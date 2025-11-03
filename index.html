@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Константин Бондаренко — Копирайтер</title>
+  <meta name="description" content="Константин Бондаренко — копирайтер, создающий тексты, которые объясняют сложное простыми словами. Пишу статьи, лендинги, контент для брендов и личных проектов." />
+  <meta name="keywords" content="копирайтер, тексты, статьи, контент, лендинги, коммерческие тексты, Константин Бондаренко" />
+  <meta name="author" content="Константин Бондаренко" />
+
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0f1113;
+      --card: rgba(255,255,255,0.04);
+      --text: #eef2f4;
+      --accent: #10B981;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,0.02), rgba(255,255,255,0) 60%),
+        radial-gradient(80% 120% at 50% 120%, rgba(255,255,255,0.015), rgba(255,255,255,0) 60%),
+        linear-gradient(0deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02)),
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0, rgba(255,255,255,0.015) 2px, rgba(0,0,0,0.015) 2px, rgba(0,0,0,0.015) 4px);
+      background-blend-mode: overlay, overlay, normal, overlay;
+    }
+
+    .site-header {
+      background: rgba(17,20,23,0.8);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-link {
+      color: #9aa4ad;
+      transition: all .25s ease;
+    }
+    .nav-link:hover {
+      color: #fff;
+      text-shadow: 0 0 8px var(--accent);
+    }
+
+    .btn-primary {
+      background: #fff;
+      color: #0f1113;
+      border-radius: .75rem;
+      padding: .8rem 1.25rem;
+      font-weight: 600;
+      transition: all .25s ease;
+    }
+    .btn-primary:hover {
+      box-shadow: 0 0 20px var(--accent), 0 0 4px var(--accent) inset;
+      background: #e9fffa;
+    }
+
+    .hd {
+      font-family: 'Playfair Display', serif;
+      text-shadow: 0 0 8px rgba(16,185,129,.2);
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .card:hover {
+      box-shadow: 0 0 20px rgba(16,185,129,.15);
+      transform: translateY(-2px);
+    }
+
+    .reveal { opacity:0; transform: translateY(20px); }
+    .reveal.show { opacity:1; transform: translateY(0); transition: opacity .6s ease, transform .6s ease; }
+
+    .footer-glow {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(16,185,129,.7), transparent);
+      filter: blur(0.4px);
+    }
+
+    .page-enter { opacity: 0; }
+    .page-enter.active { opacity: 1; transition: opacity .8s ease; }
+  </style>
+</head>
+
+<body class="page-enter">
+
+  <header class="site-header flex justify-between items-center py-5 px-6 sticky top-0 z-50">
+    <h1 class="text-2xl md:text-3xl font-semibold">Константин Бондаренко</h1>
+    <nav class="space-x-5 text-sm md:text-base">
+      <a href="#home" class="nav-link">Главная</a>
+      <a href="#about" class="nav-link">Обо мне</a>
+      <a href="#portfolio" class="nav-link">Портфолио</a>
+      <a href="#principles" class="nav-link">Принципы</a>
+      <a href="#contacts" class="nav-link">Контакты</a>
+    </nav>
+  </header>
+
+  <section id="home" class="flex flex-col justify-center items-center text-center min-h-screen px-6">
+    <h2 class="hd text-4xl md:text-5xl mb-6 reveal">Пишу так, чтобы вас услышали — и запомнили.</h2>
+    <p class="max-w-xl text-lg text-gray-300 mb-8 reveal">Создаю тексты, которые объясняют, убеждают и вдохновляют.</p>
+    <a href="#portfolio" class="btn-primary reveal">Посмотреть работы</a>
+  </section>
+
+  <section id="about" class="py-20 px-6 text-center">
+    <h3 class="hd text-3xl mb-6 reveal">Обо мне</h3>
+    <p class="text-lg text-gray-200 max-w-3xl mx-auto reveal">
+      Пишу тексты, которые объясняют сложное простыми словами и помогают бизнесу говорить с аудиторией на одном языке.
+      Осваиваю копирайтинг системно — через аналитику, структуру и смысл.
+    </p>
+  </section>
+
+  <section id="portfolio" class="py-20 px-6 text-center">
+    <h3 class="hd text-3xl mb-10 reveal">Портфолио</h3>
+    <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <div class="card p-6 rounded-xl reveal">
+        <h4 class="text-xl font-semibold mb-2">Лендинг онлайн-школы</h4>
+        <p class="text-gray-300 mb-4">Задача — убедить посетителя записаться на пробный урок. Решение — структура по AIDA, акцент на выгодах и доверии.</p>
+      </div>
+      <div class="card p-6 rounded-xl reveal">
+        <h4 class="text-xl font-semibold mb-2">SEO-статья о технологиях</h4>
+        <p class="text-gray-300 mb-4">Задача — объяснить сложную тему простыми словами, сохранив экспертность и точность.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="principles" class="py-20 px-6 text-center">
+    <h3 class="hd text-3xl mb-10 reveal">Мои принципы</h3>
+    <ul class="space-y-4 text-lg text-gray-200 max-w-xl mx-auto">
+      <li class="reveal">💬 Честность в тексте.</li>
+      <li class="reveal">⚙️ Логика в структуре.</li>
+      <li class="reveal">💡 Идея в каждом слове.</li>
+      <li class="reveal">🎯 Результат важнее количества слов.</li>
+    </ul>
+  </section>
+
+  <section id="contacts" class="py-20 px-6 text-center">
+    <h3 class="hd text-3xl mb-6 reveal">Контакты</h3>
+    <p class="text-lg text-gray-200 mb-2 reveal">✉️ Email: <a href="mailto:irisinsightai@gmail.com" class="text-green-400 hover:text-white">irisinsightai@gmail.com</a></p>
+    <p class="text-lg text-gray-200 reveal">💬 Telegram: <a href="https://t.me/whity14" target="_blank" class="text-green-400 hover:text-white">@whity14</a></p>
+  </section>
+
+  <div class="footer-glow"></div>
+  <footer class="text-center py-8 text-gray-400 text-sm">© 2025 Константин Бондаренко — Копирайтер</footer>
+
+  <script>
+    window.addEventListener('load', () => {
+      document.body.classList.add('active');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    });
+  </script>
+</body>
+</html>

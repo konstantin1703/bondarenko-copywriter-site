@@ -1,9 +1,9 @@
 name = "bondarenko-site-worker"
-main = "cloudflare/worker.patched.js"
+main = "cloudflare/worker.js"
 compatibility_date = "2024-10-01"
 
 [vars]
-# MATOMO_URL, MATOMO_TOKEN, MATOMO_SITE_ID must be set by secrets
+# MATOMO_URL, MATOMO_TOKEN, MATOMO_SITE_ID — задайте как секреты (wrangler secret put ...)
 
 [[kv_namespaces]]
 binding = "REVIEWS"

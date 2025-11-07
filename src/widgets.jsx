@@ -1,49 +1,49 @@
-import React, { useEffect, useState } from 'react'
-import { createRoot } from 'react-dom/client'
+import React, { useEffect, useState } from 'react';
+import { createRoot } from 'react-dom/client';
 
 function Stars({ value=0 }){
-  const full = Math.round(value*2)/2
+  const full = Math.round(value*2)/2;
   return (
     <div style={{display:'inline-flex', gap:6}} aria-label={`Рейтинг ${full} из 5`}>
       {[1,2,3,4,5].map(i=>{
-        const filled = i <= Math.floor(full)
-        const half = !filled && (i-0.5) <= full
-        return <span key={i} style={{fontSize:18, color: filled || half ? '#21e0a5' : '#3b3b3b'}}>{half?'⯪':'★'}</span>
+        const filled = i <= Math.floor(full);
+        const half = !filled && (i-0.5) <= full;
+        return <span key={i} style={{fontSize:18, color: filled || half ? '#1FD3A3' : '#3b3b3b'}}>{half?'⯪':'★'}</span>
       })}
     </div>
   )
 }
 
 function ReviewsWidget(){
-  const [items, setItems] = useState([])
-  const [avg, setAvg] = useState(0)
-  const [loading, setLoading] = useState(true)
-  const [name, setName] = useState('')
-  const [text, setText] = useState('')
-  const [rating, setRating] = useState(5)
-  const [ok, setOk] = useState('')
+  const [items, setItems] = useState([]);
+  const [avg, setAvg] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [name, setName] = useState('');
+  const [text, setText] = useState('');
+  const [rating, setRating] = useState(5);
+  const [ok, setOk] = useState('');
 
   async function load(){
-    setLoading(true)
+    setLoading(true);
     try{
-      const r = await fetch('/reviews', { headers: {'accept':'application/json'}})
+      const r = await fetch('/reviews', { headers: {'accept':'application/json'}});
       if (r.ok){
-        const j = await r.json()
-        setItems(j.items||[]); setAvg(j.avg||0)
+        const j = await r.json();
+        setItems(j.items||[]); setAvg(j.avg||0);
       }
     }catch(e){} finally { setLoading(false) }
   }
   useEffect(()=>{ load() }, [])
 
   async function submit(e){
-    e.preventDefault()
-    const body = { name: name.trim()||'Гость', text: text.trim(), rating: Number(rating)||5 }
+    e.preventDefault();
+    const body = { name: name.trim()||'Гость', text: text.trim(), rating: Number(rating)||5 };
     try{
-      const r = await fetch('/reviews', { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify(body)})
+      const r = await fetch('/reviews', { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify(body)});
       if (r.ok){ setOk('Спасибо! Отзыв отправлен.'); setName(''); setText(''); setRating(5); load() }
-      else setOk('Не удалось отправить. Попробуйте позже.')
+      else setOk('Не удалось отправить. Попробуйте позже.');
     }catch(e){ setOk('Сеть недоступна. Попробуйте позже.') }
-    setTimeout(()=>setOk(''), 4000)
+    setTimeout(()=>setOk(''), 4000);
   }
 
   return (
@@ -81,13 +81,13 @@ function ReviewsWidget(){
 }
 
 function LiveWidget(){
-  const [visits, setVisits] = useState([])
+  const [visits, setVisits] = useState([]);
   async function load(){
     try{
-      const r = await fetch('/live?limit=20'); const j = await r.json(); setVisits(Array.isArray(j)?j:[])
+      const r = await fetch('/live'); const j = await r.json(); setVisits(Array.isArray(j)?j:[]);
     }catch(e){}
   }
-  useEffect(()=>{ load(); const id=setInterval(load, 10000); return ()=>clearInterval(id)}, [])
+  useEffect(()=>{ load(); const id=setInterval(load, 10000); return ()=>clearInterval(id)}, []);
   return (
     <div style={{background:'#0c0f10', border:'1px solid #1f1f1f', borderRadius:12, padding:16, color:'#eaeaea'}}>
       <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
@@ -106,13 +106,8 @@ function LiveWidget(){
 }
 
 function mount(name, comp){
-  const nodes = document.querySelectorAll(`[data-widget="${name}"]`)
-  nodes.forEach(n=>{
-    const root = createRoot(n)
-    root.render(comp)
-  })
+  document.querySelectorAll(`[data-widget="${name}"]`).forEach(n=> createRoot(n).render(comp));
 }
 
-// Autostart
-mount('reviews', <ReviewsWidget/>)
-mount('live', <LiveWidget/>)
+mount('reviews', <ReviewsWidget/>);
+mount('live', <LiveWidget/>);

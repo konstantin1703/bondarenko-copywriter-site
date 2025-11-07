@@ -1,10 +1,11 @@
-name = "matomo-live-widget"
-main = "cloudflare/worker.js"
-compatibility_date = "2024-05-01"
+name = "bondarenko-site-worker"
+main = "cloudflare/worker.patched.js"
+compatibility_date = "2024-10-01"
 
 [vars]
-# MATOMO_URL, MATOMO_TOKEN, MATOMO_SITE_ID provided as secrets
+# MATOMO_URL, MATOMO_TOKEN, MATOMO_SITE_ID must be set by secrets
 
-# [route]
-# pattern = "example.com/live*"
-# zone_id = "your-zone-id"
+[[kv_namespaces]]
+binding = "REVIEWS"
+id = "REPLACE_WITH_PROD_KV_ID"
+preview_id = "REPLACE_WITH_DEV_KV_ID"

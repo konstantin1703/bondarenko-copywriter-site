@@ -1,0 +1,10 @@
+<!-- Open Graph + Twitter -->
+<meta property="og:title" content="Константин Бондаренко — Голос вашего бренда">
+<meta property="og:description" content="Слова, которые убеждают. Тексты, которые запоминают.">
+<meta property="og:image" content="https://konstantin1703.github.io/bondarenko-copywriter-site/og-preview.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Константин Бондаренко — Голос вашего бренда">
+<meta name="twitter:description" content="Слова, которые убеждают. Тексты, которые запоминают.">
+<meta name="twitter:image" content="https://konstantin1703.github.io/bondarenko-copywriter-site/og-preview.png">

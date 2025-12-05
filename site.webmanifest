@@ -1,0 +1,21 @@
+{
+  "name": "Константин Бондаренко — Копирайтер",
+  "short_name": "Бондаренко",
+  "start_url": "/bondarenko-copywriter-site/",
+  "scope": "/bondarenko-copywriter-site/",
+  "display": "standalone",
+  "background_color": "#0b0f14",
+  "theme_color": "#10b981",
+  "icons": [
+    {
+      "src": "/bondarenko-copywriter-site/favicons/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/bondarenko-copywriter-site/favicons/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

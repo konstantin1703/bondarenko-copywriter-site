@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Константин Бондаренко — Копирайтер</title>
+  <meta name="description" content="Константин Бондаренко — копирайтер, создающий тексты, которые объясняют сложное простыми словами. Пишу статьи, лендинги, контент для брендов и личных проектов." />
+  <meta name="keywords" content="копирайтер, тексты, статьи, контент, лендинги, коммерческие тексты, Константин Бондаренко" />
+  <meta name="author" content="Константин Бондаренко" />
+
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- Tailwind можно оставить для сеток, но дизайн держится на CSS ниже -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0f1113;
+      --panel-dark: #141414;
+      --panel: #1a1a1a;
+      --card: rgba(255,255,255,0.04);
+      --text: #eef2f4;
+      --muted: #d4d4d4;
+      --accent: #00e6b8;
+    }
+
+    /* База */
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,0.02), rgba(255,255,255,0) 60%),
+        radial-gradient(80% 120% at 50% 120%, rgba(255,255,255,0.015), rgba(255,255,255,0) 60%),
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0, rgba(255,255,255,0.015) 2px, rgba(0,0,0,0.015) 2px, rgba(0,0,0,0.015) 4px);
+      background-blend-mode: overlay, overlay, normal, overlay;
+      opacity: 0;
+      animation: fadeInPage 0.9s ease forwards;
+    }
+    @keyframes fadeInPage { to { opacity: 1; } }
+
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 24px;
+      background: rgba(17,20,23,0.8);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .site-header nav a {
+      color: #9aa4ad; margin-left: 18px; transition: .25s;
+      text-decoration: none;
+    }
+    .site-header nav a:hover { color: #fff; text-shadow: 0 0 8px var(--accent); }
+
+    .btn-primary {
+      background: #fff; color: #0f1113; border-radius: 12px;
+      padding: .8rem 1.25rem; font-weight: 600; transition: .25s;
+      text-decoration: none;
+    }
+    .btn-primary:hover { box-shadow: 0 0 20px var(--accent), 0 0 4px var(--accent) inset; background: #e9fffa; }
+
+    .hd { font-family: "Playfair Display", serif; text-shadow: 0 0 8px rgba(16,185,129,.2); }
+
+    /* Reveal-анимации */
+    .reveal { opacity: 0; transform: translateY(20px); }
+    .reveal.show { opacity: 1; transform: translateY(0); transition: opacity .6s ease, transform .6s ease; }
+
+    /* Универсальные панели */
+    .panel-dark { background: var(--panel-dark); }
+    .panel { background: var(--panel); border-top: 1px solid rgba(0,255,170,0.15); }
+
+    /* Портфолио */
+    .portfolio-wrap { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+    .portfolio-card {
+      background: #222; width: 300px; padding: 25px;
+      border-radius: 12px; box-shadow: 0 0 12px rgba(0,230,184,0.15);
+      transition: .35s ease; opacity: 0; transform: translateY(25px);
+    }
+    .portfolio-card.show { opacity: 1; transform: translateY(0); transition: opacity .8s ease, transform .8s ease; }
+    .portfolio-card:hover { transform: translateY(-8px); box-shadow: 0 0 20px rgba(0,230,184,0.4); }
+    .portfolio-card h3 { color: var(--accent); font-family: Orbitron, sans-serif; margin-bottom: .5rem; }
+    .portfolio-card p { color: var(--muted); }
+    .portfolio-link {
+      display: inline-block; margin-top: 10px; color: var(--accent); font-weight: 700; text-decoration: none; transition: .25s;
+    }
+    .portfolio-link:hover { color: #00ffcc; text-shadow: 0 0 10px rgba(0,255,200,0.7); transform: translateY(-1px); }
+
+    /* Услуги */
+    .service-card {
+      background: var(--card); border: 1px solid rgba(255,255,255,0.06);
+      padding: 1.8rem; border-radius: 14px; transition: .35s;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 0 20px rgba(0,230,184,0.25); }
+    .service-card h4 { color: var(--accent); font-weight: 700; margin-bottom: .5rem; }
+
+    /* Отзывы */
+    .testimonial {
+      background: rgba(255,255,255,0.03);
+      border-left: 3px solid var(--accent);
+      padding: 1.5rem; border-radius: 10px;
+      transition: .3s;
+    }
+    .testimonial:hover { box-shadow: 0 0 15px rgba(0,230,184,0.25); transform: translateY(-4px); }
+    .testimonial p { color: var(--muted); font-style: italic; }
+    .testimonial span { display: block; margin-top: 1rem; color: var(--accent); font-weight: 600; }
+
+    /* Блог */
+    .blog-card {
+      background: #1a1a1a; border-radius: 12px; padding: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,230,184,0.1); transition: .35s;
+    }
+    .blog-card:hover { transform: translateY(-6px); box-shadow: 0 0 18px rgba(0,230,184,0.35); }
+    .blog-card h4 { color: var(--accent); font-family: Orbitron, sans-serif; font-size: 1.2rem; margin-bottom: .5rem; }
+
+    .footer-glow { height: 2px; background: linear-gradient(90deg,transparent, rgba(0,230,184,.7), transparent); filter: blur(.4px); }
+    footer { text-align: center; background: #121212; border-top: 1px solid rgba(0,255,170,.15); color: #ccc; font-size: .9rem; padding: 25px 0; }
+    a:hover { color: #00ffcc; text-shadow: 0 0 8px rgba(0,255,200,.6); }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <h1 class="text-2xl md:text-3xl font-semibold" style="margin:0;">Константин Бондаренко</h1>
+    <nav>
+      <a href="#home">Главная</a>
+      <a href="#about">Обо мне</a>
+      <a href="#services">Услуги</a>
+      <a href="#portfolio">Портфолио</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#blog">Блог</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="text-center" style="min-height: 90vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 0 24px;">
+    <h2 class="hd reveal" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem;">Пишу так, чтобы вас услышали — и запомнили.</h2>
+    <p class="reveal" style="max-width: 720px; color:#cfd8dc; font-size:1.125rem; margin-bottom: 2rem;">Создаю тексты, которые объясняют, убеждают и вдохновляют.</p>
+    <a href="#portfolio" class="btn-primary reveal">Посмотреть работы</a>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="text-center" style="padding: 80px 24px;">
+    <h3 class="hd text-3xl mb-6 reveal" style="font-size: 2rem; margin-bottom: 1.25rem;">Обо мне</h3>
+    <p class="reveal" style="max-width: 960px; margin: 0 auto; font-size:1.1rem; color:#e3e8eb;">
+      Пишу тексты, которые объясняют сложное простыми словами и помогают бизнесу говорить с аудиторией на одном языке.
+      Осваиваю копирайтинг системно — через аналитику, структуру и смысл.
+    </p>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="panel-dark" style="padding: 80px 24px; text-align:center;">
+    <h3 class="hd text-3xl mb-10 reveal" style="font-size: 2rem; margin-bottom: 2rem;">Услуги</h3>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+      <div class="service-card reveal"><h4>Коммерческий копирайтинг</h4><p>Тексты, которые продают без давления: убедительно, логично и по-человечески.</p></div>
+      <div class="service-card reveal"><h4>Тексты для брендов</h4><p>Создание фирменного голоса компании, слоганов и сторителлинга.</p></div>
+      <div class="service-card reveal"><h4>Лендинги и сайты</h4><p>Структура, логика и смысл, которые ведут к действию — без клише и штампов.</p></div>
+      <div class="service-card reveal"><h4>Контент для соцсетей</h4><p>Посты с характером, ценностью и эмоцией. Аудит, стратегия и тексты под стиль бренда.</p></div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="portfolio" class="panel" style="padding: 80px 24px; text-align:center;">
+    <h3 class="hd text-3xl mb-10 reveal" style="font-size: 2rem; margin-bottom: 2rem;">Портфолио</h3>
+    <div class="portfolio-wrap">
+      <div class="portfolio-card">
+        <h3>Как ИИ помогает копирайтерам</h3>
+        <p>О том, как искусственный интеллект помогает писать лучше и человечнее.</p>
+        <a href="article1.html" class="portfolio-link">Смотреть пример →</a>
+      </div>
+      <div class="portfolio-card">
+        <h3>Текст для лендинга</h3>
+        <p>Как создать лендинг, который говорит с читателем и продаёт естественно.</p>
+        <a href="article2.html" class="portfolio-link">Смотреть пример →</a>
+      </div>
+      <div class="portfolio-card">
+        <h3>Пост для соцсетей</h3>
+        <p>Лёгкий и живой текст, который выделяет бренд в ленте.</p>
+        <a href="article3.html" class="portfolio-link">Смотреть пример →</a>
+      </div>
+      <div class="portfolio-card">
+        <h3>Личный бренд</h3>
+        <p>Как строить узнаваемость честно и без фальши — через голос, смысл и стиль.</p>
+        <a href="article4.html" class="portfolio-link">Смотреть пример →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section id="reviews" class="panel-dark" style="padding: 80px 24px; text-align:center;">
+    <h3 class="hd text-3xl mb-10 reveal" style="font-size: 2rem; margin-bottom: 2rem;">Отзывы клиентов</h3>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div class="testimonial reveal"><p>«Константин не просто пишет тексты — он помогает понять, как говорить с клиентом. После его лендинга конверсия выросла на 35%.»</p><span>— Елена, маркетолог</span></div>
+      <div class="testimonial reveal"><p>«Очень комфортное общение и быстрая работа. Получили именно тот тон текста, который отражает бренд.»</p><span>— Сергей, владелец онлайн-школы</span></div>
+      <div class="testimonial reveal"><p>«Редкий копирайтер, кто действительно слушает. Текст получился живым, понятным и с характером!»</p><span>— Анастасия, продюсер</span></div>
+      <div class="testimonial reveal"><p>«Сотрудничаем уже несколько проектов подряд — стабильно чётко, по делу и без "воды".»</p><span>— Дмитрий, агентство маркетинга</span></div>
+      <div class="testimonial reveal"><p>«Благодаря Константину наши посты наконец-то начали получать живые отклики. Люди стали писать сами!»</p><span>— Анна, SMM-менеджер</span></div>
+      <div class="testimonial reveal"><p>«Когда читаешь текст, кажется, будто ты сам это сказал. Это и есть мастерство копирайтера.»</p><span>— Владислав, предприниматель</span></div>
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <section id="blog" class="panel" style="padding: 80px 24px; text-align:center;">
+    <h3 class="hd text-3xl mb-10 reveal" style="font-size: 2rem; margin-bottom: 2rem;">Блог</h3>
+    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div class="blog-card reveal">
+        <h4>О внимании к словам</h4>
+        <p>Почему важно не просто писать красиво, а выбирать каждое слово осознанно. Даже запятая — часть смысла.</p>
+        <a href="blog1.html" class="portfolio-link">Читать →</a>
+      </div>
+      <div class="blog-card reveal">
+        <h4>Тишина в тексте</h4>
+        <p>Иногда лучше не добавить фразу, а убрать лишнее. Пространство между словами часто говорит громче.</p>
+        <a href="blog2.html" class="portfolio-link">Читать →</a>
+      </div>
+      <div class="blog-card reveal">
+        <h4>Когда текст становится голосом</h4>
+        <p>Настоящий копирайтинг начинается не с клавиатуры, а с понимания человека, для которого ты пишешь.</p>
+        <a href="blog3.html" class="portfolio-link">Читать →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacts -->
+  <section id="contacts" class="text-center" style="padding: 80px 24px;">
+    <h3 class="hd text-3xl mb-6 reveal" style="font-size: 2rem; margin-bottom: 1.25rem;">Контакты</h3>
+    <p class="reveal" style="font-size: 1.1rem; margin-bottom: .5rem;">✉️ Email: <a href="mailto:irisinsightai@gmail.com" style="color:#34d399; text-decoration:none;">irisinsightai@gmail.com</a></p>
+    <p class="reveal" style="font-size: 1.1rem;">💬 Telegram: <a href="https://t.me/whity14" target="_blank" style="color:#34d399; text-decoration:none;">@whity14</a></p>
+  </section>
+
+  <div class="footer-glow"></div>
+
+  <footer>
+    <p style="margin:0; font-family: Orbitron, sans-serif;">© 2025 Константин Бондаренко — Копирайтер</p>
+  </footer>
+
+  <!-- Скрипты (в самом конце) -->
+  <script>
+    // reveal для общих блоков
+    window.addEventListener('load', () => {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    });
+
+    // reveal для карточек портфолио
+    (function () {
+      const cards = document.querySelectorAll('.portfolio-card');
+      function onScroll() {
+        const wh = window.innerHeight, offset = 120;
+        cards.forEach(el => {
+          const top = el.getBoundingClientRect().top;
+          if (top < wh - offset) el.classList.add('show'); else el.classList.remove('show');
+        });
+      }
+      window.addEventListener('scroll', onScroll);
+      window.addEventListener('load', onScroll);
+    })();
+  </script>
+</body>
+</html>

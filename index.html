@@ -1,278 +1,787 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Константин Бондаренко — Копирайтер</title>
-  <meta name="description" content="Константин Бондаренко — копирайтер, создающий тексты, которые объясняют сложное простыми словами. Пишу статьи, лендинги, контент для брендов и личных проектов." />
-  <meta name="keywords" content="копирайтер, тексты, статьи, контент, лендинги, коммерческие тексты, Константин Бондаренко" />
-  <meta name="author" content="Константин Бондаренко" />
+    <meta charset="UTF-8">
+    <title>Константин Бондаренко — копирайтер</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Константин Бондаренко — копирайтер. Лендинги, статьи, описания услуг, которые приводят клиентов.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <!-- Tailwind можно оставить для сеток, но дизайн держится на CSS ниже -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #F8FAFC;      /* Основной фон */
+            --bg-white: #FFFFFF;        /* Белый */
+            --text-primary: #1F2937;    /* Основной текст */
+            --text-secondary: #6B7280;  /* Вторичный текст */
+            --accent: #2563EB;          /* Синий (кнопки, ссылки) */
+            --accent-hover: #1D4ED8;    /* Синий (hover) */
+            --border: #E5E7EB;          /* Разделители */
+        }
 
-  <style>
-    :root {
-      --bg: #0f1113;
-      --panel-dark: #141414;
-      --panel: #1a1a1a;
-      --card: rgba(255,255,255,0.04);
-      --text: #eef2f4;
-      --muted: #d4d4d4;
-      --accent: #00e6b8;
-    }
+        * {
+            box-sizing: border-box;
+        }
 
-    /* База */
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      overflow-x: hidden;
-      background-image:
-        radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,0.02), rgba(255,255,255,0) 60%),
-        radial-gradient(80% 120% at 50% 120%, rgba(255,255,255,0.015), rgba(255,255,255,0) 60%),
-        repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0, rgba(255,255,255,0.015) 2px, rgba(0,0,0,0.015) 2px, rgba(0,0,0,0.015) 4px);
-      background-blend-mode: overlay, overlay, normal, overlay;
-      opacity: 0;
-      animation: fadeInPage 0.9s ease forwards;
-    }
-    @keyframes fadeInPage { to { opacity: 1; } }
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            line-height: 1.6;
+        }
 
-    .site-header {
-      position: sticky; top: 0; z-index: 50;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 20px 24px;
-      background: rgba(17,20,23,0.8);
-      backdrop-filter: blur(6px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .site-header nav a {
-      color: #9aa4ad; margin-left: 18px; transition: .25s;
-      text-decoration: none;
-    }
-    .site-header nav a:hover { color: #fff; text-shadow: 0 0 8px var(--accent); }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
 
-    .btn-primary {
-      background: #fff; color: #0f1113; border-radius: 12px;
-      padding: .8rem 1.25rem; font-weight: 600; transition: .25s;
-      text-decoration: none;
-    }
-    .btn-primary:hover { box-shadow: 0 0 20px var(--accent), 0 0 4px var(--accent) inset; background: #e9fffa; }
+        a:hover {
+            color: var(--accent-hover);
+        }
 
-    .hd { font-family: "Playfair Display", serif; text-shadow: 0 0 8px rgba(16,185,129,.2); }
+        img {
+            max-width: 100%;
+            display: block;
+        }
 
-    /* Reveal-анимации */
-    .reveal { opacity: 0; transform: translateY(20px); }
-    .reveal.show { opacity: 1; transform: translateY(0); transition: opacity .6s ease, transform .6s ease; }
+        h1, h2, h3 {
+            margin: 0 0 16px;
+            font-weight: 700;
+        }
 
-    /* Универсальные панели */
-    .panel-dark { background: var(--panel-dark); }
-    .panel { background: var(--panel); border-top: 1px solid rgba(0,255,170,0.15); }
+        h1 {
+            font-size: 48px;
+        }
 
-    /* Портфолио */
-    .portfolio-wrap { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
-    .portfolio-card {
-      background: #222; width: 300px; padding: 25px;
-      border-radius: 12px; box-shadow: 0 0 12px rgba(0,230,184,0.15);
-      transition: .35s ease; opacity: 0; transform: translateY(25px);
-    }
-    .portfolio-card.show { opacity: 1; transform: translateY(0); transition: opacity .8s ease, transform .8s ease; }
-    .portfolio-card:hover { transform: translateY(-8px); box-shadow: 0 0 20px rgba(0,230,184,0.4); }
-    .portfolio-card h3 { color: var(--accent); font-family: Orbitron, sans-serif; margin-bottom: .5rem; }
-    .portfolio-card p { color: var(--muted); }
-    .portfolio-link {
-      display: inline-block; margin-top: 10px; color: var(--accent); font-weight: 700; text-decoration: none; transition: .25s;
-    }
-    .portfolio-link:hover { color: #00ffcc; text-shadow: 0 0 10px rgba(0,255,200,0.7); transform: translateY(-1px); }
+        h2 {
+            font-size: 32px;
+        }
 
-    /* Услуги */
-    .service-card {
-      background: var(--card); border: 1px solid rgba(255,255,255,0.06);
-      padding: 1.8rem; border-radius: 14px; transition: .35s;
-    }
-    .service-card:hover { transform: translateY(-6px); box-shadow: 0 0 20px rgba(0,230,184,0.25); }
-    .service-card h4 { color: var(--accent); font-weight: 700; margin-bottom: .5rem; }
+        h3 {
+            font-size: 22px;
+        }
 
-    /* Отзывы */
-    .testimonial {
-      background: rgba(255,255,255,0.03);
-      border-left: 3px solid var(--accent);
-      padding: 1.5rem; border-radius: 10px;
-      transition: .3s;
-    }
-    .testimonial:hover { box-shadow: 0 0 15px rgba(0,230,184,0.25); transform: translateY(-4px); }
-    .testimonial p { color: var(--muted); font-style: italic; }
-    .testimonial span { display: block; margin-top: 1rem; color: var(--accent); font-weight: 600; }
+        p {
+            margin: 0 0 12px;
+        }
 
-    /* Блог */
-    .blog-card {
-      background: #1a1a1a; border-radius: 12px; padding: 1.5rem;
-      box-shadow: 0 0 10px rgba(0,230,184,0.1); transition: .35s;
-    }
-    .blog-card:hover { transform: translateY(-6px); box-shadow: 0 0 18px rgba(0,230,184,0.35); }
-    .blog-card h4 { color: var(--accent); font-family: Orbitron, sans-serif; font-size: 1.2rem; margin-bottom: .5rem; }
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    .footer-glow { height: 2px; background: linear-gradient(90deg,transparent, rgba(0,230,184,.7), transparent); filter: blur(.4px); }
-    footer { text-align: center; background: #121212; border-top: 1px solid rgba(0,255,170,.15); color: #ccc; font-size: .9rem; padding: 25px 0; }
-    a:hover { color: #00ffcc; text-shadow: 0 0 8px rgba(0,255,200,.6); }
-  </style>
+        /* ----------------------
+           HEADER + NAV
+        ---------------------- */
 
-  <!-- Matomo init (auto-injected) -->
-  <script>
-    window.MATOMO_BASE_URL = window.MATOMO_BASE_URL || "{{MATOMO_URL}}/";
-    window.MATOMO_SITE_ID = window.MATOMO_SITE_ID || "{{MATOMO_SITE_ID}}";
-  </script>
-  <script src="src/analytics/init-matomo.js"></script>
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: var(--bg-white);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--text-primary);
+        }
+
+        .logo-mark {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            font-size: 14px;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 14px;
+        }
+
+        .header-links {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .phone {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Hamburger (mobile) */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 20px;
+            height: 2px;
+            background-color: var(--text-primary);
+        }
+
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            padding: 12px 0 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .mobile-nav.open {
+            display: flex !important;
+            background-color: #FFFFFF;
+        }
+
+        .mobile-nav a {
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+
+        .mobile-nav .mobile-contacts {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* ----------------------
+           HERO
+        ---------------------- */
+
+        .hero {
+            background: linear-gradient(135deg, #F8FAFC 0%, #F0F9FF 100%);
+            padding: 120px 0;
+        }
+
+        .hero-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .hero h1 {
+            margin-bottom: 10px;
+        }
+
+        .hero-role {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .hero-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .hero-tags {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        /* ----------------------
+           SECTION WRAPPER
+        ---------------------- */
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            margin-bottom: 32px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+        }
+
+        /* ----------------------
+           GUARANTEE
+        ---------------------- */
+
+        .guarantee {
+            background-color: #FFFFFF;
+        }
+
+        .guarantee-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .guarantee-item {
+            background-color: #FAFBFC;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+        }
+
+        .guarantee-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        /* ----------------------
+           SERVICES
+        ---------------------- */
+
+        .services {
+            background-color: var(--bg-primary);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .service-card {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 32px;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+        }
+
+        /* ----------------------
+           PORTFOLIO
+        ---------------------- */
+
+        .portfolio {
+            background-color: #FFFFFF;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .portfolio-card {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            padding: 24px;
+            transition: box-shadow 0.2s ease, transform 0.1s ease;
+        }
+
+        .portfolio-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .portfolio-card p {
+            color: var(--text-secondary);
+        }
+
+        .portfolio-card a {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* ----------------------
+           PHILOSOPHY
+        ---------------------- */
+
+        .philosophy {
+            background-color: var(--bg-primary);
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .philosophy-item {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            padding: 28px;
+            border: 1px solid var(--border);
+        }
+
+        .philosophy-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .philosophy-item p {
+            color: var(--text-secondary);
+        }
+
+        /* ----------------------
+           FAQ
+        ---------------------- */
+
+        .faq {
+            background-color: #FFFFFF;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+        }
+
+        .faq-q {
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .faq-a {
+            color: var(--text-secondary);
+        }
+
+        /* ----------------------
+           BLOG (заглушка)
+        ---------------------- */
+
+        .blog {
+            background-color: var(--bg-primary);
+        }
+
+        .blog-placeholder {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        /* ----------------------
+           FOOTER
+        ---------------------- */
+
+        footer {
+            background-color: #1F2937;
+            color: #FFFFFF;
+            padding: 60px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            color: #E5E7EB;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: #FFFFFF;
+        }
+
+        .footer-copy {
+            color: #9CA3AF;
+            font-size: 13px;
+        }
+
+        /* ----------------------
+           ADAPTIVE
+        ---------------------- */
+
+        @media (max-width: 1024px) {
+            .guarantee-grid,
+            .services-grid,
+            .philosophy-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .hero {
+                padding: 60px 0;
+            }
+
+            .header-inner {
+                height: 64px;
+            }
+
+            nav,
+            .header-right {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .mobile-nav.open {
+                display: flex;
+            }
+
+            .guarantee-grid,
+            .services-grid,
+            .portfolio-grid,
+            .philosophy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .btn-primary {
+                padding: 12px 24px;
+                font-size: 15px;
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-  <!-- Header -->
-  <header class="site-header">
-    <h1 class="text-2xl md:text-3xl font-semibold" style="margin:0;">Константин Бондаренко</h1>
-    <nav>
-      <a href="#home">Главная</a>
-      <a href="#about">Обо мне</a>
-      <a href="#services">Услуги</a>
-      <a href="#portfolio">Портфолио</a>
-      <a href="#reviews">Отзывы</a>
-      <a href="#blog">Блог</a>
-      <a href="#contacts">Контакты</a>
-    </nav>
-  </header>
+<!-- =========================
+     HEADER + NAV
+========================= -->
+<header>
+    <div class="container">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-mark">Kb</div>
+                <div>Константин Бондаренко</div>
+            </div>
 
-  <!-- Hero -->
-  <section id="home" class="text-center" style="min-height: 90vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 0 24px;">
-    <h2 class="hd reveal" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem;">Пишу так, чтобы вас услышали — и запомнили.</h2>
-    <p class="reveal" style="max-width: 720px; color:#cfd8dc; font-size:1.125rem; margin-bottom: 2rem;">Создаю тексты, которые объясняют, убеждают и вдохновляют.</p>
-    <a href="#portfolio" class="btn-primary reveal">Посмотреть работы</a>
-  </section>
+            <nav>
+                <a href="#portfolio">Портфолио</a>
+                <a href="#services">Услуги</a>
+                <a href="#blog">Блог</a>
+                <a href="#contacts">Контакты</a>
+            </nav>
 
-  <!-- About -->
-  <section id="about" class="text-center" style="padding: 80px 24px;">
-    <h3 class="hd text-3xl mb-6 reveal" style="font-size: 2rem; margin-bottom: 1.25rem;">Обо мне</h3>
-    <p class="reveal" style="max-width: 960px; margin: 0 auto; font-size:1.1rem; color:#e3e8eb;">
-      Пишу тексты, которые объясняют сложное простыми словами и помогают бизнесу говорить с аудиторией на одном языке.
-      Осваиваю копирайтинг системно — через аналитику, структуру и смысл.
-    </p>
-  </section>
+            <div class="header-right">
+                <div class="header-links">
+                    <a href="https://wa.me/79531509213" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                    <a href="https://t.me/whity14" target="_blank" rel="noopener noreferrer">Telegram</a>
+                </div>
+                <div class="phone">
+                    <a href="tel:+79531509213" style="color: inherit;">+7 (953) 150-92-13</a>
+                </div>
+                <a href="#contacts" class="btn btn-primary">Заказать звонок</a>
+            </div>
 
-  <!-- Services -->
-  <section id="services" class="panel-dark" style="padding: 80px 24px; text-align:center;">
-    <h3 class="hd text-3xl mb-10 reveal" style="font-size: 2rem; margin-bottom: 2rem;">Услуги</h3>
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-      <div class="service-card reveal"><h4>Коммерческий копирайтинг</h4><p>Тексты, которые продают без давления: убедительно, логично и по-человечески.</p></div>
-      <div class="service-card reveal"><h4>Тексты для брендов</h4><p>Создание фирменного голоса компании, слоганов и сторителлинга.</p></div>
-      <div class="service-card reveal"><h4>Лендинги и сайты</h4><p>Структура, логика и смысл, которые ведут к действию — без клише и штампов.</p></div>
-      <div class="service-card reveal"><h4>Контент для соцсетей</h4><p>Посты с характером, ценностью и эмоцией. Аудит, стратегия и тексты под стиль бренда.</p></div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <!-- Mobile nav -->
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#portfolio">Портфолио</a>
+            <a href="#services">Услуги</a>
+            <a href="#blog">Блог</a>
+            <a href="#contacts">Контакты</a>
+            <div class="mobile-contacts">
+                <div>
+                    <a href="https://wa.me/79531509213" target="_blank" rel="noopener noreferrer">WhatsApp</a> ·
+                    <a href="https://t.me/whity14" target="_blank" rel="noopener noreferrer">Telegram</a>
+                </div>
+                <div><a href="tel:+79531509213" style="color: inherit;">+7 (953) 150-92-13</a></div>
+            </div>
+        </div>
     </div>
-  </section>
+</header>
 
-  <!-- Portfolio -->
-  <section id="portfolio" class="panel" style="padding: 80px 24px; text-align:center;">
-    <h3 class="hd text-3xl mb-10 reveal" style="font-size: 2rem; margin-bottom: 2rem;">Портфолио</h3>
-    <div class="portfolio-wrap">
-      <div class="portfolio-card">
-        <h3>Как ИИ помогает копирайтерам</h3>
-        <p>О том, как искусственный интеллект помогает писать лучше и человечнее.</p>
-        <a href="article1.html" class="portfolio-link">Смотреть пример →</a>
-      </div>
-      <div class="portfolio-card">
-        <h3>Текст для лендинга</h3>
-        <p>Как создать лендинг, который говорит с читателем и продаёт естественно.</p>
-        <a href="article2.html" class="portfolio-link">Смотреть пример →</a>
-      </div>
-      <div class="portfolio-card">
-        <h3>Пост для соцсетей</h3>
-        <p>Лёгкий и живой текст, который выделяет бренд в ленте.</p>
-        <a href="article3.html" class="portfolio-link">Смотреть пример →</a>
-      </div>
-      <div class="portfolio-card">
-        <h3>Личный бренд</h3>
-        <p>Как строить узнаваемость честно и без фальши — через голос, смысл и стиль.</p>
-        <a href="article4.html" class="portfolio-link">Смотреть пример →</a>
-      </div>
+<!-- =========================
+     HERO
+========================= -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-inner">
+            <div class="hero-subtitle">КОНСТАНТИН БОНДАРЕНКО</div>
+            <div class="hero-role">Копирайтер</div>
+            <h1>Пишу тексты, которые приносят клиентов.</h1>
+            <p class="hero-tags">Лендинги • Статьи • Описания услуг</p>
+            <p class="hero-text">
+                Помогаю бизнесу объяснить продукт простым языком и аккуратно довести читателя до заявки — без лишнего шума и «креативности ради креативности».
+            </p>
+            <a href="#contacts" class="btn btn-primary">Заказать консультацию</a>
+        </div>
     </div>
-  </section>
+</section>
 
-  <!-- Reviews -->
-  <section id="reviews" class="panel-dark" style="padding: 80px 24px; text-align:center;">
-    <h3 class="hd text-3xl mb-10 reveal" style="font-size: 2rem; margin-bottom: 2rem;">Отзывы клиентов</h3>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-      <div class="testimonial reveal"><p>«Константин не просто пишет тексты — он помогает понять, как говорить с клиентом. После его лендинга конверсия выросла на 35%.»</p><span>— Елена, маркетолог</span></div>
-      <div class="testimonial reveal"><p>«Очень комфортное общение и быстрая работа. Получили именно тот тон текста, который отражает бренд.»</p><span>— Сергей, владелец онлайн-школы</span></div>
-      <div class="testimonial reveal"><p>«Редкий копирайтер, кто действительно слушает. Текст получился живым, понятным и с характером!»</p><span>— Анастасия, продюсер</span></div>
-      <div class="testimonial reveal"><p>«Сотрудничаем уже несколько проектов подряд — стабильно чётко, по делу и без "воды".»</p><span>— Дмитрий, агентство маркетинга</span></div>
-      <div class="testimonial reveal"><p>«Благодаря Константину наши посты наконец-то начали получать живые отклики. Люди стали писать сами!»</p><span>— Анна, SMM-менеджер</span></div>
-      <div class="testimonial reveal"><p>«Когда читаешь текст, кажется, будто ты сам это сказал. Это и есть мастерство копирайтера.»</p><span>— Владислав, предприниматель</span></div>
+<!-- =========================
+     GUARANTEE
+========================= -->
+<section class="guarantee">
+    <div class="container">
+        <div class="section-header">
+            <h2>Гарантии работы</h2>
+            <p>Спокойный, предсказуемый процесс и понятные правила.</p>
+        </div>
+        <div class="guarantee-grid">
+            <div class="guarantee-item">
+                <div class="guarantee-icon">✅</div>
+                <h3>Первый черновик — за 3 дня</h3>
+                <p>Согласуем задачу, и вы получаете первый вариант текста в оговорённый срок.</p>
+            </div>
+            <div class="guarantee-item">
+                <div class="guarantee-icon">✅</div>
+                <h3>Правки до результата</h3>
+                <p>Не ограничиваю количество правок по мелочам. Доводим текст до того состояния, в котором вам спокойно.</p>
+            </div>
+            <div class="guarantee-item">
+                <div class="guarantee-icon">✅</div>
+                <h3>100% возврат, если не заходит</h3>
+                <p>Если формат моей работы вам не подойдёт, возвращаю оплату без споров.</p>
+            </div>
+        </div>
     </div>
-  </section>
+</section>
 
-  <!-- Blog -->
-  <section id="blog" class="panel" style="padding: 80px 24px; text-align:center;">
-    <h3 class="hd text-3xl mb-10 reveal" style="font-size: 2rem; margin-bottom: 2rem;">Блог</h3>
-    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-      <div class="blog-card reveal">
-        <h4>О внимании к словам</h4>
-        <p>Почему важно не просто писать красиво, а выбирать каждое слово осознанно. Даже запятая — часть смысла.</p>
-        <a href="blog1.html" class="portfolio-link">Читать →</a>
-      </div>
-      <div class="blog-card reveal">
-        <h4>Тишина в тексте</h4>
-        <p>Иногда лучше не добавить фразу, а убрать лишнее. Пространство между словами часто говорит громче.</p>
-        <a href="blog2.html" class="portfolio-link">Читать →</a>
-      </div>
-      <div class="blog-card reveal">
-        <h4>Когда текст становится голосом</h4>
-        <p>Настоящий копирайтинг начинается не с клавиатуры, а с понимания человека, для которого ты пишешь.</p>
-        <a href="blog3.html" class="portfolio-link">Читать →</a>
-      </div>
+<!-- =========================
+     SERVICES
+========================= -->
+<section class="services" id="services">
+    <div class="container">
+        <div class="section-header">
+            <h2>Что я делаю</h2>
+            <p>Помогаю упаковать ваши продукты и услуги в понятные и работающие тексты.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Лендинг-копирайт</h3>
+                <p>Пишу продающие тексты для посадочных страниц: от структуры блоков до финальных формулировок.</p>
+            </div>
+            <div class="service-card">
+                <h3>Статьи и контент</h3>
+                <p>Структурирую идеи и опыт в аккуратные тексты: статьи, полезные материалы, контент для блога.</p>
+            </div>
+            <div class="service-card">
+                <h3>Редактура и доработка</h3>
+                <p>Улучшаю уже написанный текст: чистка воды, логика, акценты, ясность и читабельность.</p>
+            </div>
+        </div>
     </div>
-  </section>
+</section>
 
-  <!-- Contacts -->
-  <section id="contacts" class="text-center" style="padding: 80px 24px;">
-    <h3 class="hd text-3xl mb-6 reveal" style="font-size: 2rem; margin-bottom: 1.25rem;">Контакты</h3>
-    <p class="reveal" style="font-size: 1.1rem; margin-bottom: .5rem;">✉️ Email: <a href="mailto:irisinsightai@gmail.com" style="color:#34d399; text-decoration:none;">irisinsightai@gmail.com</a></p>
-    <p class="reveal" style="font-size: 1.1rem;">💬 Telegram: <a href="https://t.me/whity14" target="_blank" style="color:#34d399; text-decoration:none;">@whity14</a></p>
-  </section>
+<!-- =========================
+     PORTFOLIO
+========================= -->
+<section class="portfolio" id="portfolio">
+    <div class="container">
+        <div class="section-header">
+            <h2>Портфолио</h2>
+            <p>Несколько примеров задач, с которыми я работал.</p>
+        </div>
+        <div class="portfolio-grid">
+            <div class="portfolio-card">
+                <h3>Лендинг коммерческого копирайтера</h3>
+                <p>Структура и тексты для личного лендинга копирайтера. Фокус на спокойной подаче и заявках через мессенджер.</p>
+                <a href="https://konstantin1703.github.io/anna-copywriter-landing/" target="_blank" rel="noopener noreferrer">Смотреть пример →</a>
+            </div>
+            <div class="portfolio-card">
+                <h3>Одностраничник для услуги</h3>
+                <p>Лендинг для нишевой услуги с акцентом на выгоды, социальное доказательство и понятное УТП.</p>
+                <a href="#" target="_blank" rel="noopener noreferrer">Смотреть пример →</a>
+            </div>
+            <div class="portfolio-card">
+                <h3>Статьи и экспертный контент</h3>
+                <p>Подборка материалов для блога и рассылки: объясняем продукт и снимаем сомнения у читателя.</p>
+                <a href="#" target="_blank" rel="noopener noreferrer">Смотреть пример →</a>
+            </div>
+        </div>
+    </div>
+</section>
 
-  <div class="footer-glow"></div>
+<!-- =========================
+     PHILOSOPHY
+========================= -->
+<section class="philosophy">
+    <div class="container">
+        <div class="section-header">
+            <h2>Моя философия</h2>
+            <p>Как я подхожу к работе с текстами и проектами.</p>
+        </div>
+        <div class="philosophy-grid">
+            <div class="philosophy-item">
+                <div class="philosophy-icon">🎯</div>
+                <h3>Результат, а не красивость</h3>
+                <p>Тексты должны помогать бизнесу: приводить клиентов, объяснять продукт, поддерживать продажи.</p>
+            </div>
+            <div class="philosophy-item">
+                <div class="philosophy-icon">📝</div>
+                <h3>Ясность в каждом слове</h3>
+                <p>Без воды, без перегруза, без сложных конструкций. Простые фразы, понятные людям.</p>
+            </div>
+            <div class="philosophy-item">
+                <div class="philosophy-icon">⚡</div>
+                <h3>Быстро и аккуратно</h3>
+                <p>Сроки держу, на связь выхожу вовремя, правки вношу без лишней драмы и споров.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-  <footer>
-    <p style="margin:0; font-family: Orbitron, sans-serif;">© 2025 Константин Бондаренко — Копирайтер</p>
-  </footer>
+<!-- =========================
+     FAQ
+========================= -->
+<section class="faq">
+    <div class="container">
+        <div class="section-header">
+            <h2>Частые вопросы</h2>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Сколько времени занимает работа над текстом?</div>
+            <div class="faq-a">Обычно 3–5 дней, в зависимости от объёма и сложности задачи. Сроки фиксируем до старта.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Можно ли вернуть деньги, если текст не подойдёт?</div>
+            <div class="faq-a">Да. Если после правок формат вам не подходит, я возвращаю оплату.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Вы только пишете текст или помогаете со структурой?</div>
+            <div class="faq-a">В большинстве случаев мы сначала обсуждаем структуру и логику, а потом я пишу текст под эту структуру.</div>
+        </div>
+    </div>
+</section>
 
-  <!-- Скрипты (в самом конце) -->
-  <script>
-    // reveal для общих блоков
-    window.addEventListener('load', () => {
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
-      }, { threshold: 0.12 });
-      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+<!-- =========================
+     BLOG (заглушка)
+========================= -->
+<section class="blog" id="blog">
+    <div class="container">
+        <div class="section-header">
+            <h2>Блог</h2>
+            <p class="blog-placeholder">
+                Здесь будут статьи о текстах, структуре лендингов и работе с контентом. Раздел в разработке.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- =========================
+     FOOTER / CONTACTS
+========================= -->
+<footer id="contacts">
+    <div class="container">
+        <div class="footer-inner">
+            <div>
+                <strong>Константин Бондаренко</strong><br>
+                Копирайтер
+            </div>
+            <div class="footer-links">
+                <a href="https://wa.me/79531509213" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                <a href="https://t.me/whity14" target="_blank" rel="noopener noreferrer">Telegram</a>
+                <a href="mailto:byxapckuu@gmail.com">byxapckuu@gmail.com</a>
+                <a href="tel:+79531509213">+7 (953) 150-92-13</a>
+            </div>
+            <div class="footer-copy">
+                © 2025 · Все права защищены.
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Простое управление мобильным меню
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    hamburger.addEventListener('click', () => {
+        mobileNav.classList.toggle('open');
     });
 
-    // reveal для карточек портфолио
-    (function () {
-      const cards = document.querySelectorAll('.portfolio-card');
-      function onScroll() {
-        const wh = window.innerHeight, offset = 120;
-        cards.forEach(el => {
-          const top = el.getBoundingClientRect().top;
-          if (top < wh - offset) el.classList.add('show'); else el.classList.remove('show');
+    // Закрытие меню по клику на ссылку
+    mobileNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileNav.classList.remove('open');
         });
-      }
-      window.addEventListener('scroll', onScroll);
-      window.addEventListener('load', onScroll);
-    })();
-  </script>
-  <script src="js/telegram.js"></script>
+    });
+</script>
 
-
-<script src="js/analytics.js"></script>
 </body>
 </html>

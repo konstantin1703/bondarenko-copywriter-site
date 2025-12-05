@@ -1,0 +1,22 @@
+{
+  "name": "matomo-integration-pack",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "matomo:auto-goals": "node scripts/matomo_auto_goals.js",
+    "worker:dev": "miniflare cloudflare/worker.js --watch --wrangler-config=cloudflare/wrangler.toml",
+    "worker:deploy": "wrangler deploy",
+    "test:analytics": "node --test tests/analytics.smoke.test.js",
+    "lint": "eslint .",
+    "format": "prettier -w ."
+  },
+  "devDependencies": {
+    "eslint": "^9.11.0",
+    "prettier": "^3.3.3",
+    "node-fetch": "^3.3.2",
+    "@cloudflare/workers-types": "^4.20240512.0",
+    "undici": "^6.19.8"
+  },
+  "dependencies": {}
+}

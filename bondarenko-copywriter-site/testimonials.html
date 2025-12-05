@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Отзывы — Константин Бондаренко</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.4/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- Matomo init (auto-injected) -->
+  <script>
+    window.MATOMO_BASE_URL = window.MATOMO_BASE_URL || "{{MATOMO_URL}}/";
+    window.MATOMO_SITE_ID = window.MATOMO_SITE_ID || "{{MATOMO_SITE_ID}}";
+  </script>
+  <script src="src/analytics/init-matomo.js"></script>
+</head>
+<body class="bg-slate-950 text-white">
+  <main id="main" class="max-w-4xl mx-auto px-6 py-10 space-y-8">
+    <header class="space-y-2">
+      <h1 class="text-4xl font-bold">Отзывы</h1>
+      <p id="reviews-summary" class="text-slate-300"></p>
+    </header>
+    <section class="grid gap-4" id="reviews-list"></section>
+    <section class="max-w-2xl p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+      <h2 class="text-2xl font-bold mb-4">Оставить отзыв</h2>
+      <form id="review-form" class="space-y-4">
+        <input type="text" name="name" placeholder="Ваше имя" required class="w-full px-4 py-3 rounded-xl bg-gray-800 text-white placeholder-gray-400">
+        <input type="email" name="email" placeholder="E-mail" required class="w-full px-4 py-3 rounded-xl bg-gray-800 text-white placeholder-gray-400">
+        <div>
+          <label class="block mb-2">Оценка</label>
+          <select name="rating" class="w-full px-4 py-3 rounded-xl bg-gray-800 text-white">
+            <option value="5">5 — Отлично</option>
+            <option value="4">4 — Хорошо</option>
+            <option value="3">3 — Нормально</option>
+            <option value="2">2 — Плохо</option>
+            <option value="1">1 — Очень плохо</option>
+          </select>
+        </div>
+        <textarea name="message" placeholder="Ваш отзыв" required class="w-full px-4 py-3 rounded-xl bg-gray-800 text-white placeholder-gray-400"></textarea>
+        <button type="submit" class="px-6 py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400">Отправить</button>
+        <p id="review-status" class="text-sm text-slate-400 mt-2"></p>
+      </form>
+    </section>
+  </main>
+  <script src="https://konstantin1703.github.io/bondarenko-copywriter-site/js/config.js"></script>
+  <script src="https://konstantin1703.github.io/bondarenko-copywriter-site/js/telegram.js"></script>
+  <script src="https://konstantin1703.github.io/bondarenko-copywriter-site/js/reviews.js"></script>
+  <script src="https://konstantin1703.github.io/bondarenko-copywriter-site/js/review-form.js"></script>
+
+<script src="js/analytics.js"></script>
+</body>
+</html>

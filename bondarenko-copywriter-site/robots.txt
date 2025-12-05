@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://konstantin1703.github.io/bondarenko-copywriter-site/sitemap.xml

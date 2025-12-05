@@ -5,6 +5,14 @@
     <title>Константин Бондаренко — копирайтер</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Константин Бондаренко — копирайтер. Лендинги, статьи, описания услуг, которые приводят клиентов.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Константин Бондаренко — копирайтер">
+    <meta property="og:description" content="Пишу тексты, которые приносят клиентов. Лендинги, статьи, email, описания товаров, рерайт, контент для соцсетей.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://konstantin1703.github.io/bondarenko-copywriter-site/">
+    <meta property="og:image" content="https://konstantin1703.github.io/bondarenko-copywriter-site/og-image.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -171,6 +179,25 @@
             transform: translateY(-1px);
         }
 
+        .btn-link {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin-top: 8px;
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-link:hover {
+            color: var(--accent-hover);
+        }
+
         /* Hamburger (mobile) */
         .hamburger {
             display: none;
@@ -213,11 +240,15 @@
         ---------------------- */
 
         .hero {
+            position: relative;
+            overflow: hidden;
             background: linear-gradient(135deg, #F8FAFC 0%, #F0F9FF 100%);
             padding: 120px 0;
         }
 
         .hero-inner {
+            position: relative;
+            z-index: 1;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
@@ -251,6 +282,34 @@
             font-size: 15px;
             color: var(--text-secondary);
             margin-bottom: 32px;
+        }
+
+        /* Falling letters background */
+        .falling-letters {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .falling-letter {
+            position: absolute;
+            top: -10%;
+            color: var(--text-primary);
+            opacity: 0.1;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            animation: fallingLetter 25s linear infinite;
+            user-select: none;
+        }
+
+        @keyframes fallingLetter {
+            0% {
+                transform: translateY(-10%);
+            }
+            100% {
+                transform: translateY(120%);
+            }
         }
 
         /* ----------------------
@@ -313,11 +372,30 @@
             background-color: #FFFFFF;
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 32px;
+            padding: 24px 24px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 200px;
         }
 
         .service-card p {
             color: var(--text-secondary);
+        }
+
+        .service-price {
+            margin-top: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .service-card-footer {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
         }
 
         /* ----------------------
@@ -459,13 +537,136 @@
         }
 
         /* ----------------------
+           MODAL
+        ---------------------- */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            z-index: 100;
+        }
+
+        .modal-overlay.visible {
+            display: flex;
+        }
+
+        .modal {
+            background: #FFFFFF;
+            border-radius: 12px;
+            max-width: 480px;
+            width: 100%;
+            padding: 28px 24px 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            position: relative;
+            animation: modalFade 0.25s ease-out;
+        }
+
+        @keyframes modalFade {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .modal h2 {
+            margin-bottom: 8px;
+        }
+
+        .modal-subtitle {
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .modal-contacts {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .modal-icon-btn {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            background: #F9FAFB;
+        }
+
+        .modal-icon-btn:hover {
+            background: #EFF6FF;
+            border-color: var(--accent);
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .modal-form label {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .modal-form input,
+        .modal-form textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        .modal-form textarea {
+            min-height: 80px;
+        }
+
+        .modal-form .btn-primary {
+            margin-top: 8px;
+            width: 100%;
+        }
+
+        /* ----------------------
            ADAPTIVE
         ---------------------- */
 
         @media (max-width: 1024px) {
             .guarantee-grid,
-            .services-grid,
             .philosophy-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .services-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
@@ -517,6 +718,10 @@
                 width: 100%;
                 max-width: 200px;
             }
+
+            .falling-letters {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -548,7 +753,7 @@
                 <div class="phone">
                     <a href="tel:+79531509213" style="color: inherit;">+7 (953) 150-92-13</a>
                 </div>
-                <a href="#contacts" class="btn btn-primary">Заказать звонок</a>
+                <a href="#" class="btn btn-primary open-modal">Заказать звонок</a>
             </div>
 
             <div class="hamburger" id="hamburger">
@@ -579,6 +784,7 @@
      HERO
 ========================= -->
 <section class="hero">
+    <div class="falling-letters" id="fallingLetters"></div>
     <div class="container">
         <div class="hero-inner">
             <div class="hero-subtitle">КОНСТАНТИН БОНДАРЕНКО</div>
@@ -588,7 +794,7 @@
             <p class="hero-text">
                 Помогаю бизнесу объяснить продукт простым языком и аккуратно довести читателя до заявки — без лишнего шума и «креативности ради креативности».
             </p>
-            <a href="#contacts" class="btn btn-primary">Заказать консультацию</a>
+            <a href="#" class="btn btn-primary open-modal">Заказать консультацию</a>
         </div>
     </div>
 </section>
@@ -633,16 +839,80 @@
         </div>
         <div class="services-grid">
             <div class="service-card">
-                <h3>Лендинг-копирайт</h3>
-                <p>Пишу продающие тексты для посадочных страниц: от структуры блоков до финальных формулировок.</p>
+                <div>
+                    <h3>Лендинг-копирайт</h3>
+                    <p>Пишу продающие тексты для посадочных страниц: от структуры блоков до финальных формулировок, которые приводят клиентов.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 5 000 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
             </div>
+
             <div class="service-card">
-                <h3>Статьи и контент</h3>
-                <p>Структурирую идеи и опыт в аккуратные тексты: статьи, полезные материалы, контент для блога.</p>
+                <div>
+                    <h3>Email-рассылка</h3>
+                    <p>Создаю цепочки писем, автоворонки и коммерческие письма, которые люди открывают и читают до конца.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 2 500 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
             </div>
+
             <div class="service-card">
-                <h3>Редактура и доработка</h3>
-                <p>Улучшаю уже написанный текст: чистка воды, логика, акценты, ясность и читабельность.</p>
+                <div>
+                    <h3>Статьи и контент</h3>
+                    <p>Структурирую идеи и опыт в аккуратные тексты: статьи, полезные материалы, контент для блога.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 3 000 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <h3>Описания товаров/услуг</h3>
+                    <p>Пишу ясные описания для маркетплейсов, каталогов и сайтов — чтобы люди сразу поняли ценность.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 1 000 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <h3>Рерайт текстов</h3>
+                    <p>Переписываю текст с сохранением смысла, но с новым стилем, ясностью и ударными фразами.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 2 000 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <h3>Копирайт для соцсетей</h3>
+                    <p>Создаю посты, описания и сценарии для Instagram, TikTok, YouTube — контент, который люди лайкают и шерят.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 2 000 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <h3>Редактура и доработка</h3>
+                    <p>Улучшаю уже написанный текст: чистка воды, логика, акценты, ясность и читабельность.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 1 500 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
             </div>
         </div>
     </div>
@@ -766,21 +1036,122 @@
     </div>
 </footer>
 
+<!-- =========================
+     MODAL
+========================= -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="modal-close" id="modalClose" aria-label="Закрыть окно">&times;</button>
+        <h2 id="modalTitle">Обсудим вашу задачу</h2>
+        <p class="modal-subtitle">Выберите удобный способ связи:</p>
+
+        <div class="modal-contacts">
+            <a class="modal-icon-btn" href="https://wa.me/79531509213" target="_blank" rel="noopener noreferrer">
+                WhatsApp
+            </a>
+            <a class="modal-icon-btn" href="https://t.me/whity14" target="_blank" rel="noopener noreferrer">
+                Telegram
+            </a>
+        </div>
+
+        <form class="modal-form" id="modalForm" action="mailto:byxapckuu@gmail.com" method="POST" enctype="text/plain">
+            <div>
+                <label for="nameInput">Ваше имя *</label>
+                <input id="nameInput" name="Имя" type="text" required>
+            </div>
+            <div>
+                <label for="contactInput">WhatsApp или Telegram *</label>
+                <input id="contactInput" name="Контакт" type="text" required>
+            </div>
+            <div>
+                <label for="projectInput">Расскажите коротко о проекте</label>
+                <textarea id="projectInput" name="Проект"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Отправить заявку</button>
+        </form>
+    </div>
+</div>
+
 <script>
-    // Простое управление мобильным меню
+    // =========================
+    // Mobile menu
+    // =========================
     const hamburger = document.getElementById('hamburger');
     const mobileNav = document.getElementById('mobileNav');
 
-    hamburger.addEventListener('click', () => {
-        mobileNav.classList.toggle('open');
+    if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', () => {
+            mobileNav.classList.toggle('open');
+        });
+
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('open');
+            });
+        });
+    }
+
+    // =========================
+    // Modal controls
+    // =========================
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+    const openModalButtons = document.querySelectorAll('.open-modal');
+
+    function openModal(event) {
+        if (event) event.preventDefault();
+        if (modalOverlay) {
+            modalOverlay.classList.add('visible');
+        }
+    }
+
+    function closeModal() {
+        if (modalOverlay) {
+            modalOverlay.classList.remove('visible');
+        }
+    }
+
+    openModalButtons.forEach(btn => {
+        btn.addEventListener('click', openModal);
     });
 
-    // Закрытие меню по клику на ссылку
-    mobileNav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            mobileNav.classList.remove('open');
+    if (modalClose) {
+        modalClose.addEventListener('click', closeModal);
+    }
+
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
         });
-    });
+    }
+
+    // =========================
+    // Falling letters (desktop / tablet only)
+    // =========================
+    const lettersContainer = document.getElementById('fallingLetters');
+
+    if (lettersContainer && window.matchMedia('(min-width: 769px)').matches) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const count = 24;
+
+        for (let i = 0; i < count; i++) {
+            const span = document.createElement('span');
+            span.className = 'falling-letter';
+            span.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
+
+            const left = Math.random() * 100;
+            const fontSize = 20 + Math.random() * 60;
+            const delay = Math.random() * 5;
+
+            span.style.left = left + '%';
+            span.style.fontSize = fontSize + 'px';
+            span.style.animationDelay = delay + 's';
+
+            lettersContainer.appendChild(span);
+        }
+    }
 </script>
 
 </body>

@@ -546,7 +546,6 @@
             letter-spacing: 2px;
             user-select: none;
             line-height: 1;
-            /* finite анимация: 3 цикла вместо infinite */
             animation: floatLetter 18s linear 3;
         }
 
@@ -1170,7 +1169,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 769px)').matches) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const count = 24; // было 80, оптимизировали
+        const count = 24; // оптимизировано, было 80
 
         for (let i = 0; i < count; i++) {
             const span = document.createElement('span');

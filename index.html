@@ -546,7 +546,8 @@
             letter-spacing: 2px;
             user-select: none;
             line-height: 1;
-            animation: floatLetter 18s linear infinite;
+            /* finite анимация: 3 цикла вместо infinite */
+            animation: floatLetter 18s linear 3;
         }
 
         @keyframes floatLetter {
@@ -579,7 +580,7 @@
             justify-content: center;
             align-items: center;
             padding: 16px;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .modal-overlay.visible {
@@ -632,39 +633,14 @@
         .modal-contacts {
             display: flex;
             gap: 16px;
-            margin-bottom: 20px;
+            margin-bottom: 8px;
         }
 
-        .modal-form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 4px;
-        }
-
-        .modal-form label {
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        .modal-form input,
-        .modal-form textarea {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            font-family: inherit;
-            font-size: 14px;
-            resize: vertical;
-        }
-
-        .modal-form textarea {
-            min-height: 80px;
-        }
-
-        .modal-form .btn-primary {
+        .modal-note {
             margin-top: 8px;
-            width: 100%;
+            margin-bottom: 4px;
+            font-size: 13px;
+            color: var(--text-secondary);
         }
 
         /* ----------------------
@@ -1109,25 +1085,14 @@
             <a class="circle-messenger circle-telegram" href="https://t.me/whity14" target="_blank" rel="noopener noreferrer" aria-label="Telegram"></a>
         </div>
 
-        <form class="modal-form" id="modalForm" action="mailto:byxapckuu@gmail.com" method="POST" enctype="text/plain">
-            <div>
-                <label for="nameInput">Ваше имя *</label>
-                <input id="nameInput" name="Имя" type="text" required>
-            </div>
-            <div>
-                <label for="contactInput">WhatsApp или Telegram *</label>
-                <input id="contactInput" name="Контакт" type="text" required>
-            </div>
-            <div>
-                <label for="projectInput">Расскажите коротко о проекте</label>
-                <textarea id="projectInput" name="Проект"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Отправить заявку</button>
-        </form>
+        <p class="modal-note">
+            Напишите в удобный мессенджер — отвечу и уточню задачу.
+        </p>
     </div>
 </div>
 
 <script>
+document.addEventListener('DOMContentLoaded', function () {
     // =========================
     // Mobile menu
     // =========================
@@ -1135,12 +1100,13 @@
     const mobileNav = document.getElementById('mobileNav');
 
     if (hamburger && mobileNav) {
-        hamburger.addEventListener('click', () => {
+        hamburger.addEventListener('click', function () {
             mobileNav.classList.toggle('open');
         });
 
-        mobileNav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
+        const mobileLinks = mobileNav.querySelectorAll('a');
+        mobileLinks.forEach(function (link) {
+            link.addEventListener('click', function () {
                 mobileNav.classList.remove('open');
             });
         });
@@ -1155,58 +1121,65 @@
 
     function openModal(event) {
         if (event) event.preventDefault();
-        if (modalOverlay) {
-            modalOverlay.classList.add('visible');
-            document.body.classList.add('modal-open');
-        }
+        if (!modalOverlay) return;
+
+        modalOverlay.classList.add('visible');
+        document.body.classList.add('modal-open');
     }
 
     function closeModal() {
-        if (modalOverlay) {
-            modalOverlay.classList.remove('visible');
-            document.body.classList.remove('modal-open');
-        }
+        if (!modalOverlay) return;
+
+        modalOverlay.classList.remove('visible');
+        document.body.classList.remove('modal-open');
     }
 
-    openModalButtons.forEach(btn => {
-        btn.addEventListener('click', openModal);
-    });
+    if (openModalButtons && openModalButtons.length > 0) {
+        openModalButtons.forEach(function (btn) {
+            btn.addEventListener('click', openModal);
+        });
+    }
 
     if (modalClose) {
-        modalClose.addEventListener('click', closeModal);
+        modalClose.addEventListener('click', function (e) {
+            e.preventDefault();
+            closeModal();
+        });
     }
 
     if (modalOverlay) {
-        modalOverlay.addEventListener('click', (e) => {
+        modalOverlay.addEventListener('click', function (e) {
             if (e.target === modalOverlay) {
                 closeModal();
             }
         });
     }
 
-    // Закрытие по ESC
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modalOverlay && modalOverlay.classList.contains('visible')) {
-            closeModal();
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.key === 'Esc') {
+            if (modalOverlay && modalOverlay.classList.contains('visible')) {
+                closeModal();
+            }
         }
     });
 
     // =========================
-    // Floating letters layer (по всему сайту)
+    // Floating letters layer (по всему сайту, только desktop/tablet)
     // =========================
     const lettersLayer = document.getElementById('lettersLayer');
 
-    if (lettersLayer && window.matchMedia('(min-width: 769px)').matches) {
+    if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 769px)').matches) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const count = 80;
+        const count = 24; // было 80, оптимизировали
 
         for (let i = 0; i < count; i++) {
             const span = document.createElement('span');
             span.className = 'floating-letter';
             span.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
 
-            const left = Math.random() * 100;
-            const top = Math.random() * 100;
+            const left = 5 + Math.random() * 90;  // 5–95%, чтобы не упирались в края
+            const top = 5 + Math.random() * 90;
+
             const fontSize = 8 + Math.random() * 18;
             const delay = Math.random() * 20;
 
@@ -1218,6 +1191,7 @@
             lettersLayer.appendChild(span);
         }
     }
+});
 </script>
 
 </body>

@@ -13,17 +13,17 @@
     <meta property="og:url" content="https://konstantin1703.github.io/bondarenko-copywriter-site/">
     <meta property="og:image" content="https://konstantin1703.github.io/bondarenko-copywriter-site/og-image.png">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg-primary: #F8FAFC;
-            --bg-white: #FFFFFF;
-            --text-primary: #1F2937;
-            --text-secondary: #6B7280;
-            --accent: #2563EB;
-            --accent-hover: #1D4ED8;
-            --border: #E5E7EB;
+            --bg-primary: #F8FAFC;      /* Основной фон */
+            --bg-white: #FFFFFF;        /* Белый */
+            --text-primary: #1F2937;    /* Основной текст */
+            --text-secondary: #6B7280;  /* Вторичный текст */
+            --accent: #2563EB;          /* Синий (кнопки, ссылки) */
+            --accent-hover: #1D4ED8;    /* Синий (hover) */
+            --border: #E5E7EB;          /* Разделители */
         }
 
         * {
@@ -147,27 +147,7 @@
         .header-links {
             display: flex;
             align-items: center;
-            gap: 12px;
-        }
-
-        .header-links a {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            color: var(--accent);
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-
-        .header-links a:hover {
-            color: var(--accent-hover);
-        }
-
-        .header-links a svg {
-            width: 18px;
-            height: 18px;
-            display: inline-block;
-            vertical-align: middle;
+            gap: 10px;
         }
 
         .phone {
@@ -302,40 +282,6 @@
             font-size: 15px;
             color: var(--text-secondary);
             margin-bottom: 32px;
-        }
-
-        /* Falling letters background */
-        .falling-letters {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .falling-letter {
-            position: absolute;
-            top: -10%;
-            color: var(--text-primary);
-            opacity: 0.1;
-            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            font-weight: 700;
-            animation: fallingLetter 25s linear infinite;
-            user-select: none;
-        }
-
-        @keyframes fallingLetter {
-            0% {
-                transform: translateY(-10%);
-                opacity: 0.1;
-            }
-            50% {
-                opacity: 0.1;
-            }
-            100% {
-                transform: translateY(120%);
-                opacity: 0;
-            }
         }
 
         /* ----------------------
@@ -513,7 +459,7 @@
         }
 
         /* ----------------------
-           BLOG
+           BLOG (заглушка)
         ---------------------- */
 
         .blog {
@@ -560,6 +506,54 @@
         .footer-copy {
             color: #9CA3AF;
             font-size: 13px;
+        }
+
+        /* ----------------------
+           LETTERS LAYER (облако букв)
+        ---------------------- */
+
+        .letters-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* Весь основной контент выше слоя букв */
+        body > *:not(.letters-layer) {
+            position: relative;
+            z-index: 1;
+        }
+
+        .floating-letter {
+            position: absolute;
+            color: var(--text-primary);
+            opacity: 0.05;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-weight: 300;
+            letter-spacing: 2px;
+            user-select: none;
+            line-height: 1;
+            animation: floatLetter 18s linear infinite;
+        }
+
+        @keyframes floatLetter {
+            0% {
+                transform: translate3d(0, 0, 0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.07;
+            }
+            50% {
+                transform: translate3d(40px, -30px, 0) rotate(120deg);
+                opacity: 0.09;
+            }
+            100% {
+                transform: translate3d(-40px, 30px, 0) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         /* ----------------------
@@ -626,39 +620,8 @@
 
         .modal-contacts {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             margin-bottom: 20px;
-        }
-
-        .modal-icon-btn {
-            flex: 1;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 10px 12px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-primary);
-            background: #F9FAFB;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .modal-icon-btn:hover {
-            background: #EFF6FF;
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        .modal-icon-btn svg {
-            width: 18px;
-            height: 18px;
-            color: var(--accent);
-            flex-shrink: 0;
         }
 
         .modal-form {
@@ -691,6 +654,55 @@
         .modal-form .btn-primary {
             margin-top: 8px;
             width: 100%;
+        }
+
+        /* ----------------------
+           ICON / MESSENGER STYLES
+        ---------------------- */
+
+        .circle-messenger {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+
+        .circle-messenger::before {
+            content: '';
+            display: block;
+            width: 70%;
+            height: 70%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .circle-whatsapp {
+            background-color: #25D366;
+        }
+
+        .circle-whatsapp::before {
+            background-image: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg');
+            filter: invert(1);
+        }
+
+        .circle-telegram {
+            background-color: #0088cc;
+        }
+
+        .circle-telegram::before {
+            background-image: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg');
+            filter: invert(1);
+        }
+
+        .circle-messenger:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
         }
 
         /* ----------------------
@@ -756,7 +768,7 @@
                 max-width: 200px;
             }
 
-            .falling-letters {
+            .letters-layer {
                 display: none;
             }
         }
@@ -764,9 +776,6 @@
 </head>
 <body>
 
-<!-- =========================
-     HEADER + NAV
-========================= -->
 <header>
     <div class="container">
         <div class="header-inner">
@@ -784,14 +793,8 @@
 
             <div class="header-right">
                 <div class="header-links">
-                    <a href="https://wa.me/79531509213" target="_blank" rel="noopener noreferrer" title="WhatsApp">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-5.031 1.378l-.361.214-3.741-.982.998 3.645-.235.374a9.86 9.86 0 001.341 15.298 9.86 9.86 0 001.341-9.868l-.184-.287-3.724.961.231.364a8.254 8.254 0 01.428 5.649 8.247 8.247 0 11-8.98-8.736z"/></svg>
-                        WhatsApp
-                    </a>
-                    <a href="https://t.me/whity14" target="_blank" rel="noopener noreferrer" title="Telegram">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295-.04 0-.082-.003-.12-.01l.214-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.207-.659-.643.135-.953l11.566-4.458c.54-.196 1.011.129.84.951z"/></svg>
-                        Telegram
-                    </a>
+                    <a href="https://wa.me/79531509213" class="circle-messenger circle-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"></a>
+                    <a href="https://t.me/whity14" class="circle-messenger circle-telegram" target="_blank" rel="noopener noreferrer" aria-label="Telegram"></a>
                 </div>
                 <div class="phone">
                     <a href="tel:+79531509213" style="color: inherit;">+7 (953) 150-92-13</a>
@@ -823,11 +826,13 @@
     </div>
 </header>
 
+<!-- Общий слой с плавающими буквами -->
+<div class="letters-layer" id="lettersLayer"></div>
+
 <!-- =========================
      HERO
 ========================= -->
 <section class="hero">
-    <div class="falling-letters" id="fallingLetters"></div>
     <div class="container">
         <div class="hero-inner">
             <div class="hero-subtitle">КОНСТАНТИН БОНДАРЕНКО</div>
@@ -1043,7 +1048,7 @@
 </section>
 
 <!-- =========================
-     BLOG
+     BLOG (заглушка)
 ========================= -->
 <section class="blog" id="blog">
     <div class="container">
@@ -1057,7 +1062,7 @@
 </section>
 
 <!-- =========================
-     FOOTER
+     FOOTER / CONTACTS
 ========================= -->
 <footer id="contacts">
     <div class="container">
@@ -1089,14 +1094,8 @@
         <p class="modal-subtitle">Выберите удобный способ связи:</p>
 
         <div class="modal-contacts">
-            <a class="modal-icon-btn" href="https://wa.me/79531509213" target="_blank" rel="noopener noreferrer" title="WhatsApp">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-5.031 1.378l-.361.214-3.741-.982.998 3.645-.235.374a9.86 9.86 0 001.341 15.298 9.86 9.86 0 001.341-9.868l-.184-.287-3.724.961.231.364a8.254 8.254 0 01.428 5.649 8.247 8.247 0 11-8.98-8.736z"/></svg>
-                WhatsApp
-            </a>
-            <a class="modal-icon-btn" href="https://t.me/whity14" target="_blank" rel="noopener noreferrer" title="Telegram">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295-.04 0-.082-.003-.12-.01l.214-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.207-.659-.643.135-.953l11.566-4.458c.54-.196 1.011.129.84.951z"/></svg>
-                Telegram
-            </a>
+            <a class="circle-messenger circle-whatsapp" href="https://wa.me/79531509213" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"></a>
+            <a class="circle-messenger circle-telegram" href="https://t.me/whity14" target="_blank" rel="noopener noreferrer" aria-label="Telegram"></a>
         </div>
 
         <form class="modal-form" id="modalForm" action="mailto:byxapckuu@gmail.com" method="POST" enctype="text/plain">
@@ -1173,28 +1172,30 @@
     }
 
     // =========================
-    // Falling letters (desktop / tablet only)
+    // Floating letters layer (desktop / tablet only, по всему сайту)
     // =========================
-    const lettersContainer = document.getElementById('fallingLetters');
+    const lettersLayer = document.getElementById('lettersLayer');
 
-    if (lettersContainer && window.matchMedia('(min-width: 769px)').matches) {
+    if (lettersLayer && window.matchMedia('(min-width: 769px)').matches) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const count = 24;
+        const count = 80;
 
         for (let i = 0; i < count; i++) {
             const span = document.createElement('span');
-            span.className = 'falling-letter';
+            span.className = 'floating-letter';
             span.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
 
             const left = Math.random() * 100;
-            const fontSize = 20 + Math.random() * 60;
-            const delay = Math.random() * 5;
+            const top = Math.random() * 100;
+            const fontSize = 8 + Math.random() * 18;
+            const delay = Math.random() * 20;
 
             span.style.left = left + '%';
+            span.style.top = top + '%';
             span.style.fontSize = fontSize + 'px';
             span.style.animationDelay = delay + 's';
 
-            lettersContainer.appendChild(span);
+            lettersLayer.appendChild(span);
         }
     }
 </script>

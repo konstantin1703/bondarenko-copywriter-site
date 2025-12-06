@@ -38,6 +38,11 @@
             line-height: 1.6;
         }
 
+        /* Блокировка скролла при открытой модалке */
+        body.modal-open {
+            overflow: hidden;
+        }
+
         a {
             color: var(--accent);
             text-decoration: none;
@@ -574,7 +579,7 @@
             justify-content: center;
             align-items: center;
             padding: 16px;
-            z-index: 999;
+            z-index: 100;
         }
 
         .modal-overlay.visible {
@@ -589,17 +594,17 @@
             padding: 28px 24px 24px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
             position: relative;
-            animation: modalFade 0.3s ease-out forwards;
+            animation: modalFade 0.25s ease-out;
         }
 
         @keyframes modalFade {
             0% {
                 opacity: 0;
-                transform: translateY(20px) scale(0.95);
+                transform: translateY(10px);
             }
             100% {
                 opacity: 1;
-                transform: translateY(0) scale(1);
+                transform: translateY(0);
             }
         }
 
@@ -612,10 +617,6 @@
             font-size: 20px;
             cursor: pointer;
             color: var(--text-secondary);
-        }
-
-        .modal-close:hover {
-            color: var(--text-primary);
         }
 
         .modal h2 {
@@ -713,14 +714,6 @@
         .circle-messenger:hover {
             transform: translateY(-1px);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
-        }
-
-        /* ----------------------
-           BODY MODAL OPEN STATE
-        ---------------------- */
-
-        body.modal-open {
-            overflow: hidden;
         }
 
         /* ----------------------
@@ -1154,7 +1147,7 @@
     }
 
     // =========================
-    // Modal controls (FIXED)
+    // Modal controls
     // =========================
     const modalOverlay = document.getElementById('modalOverlay');
     const modalClose = document.getElementById('modalClose');
@@ -1191,7 +1184,7 @@
         });
     }
 
-    // Закрыть модалку на ESC
+    // Закрытие по ESC
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modalOverlay && modalOverlay.classList.contains('visible')) {
             closeModal();
@@ -1199,11 +1192,11 @@
     });
 
     // =========================
-    // Floating letters layer (desktop / tablet only, по всему сайту)
+    // Floating letters layer (по всему сайту)
     // =========================
     const lettersLayer = document.getElementById('lettersLayer');
 
-    if (lettersLayer) {
+    if (lettersLayer && window.matchMedia('(min-width: 769px)').matches) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         const count = 80;
 

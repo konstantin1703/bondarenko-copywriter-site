@@ -531,8 +531,8 @@
             overflow: hidden;
         }
 
-        /* Весь основной контент выше слоя букв */
-        body > *:not(.letters-layer) {
+        /* FIX #1: Весь основной контент выше слоя букв, но не перекрываем модалку */
+        body > *:not(.letters-layer):not(.modal-overlay) {
             position: relative;
             z-index: 1;
         }
@@ -1116,7 +1116,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // =========================
     const modalOverlay = document.getElementById('modalOverlay');
     const modalClose = document.getElementById('modalClose');
-    const openModalButtons = document.querySelectorAll('.open-modal');
 
     function openModal(event) {
         if (event) event.preventDefault();
@@ -1133,11 +1132,17 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.classList.remove('modal-open');
     }
 
-    if (openModalButtons && openModalButtons.length > 0) {
-        openModalButtons.forEach(function (btn) {
-            btn.addEventListener('click', openModal);
-        });
-    }
+    /*
+      FIX #2: Надёжное открытие модалки.
+      Теперь модалка откроется даже если клик был по иконке/внутреннему элементу внутри кнопки .open-modal
+      (после добавления иконок это и ломалось).
+    */
+    document.addEventListener('click', function (e) {
+        const trigger = e.target.closest('.open-modal');
+        if (!trigger) return;
+
+        openModal(e);
+    });
 
     if (modalClose) {
         modalClose.addEventListener('click', function (e) {

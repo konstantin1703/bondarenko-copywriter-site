@@ -579,7 +579,7 @@
             justify-content: center;
             align-items: center;
             padding: 16px;
-            z-index: 1100; /* 1000+ как в ТЗ */
+            z-index: 1100; /* 1000+ */
         }
 
         .modal-overlay.visible {
@@ -622,7 +622,7 @@
 
         .modal h2 {
             margin: 0 0 12px;
-            font-size: 20px; /* 18–20px как в ТЗ */
+            font-size: 20px;
             font-weight: 700;
         }
 
@@ -852,7 +852,7 @@
                 display: none;
             }
 
-            /* Модалка: max-width 90% на маленьких экранах (как в ТЗ) */
+            /* Модалка: max-width 90% на маленьких экранах */
             .modal {
                 max-width: 90%;
             }
@@ -1258,10 +1258,8 @@ document.addEventListener('DOMContentLoaded', function () {
         modalOverlay.classList.add('visible');
         document.body.classList.add('modal-open');
 
-        // Сброс сообщения при открытии
         clearMessage();
 
-        // Фокус в первое поле (удобно и по-человечески)
         const firstField = document.getElementById('name');
         if (firstField) {
             setTimeout(function () { firstField.focus(); }, 0);
@@ -1278,7 +1276,6 @@ document.addEventListener('DOMContentLoaded', function () {
     /*
       FIX #2: Надёжное открытие модалки.
       Теперь модалка откроется даже если клик был по иконке/внутреннему элементу внутри кнопки .open-modal
-      (после добавления иконок это и ломалось).
     */
     document.addEventListener('click', function (e) {
         const trigger = e.target.closest('.open-modal');
@@ -1311,8 +1308,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // =========================
-    // Form submit (mailto)
+    // Form submit (Telegram Bot)
     // =========================
+
+    // ВСТАВЬ СЮДА СВОИ ДАННЫЕ
+    const telegramToken = '8245410627:AAEcDeQfLBDQhlAHO15ymdGD2yJuoqtJ520' ; // ← вставишь свой TOKEN
+    const chatId = '6135071547' ; // ← вставишь свой chat_id
+
     if (contactForm) {
         contactForm.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -1326,13 +1328,13 @@ document.addEventListener('DOMContentLoaded', function () {
             const email = (emailEl && emailEl.value ? emailEl.value.trim() : '');
             const message = (msgEl && msgEl.value ? msgEl.value.trim() : '');
 
+            // ===== Валидация (оставляем как было) =====
             if (!name) {
                 showMessage('error', 'Ошибка: заполните поле "Ваше имя".');
                 if (nameEl) nameEl.focus();
                 return;
             }
 
-            // Простая проверка email (плюс есть type="email")
             const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
             if (!email || !emailOk) {
                 showMessage('error', 'Ошибка: укажите корректный email.');
@@ -1346,23 +1348,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Отправка через mailto (под GitHub Pages — самый практичный вариант)
-            const to = 'byxapckuu@gmail.com';
-            const subject = 'Заявка с сайта: bondarenko-copywriter-site';
-            const body =
-                'Имя: ' + name + '\n' +
-                'Email: ' + email + '\n\n' +
-                'Сообщение:\n' + message + '\n';
+            // Базовая защита от "забыл вставить токен/айди"
+            if (!telegramToken || telegramToken.includes('ТВОЙ_TOKEN') || !chatId || chatId.includes('ТВОЙ_CHAT_ID')) {
+                showMessage('error', 'Ошибка: не настроены telegramToken / chatId.');
+                return;
+            }
 
-            const mailtoLink =
-                'mailto:' + encodeURIComponent(to) +
-                '?subject=' + encodeURIComponent(subject) +
-                '&body=' + encodeURIComponent(body);
-
-            // Переходим на mailto (откроется почтовый клиент)
-            window.location.href = mailtoLink;
-
-            showMessage('success', 'Готово: откроется почтовое приложение. Если не открылось — напишите в мессенджер ниже.');
+            fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: `📬 Новая заявка!\n👤 Имя: ${name}\n📧 Email: ${email}\n💬 Сообщение: ${message}`
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.ok) {
+                    showMessage('success', 'Заявка отправлена!');
+                    contactForm.reset();
+                } else {
+                    showMessage('error', 'Ошибка отправки');
+                }
+            })
+            .catch(() => {
+                showMessage('error', 'Ошибка соединения');
+            });
         });
     }
 
@@ -1373,14 +1384,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 769px)').matches) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const count = 24; // оптимизировано, было 80
+        const count = 24;
 
         for (let i = 0; i < count; i++) {
             const span = document.createElement('span');
             span.className = 'floating-letter';
             span.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
 
-            const left = 5 + Math.random() * 90;  // 5–95%, чтобы не упирались в края
+            const left = 5 + Math.random() * 90;
             const top = 5 + Math.random() * 90;
 
             const fontSize = 8 + Math.random() * 18;

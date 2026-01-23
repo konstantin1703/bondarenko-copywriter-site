@@ -2,16 +2,14 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Константин Бондаренко — копирайтер</title>
+    <title>Блог — 5 ошибок в копирайтинге, которые убивают конверсию | Константин Бондаренко</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Константин Бондаренко — копирайтер. Пишу тексты для продающих страниц, статьи, email-рассылки и контент для соцсетей, которые приводят клиентов.">
+    <meta name="description" content="Разбор 5 типичных ошибок в продающих текстах: оффер, структура, конкретика, возражения и CTA. Автор: Константин Бондаренко.">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Константин Бондаренко — копирайтер">
-    <meta property="og:description" content="Пишу тексты, которые приводят клиентов: продающие страницы, статьи, email-рассылки, контент для соцсетей, редактура и рерайт.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://konstantin1703.github.io/bondarenko-copywriter-site/">
-    <meta property="og:image" content="https://konstantin1703.github.io/bondarenko-copywriter-site/og-image.png">
+    <meta property="og:title" content="5 ошибок в копирайтинге, которые убивают конверсию">
+    <meta property="og:description" content="Практический разбор: что ломает тексты и как исправить без “магических” обещаний.">
+    <meta property="og:type" content="article">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -36,13 +34,10 @@
             line-height: 1.6;
         }
 
-        /* Блокировка скролла при открытой модалке */
         body.modal-open { overflow: hidden; }
 
         a { color: var(--accent); text-decoration: none; }
         a:hover { color: var(--accent-hover); }
-
-        img { max-width: 100%; display: block; }
 
         h1, h2, h3 {
             margin: 0 0 16px;
@@ -180,23 +175,6 @@
             transform: translateY(-1px);
         }
 
-        .btn-link {
-            background: transparent;
-            border: none;
-            padding: 0;
-            margin-top: 8px;
-            color: var(--accent);
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .btn-link:hover { color: var(--accent-hover); }
-
         /* Hamburger (mobile) */
         .hamburger {
             display: none;
@@ -261,7 +239,7 @@
             position: relative;
             overflow: hidden;
             background: linear-gradient(135deg, #F8FAFC 0%, #F0F9FF 100%);
-            padding: 120px 0;
+            padding: 90px 0 70px;
         }
 
         .hero-inner {
@@ -271,7 +249,7 @@
             flex-direction: column;
             align-items: flex-start;
             text-align: left;
-            max-width: 760px;
+            max-width: 900px;
         }
 
         .hero-subtitle {
@@ -283,20 +261,8 @@
 
         .hero h1 { margin-bottom: 10px; }
 
-        .hero-role {
-            font-size: 22px;
-            font-weight: 500;
-            margin-bottom: 14px;
-        }
-
         .hero-text {
             font-size: 16px;
-            color: var(--text-secondary);
-            margin-bottom: 22px;
-        }
-
-        .hero-tags {
-            font-size: 15px;
             color: var(--text-secondary);
             margin-bottom: 22px;
         }
@@ -308,232 +274,108 @@
         }
 
         /* ----------------------
-           SECTION WRAPPER
+           CONTENT
         ---------------------- */
 
         section { padding: 80px 0; }
 
-        .section-header { margin-bottom: 32px; }
-        .section-header p { color: var(--text-secondary); }
+        .content { background: #FFFFFF; }
 
-        /* ----------------------
-           ABOUT
-        ---------------------- */
-
-        .about { background-color: #FFFFFF; }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1.3fr 0.7fr;
-            gap: 24px;
-            align-items: start;
-        }
-
-        .about-card {
-            background: #FAFBFC;
+        .content-wrap {
+            background: #FFFFFF;
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 22px;
+            padding: 26px;
         }
 
-        .about-list {
-            margin: 0;
+        .post-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 10px 0 18px;
+        }
+
+        .post-meta span {
+            background: #F8FAFC;
+            border: 1px solid rgba(229, 231, 235, 0.7);
+            border-radius: 999px;
+            padding: 6px 10px;
+        }
+
+        .lead {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 18px;
+        }
+
+        .hr {
+            height: 1px;
+            background: var(--border);
+            margin: 18px 0;
+        }
+
+        article h2 {
+            font-size: 24px;
+            margin-top: 22px;
+        }
+
+        article h3 {
+            font-size: 18px;
+            margin-top: 18px;
+        }
+
+        article ul, article ol {
+            margin: 10px 0 14px;
             padding-left: 18px;
             color: var(--text-secondary);
         }
 
-        .about-list li { margin-bottom: 8px; }
+        article li { margin-bottom: 8px; }
 
-        /* ----------------------
-           GUARANTEE
-        ---------------------- */
-
-        .guarantee { background-color: #FFFFFF; }
-
-        .guarantee-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 24px;
-        }
-
-        .guarantee-item {
-            background-color: #FAFBFC;
-            border: 1px solid var(--border);
+        .callout {
+            background: #F8FAFC;
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            border-left: 4px solid rgba(37, 99, 235, 0.7);
             border-radius: 12px;
-            padding: 32px;
-        }
-
-        .guarantee-icon {
-            font-size: 24px;
-            margin-bottom: 12px;
-        }
-
-        /* ----------------------
-           SERVICES
-        ---------------------- */
-
-        .services { background-color: var(--bg-primary); }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 24px;
-        }
-
-        .service-card {
-            background-color: #FFFFFF;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 24px 24px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 210px;
-        }
-
-        .service-card p { color: var(--text-secondary); }
-
-        .service-price {
-            margin-top: 12px;
-            font-size: 14px;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .service-card-footer {
-            margin-top: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-        }
-
-        /* ----------------------
-           CARDS GRID (portfolio/blog)
-        ---------------------- */
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 24px;
-        }
-
-        .card {
-            background-color: #FFFFFF;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            padding: 24px;
-            transition: box-shadow 0.2s ease, transform 0.1s ease;
-            border: 1px solid rgba(229, 231, 235, 0.45);
-        }
-
-        .card:hover {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-            transform: translateY(-4px);
-        }
-
-        .card p { color: var(--text-secondary); }
-
-        .card a {
-            font-size: 14px;
-            font-weight: 600;
-            display: inline-flex;
-            gap: 6px;
-            align-items: center;
-        }
-
-        .card-meta {
-            margin-top: 10px;
-            font-size: 13px;
+            padding: 14px 16px;
+            margin: 14px 0;
             color: var(--text-secondary);
         }
 
-        /* ----------------------
-           PHILOSOPHY
-        ---------------------- */
-
-        .philosophy { background-color: var(--bg-primary); }
-
-        .philosophy-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 24px;
-        }
-
-        .philosophy-item {
-            background-color: #FFFFFF;
-            border-radius: 8px;
-            padding: 28px;
-            border: 1px solid var(--border);
-        }
-
-        .philosophy-icon {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .philosophy-item p { color: var(--text-secondary); }
-
-        /* ----------------------
-           FAQ
-        ---------------------- */
-
-        .faq { background-color: #FFFFFF; }
-
-        .faq-item {
-            border-bottom: 1px solid var(--border);
-            padding: 16px 0;
-        }
-
-        .faq-q { font-weight: 600; margin-bottom: 6px; }
-        .faq-a { color: var(--text-secondary); }
-
-        /* ----------------------
-           CTA / CONTACTS
-        ---------------------- */
-
-        .cta {
-            background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
-        }
-
-        .cta-wrap {
-            border: 1px solid var(--border);
+        .error-card {
             background: #FFFFFF;
-            border-radius: 14px;
-            padding: 28px;
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 18px;
-            align-items: start;
+            border: 1px solid rgba(229, 231, 235, 0.95);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 14px 0;
         }
 
-        .cta-note {
+        .error-card h3 { margin-bottom: 8px; }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .pill {
+            font-size: 12px;
             color: var(--text-secondary);
-            margin-bottom: 14px;
+            background: #F8FAFC;
+            border: 1px solid rgba(229, 231, 235, 0.7);
+            border-radius: 999px;
+            padding: 6px 10px;
         }
 
-        .cta-actions {
+        .back-wrap {
+            margin-top: 18px;
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
-            margin-top: 10px;
         }
-
-        .cta-contacts {
-            background: #FAFBFC;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 18px;
-            display: grid;
-            gap: 10px;
-        }
-
-        .cta-contacts a {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .cta-contacts a:hover { color: var(--accent); }
 
         /* ----------------------
            FOOTER
@@ -571,7 +413,7 @@
         }
 
         /* ----------------------
-           LETTERS LAYER (облако букв)
+           LETTERS LAYER
         ---------------------- */
 
         .letters-layer {
@@ -582,7 +424,6 @@
             overflow: hidden;
         }
 
-        /* Весь основной контент выше слоя букв, но не перекрываем модалку */
         body > *:not(header):not(.letters-layer):not(.modal-overlay) {
             position: relative;
             z-index: 1;
@@ -826,14 +667,7 @@
         ---------------------- */
 
         @media (max-width: 1024px) {
-            .guarantee-grid,
-            .philosophy-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-            .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-            .about-grid { grid-template-columns: 1fr; }
-            .cta-wrap { grid-template-columns: 1fr; }
+            section { padding: 60px 0; }
         }
 
         @media (max-width: 768px) {
@@ -845,22 +679,6 @@
 
             nav, .header-right { display: none; }
             .hamburger { display: flex; }
-
-            .guarantee-grid,
-            .services-grid,
-            .cards-grid,
-            .philosophy-grid {
-                grid-template-columns: 1fr;
-            }
-
-            section { padding: 60px 0; }
-
-            .btn-primary {
-                padding: 12px 24px;
-                font-size: 15px;
-                width: 100%;
-                max-width: 240px;
-            }
 
             .letters-layer { display: none; }
             .modal { max-width: 90%; }
@@ -886,10 +704,10 @@
             </div>
 
             <nav>
-                <a href="#portfolio">Портфолио</a>
-                <a href="#services">Услуги</a>
-                <a href="#blog">Блог</a>
-                <a href="#contacts">Контакты</a>
+                <a href="../index.html#portfolio">Портфолио</a>
+                <a href="../index.html#services">Услуги</a>
+                <a href="../index.html#blog">Блог</a>
+                <a href="../index.html#contacts">Контакты</a>
             </nav>
 
             <div class="header-right">
@@ -910,12 +728,11 @@
             </button>
         </div>
 
-        <!-- Mobile nav -->
         <div class="mobile-nav" id="mobileNav">
-            <a href="#portfolio">Портфолио</a>
-            <a href="#services">Услуги</a>
-            <a href="#blog">Блог</a>
-            <a href="#contacts">Контакты</a>
+            <a href="../index.html#portfolio">Портфолио</a>
+            <a href="../index.html#services">Услуги</a>
+            <a href="../index.html#blog">Блог</a>
+            <a href="../index.html#contacts">Контакты</a>
 
             <div class="mobile-contacts">
                 <div>
@@ -932,346 +749,151 @@
     </div>
 </header>
 
-<!-- Общий слой с плавающими буквами -->
 <div class="letters-layer" id="lettersLayer"></div>
 
-<!-- =========================
-     HERO
-========================= -->
-<section class="hero">
-    <div class="container">
-        <div class="hero-inner">
-            <div class="hero-subtitle">КОНСТАНТИН БОНДАРЕНКО</div>
-            <div class="hero-role">Копирайтер</div>
-            <h1>Пишу тексты, которые приводят клиентов и укрепляют доверие.</h1>
-            <p class="hero-tags">Продающие страницы • Статьи • Email • Соцсети</p>
-            <p class="hero-text">
-                Помогаю бизнесу говорить просто и убедительно: выделяю суть, убираю «воду», расставляю акценты — и довожу читателя до заявки без давления и лишнего шума.
-            </p>
-            <div class="hero-actions">
-                <a href="#" class="btn btn-primary open-modal">Обсудить задачу</a>
-                <a href="#portfolio" class="btn btn-secondary">Смотреть примеры</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- =========================
-     ABOUT
-========================= -->
-<section class="about">
-    <div class="container">
-        <div class="section-header">
-            <h2>Обо мне</h2>
-            <p>Работаю с текстами как с инструментом: понятность, логика, результат.</p>
-        </div>
-
-        <div class="about-grid">
-            <div class="about-card">
-                <p>
-                    Я — копирайтер, который делает ставку на ясность и здравый смысл. В работе мне важно не «написать красиво», а объяснить продукт так, чтобы человек понял ценность, снял сомнения и сделал следующий шаг — написал, позвонил, оставил заявку. Для этого я всегда начинаю с вопросов: кому продаём, почему выбирают именно вас, что мешает покупке, какие есть альтернативы и как вы реально отличаетесь.
-                </p>
-                <p>
-                    Дальше — структурирую материал, собираю логику и акценты, пишу черновик и довожу текст до чистого, уверенного звучания. В процессе держу связь, уточняю детали и аккуратно вношу правки. Результат — текст, который легко читать, сложно неправильно понять и удобно использовать в коммуникациях: на продающих страницах, в статьях, в письмах и социальных сетях.
-                </p>
-                <p>
-                    Если нужно, помогу с тоном, формулировками, заголовками и смысловой «упаковкой», чтобы текст работал на вашу задачу: заявки, продажи, доверие или регулярный контент.
-                </p>
-            </div>
-
-            <div class="about-card">
-                <h3 style="margin-top: 0;">Как работаем</h3>
-                <ul class="about-list">
-                    <li>Короткий бриф и уточняющие вопросы</li>
-                    <li>Структура и план текста</li>
-                    <li>Черновик и правки до результата</li>
-                    <li>Финальная вычитка и передача</li>
-                </ul>
-                <div style="margin-top: 14px;">
-                    <button type="button" class="btn btn-primary open-modal" style="width: 100%;">Заказать звонок</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- =========================
-     GUARANTEE
-========================= -->
-<section class="guarantee">
-    <div class="container">
-        <div class="section-header">
-            <h2>Гарантии работы</h2>
-            <p>Спокойный, предсказуемый процесс и понятные правила.</p>
-        </div>
-        <div class="guarantee-grid">
-            <div class="guarantee-item">
-                <div class="guarantee-icon">✅</div>
-                <h3>Первый черновик — в срок</h3>
-                <p>Согласуем задачу и дедлайн заранее. Первый вариант текста отдаю в оговорённые сроки.</p>
-            </div>
-            <div class="guarantee-item">
-                <div class="guarantee-icon">✅</div>
-                <h3>Правки до результата</h3>
-                <p>Правки по смыслу и формулировкам — спокойно доводим текст до нужного уровня.</p>
-            </div>
-            <div class="guarantee-item">
-                <div class="guarantee-icon">✅</div>
-                <h3>Честно и без лишнего</h3>
-                <p>Если вижу, что задачу лучше решить иначе — скажу прямо и предложу вариант.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- =========================
-     SERVICES
-========================= -->
-<section class="services" id="services">
-    <div class="container">
-        <div class="section-header">
-            <h2>Услуги</h2>
-            <p>Только копирайтинг и контент: тексты, которые помогают продавать и объяснять.</p>
-        </div>
-
-        <div class="services-grid">
-            <div class="service-card">
-                <div>
-                    <h3>Тексты для продающих страниц</h3>
-                    <p>Структура, заголовки, офферы, выгоды, блоки доверия и финальные формулировки, которые ведут к заявке.</p>
-                </div>
-                <div class="service-card-footer">
-                    <span class="service-price">от 5 000 ₽</span>
-                    <button type="button" class="btn-link open-modal">Уточнить задачу →</button>
-                </div>
-            </div>
-
-            <div class="service-card">
-                <div>
-                    <h3>Статьи и блог-посты</h3>
-                    <p>Long-form контент 1000–3000 слов: экспертно, структурно, с понятными выводами и примерами.</p>
-                </div>
-                <div class="service-card-footer">
-                    <span class="service-price">от 3 000 ₽</span>
-                    <button type="button" class="btn-link open-modal">Уточнить задачу →</button>
-                </div>
-            </div>
-
-            <div class="service-card">
-                <div>
-                    <h3>SMM-контент</h3>
-                    <p>Посты и серии публикаций для Telegram, Instagram, Facebook и других площадок — без воды и ради пользы.</p>
-                </div>
-                <div class="service-card-footer">
-                    <span class="service-price">от 2 000 ₽</span>
-                    <button type="button" class="btn-link open-modal">Уточнить задачу →</button>
-                </div>
-            </div>
-
-            <div class="service-card">
-                <div>
-                    <h3>Email-рассылки</h3>
-                    <p>Письма, цепочки, прогрев и коммерческие сообщения: открывают, читают и понимают, что делать дальше.</p>
-                </div>
-                <div class="service-card-footer">
-                    <span class="service-price">от 2 500 ₽</span>
-                    <button type="button" class="btn-link open-modal">Уточнить задачу →</button>
-                </div>
-            </div>
-
-            <div class="service-card">
-                <div>
-                    <h3>Редактура и рерайт</h3>
-                    <p>Убираю «воду», улучшаю логику, делаю текст ясным, сильным и удобным для чтения.</p>
-                </div>
-                <div class="service-card-footer">
-                    <span class="service-price">от 1 500 ₽</span>
-                    <button type="button" class="btn-link open-modal">Уточнить задачу →</button>
-                </div>
-            </div>
-
-            <div class="service-card">
-                <div>
-                    <h3>Контент-стратегия</h3>
-                    <p>Темы, рубрики, позиционирование, контент-план и логика прогрева — чтобы контент работал системно.</p>
-                </div>
-                <div class="service-card-footer">
-                    <span class="service-price">по договорённости</span>
-                    <button type="button" class="btn-link open-modal">Уточнить задачу →</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- =========================
-     PORTFOLIO
-========================= -->
-<section class="portfolio" id="portfolio" style="background-color:#FFFFFF;">
-    <div class="container">
-        <div class="section-header">
-            <h2>Портфолио</h2>
-            <p>Примеры форматов: продающий текст, статья, серия постов.</p>
-        </div>
-
-        <div class="cards-grid">
-            <div class="card">
-                <h3>Пример 1 — текст для продающей страницы</h3>
-                <p>Структурированный текст с оффером, выгодами, блоками доверия и призывом к действию.</p>
-                <div class="card-meta">Объём: 400–600 слов</div>
-                <a href="portfolio/example-1-landing-text.html">Смотреть полностью →</a>
-            </div>
-
-            <div class="card">
-                <h3>Пример 2 — статья для блога</h3>
-                <p>Экспертная статья с подзаголовками, примерами и аккуратными выводами.</p>
-                <div class="card-meta">Объём: 1200–1500 слов</div>
-                <a href="portfolio/example-2-article.html">Смотреть полностью →</a>
-            </div>
-
-            <div class="card">
-                <h3>Пример 3 — серия постов</h3>
-                <p>Набор публикаций для соцсетей: польза, аргументы, прогрев и мягкий CTA.</p>
-                <div class="card-meta">5–7 постов по 100–150 слов</div>
-                <a href="portfolio/example-3-social-posts.html">Смотреть полностью →</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- =========================
-     BLOG
-========================= -->
-<section class="blog" id="blog" style="background-color: var(--bg-primary);">
-    <div class="container">
-        <div class="section-header">
-            <h2>Блог</h2>
-            <p>Практика копирайтинга: структура, ошибки, контент-система.</p>
-        </div>
-
-        <div class="cards-grid">
-            <div class="card">
-                <h3>Как писать текст продающей страницы, который продаёт</h3>
-                <p>Пошаговая логика: кому пишем, какой оффер, какие блоки нужны и как довести до заявки.</p>
-                <div class="card-meta">~ 8–10 минут чтения</div>
-                <a href="blog/how-to-write-landing-copy.html">Читать статью →</a>
-            </div>
-
-            <div class="card">
-                <h3>5 ошибок в копирайтинге, которые убивают конверсию</h3>
-                <p>Типичные провалы: «вода», отсутствие выгод, страх цены, слабый оффер и размытый CTA.</p>
-                <div class="card-meta">~ 7–9 минут чтения</div>
-                <a href="blog/copywriting-mistakes.html">Читать статью →</a>
-            </div>
-
-            <div class="card">
-                <h3>Контент-стратегия для фрилансера</h3>
-                <p>Как регулярно публиковаться, не выгорать, собирать доверие и превращать контент в заявки.</p>
-                <div class="card-meta">~ 9–11 минут чтения</div>
-                <a href="blog/content-strategy-tips.html">Читать статью →</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- =========================
-     PHILOSOPHY
-========================= -->
-<section class="philosophy">
-    <div class="container">
-        <div class="section-header">
-            <h2>Подход к работе</h2>
-            <p>Как я делаю тексты понятными и убедительными.</p>
-        </div>
-        <div class="philosophy-grid">
-            <div class="philosophy-item">
-                <div class="philosophy-icon">🎯</div>
-                <h3>Смысл и структура</h3>
-                <p>Сначала логика и акценты, потом формулировки. Так текст читается легко и ведёт к действию.</p>
-            </div>
-            <div class="philosophy-item">
-                <div class="philosophy-icon">📝</div>
-                <h3>Ясность без воды</h3>
-                <p>Простые фразы, конкретика, минимум клише. Чтобы человеку не приходилось «догадываться».</p>
-            </div>
-            <div class="philosophy-item">
-                <div class="philosophy-icon">⚡</div>
-                <h3>Сроки и дисциплина</h3>
-                <p>Делаю работу по плану, держу дедлайны и спокойно довожу материал до результата.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- =========================
-     FAQ
-========================= -->
-<section class="faq">
-    <div class="container">
-        <div class="section-header">
-            <h2>Частые вопросы</h2>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-q">Что нужно от меня для старта?</div>
-            <div class="faq-a">Коротко: что продаёте, кому, чем отличаетесь, какие есть кейсы/цифры и как сейчас приходят клиенты. Остальное уточню вопросами.</div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-q">Сколько времени занимает работа?</div>
-            <div class="faq-a">Обычно 3–5 дней в зависимости от объёма. Срок фиксируем до старта, без сюрпризов.</div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-q">Можно ли править текст после черновика?</div>
-            <div class="faq-a">Да. Правки по смыслу и формулировкам — нормальная часть процесса. Доводим до нужного состояния.</div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-q">Работаете по NDA?</div>
-            <div class="faq-a">Если нужно — да. Могу подписать NDA или соблюдать конфиденциальность по договорённости.</div>
-        </div>
-    </div>
-</section>
-
-<!-- =========================
-     CTA / CONTACTS
-========================= -->
-<section class="cta" id="contacts">
-    <div class="container">
-        <div class="section-header">
-            <h2>Контакты</h2>
-            <p>Быстрее всего — написать в мессенджер или оставить заявку в форме.</p>
-        </div>
-
-        <div class="cta-wrap">
-            <div>
-                <p class="cta-note">
-                    Опиши задачу в двух-трёх предложениях: что нужно написать, для кого и какой результат хочешь получить.
-                    Я отвечу, уточню детали и предложу понятный план.
+<main>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-inner">
+                <div class="hero-subtitle">БЛОГ</div>
+                <h1>5 ошибок в копирайтинге, которые убивают конверсию</h1>
+                <p class="hero-text">
+                    Эти ошибки встречаются в лендингах, коммерческих предложениях и постах. Хорошая новость: почти всё правится структурой и ясностью.
                 </p>
 
-                <div class="cta-actions">
-                    <a href="#" class="btn btn-primary open-modal">Оставить заявку</a>
-                    <a href="https://t.me/whity14" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
-                    <a href="https://wa.me/79912810796" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Написать в WhatsApp</a>
+                <div class="hero-actions">
+                    <a class="btn btn-secondary" href="../index.html">← Вернуться на главную</a>
+                    <a class="btn btn-primary open-modal" href="#">Заказать звонок</a>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="cta-contacts">
-                <div><strong>Связаться напрямую:</strong></div>
-                <div><a href="tel:+79912810796">📞 +7 (991) 281-07-96</a></div>
-                <div><a href="https://t.me/whity14" target="_blank" rel="noopener noreferrer">💬 Telegram: @whity14</a></div>
-                <div><a href="https://wa.me/79912810796" target="_blank" rel="noopener noreferrer">✅ WhatsApp: написать</a></div>
-                <div><a href="mailto:byxapckuu@gmail.com">✉️ byxapckuu@gmail.com</a></div>
+    <section class="content">
+        <div class="container">
+            <div class="content-wrap">
+                <div class="post-meta" aria-label="Метаданные статьи">
+                    <span>Автор: Константин Бондаренко</span>
+                    <span>Дата: 24.12.2025</span>
+                    <span>Время чтения: ~8 минут</span>
+                </div>
+
+                <p class="lead">
+                    Конверсия падает редко из-за «неправильных слов». Чаще ломается логика: читатель не понимает ценность, сомневается,
+                    не видит конкретики и уходит. Ниже — пять ошибок, которые встречаю чаще всего, и способы исправления.
+                </p>
+
+                <div class="hr"></div>
+
+                <article>
+                    <h2>Ошибка №1. Оффер «ни о чём»</h2>
+                    <p>
+                        «Качественные тексты», «индивидуальный подход», «работаем на результат» — звучит хорошо, но не объясняет, что именно вы даёте
+                        и почему это нужно клиенту. У читателя нет точки опоры.
+                    </p>
+
+                    <div class="error-card">
+                        <h3>Как выглядит ошибка</h3>
+                        <p class="lead">Слова общие, обещание размытое, непонятно — кому и зачем.</p>
+                        <div class="pill-row">
+                            <span class="pill">«лучшее качество»</span>
+                            <span class="pill">«под ключ»</span>
+                            <span class="pill">«индивидуально»</span>
+                            <span class="pill">«высокий уровень»</span>
+                        </div>
+                    </div>
+
+                    <div class="callout">
+                        <strong>Как исправить:</strong> соберите оффер по схеме «кому → что → результат → за счёт чего».
+                        Пример: «Пишу тексты продающих страниц для услуг, чтобы читатель быстро понимал ценность и доходил до заявки».
+                    </div>
+
+                    <h2>Ошибка №2. Текст начинается с вас, а не с читателя</h2>
+                    <p>
+                        Когда страница стартует с истории компании, регалий и «мы на рынке 10 лет», читатель видит одно:
+                        ему снова придётся разбираться самому. Он пришёл с вопросом «мне это поможет или нет?».
+                    </p>
+
+                    <div class="callout">
+                        <strong>Как исправить:</strong> первые экраны — про задачу читателя: контекст, боль, результат.
+                        Про себя — коротко и по делу, как элемент доверия, а не главный смысл.
+                    </div>
+
+                    <h2>Ошибка №3. Мало конкретики, много “воды”</h2>
+                    <p>
+                        «Быстро», «надёжно», «эффективно», «удобно», «профессионально» — это оценочные слова. Они не спорят с реальностью,
+                        но и не дают понимания. Когда конкретики нет — доверие падает.
+                    </p>
+
+                    <h3>Что считать конкретикой</h3>
+                    <ul>
+                        <li>Сроки: «первый вариант — за 3 дня», «правки — в течение 24 часов».</li>
+                        <li>Формат: «структура блоков + финальный текст», «статья 1200–1500 слов».</li>
+                        <li>Процесс: «бриф → структура → черновик → правки → финал».</li>
+                        <li>Результат: «чтобы читатель понял ценность и сделал следующий шаг».</li>
+                    </ul>
+
+                    <div class="callout">
+                        <strong>Как исправить:</strong> заменяйте “оценки” на факты: сроки, шаги, объём, что входит в работу.
+                    </div>
+
+                    <h2>Ошибка №4. Возражения игнорируются</h2>
+                    <p>
+                        Читатель почти всегда сомневается. Даже если ему нравится текст, он думает: «а если не подойдёт?», «а вдруг долго?»,
+                        «а если тема сложная?». Если вы не отвечаете на эти вопросы, он ищет ответы где-то ещё — и часто уходит.
+                    </p>
+
+                    <h3>Типовые возражения</h3>
+                    <ul>
+                        <li><strong>«Дорого»</strong> — непонятно, что входит и почему такая цена.</li>
+                        <li><strong>«Не уверен, что подойдёт»</strong> — нет прозрачного процесса и точек согласования.</li>
+                        <li><strong>«Нет времени»</strong> — непонятно, что нужно от клиента, сколько это займёт.</li>
+                        <li><strong>«Мы уже пробовали»</strong> — нет аргументов, чем ваш подход отличается.</li>
+                    </ul>
+
+                    <div class="callout">
+                        <strong>Как исправить:</strong> добавьте блок “Как мы работаем” + “FAQ” + гарантии/правила. Это снижает риск и повышает доверие.
+                    </div>
+
+                    <h2>Ошибка №5. CTA непонятный или их слишком много</h2>
+                    <p>
+                        «Оставьте заявку», «Позвоните», «Напишите в мессенджер», «Скачайте файл», «Запишитесь», «Узнайте цену» — если всё сразу,
+                        читатель теряется. Если CTA вообще нет — он не понимает, что делать дальше.
+                    </p>
+
+                    <h3>Принцип рабочего CTA</h3>
+                    <ul>
+                        <li><strong>Один основной шаг:</strong> например, «обсудить задачу».</li>
+                        <li><strong>Понятная формулировка:</strong> без “купить прямо сейчас”, если аудитория не готова.</li>
+                        <li><strong>Снижение риска:</strong> «ответим в течение дня», «согласуем сроки до старта».</li>
+                    </ul>
+
+                    <div class="callout">
+                        <strong>Как исправить:</strong> оставьте один главный CTA и поддерживающие контакты.
+                        В тексте объясните, что будет после обращения.
+                    </div>
+
+                    <h2>Итог: тексты “ломаются” логикой, а чинятся ясностью</h2>
+                    <p>
+                        Если коротко: оффер должен быть понятным, структура — вести читателя, конкретика — держать доверие,
+                        возражения — снижать риск, CTA — давать следующий шаг.
+                    </p>
+
+                    <p>
+                        Хотите быстро проверить свой текст? Пройдитесь по 5 пунктам выше и честно ответьте:
+                        есть ли смысл, конкретика и понятный шаг. Если нет — у конверсии просто не было шанса.
+                    </p>
+
+                    <div class="back-wrap">
+                        <a class="btn btn-secondary" href="../index.html">← Вернуться на главную</a>
+                        <a class="btn btn-primary open-modal" href="#">Оставить заявку</a>
+                    </div>
+                </article>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</main>
 
-<!-- =========================
-     FOOTER
-========================= -->
 <footer>
     <div class="container">
         <div class="footer-inner">
@@ -1294,9 +916,6 @@
     </div>
 </footer>
 
-<!-- =========================
-     MODAL
-========================= -->
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <button class="modal-close" id="modalClose" aria-label="Закрыть окно">&times;</button>

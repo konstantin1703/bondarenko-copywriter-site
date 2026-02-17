@@ -1201,6 +1201,11 @@
             </div>
 
             <div class="modal-field">
+                <label for="phone">Ваш телефон<span class="req">*</span></label>
+                <input class="modal-input" type="tel" id="phone" name="phone" required placeholder="+7 (999) 123-45-67">
+            </div>
+
+            <div class="modal-field">
                 <label for="message">Ваше сообщение<span class="req">*</span></label>
                 <textarea class="modal-textarea" id="message" name="message" required placeholder="Коротко опишите задачу"></textarea>
             </div>
@@ -1282,10 +1287,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.classList.remove('modal-open');
     }
 
-    /*
-      FIX #2: Надёжное открытие модалки.
-      Теперь модалка откроется даже если клик был по иконке/внутреннему элементу внутри кнопки .open-modal
-    */
     document.addEventListener('click', function (e) {
         const trigger = e.target.closest('.open-modal');
         if (!trigger) return;
@@ -1317,77 +1318,75 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // =========================
-    // Form submit (Telegram Bot)
+    // Form submit через Cloudflare Worker
     // =========================
-
-    // ВСТАВЬ СЮДА СВОИ ДАННЫЕ
-    const telegramToken = '8245410627:AAEcDeQfLBDQhlAHO15ymdGD2yJuoqtJ520' ; // ← вставишь свой TOKEN
-    const chatId = '6135071547' ; // ← вставишь свой chat_id
-
     if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
+        contactForm.addEventListener('submit', async function (e) {
             e.preventDefault();
             clearMessage();
 
-            const nameEl = document.getElementById('name');
-            const emailEl = document.getElementById('email');
-            const msgEl = document.getElementById('message');
+            const formData = new FormData(contactForm);
 
-            const name = (nameEl && nameEl.value ? nameEl.value.trim() : '');
-            const email = (emailEl && emailEl.value ? emailEl.value.trim() : '');
-            const message = (msgEl && msgEl.value ? msgEl.value.trim() : '');
+            const payload = {
+                name: formData.get('name') || '',
+                email: formData.get('email') || '',
+                phone: formData.get('phone') || '',
+                message: formData.get('message') || ''
+            };
 
-            // ===== Валидация (оставляем как было) =====
-            if (!name) {
+            // Базовая валидация
+            if (!payload.name.trim()) {
                 showMessage('error', 'Ошибка: заполните поле "Ваше имя".');
-                if (nameEl) nameEl.focus();
+                document.getElementById('name').focus();
                 return;
             }
 
-            const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-            if (!email || !emailOk) {
+            const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email);
+            if (!payload.email.trim() || !emailOk) {
                 showMessage('error', 'Ошибка: укажите корректный email.');
-                if (emailEl) emailEl.focus();
+                document.getElementById('email').focus();
                 return;
             }
 
-            if (!message) {
+            if (!payload.phone.trim()) {
+                showMessage('error', 'Ошибка: заполните поле "Ваш телефон".');
+                document.getElementById('phone').focus();
+                return;
+            }
+
+            if (!payload.message.trim()) {
                 showMessage('error', 'Ошибка: заполните поле "Ваше сообщение".');
-                if (msgEl) msgEl.focus();
+                document.getElementById('message').focus();
                 return;
             }
 
-            // Базовая защита от "забыл вставить токен/айди"
-            if (!telegramToken || telegramToken.includes('ТВОЙ_TOKEN') || !chatId || chatId.includes('ТВОЙ_CHAT_ID')) {
-                showMessage('error', 'Ошибка: не настроены telegramToken / chatId.');
-                return;
-            }
+            // Показываем статус отправки
+            showMessage('success', 'Отправляем заявку…');
 
-            fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: `📬 Новая заявка!\n👤 Имя: ${name}\n📧 Email: ${email}\n💬 Сообщение: ${message}`
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data && data.ok) {
-                    showMessage('success', 'Заявка отправлена!');
-                    contactForm.reset();
-                } else {
-                    showMessage('error', 'Ошибка отправки');
+            try {
+                const resp = await fetch('https://leads-inbox.byxapckuu.workers.dev', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await resp.json().catch(() => ({}));
+                
+                if (!resp.ok || data.success !== true) {
+                    throw new Error(data.error || 'Ошибка отправки');
                 }
-            })
-            .catch(() => {
-                showMessage('error', 'Ошибка соединения');
-            });
+
+                showMessage('success', 'Заявка отправлена! Я свяжусь с вами в ближайшее время.');
+                contactForm.reset();
+            } catch (err) {
+                console.error(err);
+                showMessage('error', 'Не удалось отправить заявку. Попробуйте ещё раз.');
+            }
         });
     }
 
     // =========================
-    // Floating letters layer (по всему сайту, только desktop/tablet)
+    // Floating letters layer
     // =========================
     const lettersLayer = document.getElementById('lettersLayer');
 

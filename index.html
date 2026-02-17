@@ -20,3 +20,1401 @@
     <meta property="og:image" content="https://konstantin1703.github.io/bondarenko-copywriter-site/og-preview.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #F8FAFC;      /* Основной фон */
+            --bg-white: #FFFFFF;        /* Белый */
+            --text-primary: #1F2937;    /* Основной текст */
+            --text-secondary: #6B7280;  /* Вторичный текст */
+            --accent: #2563EB;          /* Синий (кнопки, ссылки) */
+            --accent-hover: #1D4ED8;    /* Синий (hover) */
+            --border: #E5E7EB;          /* Разделители */
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            line-height: 1.6;
+        }
+
+        /* Блокировка скролла при открытой модалке */
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--accent-hover);
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        h1, h2, h3 {
+            margin: 0 0 16px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 48px;
+        }
+
+        h2 {
+            font-size: 32px;
+        }
+
+        h3 {
+            font-size: 22px;
+        }
+
+        p {
+            margin: 0 0 12px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ----------------------
+           HEADER + NAV
+        ---------------------- */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: var(--bg-white);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--text-primary);
+        }
+
+        .logo-mark {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            font-size: 14px;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 14px;
+        }
+
+        .header-links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .phone {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            color: #FFFFFF;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:focus-visible {
+            outline: 2px solid rgba(37, 99, 235, 0.7);
+            outline-offset: 2px;
+        }
+
+        .btn-link {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin-top: 8px;
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-link:hover {
+            color: var(--accent-hover);
+        }
+
+        /* Hamburger (mobile) */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 20px;
+            height: 2px;
+            background-color: var(--text-primary);
+        }
+
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            padding: 12px 0 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .mobile-nav.open {
+            display: flex !important;
+            background-color: #FFFFFF;
+        }
+
+        .mobile-nav a {
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+
+        .mobile-nav .mobile-contacts {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* ----------------------
+           HERO
+        ---------------------- */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #F8FAFC 0%, #F0F9FF 100%);
+            padding: 120px 0;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .hero h1 {
+            margin-bottom: 10px;
+        }
+
+        .hero-role {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .hero-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .hero-tags {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        /* ----------------------
+           SECTION WRAPPER
+        ---------------------- */
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            margin-bottom: 32px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+        }
+
+        /* ----------------------
+           GUARANTEE
+        ---------------------- */
+
+        .guarantee {
+            background-color: #FFFFFF;
+        }
+
+        .guarantee-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .guarantee-item {
+            background-color: #FAFBFC;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+        }
+
+        .guarantee-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        /* ----------------------
+           SERVICES
+        ---------------------- */
+
+        .services {
+            background-color: var(--bg-primary);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .service-card {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px 24px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 200px;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+        }
+
+        .service-price {
+            margin-top: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .service-card-footer {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        /* ----------------------
+           PORTFOLIO
+        ---------------------- */
+
+        .portfolio {
+            background-color: #FFFFFF;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .portfolio-card {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            padding: 24px;
+            transition: box-shadow 0.2s ease, transform 0.1s ease;
+        }
+
+        .portfolio-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .portfolio-card p {
+            color: var(--text-secondary);
+        }
+
+        .portfolio-card a {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* ----------------------
+           PHILOSOPHY
+        ---------------------- */
+
+        .philosophy {
+            background-color: var(--bg-primary);
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .philosophy-item {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            padding: 28px;
+            border: 1px solid var(--border);
+        }
+
+        .philosophy-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .philosophy-item p {
+            color: var(--text-secondary);
+        }
+
+        /* ----------------------
+           FAQ
+        ---------------------- */
+
+        .faq {
+            background-color: #FFFFFF;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+        }
+
+        .faq-q {
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .faq-a {
+            color: var(--text-secondary);
+        }
+
+        /* ----------------------
+           BLOG (заглушка)
+        ---------------------- */
+
+        .blog {
+            background-color: var(--bg-primary);
+        }
+
+        .blog-placeholder {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        /* ----------------------
+           FOOTER
+        ---------------------- */
+
+        footer {
+            background-color: #1F2937;
+            color: #FFFFFF;
+            padding: 60px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            color: #E5E7EB;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: #FFFFFF;
+        }
+
+        .footer-copy {
+            color: #9CA3AF;
+            font-size: 13px;
+        }
+
+        /* ----------------------
+           LETTERS LAYER (облако букв)
+        ---------------------- */
+
+        .letters-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* FIX #1: Весь основной контент выше слоя букв, но не перекрываем модалку */
+        body > *:not(.letters-layer):not(.modal-overlay) {
+            position: relative;
+            z-index: 1;
+        }
+
+        .floating-letter {
+            position: absolute;
+            color: var(--text-primary);
+            opacity: 0.05;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-weight: 300;
+            letter-spacing: 2px;
+            user-select: none;
+            line-height: 1;
+            animation: floatLetter 18s linear 3;
+        }
+
+        @keyframes floatLetter {
+            0% {
+                transform: translate3d(0, 0, 0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.07;
+            }
+            50% {
+                transform: translate3d(40px, -30px, 0) rotate(120deg);
+                opacity: 0.09;
+            }
+            100% {
+                transform: translate3d(-40px, 30px, 0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ----------------------
+           MODAL
+        ---------------------- */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            z-index: 1100; /* 1000+ */
+        }
+
+        .modal-overlay.visible {
+            display: flex;
+        }
+
+        .modal {
+            background: #FFFFFF;
+            border-radius: 12px;
+            max-width: 560px;
+            width: 100%;
+            padding: 22px 20px 18px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            position: relative;
+            animation: modalFade 0.25s ease-out;
+        }
+
+        @keyframes modalFade {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            line-height: 1;
+        }
+
+        .modal h2 {
+            margin: 0 0 12px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        /* Форма */
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .modal-field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .modal-field .req {
+            color: var(--accent);
+            margin-left: 2px;
+        }
+
+        .modal-input,
+        .modal-textarea {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--text-primary);
+            background: #FFFFFF;
+            outline: none;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .modal-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .modal-input:focus,
+        .modal-textarea:focus {
+            border-color: rgba(37, 99, 235, 0.65);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+        }
+
+        .modal-submit {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--accent);
+            color: #FFFFFF;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .modal-submit:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .modal-submit:focus-visible {
+            outline: 2px solid rgba(37, 99, 235, 0.7);
+            outline-offset: 2px;
+        }
+
+        .form-message {
+            display: none;
+            margin: 0 0 8px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .form-message.error {
+            display: block;
+            background: rgba(220, 38, 38, 0.08);
+            border: 1px solid rgba(220, 38, 38, 0.25);
+            color: #991B1B;
+        }
+
+        .form-message.success {
+            display: block;
+            background: rgba(22, 163, 74, 0.08);
+            border: 1px solid rgba(22, 163, 74, 0.25);
+            color: #166534;
+        }
+
+        .modal-divider {
+            margin: 10px 0 10px;
+            border-top: 1px solid var(--border);
+        }
+
+        .modal-subtitle {
+            margin: 0 0 10px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .modal-contacts {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        /* ----------------------
+           ICON / MESSENGER STYLES
+        ---------------------- */
+
+        .circle-messenger {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+
+        .circle-messenger::before {
+            content: '';
+            display: block;
+            width: 70%;
+            height: 70%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .circle-whatsapp {
+            background-color: #25D366;
+        }
+
+        .circle-whatsapp::before {
+            background-image: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg');
+            filter: invert(1);
+        }
+
+        .circle-telegram {
+            background-color: #0088cc;
+        }
+
+        .circle-telegram::before {
+            background-image: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg');
+            filter: invert(1);
+        }
+
+        .circle-messenger:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+        }
+
+        /* ----------------------
+           ADAPTIVE
+        ---------------------- */
+
+        @media (max-width: 1024px) {
+            .guarantee-grid,
+            .philosophy-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .hero {
+                padding: 60px 0;
+            }
+
+            .header-inner {
+                height: 64px;
+            }
+
+            nav,
+            .header-right {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .mobile-nav.open {
+                display: flex;
+            }
+
+            .guarantee-grid,
+            .services-grid,
+            .portfolio-grid,
+            .philosophy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .btn-primary {
+                padding: 12px 24px;
+                font-size: 15px;
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .letters-layer {
+                display: none;
+            }
+
+            /* Модалка: max-width 90% на маленьких экранах */
+            .modal {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-mark">Kb</div>
+                <div>Константин Бондаренко</div>
+            </div>
+
+            <nav>
+                <a href="#portfolio">Портфолио</a>
+                <a href="#services">Услуги</a>
+                <a href="#blog">Блог</a>
+                <a href="#contacts">Контакты</a>
+            </nav>
+
+            <div class="header-right">
+                <div class="header-links">
+                    <a href="https://wa.me/79912810796" class="circle-messenger circle-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"></a>
+                    <a href="https://t.me/whity14" class="circle-messenger circle-telegram" target="_blank" rel="noopener noreferrer" aria-label="Telegram"></a>
+                </div>
+                <div class="phone">
+                    <a href="tel:+79912810796" style="color: inherit;">+7 (991) 281-07-96</a>
+                </div>
+                <a href="#" class="btn btn-primary open-modal">Заказать звонок</a>
+            </div>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <!-- Mobile nav -->
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#portfolio">Портфолио</a>
+            <a href="#services">Услуги</a>
+            <a href="#blog">Блог</a>
+            <a href="#contacts">Контакты</a>
+            <div class="mobile-contacts">
+                <div>
+                    <a href="https://wa.me/79912810796" target="_blank" rel="noopener noreferrer">WhatsApp</a> ·
+                    <a href="https://t.me/whity14" target="_blank" rel="noopener noreferrer">Telegram</a>
+                </div>
+                <div><a href="tel:+79912810796" style="color: inherit;">+7 (991) 281-07-96</a></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Общий слой с плавающими буквами -->
+<div class="letters-layer" id="lettersLayer"></div>
+
+<!-- =========================
+     HERO
+========================= -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-inner">
+            <div class="hero-subtitle">КОНСТАНТИН БОНДАРЕНКО</div>
+            <div class="hero-role">Копирайтер</div>
+            <h1>Пишу тексты, которые приносят клиентов.</h1>
+            <p class="hero-tags">Лендинги • Статьи • Описания услуг</p>
+            <p class="hero-text">
+                Помогаю бизнесу объяснить продукт простым языком и аккуратно довести читателя до заявки — без лишнего шума и «креативности ради креативности».
+            </p>
+            <a href="#" class="btn btn-primary open-modal">Заказать консультацию</a>
+        </div>
+    </div>
+</section>
+
+<!-- =========================
+     GUARANTEE
+========================= -->
+<section class="guarantee">
+    <div class="container">
+        <div class="section-header">
+            <h2>Гарантии работы</h2>
+            <p>Спокойный, предсказуемый процесс и понятные правила.</p>
+        </div>
+        <div class="guarantee-grid">
+            <div class="guarantee-item">
+                <div class="guarantee-icon">✅</div>
+                <h3>Первый черновик — за 3 дня</h3>
+                <p>Согласуем задачу, и вы получаете первый вариант текста в оговорённый срок.</p>
+            </div>
+            <div class="guarantee-item">
+                <div class="guarantee-icon">✅</div>
+                <h3>Правки до результата</h3>
+                <p>Не ограничиваю количество правок по мелочам. Доводим текст до того состояния, в котором вам спокойно.</p>
+            </div>
+            <div class="guarantee-item">
+                <div class="guarantee-icon">✅</div>
+                <h3>100% возврат, если не заходит</h3>
+                <p>Если формат моей работы вам не подойдёт, возвращаю оплату без споров.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================
+     SERVICES
+========================= -->
+<section class="services" id="services">
+    <div class="container">
+        <div class="section-header">
+            <h2>Что я делаю</h2>
+            <p>Помогаю упаковать ваши продукты и услуги в понятные и работающие тексты.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div>
+                    <h3>Лендинг-копирайт</h3>
+                    <p>Пишу продающие тексты для посадочных страниц: от структуры блоков до финальных формулировок, которые приводят клиентов.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 5 000 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <h3>Email-рассылка</h3>
+                    <p>Создаю цепочки писем, автоворонки и коммерческие письма, которые люди открывают и читают до конца.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 2 500 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <h3>Статьи и контент</h3>
+                    <p>Структурирую идеи и опыт в аккуратные тексты: статьи, полезные материалы, контент для блога.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 3 000 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <h3>Описания товаров/услуг</h3>
+                    <p>Пишу ясные описания для маркетплейсов, каталогов и сайтов — чтобы люди сразу поняли ценность.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 1 000 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <h3>Рерайт текстов</h3>
+                    <p>Переписываю текст с сохранением смысла, но с новым стилем, ясностью и ударными фразами.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 2 000 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <h3>Копирайт для соцсетей</h3>
+                    <p>Создаю посты, описания и сценарии для Instagram, TikTok, YouTube — контент, который люди лайкают и шерят.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 2 000 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <h3>Редактура и доработка</h3>
+                    <p>Улучшаю уже написанный текст: чистка воды, логика, акценты, ясность и читабельность.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 1 500 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================
+     PORTFOLIO
+========================= -->
+<section class="portfolio" id="portfolio">
+    <div class="container">
+        <div class="section-header">
+            <h2>Портфолио</h2>
+            <p>Несколько примеров задач, с которыми я работал.</p>
+        </div>
+        <div class="portfolio-grid">
+            <div class="portfolio-card">
+                <h3>Лендинг коммерческого копирайтера</h3>
+                <p>Структура и тексты для личного лендинга копирайтера. Фокус на спокойной подаче и заявках через мессенджер.</p>
+                <a href="https://konstantin1703.github.io/anna-copywriter-landing/" target="_blank" rel="noopener noreferrer">Смотреть пример →</a>
+            </div>
+            <div class="portfolio-card">
+                <h3>Одностраничник для услуги</h3>
+                <p>Лендинг для нишевой услуги с акцентом на выгоды, социальное доказательство и понятное УТП.</p>
+                <a href="#" target="_blank" rel="noopener noreferrer">Смотреть пример →</a>
+            </div>
+            <div class="portfolio-card">
+                <h3>Статьи и экспертный контент</h3>
+                <p>Подборка материалов для блога и рассылки: объясняем продукт и снимаем сомнения у читателя.</p>
+                <a href="#" target="_blank" rel="noopener noreferrer">Смотреть пример →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================
+     PHILOSOPHY
+========================= -->
+<section class="philosophy">
+    <div class="container">
+        <div class="section-header">
+            <h2>Моя философия</h2>
+            <p>Как я подхожу к работе с текстами и проектами.</p>
+        </div>
+        <div class="philosophy-grid">
+            <div class="philosophy-item">
+                <div class="philosophy-icon">🎯</div>
+                <h3>Результат, а не красивость</h3>
+                <p>Тексты должны помогать бизнесу: приводить клиентов, объяснять продукт, поддерживать продажи.</p>
+            </div>
+            <div class="philosophy-item">
+                <div class="philosophy-icon">📝</div>
+                <h3>Ясность в каждом слове</h3>
+                <p>Без воды, без перегруза, без сложных конструкций. Простые фразы, понятные людям.</p>
+            </div>
+            <div class="philosophy-item">
+                <div class="philosophy-icon">⚡</div>
+                <h3>Быстро и аккуратно</h3>
+                <p>Сроки держу, на связь выхожу вовремя, правки вношу без лишней драмы и споров.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================
+     FAQ
+========================= -->
+<section class="faq">
+    <div class="container">
+        <div class="section-header">
+            <h2>Частые вопросы</h2>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Сколько времени занимает работа над текстом?</div>
+            <div class="faq-a">Обычно 3–5 дней, в зависимости от объёма и сложности задачи. Сроки фиксируем до старта.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Можно ли вернуть деньги, если текст не подойдёт?</div>
+            <div class="faq-a">Да. Если после правок формат вам не подходит, я возвращаю оплату.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Вы только пишете текст или помогаете со структурой?</div>
+            <div class="faq-a">В большинстве случаев мы сначала обсуждаем структуру и логику, а потом я пишу текст под эту структуру.</div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================
+     BLOG (заглушка)
+========================= -->
+<section class="blog" id="blog">
+    <div class="container">
+        <div class="section-header">
+            <h2>Блог</h2>
+            <p class="blog-placeholder">
+                Здесь будут статьи о текстах, структуре лендингов и работе с контентом. Раздел в разработке.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- =========================
+     FOOTER / CONTACTS
+========================= -->
+<footer id="contacts">
+    <div class="container">
+        <div class="footer-inner">
+            <div>
+                <strong>Константин Бондаренко</strong><br>
+                Копирайтер
+            </div>
+            <div class="footer-links">
+                <a href="https://wa.me/79912810796" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                <a href="https://t.me/whity14" target="_blank" rel="noopener noreferrer">Telegram</a>
+                <a href="mailto:byxapckuu@gmail.com">byxapckuu@gmail.com</a>
+                <a href="tel:+79531509213">+7 (991) 281-07-96</a>
+            </div>
+            <div class="footer-copy">
+                © 2025 · Все права защищены.
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- =========================
+     MODAL
+========================= -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="modal-close" id="modalClose" aria-label="Закрыть окно">&times;</button>
+
+        <h2 id="modalTitle">Обсудим вашу задачу</h2>
+
+        <div id="formMessage" class="form-message" aria-live="polite"></div>
+
+        <form id="contactForm" class="modal-form" novalidate>
+            <div class="modal-field">
+                <label for="name">Ваше имя<span class="req">*</span></label>
+                <input class="modal-input" type="text" id="name" name="name" required placeholder="Например: Иван">
+            </div>
+
+            <div class="modal-field">
+                <label for="email">Ваш email<span class="req">*</span></label>
+                <input class="modal-input" type="email" id="email" name="email" required placeholder="mail@example.com">
+            </div>
+
+            <div class="modal-field">
+                <label for="message">Ваше сообщение<span class="req">*</span></label>
+                <textarea class="modal-textarea" id="message" name="message" required placeholder="Коротко опишите задачу"></textarea>
+            </div>
+
+            <button type="submit" class="modal-submit">Отправить сообщение</button>
+        </form>
+
+        <div class="modal-divider"></div>
+
+        <p class="modal-subtitle">Или напишите в удобный мессенджер:</p>
+        <div class="modal-contacts">
+            <a class="circle-messenger circle-whatsapp" href="https://wa.me/79912810796" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"></a>
+            <a class="circle-messenger circle-telegram" href="https://t.me/whity14" target="_blank" rel="noopener noreferrer" aria-label="Telegram"></a>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // =========================
+    // Mobile menu
+    // =========================
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', function () {
+            mobileNav.classList.toggle('open');
+        });
+
+        const mobileLinks = mobileNav.querySelectorAll('a');
+        mobileLinks.forEach(function (link) {
+            link.addEventListener('click', function () {
+                mobileNav.classList.remove('open');
+            });
+        });
+    }
+
+    // =========================
+    // Modal controls
+    // =========================
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+
+    function showMessage(type, text) {
+        if (!formMessage) return;
+        formMessage.className = 'form-message ' + type;
+        formMessage.textContent = text;
+    }
+
+    function clearMessage() {
+        if (!formMessage) return;
+        formMessage.className = 'form-message';
+        formMessage.textContent = '';
+    }
+
+    function openModal(event) {
+        if (event) event.preventDefault();
+        if (!modalOverlay) return;
+
+        modalOverlay.classList.add('visible');
+        document.body.classList.add('modal-open');
+
+        clearMessage();
+
+        const firstField = document.getElementById('name');
+        if (firstField) {
+            setTimeout(function () { firstField.focus(); }, 0);
+        }
+    }
+
+    function closeModal() {
+        if (!modalOverlay) return;
+
+        modalOverlay.classList.remove('visible');
+        document.body.classList.remove('modal-open');
+    }
+
+    /*
+      FIX #2: Надёжное открытие модалки.
+      Теперь модалка откроется даже если клик был по иконке/внутреннему элементу внутри кнопки .open-modal
+    */
+    document.addEventListener('click', function (e) {
+        const trigger = e.target.closest('.open-modal');
+        if (!trigger) return;
+
+        openModal(e);
+    });
+
+    if (modalClose) {
+        modalClose.addEventListener('click', function (e) {
+            e.preventDefault();
+            closeModal();
+        });
+    }
+
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', function (e) {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.key === 'Esc') {
+            if (modalOverlay && modalOverlay.classList.contains('visible')) {
+                closeModal();
+            }
+        }
+    });
+
+    // =========================
+    // Form submit (Telegram Bot)
+    // =========================
+
+    // ВСТАВЬ СЮДА СВОИ ДАННЫЕ
+    const telegramToken = '8245410627:AAEcDeQfLBDQhlAHO15ymdGD2yJuoqtJ520' ; // ← вставишь свой TOKEN
+    const chatId = '6135071547' ; // ← вставишь свой chat_id
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            clearMessage();
+
+            const nameEl = document.getElementById('name');
+            const emailEl = document.getElementById('email');
+            const msgEl = document.getElementById('message');
+
+            const name = (nameEl && nameEl.value ? nameEl.value.trim() : '');
+            const email = (emailEl && emailEl.value ? emailEl.value.trim() : '');
+            const message = (msgEl && msgEl.value ? msgEl.value.trim() : '');
+
+            // ===== Валидация (оставляем как было) =====
+            if (!name) {
+                showMessage('error', 'Ошибка: заполните поле "Ваше имя".');
+                if (nameEl) nameEl.focus();
+                return;
+            }
+
+            const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            if (!email || !emailOk) {
+                showMessage('error', 'Ошибка: укажите корректный email.');
+                if (emailEl) emailEl.focus();
+                return;
+            }
+
+            if (!message) {
+                showMessage('error', 'Ошибка: заполните поле "Ваше сообщение".');
+                if (msgEl) msgEl.focus();
+                return;
+            }
+
+            // Базовая защита от "забыл вставить токен/айди"
+            if (!telegramToken || telegramToken.includes('ТВОЙ_TOKEN') || !chatId || chatId.includes('ТВОЙ_CHAT_ID')) {
+                showMessage('error', 'Ошибка: не настроены telegramToken / chatId.');
+                return;
+            }
+
+            fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: `📬 Новая заявка!\n👤 Имя: ${name}\n📧 Email: ${email}\n💬 Сообщение: ${message}`
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.ok) {
+                    showMessage('success', 'Заявка отправлена!');
+                    contactForm.reset();
+                } else {
+                    showMessage('error', 'Ошибка отправки');
+                }
+            })
+            .catch(() => {
+                showMessage('error', 'Ошибка соединения');
+            });
+        });
+    }
+
+    // =========================
+    // Floating letters layer (по всему сайту, только desktop/tablet)
+    // =========================
+    const lettersLayer = document.getElementById('lettersLayer');
+
+    if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 769px)').matches) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const count = 24;
+
+        for (let i = 0; i < count; i++) {
+            const span = document.createElement('span');
+            span.className = 'floating-letter';
+            span.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
+
+            const left = 5 + Math.random() * 90;
+            const top = 5 + Math.random() * 90;
+
+            const fontSize = 8 + Math.random() * 18;
+            const delay = Math.random() * 20;
+
+            span.style.left = left + '%';
+            span.style.top = top + '%';
+            span.style.fontSize = fontSize + 'px';
+            span.style.animationDelay = delay + 's';
+
+            lettersLayer.appendChild(span);
+        }
+    }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Блог — Как писать текст лендинга, который продаёт | Константин Бондаренко</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Практическая статья: как написать текст продающей страницы — структура, оффер, аргументы, возражения и CTA. Автор: Константин Бондаренко.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Как писать текст лендинга, который продаёт">
+    <meta property="og:description" content="Пошаговый разбор: от оффера и структуры до возражений и призыва к действию.">
+    <meta property="og:type" content="article">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #F8FAFC;      /* Основной фон */
+            --bg-white: #FFFFFF;        /* Белый */
+            --text-primary: #1F2937;    /* Основной текст */
+            --text-secondary: #6B7280;  /* Вторичный текст */
+            --accent: #2563EB;          /* Синий (кнопки, ссылки) */
+            --accent-hover: #1D4ED8;    /* Синий (hover) */
+            --border: #E5E7EB;          /* Разделители */
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            line-height: 1.6;
+        }
+
+        body.modal-open { overflow: hidden; }
+
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { color: var(--accent-hover); }
+
+        h1, h2, h3 {
+            margin: 0 0 16px;
+            font-weight: 700;
+        }
+
+        h1 { font-size: 48px; }
+        h2 { font-size: 32px; }
+        h3 { font-size: 22px; }
+
+        p { margin: 0 0 12px; }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ----------------------
+           HEADER + NAV
+        ---------------------- */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: var(--bg-white);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        .logo-mark {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            font-size: 14px;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        nav a:hover { color: var(--accent); }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 14px;
+        }
+
+        .header-links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .phone {
+            color: var(--text-secondary);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            color: #FFFFFF;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:focus-visible {
+            outline: 2px solid rgba(37, 99, 235, 0.7);
+            outline-offset: 2px;
+        }
+
+        .btn-secondary {
+            background: #EFF6FF;
+            color: var(--accent);
+            border: 1px solid rgba(37, 99, 235, 0.18);
+        }
+
+        .btn-secondary:hover {
+            background: #DBEAFE;
+            color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Hamburger (mobile) */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            flex: 0 0 auto;
+            background: transparent;
+            border: 0;
+            padding: 0;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .hamburger:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 4px;
+        }
+.hamburger span {
+            width: 20px;
+            height: 2px;
+            background-color: var(--text-primary);
+        }
+
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            padding: 12px 0 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .mobile-nav.open {
+            display: flex !important;
+            background-color: #FFFFFF;
+        }
+
+        .mobile-nav a {
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+
+        .mobile-nav .mobile-contacts {
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: grid;
+            gap: 6px;
+        }
+
+        .mobile-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding-top: 6px;
+        }
+
+        /* ----------------------
+           HERO
+        ---------------------- */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #F8FAFC 0%, #F0F9FF 100%);
+            padding: 90px 0 70px;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            max-width: 900px;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .hero h1 { margin-bottom: 10px; }
+
+        .hero-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 22px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* ----------------------
+           CONTENT
+        ---------------------- */
+
+        section { padding: 80px 0; }
+
+        .content { background: #FFFFFF; }
+
+        .content-wrap {
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 26px;
+        }
+
+        .post-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 10px 0 18px;
+        }
+
+        .post-meta span {
+            background: #F8FAFC;
+            border: 1px solid rgba(229, 231, 235, 0.7);
+            border-radius: 999px;
+            padding: 6px 10px;
+        }
+
+        .lead {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 18px;
+        }
+
+        .hr {
+            height: 1px;
+            background: var(--border);
+            margin: 18px 0;
+        }
+
+        article h2 {
+            font-size: 24px;
+            margin-top: 22px;
+        }
+
+        article h3 {
+            font-size: 18px;
+            margin-top: 18px;
+        }
+
+        article ul, article ol {
+            margin: 10px 0 14px;
+            padding-left: 18px;
+            color: var(--text-secondary);
+        }
+
+        article li { margin-bottom: 8px; }
+
+        .callout {
+            background: #F8FAFC;
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            border-left: 4px solid rgba(37, 99, 235, 0.7);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin: 14px 0;
+            color: var(--text-secondary);
+        }
+
+        .checklist {
+            background: #FFFFFF;
+            border: 1px solid rgba(229, 231, 235, 0.95);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 14px 0;
+        }
+
+        .checklist h3 { margin-bottom: 10px; }
+
+        .checklist ul { margin: 0; }
+
+        .back-wrap {
+            margin-top: 18px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* ----------------------
+           FOOTER
+        ---------------------- */
+
+        footer {
+            background-color: #1F2937;
+            color: #FFFFFF;
+            padding: 60px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            color: #E5E7EB;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover { color: #FFFFFF; }
+
+        .footer-copy {
+            color: #9CA3AF;
+            font-size: 13px;
+        }
+
+        /* ----------------------
+           LETTERS LAYER
+        ---------------------- */
+
+        .letters-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        body > *:not(header):not(.letters-layer):not(.modal-overlay) {
+            position: relative;
+            z-index: 1;
+        }
+
+        .floating-letter {
+            position: absolute;
+            color: var(--text-primary);
+            opacity: 0.05;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-weight: 300;
+            letter-spacing: 2px;
+            user-select: none;
+            line-height: 1;
+            animation: floatLetter 18s linear 3;
+        }
+
+        @keyframes floatLetter {
+            0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.07; }
+            50% { transform: translate3d(40px, -30px, 0) rotate(120deg); opacity: 0.09; }
+            100% { transform: translate3d(-40px, 30px, 0) rotate(360deg); opacity: 0; }
+        }
+
+        /* ----------------------
+           MODAL
+        ---------------------- */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            z-index: 1100;
+        }
+
+        .modal-overlay.visible { display: flex; }
+
+        .modal {
+            background: #FFFFFF;
+            border-radius: 12px;
+            max-width: 560px;
+            width: 100%;
+            padding: 22px 20px 18px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            position: relative;
+            animation: modalFade 0.25s ease-out;
+        }
+
+        @keyframes modalFade {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            line-height: 1;
+        }
+
+        .modal h2 {
+            margin: 0 0 12px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .modal-field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .modal-field .req {
+            color: var(--accent);
+            margin-left: 2px;
+        }
+
+        .modal-input,
+        .modal-textarea {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--text-primary);
+            background: #FFFFFF;
+            outline: none;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .modal-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .modal-input:focus,
+        .modal-textarea:focus {
+            border-color: rgba(37, 99, 235, 0.65);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+        }
+
+        .modal-submit {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--accent);
+            color: #FFFFFF;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .modal-submit:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .modal-submit:focus-visible {
+            outline: 2px solid rgba(37, 99, 235, 0.7);
+            outline-offset: 2px;
+        }
+
+        .form-message {
+            display: none;
+            margin: 0 0 8px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .form-message.error {
+            display: block;
+            background: rgba(220, 38, 38, 0.08);
+            border: 1px solid rgba(220, 38, 38, 0.25);
+            color: #991B1B;
+        }
+
+        .form-message.success {
+            display: block;
+            background: rgba(22, 163, 74, 0.08);
+            border: 1px solid rgba(22, 163, 74, 0.25);
+            color: #166534;
+        }
+
+        .modal-divider {
+            margin: 10px 0 10px;
+            border-top: 1px solid var(--border);
+        }
+
+        .modal-subtitle {
+            margin: 0 0 10px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .modal-contacts {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 6px;
+        }
+
+        .modal-phone {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .modal-phone:hover { color: var(--accent); }
+
+        /* ----------------------
+           ICON / MESSENGER STYLES
+        ---------------------- */
+
+        .circle-messenger {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+
+        .circle-messenger::before {
+            content: '';
+            display: block;
+            width: 70%;
+            height: 70%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .circle-whatsapp { background-color: #25D366; }
+        .circle-whatsapp::before {
+            background-image: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg');
+            filter: invert(1);
+        }
+
+        .circle-telegram { background-color: #0088cc; }
+        .circle-telegram::before {
+            background-image: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg');
+            filter: invert(1);
+        }
+
+        .circle-messenger:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+        }
+
+        /* ----------------------
+           ADAPTIVE
+        ---------------------- */
+
+        @media (max-width: 1024px) {
+            section { padding: 60px 0; }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 32px; }
+            h2 { font-size: 24px; }
+
+            .hero { padding: 60px 0; }
+            .header-inner { height: 64px; }
+
+            nav, .header-right { display: none; }
+            .hamburger { display: flex; }
+
+            .letters-layer { display: none; }
+            .modal { max-width: 90%; }
+        }
+        .hp-field {
+            position: absolute;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+
+</style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-mark">Kb</div>
+                <div>Константин Бондаренко</div>
+            </div>
+
+            <nav>
+                <a href="../index.html#portfolio">Портфолио</a>
+                <a href="../index.html#services">Услуги</a>
+                <a href="../index.html#blog">Блог</a>
+                <a href="../index.html#contacts">Контакты</a>
+            </nav>
+
+            <div class="header-right">
+                <div class="header-links">
+                    <a href="https://wa.me/79912810796" class="circle-messenger circle-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"></a>
+                    <a href="https://t.me/whity14" class="circle-messenger circle-telegram" target="_blank" rel="noopener noreferrer" aria-label="Telegram"></a>
+                </div>
+                <div class="phone">
+                    <a href="tel:+79912810796" style="color: inherit;">+7 (991) 281-07-96</a>
+                </div>
+                <a href="#" class="btn btn-primary open-modal">Заказать звонок</a>
+            </div>
+
+            <button class="hamburger" id="hamburger" type="button" aria-controls="mobileNav" aria-expanded="false" aria-label="Открыть меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <div class="mobile-nav" id="mobileNav">
+            <a href="../index.html#portfolio">Портфолио</a>
+            <a href="../index.html#services">Услуги</a>
+            <a href="../index.html#blog">Блог</a>
+            <a href="../index.html#contacts">Контакты</a>
+
+            <div class="mobile-contacts">
+                <div>
+                    <a href="https://wa.me/79912810796" target="_blank" rel="noopener noreferrer">WhatsApp</a> ·
+                    <a href="https://t.me/whity14" target="_blank" rel="noopener noreferrer">Telegram</a>
+                </div>
+                <div><a href="tel:+79912810796" style="color: inherit;">+7 (991) 281-07-96</a></div>
+            </div>
+
+            <div class="mobile-actions">
+                <a href="#" class="btn btn-primary open-modal">Заказать звонок</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="letters-layer" id="lettersLayer"></div>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-inner">
+                <div class="hero-subtitle">БЛОГ</div>
+                <h1>Как писать текст лендинга, который продаёт</h1>
+                <p class="hero-text">
+                    Практический разбор: как собрать оффер, структуру и аргументы так, чтобы читатель понимал ценность и доходил до действия.
+                </p>
+
+                <div class="hero-actions">
+                    <a class="btn btn-secondary" href="../index.html">← Вернуться на главную</a>
+                    <a class="btn btn-primary open-modal" href="#">Заказать звонок</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container">
+            <div class="content-wrap">
+                <div class="post-meta" aria-label="Метаданные статьи">
+                    <span>Автор: Константин Бондаренко</span>
+                    <span>Дата: 24.12.2025</span>
+                    <span>Время чтения: ~9 минут</span>
+                </div>
+
+                <p class="lead">
+                    Лендинг — это не «красивый текст». Это последовательность смыслов, которая ведёт читателя от интереса к решению.
+                    Ниже — рабочая схема, как писать тексты для продающих страниц без магии и обещаний «в два клика».
+                </p>
+
+                <div class="hr"></div>
+
+                <article>
+                    <h2>1) Начинай не с текста, а с задачи</h2>
+                    <p>
+                        Большинство провалов происходит до первой строчки: автор не понимает, что именно нужно продать и кому.
+                        В итоге получается «универсальный текст для всех», а универсальные тексты не цепляют никого.
+                    </p>
+                    <p>Перед работой зафиксируй:</p>
+                    <ul>
+                        <li><strong>Цель страницы:</strong> заявка, звонок, запись, покупка, регистрация.</li>
+                        <li><strong>Целевая аудитория:</strong> кто принимает решение и в каком контексте.</li>
+                        <li><strong>Сценарий читателя:</strong> с какой мыслью он приходит и с какой должен уйти.</li>
+                        <li><strong>Главное обещание:</strong> какой измеримый или ощутимый результат он получит.</li>
+                    </ul>
+
+                    <div class="callout">
+                        <strong>Правило:</strong> если ты не можешь объяснить ценность в 1–2 предложениях, текст на странице расползётся.
+                    </div>
+
+                    <h2>2) Оффер — это не «мы лучшие»</h2>
+                    <p>
+                        Оффер — это ясная формулировка: для кого, что именно, какой результат и за счёт чего.
+                        «Качество», «индивидуальный подход» и «опыт с 2010 года» — это не оффер. Это детали, которые можно использовать,
+                        но только после того, как человек понял смысл.
+                    </p>
+
+                    <h3>Шаблон, который помогает собрать оффер</h3>
+                    <ul>
+                        <li><strong>Кому:</strong> «для владельцев малого бизнеса / экспертов / услуг»</li>
+                        <li><strong>Что:</strong> «пишу текст продающей страницы / статьи / письма»</li>
+                        <li><strong>Результат:</strong> «чтобы читатель понимал ценность и оставлял заявку»</li>
+                        <li><strong>Механика:</strong> «структура + аргументы + снятие возражений + понятный CTA»</li>
+                    </ul>
+
+                    <p>
+                        Пример оффера без лишних слов:
+                        «Пишу тексты продающих страниц для услуг, чтобы читатель быстро понимал ценность и доходил до заявки».
+                    </p>
+
+                    <h2>3) Структура: как вести читателя сверху вниз</h2>
+                    <p>
+                        Хороший лендинг читается по диагонали. У читателя мало времени, и он сканирует страницу:
+                        заголовки, первые строки, выделения, кнопки. Твоя задача — сделать так, чтобы при сканировании смысл был понятен.
+                    </p>
+
+                    <h3>Базовая структура блоков (универсальная)</h3>
+                    <ol>
+                        <li><strong>Hero:</strong> короткий смысл + кому + результат + CTA.</li>
+                        <li><strong>Проблема / контекст:</strong> что у клиента болит и почему сейчас.</li>
+                        <li><strong>Решение:</strong> что предлагается и как это работает.</li>
+                        <li><strong>Выгоды:</strong> не список «плюсов», а последствия для клиента.</li>
+                        <li><strong>Доверие:</strong> кейсы, примеры, цифры, гарантии, процесс.</li>
+                        <li><strong>Возражения:</strong> ответы на «дорого/долго/не подойдёт/страшно».</li>
+                        <li><strong>CTA и контакты:</strong> понятный шаг + что будет дальше.</li>
+                    </ol>
+
+                    <div class="callout">
+                        <strong>Ошибочный подход:</strong> сразу «о компании» и «наши преимущества». Читателю сначала нужен смысл: зачем ему это.
+                    </div>
+
+                    <h2>4) Заголовки: не «красиво», а ясно</h2>
+                    <p>
+                        Заголовок — это обещание смысла. Он должен помогать понять: о чём блок и почему он важен.
+                        Хорошие заголовки конкретны и «цепляются» за реальность клиента.
+                    </p>
+
+                    <h3>4 приёма для заголовков</h3>
+                    <ul>
+                        <li><strong>Результат:</strong> «Текст, который доводит до заявки»</li>
+                        <li><strong>Снятие риска:</strong> «Понятные сроки и правки до результата»</li>
+                        <li><strong>Конкретика:</strong> «Первый вариант текста — за 3 дня»</li>
+                        <li><strong>Контраст:</strong> «Без воды и “креативности ради креативности”»</li>
+                    </ul>
+
+                    <h2>5) Выгоды: говори на языке результата</h2>
+                    <p>
+                        «Мы пишем тексты», «мы делаем структуру», «мы анализируем аудиторию» — это процессы.
+                        Клиент покупает не процессы, а последствия: что станет проще, быстрее, понятнее, выгоднее.
+                    </p>
+
+                    <p>Превращай процесс в выгоду:</p>
+                    <ul>
+                        <li>«Собираю структуру» → «читатель быстро понимает смысл и не теряется»</li>
+                        <li>«Пишу без воды» → «текст читается легко и не раздражает»</li>
+                        <li>«Снимаю возражения» → «меньше сомнений, больше заявок»</li>
+                    </ul>
+
+                    <h2>6) Доверие: доказательства важнее слов</h2>
+                    <p>
+                        На лендинге доверие — это валюта. Если доверия нет, человек будет искать, к чему придраться:
+                        «не верю», «похоже на шаблон», «все так пишут».
+                    </p>
+
+                    <p>Что усиливает доверие:</p>
+                    <ul>
+                        <li><strong>Примеры работ</strong> (даже 2–3 качественных примера лучше, чем 20 “скоро будет”).</li>
+                        <li><strong>Процесс</strong> (шаги: бриф → структура → черновик → правки → финал).</li>
+                        <li><strong>Гарантии</strong> (что будет, если не подойдёт формат).</li>
+                        <li><strong>Конкретика</strong> (сроки, объём, что входит, что не входит).</li>
+                    </ul>
+
+                    <div class="callout">
+                        <strong>Важно:</strong> доверие не строится “словами о доверии”. Оно строится прозрачностью и фактами.
+                    </div>
+
+                    <h2>7) Возражения: предугадай вопросы читателя</h2>
+                    <p>
+                        Возражения — это не сопротивление «против тебя». Это попытка снизить риск.
+                        Если ты отвечаешь заранее — человек чувствует контроль и спокойнее принимает решение.
+                    </p>
+
+                    <h3>Частые возражения и что с ними делать</h3>
+                    <ul>
+                        <li><strong>«Дорого»</strong> — покажи, что входит, что получает клиент, как устроена работа.</li>
+                        <li><strong>«Не уверен, что подойдёт»</strong> — объясни процесс и точки согласования.</li>
+                        <li><strong>«Нет времени»</strong> — упростите старт: что нужно от клиента и сколько это займёт.</li>
+                        <li><strong>«У нас сложная тема»</strong> — покажи, как разбираешься: вопросы, бриф, примеры.</li>
+                    </ul>
+
+                    <h2>8) CTA: один шаг, один смысл</h2>
+                    <p>
+                        Призыв к действию должен быть понятным и безопасным. Не «купить прямо сейчас», если аудитория ещё не прогрета.
+                        Часто лучше работает мягкий шаг: консультация, аудит, расчёт, обсуждение задачи.
+                    </p>
+
+                    <h3>Примеры CTA, которые звучат спокойно</h3>
+                    <ul>
+                        <li>«Обсудить задачу»</li>
+                        <li>«Получить консультацию»</li>
+                        <li>«Оставить заявку»</li>
+                        <li>«Запросить стоимость»</li>
+                    </ul>
+
+                    <div class="callout">
+                        <strong>Лайфхак:</strong> CTA усиливается, если рядом есть ожидание процесса: «Ответим в течение дня», «Согласуем задачу и сроки».
+                    </div>
+
+                    <h2>9) Редактура: доведи текст до ясности</h2>
+                    <p>
+                        Черновик почти всегда длиннее, чем нужно. Редактура — это «убрать лишнее» и сделать смысл резче.
+                        Хороший лендинг — это когда фраз меньше, а понимания больше.
+                    </p>
+
+                    <div class="checklist">
+                        <h3>Чек-лист перед публикацией</h3>
+                        <ul>
+                            <li>В Hero понятно: кому, что, результат, CTA?</li>
+                            <li>Каждый блок отвечает на вопрос читателя или снимает риск?</li>
+                            <li>Есть конкретика: сроки, формат, процесс?</li>
+                            <li>Выгоды сформулированы как результат, а не как “мы делаем”?</li>
+                            <li>CTA один и понятный, без “разрывов” по смыслу?</li>
+                            <li>Текст читается по диагонали: заголовки и первые строки держат смысл?</li>
+                        </ul>
+                    </div>
+
+                    <h2>Если нужно — помогу собрать текст под вашу задачу</h2>
+                    <p>
+                        Можно написать страницу быстро. Но чтобы она работала, важны структура и логика.
+                        Если хотите — разберём вашу задачу, соберём оффер и сделаем текст, который читается легко и доводит до действия.
+                    </p>
+
+                    <div class="back-wrap">
+                        <a class="btn btn-secondary" href="../index.html">← Вернуться на главную</a>
+                        <a class="btn btn-primary open-modal" href="#">Оставить заявку</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-inner">
+            <div>
+                <strong>Константин Бондаренко</strong><br>
+                Копирайтер
+            </div>
+
+            <div class="footer-links">
+                <a href="https://wa.me/79912810796" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                <a href="https://t.me/whity14" target="_blank" rel="noopener noreferrer">Telegram</a>
+                <a href="mailto:byxapckuu@gmail.com">byxapckuu@gmail.com</a>
+                <a href="tel:+79912810796">+7 (991) 281-07-96</a>
+            </div>
+
+            <div class="footer-copy">
+                © 2025 · Все права защищены.
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="modal-close" id="modalClose" aria-label="Закрыть окно">&times;</button>
+
+        <h2 id="modalTitle">Обсудим вашу задачу</h2>
+
+        <div id="formMessage" class="form-message" aria-live="polite"></div>
+
+        <form id="contactForm" class="modal-form" novalidate>
+            <div class="hp-field" aria-hidden="true">
+                <label for="company">Company</label>
+                <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
+            </div>
+            <input type="hidden" id="clientTs" name="client_ts" value="">
+            <div class="modal-field">
+                <label for="name">Ваше имя<span class="req">*</span></label>
+                <input class="modal-input" type="text" id="name" name="name" required placeholder="Например: Иван">
+            </div>
+
+            <div class="modal-field">
+                <label for="email">Ваш email<span class="req">*</span></label>
+                <input class="modal-input" type="email" id="email" name="email" required placeholder="mail@example.com">
+            </div>
+
+            <div class="modal-field">
+                <label for="message">Ваше сообщение<span class="req">*</span></label>
+                <textarea class="modal-textarea" id="message" name="message" required placeholder="Коротко опишите задачу"></textarea>
+            </div>
+
+            <button type="submit" class="modal-submit">Отправить сообщение</button>
+        </form>
+
+        <div class="modal-divider"></div>
+
+        <p class="modal-subtitle">Или напишите в удобный мессенджер:</p>
+        <div class="modal-contacts">
+            <a class="circle-messenger circle-whatsapp" href="https://wa.me/79912810796" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"></a>
+            <a class="circle-messenger circle-telegram" href="https://t.me/whity14" target="_blank" rel="noopener noreferrer" aria-label="Telegram"></a>
+            <a class="modal-phone" href="tel:+79912810796">📞 +7 (991) 281-07-96</a>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // =========================
+    // Config
+    // =========================
+    // По умолчанию — для Cloudflare Pages (Functions/Worker binding): "/api/lead"
+    // Если воркер вынесен отдельно — замените на полный URL одной строкой:
+    // const LEAD_ENDPOINT = "https://xxx.workers.dev/api/lead";
+    const LEAD_ENDPOINT = "/api/lead";
+
+    // =========================
+    // Mobile menu (A11y)
+    // =========================
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    function setMobileNavState(isOpen) {
+        if (!mobileNav || !hamburger) return;
+        mobileNav.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+    }
+
+    function toggleMobileNav() {
+        if (!mobileNav || !hamburger) return;
+        const isOpen = !mobileNav.classList.contains('open');
+        setMobileNavState(isOpen);
+    }
+
+    if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', function () {
+            toggleMobileNav();
+        });
+
+        const mobileLinks = mobileNav.querySelectorAll('a');
+        mobileLinks.forEach(function (link) {
+            link.addEventListener('click', function () {
+                setMobileNavState(false);
+            });
+        });
+    }
+
+    // =========================
+    // Modal controls (Focus trap + restore focus)
+    // =========================
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+
+    let modalTriggerEl = null;
+
+    function showMessage(type, text) {
+        if (!formMessage) return;
+        formMessage.className = 'form-message ' + type;
+        formMessage.textContent = text;
+    }
+
+    function clearMessage() {
+        if (!formMessage) return;
+        formMessage.className = 'form-message';
+        formMessage.textContent = '';
+    }
+
+    function getFocusableElements(container) {
+        if (!container) return [];
+        const selectors = [
+            'a[href]',
+            'button:not([disabled])',
+            'input:not([disabled]):not([type="hidden"])',
+            'select:not([disabled])',
+            'textarea:not([disabled])',
+            '[tabindex]:not([tabindex="-1"])'
+        ];
+        return Array.from(container.querySelectorAll(selectors.join(',')))
+            .filter(function (el) { return el.offsetParent !== null; });
+    }
+
+    function openModal(event, triggerEl) {
+        if (event) event.preventDefault();
+        if (!modalOverlay) return;
+
+        modalTriggerEl = triggerEl || document.activeElement;
+
+        modalOverlay.classList.add('visible');
+        document.body.classList.add('modal-open');
+
+        clearMessage();
+
+        // Anti-spam: client timestamp (used by Worker)
+        const clientTsEl = document.getElementById('clientTs');
+        if (clientTsEl) clientTsEl.value = String(Date.now());
+
+        const firstField = document.getElementById('name');
+        if (firstField) {
+            setTimeout(function () { firstField.focus(); }, 0);
+        }
+    }
+
+    function closeModal() {
+        if (!modalOverlay) return;
+
+        modalOverlay.classList.remove('visible');
+        document.body.classList.remove('modal-open');
+
+        if (modalTriggerEl && typeof modalTriggerEl.focus === 'function') {
+            setTimeout(function () { modalTriggerEl.focus(); }, 0);
+        }
+        modalTriggerEl = null;
+    }
+
+    document.addEventListener('click', function (e) {
+        const trigger = e.target.closest('.open-modal');
+        if (!trigger) return;
+        openModal(e, trigger);
+    });
+
+    if (modalClose) {
+        modalClose.addEventListener('click', function (e) {
+            e.preventDefault();
+            closeModal();
+        });
+    }
+
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', function (e) {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', function (e) {
+        const isModalOpen = modalOverlay && modalOverlay.classList.contains('visible');
+
+        if ((e.key === 'Escape' || e.key === 'Esc') && isModalOpen) {
+            closeModal();
+            return;
+        }
+
+        if (e.key === 'Tab' && isModalOpen) {
+            const modal = modalOverlay.querySelector('.modal');
+            const focusables = getFocusableElements(modal);
+
+            if (!focusables.length) return;
+
+            const firstEl = focusables[0];
+            const lastEl = focusables[focusables.length - 1];
+
+            if (e.shiftKey && document.activeElement === firstEl) {
+                e.preventDefault();
+                lastEl.focus();
+                return;
+            }
+
+            if (!e.shiftKey && document.activeElement === lastEl) {
+                e.preventDefault();
+                firstEl.focus();
+            }
+        }
+    });
+
+    // =========================
+    // Form submit (via Cloudflare Worker)
+    // =========================
+    function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    async function submitLead(payload) {
+        const res = await fetch(LEAD_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        let data = null;
+        try { data = await res.json(); } catch (_) { data = null; }
+
+        if (res.ok && data && data.ok) {
+            return { ok: true };
+        }
+
+        const errorMsg = (data && data.error) ? data.error : 'Ошибка отправки';
+        return { ok: false, error: errorMsg, status: res.status };
+    }
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            clearMessage();
+
+            const nameEl = document.getElementById('name');
+            const emailEl = document.getElementById('email');
+            const msgEl = document.getElementById('message');
+            const companyEl = document.getElementById('company');
+            const clientTsEl = document.getElementById('clientTs');
+
+            const name = (nameEl && nameEl.value ? nameEl.value.trim() : '');
+            const email = (emailEl && emailEl.value ? emailEl.value.trim() : '');
+            const message = (msgEl && msgEl.value ? msgEl.value.trim() : '');
+            const company = (companyEl && companyEl.value ? companyEl.value.trim() : '');
+            const clientTs = (clientTsEl && clientTsEl.value ? Number(clientTsEl.value) : null);
+
+            if (name.length < 2) {
+                showMessage('error', 'Ошибка: имя должно быть не короче 2 символов.');
+                if (nameEl) nameEl.focus();
+                return;
+            }
+
+            if (!email || !validateEmail(email)) {
+                showMessage('error', 'Ошибка: укажите корректный email.');
+                if (emailEl) emailEl.focus();
+                return;
+            }
+
+            if (message.length < 10) {
+                showMessage('error', 'Ошибка: сообщение должно быть не короче 10 символов.');
+                if (msgEl) msgEl.focus();
+                return;
+            }
+
+            // Honeypot (must stay empty)
+            if (company) {
+                showMessage('error', 'Ошибка отправки.');
+                return;
+            }
+
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            if (submitBtn) submitBtn.disabled = true;
+
+            try {
+                const result = await submitLead({
+                    name: name,
+                    email: email,
+                    message: message,
+                    page: window.location.pathname,
+                    company: company,
+                    client_ts: clientTs
+                });
+
+                if (result.ok) {
+                    showMessage('success', 'Заявка отправлена!');
+                    contactForm.reset();
+                } else {
+                    showMessage('error', result.error || 'Ошибка отправки');
+                }
+            } catch (_) {
+                showMessage('error', 'Ошибка соединения');
+            } finally {
+                if (submitBtn) submitBtn.disabled = false;
+            }
+        });
+    }
+
+    // =========================
+    // Floating letters layer (по всему сайту, только desktop/tablet)
+    // =========================
+    const lettersLayer = document.getElementById('lettersLayer');
+
+    if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 769px)').matches) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const count = 24;
+
+        for (let i = 0; i < count; i++) {
+            const span = document.createElement('span');
+            span.className = 'floating-letter';
+            span.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
+
+            const left = 5 + Math.random() * 90;
+            const top = 5 + Math.random() * 90;
+
+            const fontSize = 8 + Math.random() * 18;
+            const delay = Math.random() * 20;
+
+            span.style.left = left + '%';
+            span.style.top = top + '%';
+            span.style.fontSize = fontSize + 'px';
+            span.style.animationDelay = delay + 's';
+
+            lettersLayer.appendChild(span);
+        }
+    }
+});
+</script>
+
+</body>
+</html>

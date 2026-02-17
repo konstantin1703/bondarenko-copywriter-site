@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Портфолио — Примеры постов для соцсетей | Константин Бондаренко</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Пример: посты для соцсетей (5–7 штук) — разные форматы, тон и подача. Автор: Константин Бондаренко.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Портфолио — Примеры постов для соцсетей">
+    <meta property="og:description" content="Пример копирайтинга: подборка постов для соцсетей с разными целями (полезное, доверие, вовлечение, CTA).">
+    <meta property="og:type" content="article">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #F8FAFC;      /* Основной фон */
+            --bg-white: #FFFFFF;        /* Белый */
+            --text-primary: #1F2937;    /* Основной текст */
+            --text-secondary: #6B7280;  /* Вторичный текст */
+            --accent: #2563EB;          /* Синий (кнопки, ссылки) */
+            --accent-hover: #1D4ED8;    /* Синий (hover) */
+            --border: #E5E7EB;          /* Разделители */
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            line-height: 1.6;
+        }
+
+        body.modal-open { overflow: hidden; }
+
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { color: var(--accent-hover); }
+
+        h1, h2, h3 {
+            margin: 0 0 16px;
+            font-weight: 700;
+        }
+
+        h1 { font-size: 48px; }
+        h2 { font-size: 32px; }
+        h3 { font-size: 22px; }
+
+        p { margin: 0 0 12px; }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ----------------------
+           HEADER + NAV
+        ---------------------- */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: var(--bg-white);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        .logo-mark {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            font-size: 14px;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        nav a:hover { color: var(--accent); }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 14px;
+        }
+
+        .header-links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .phone {
+            color: var(--text-secondary);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            color: #FFFFFF;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:focus-visible {
+            outline: 2px solid rgba(37, 99, 235, 0.7);
+            outline-offset: 2px;
+        }
+
+        .btn-secondary {
+            background: #EFF6FF;
+            color: var(--accent);
+            border: 1px solid rgba(37, 99, 235, 0.18);
+        }
+
+        .btn-secondary:hover {
+            background: #DBEAFE;
+            color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Hamburger (mobile) */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            flex: 0 0 auto;
+            background: transparent;
+            border: 0;
+            padding: 0;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .hamburger:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 4px;
+        }
+.hamburger span {
+            width: 20px;
+            height: 2px;
+            background-color: var(--text-primary);
+        }
+
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            padding: 12px 0 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .mobile-nav.open {
+            display: flex !important;
+            background-color: #FFFFFF;
+        }
+
+        .mobile-nav a {
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+
+        .mobile-nav .mobile-contacts {
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: grid;
+            gap: 6px;
+        }
+
+        .mobile-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding-top: 6px;
+        }
+
+        /* ----------------------
+           HERO
+        ---------------------- */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #F8FAFC 0%, #F0F9FF 100%);
+            padding: 90px 0 70px;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            max-width: 860px;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .hero h1 { margin-bottom: 10px; }
+
+        .hero-role {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .hero-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 22px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* ----------------------
+           CONTENT
+        ---------------------- */
+
+        section { padding: 80px 0; }
+
+        .content { background: #FFFFFF; }
+
+        .content-wrap {
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 26px;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 14px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+        }
+
+        .meta span {
+            background: #F8FAFC;
+            border: 1px solid rgba(229, 231, 235, 0.7);
+            border-radius: 999px;
+            padding: 6px 10px;
+        }
+
+        .lead {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 18px;
+        }
+
+        .hr {
+            height: 1px;
+            background: var(--border);
+            margin: 18px 0;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .post-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(229, 231, 235, 0.95);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .post-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .post-tag {
+            font-size: 12px;
+            color: var(--text-secondary);
+            background: #F8FAFC;
+            border: 1px solid rgba(229, 231, 235, 0.7);
+            border-radius: 999px;
+            padding: 6px 10px;
+            white-space: nowrap;
+        }
+
+        .post-title {
+            font-size: 16px;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .post-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin: 0;
+            white-space: pre-line;
+        }
+
+        .back-wrap {
+            margin-top: 18px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* ----------------------
+           FOOTER
+        ---------------------- */
+
+        footer {
+            background-color: #1F2937;
+            color: #FFFFFF;
+            padding: 60px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            color: #E5E7EB;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover { color: #FFFFFF; }
+
+        .footer-copy {
+            color: #9CA3AF;
+            font-size: 13px;
+        }
+
+        /* ----------------------
+           LETTERS LAYER
+        ---------------------- */
+
+        .letters-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        body > *:not(header):not(.letters-layer):not(.modal-overlay) {
+            position: relative;
+            z-index: 1;
+        }
+
+        .floating-letter {
+            position: absolute;
+            color: var(--text-primary);
+            opacity: 0.05;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-weight: 300;
+            letter-spacing: 2px;
+            user-select: none;
+            line-height: 1;
+            animation: floatLetter 18s linear 3;
+        }
+
+        @keyframes floatLetter {
+            0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.07; }
+            50% { transform: translate3d(40px, -30px, 0) rotate(120deg); opacity: 0.09; }
+            100% { transform: translate3d(-40px, 30px, 0) rotate(360deg); opacity: 0; }
+        }
+
+        /* ----------------------
+           MODAL
+        ---------------------- */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            z-index: 1100;
+        }
+
+        .modal-overlay.visible { display: flex; }
+
+        .modal {
+            background: #FFFFFF;
+            border-radius: 12px;
+            max-width: 560px;
+            width: 100%;
+            padding: 22px 20px 18px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            position: relative;
+            animation: modalFade 0.25s ease-out;
+        }
+
+        @keyframes modalFade {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            line-height: 1;
+        }
+
+        .modal h2 {
+            margin: 0 0 12px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .modal-field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .modal-field .req {
+            color: var(--accent);
+            margin-left: 2px;
+        }
+
+        .modal-input,
+        .modal-textarea {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--text-primary);
+            background: #FFFFFF;
+            outline: none;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .modal-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .modal-input:focus,
+        .modal-textarea:focus {
+            border-color: rgba(37, 99, 235, 0.65);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+        }
+
+        .modal-submit {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--accent);
+            color: #FFFFFF;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .modal-submit:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .modal-submit:focus-visible {
+            outline: 2px solid rgba(37, 99, 235, 0.7);
+            outline-offset: 2px;
+        }
+
+        .form-message {
+            display: none;
+            margin: 0 0 8px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .form-message.error {
+            display: block;
+            background: rgba(220, 38, 38, 0.08);
+            border: 1px solid rgba(220, 38, 38, 0.25);
+            color: #991B1B;
+        }
+
+        .form-message.success {
+            display: block;
+            background: rgba(22, 163, 74, 0.08);
+            border: 1px solid rgba(22, 163, 74, 0.25);
+            color: #166534;
+        }
+
+        .modal-divider {
+            margin: 10px 0 10px;
+            border-top: 1px solid var(--border);
+        }
+
+        .modal-subtitle {
+            margin: 0 0 10px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .modal-contacts {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 6px;
+        }
+
+        .modal-phone {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .modal-phone:hover { color: var(--accent); }
+
+        /* ----------------------
+           ICON / MESSENGER STYLES
+        ---------------------- */
+
+        .circle-messenger {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+
+        .circle-messenger::before {
+            content: '';
+            display: block;
+            width: 70%;
+            height: 70%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .circle-whatsapp { background-color: #25D366; }
+        .circle-whatsapp::before {
+            background-image: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg');
+            filter: invert(1);
+        }
+
+        .circle-telegram { background-color: #0088cc; }
+        .circle-telegram::before {
+            background-image: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg');
+            filter: invert(1);
+        }
+
+        .circle-messenger:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+        }
+
+        /* ----------------------
+           ADAPTIVE
+        ---------------------- */
+
+        @media (max-width: 1024px) {
+            section { padding: 60px 0; }
+            .posts-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 32px; }
+            h2 { font-size: 24px; }
+
+            .hero { padding: 60px 0; }
+            .header-inner { height: 64px; }
+
+            nav, .header-right { display: none; }
+            .hamburger { display: flex; }
+
+            .letters-layer { display: none; }
+            .modal { max-width: 90%; }
+        }
+        .hp-field {
+            position: absolute;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+
+</style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-mark">Kb</div>
+                <div>Константин Бондаренко</div>
+            </div>
+
+            <nav>
+                <a href="../index.html#portfolio">Портфолио</a>
+                <a href="../index.html#services">Услуги</a>
+                <a href="../index.html#blog">Блог</a>
+                <a href="../index.html#contacts">Контакты</a>
+            </nav>
+
+            <div class="header-right">
+                <div class="header-links">
+                    <a href="https://wa.me/79912810796" class="circle-messenger circle-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"></a>
+                    <a href="https://t.me/whity14" class="circle-messenger circle-telegram" target="_blank" rel="noopener noreferrer" aria-label="Telegram"></a>
+                </div>
+                <div class="phone">
+                    <a href="tel:+79912810796" style="color: inherit;">+7 (991) 281-07-96</a>
+                </div>
+                <a href="#" class="btn btn-primary open-modal">Заказать звонок</a>
+            </div>
+
+            <button class="hamburger" id="hamburger" type="button" aria-controls="mobileNav" aria-expanded="false" aria-label="Открыть меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <div class="mobile-nav" id="mobileNav">
+            <a href="../index.html#portfolio">Портфолио</a>
+            <a href="../index.html#services">Услуги</a>
+            <a href="../index.html#blog">Блог</a>
+            <a href="../index.html#contacts">Контакты</a>
+
+            <div class="mobile-contacts">
+                <div>
+                    <a href="https://wa.me/79912810796" target="_blank" rel="noopener noreferrer">WhatsApp</a> ·
+                    <a href="https://t.me/whity14" target="_blank" rel="noopener noreferrer">Telegram</a>
+                </div>
+                <div><a href="tel:+79912810796" style="color: inherit;">+7 (991) 281-07-96</a></div>
+            </div>
+
+            <div class="mobile-actions">
+                <a href="#" class="btn btn-primary open-modal">Заказать звонок</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="letters-layer" id="lettersLayer"></div>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-inner">
+                <div class="hero-subtitle">ПОРТФОЛИО</div>
+                <h1>Пример 3 — посты для соцсетей</h1>
+                <div class="hero-role">Формат: 7 постов по 100–150 слов (пример)</div>
+                <p class="hero-text">
+                    Ниже — подборка демонстрационных постов: полезное, доверие, вовлечение, мягкий призыв.
+                    Можно адаптировать под Telegram/Instagram/VK.
+                </p>
+
+                <div class="hero-actions">
+                    <a class="btn btn-secondary" href="../index.html">← Вернуться на главную</a>
+                    <a class="btn btn-primary open-modal" href="#">Заказать звонок</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container">
+            <div class="content-wrap">
+                <h2>Описание примера</h2>
+                <p class="lead">
+                    Задача: подготовить серию постов для эксперта (услуги для бизнеса). Цель: дать пользу, показать подход,
+                    собрать доверие и привести к диалогу в личке.
+                </p>
+
+                <div class="meta" aria-label="Метаданные примера">
+                    <span>Формат: соцсети</span>
+                    <span>Тон: спокойный, практичный</span>
+                    <span>Цели: польза / доверие / вовлечение</span>
+                    <span>Объём: 7 постов</span>
+                </div>
+
+                <div class="hr"></div>
+
+                <div class="posts-grid">
+                    <div class="post-card">
+                        <div class="post-top">
+                            <h3 class="post-title">Пост 1: «Почему текст не работает»</h3>
+                            <div class="post-tag">Польза</div>
+                        </div>
+                        <p class="post-text">Частая причина, почему текст “не продаёт”, — он не отвечает на главный вопрос клиента: «А мне это зачем?»
+Не “какие у вас услуги”, а какую проблему вы снимаете и что станет проще после покупки.
+
+Попробуйте простой тест:
+1) Выпишите 3 боли клиента.
+2) Рядом — 3 результата (в чём станет лучше).
+3) И только потом подбирайте формулировки.
+
+Если текст начинается с “мы компания с опытом…”, а выгода появляется в конце — читатель может до конца просто не дойти.</p>
+                    </div>
+
+                    <div class="post-card">
+                        <div class="post-top">
+                            <h3 class="post-title">Пост 2: «Короткая формула ясности»</h3>
+                            <div class="post-tag">Польза</div>
+                        </div>
+                        <p class="post-text">Ясный текст обычно собирается из трёх вещей:
+— Кто вы и чем полезны (1 предложение)
+— Кому это (1 предложение)
+— Что получит человек (1–2 предложения)
+
+Пример:
+«Помогаю малому бизнесу приводить заявки через тексты.
+Пишу для экспертов и услуг.
+Делаю структуру, снимаю возражения, помогаю объяснить ценность простыми словами».
+
+Без “мы динамично развиваемся” и “индивидуальный подход”. Читателю важнее понять смысл, чем оценить эпитеты.</p>
+                    </div>
+
+                    <div class="post-card">
+                        <div class="post-top">
+                            <h3 class="post-title">Пост 3: «Текст — это не украшение»</h3>
+                            <div class="post-tag">Мнение</div>
+                        </div>
+                        <p class="post-text">Текст не обязан быть “красивым”. Он обязан быть понятным.
+
+Иногда самый рабочий вариант — сухой, но честный:
+— что делаем
+— как
+— сколько по времени
+— сколько стоит
+— что нужно от клиента
+
+И да, это не всегда звучит “вдохновляюще”. Зато человек не теряется и быстрее принимает решение.
+Смысл важнее блеска. Блеск — потом, когда структура уже держится.</p>
+                    </div>
+
+                    <div class="post-card">
+                        <div class="post-top">
+                            <h3 class="post-title">Пост 4: «Возражения — это подарок»</h3>
+                            <div class="post-tag">Польза</div>
+                        </div>
+                        <p class="post-text">Когда клиент задаёт вопрос “а если не получится?” — это не придирка. Это попытка снизить риск.
+
+Хороший текст делает это заранее:
+— “Сроки фиксируем до старта”
+— “Правки — до согласования результата”
+— “Если не подойдёт формат — вернём оплату” (если так работаете)
+
+Чем прозрачнее правила, тем меньше недоверия. И тем меньше “пропал после первого созвона”.</p>
+                    </div>
+
+                    <div class="post-card">
+                        <div class="post-top">
+                            <h3 class="post-title">Пост 5: «История из практики»</h3>
+                            <div class="post-tag">Доверие</div>
+                        </div>
+                        <p class="post-text">Был проект, где текст “в целом нравился”, но заявок почти не было.
+Проблема оказалась простой: человек не понимал, с чего начать.
+
+Мы добавили:
+— 3 шага работы
+— что нужно от клиента
+— что он получит в итоге
+— и понятный CTA (“получить консультацию”)
+
+Никакой магии. Просто сняли неопределённость.
+Иногда конверсию убивает не качество фраз, а отсутствие ясного следующего шага.</p>
+                    </div>
+
+                    <div class="post-card">
+                        <div class="post-top">
+                            <h3 class="post-title">Пост 6: «Вопрос аудитории»</h3>
+                            <div class="post-tag">Вовлечение</div>
+                        </div>
+                        <p class="post-text">Давайте честно: что сложнее всего в текстах?
+
+1) Сформулировать оффер
+2) Сделать структуру
+3) Написать “живым” языком без воды
+4) Снять возражения
+5) Придумать заголовки
+
+Напишите цифру в комментарии — и я сделаю короткий разбор по самому популярному пункту.
+Без “мотивации”. Только практика: как именно это собирать.</p>
+                    </div>
+
+                    <div class="post-card">
+                        <div class="post-top">
+                            <h3 class="post-title">Пост 7: «Мягкий CTA»</h3>
+                            <div class="post-tag">CTA</div>
+                        </div>
+                        <p class="post-text">Если хотите, могу быстро посмотреть ваш текст и сказать, где он теряет ясность:
+— что непонятно
+— что лишнее
+— где не хватает конкретики
+— и какой CTA поставить
+
+Без продажи “в лоб”. Просто короткий аудит и рекомендации.
+Напишите в личку слово “ТЕКСТ” — и пришлите ссылку или документ.</p>
+                    </div>
+                </div>
+
+                <div class="back-wrap">
+                    <a class="btn btn-secondary" href="../index.html">← Вернуться на главную</a>
+                    <a class="btn btn-primary open-modal" href="#">Оставить заявку</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-inner">
+            <div>
+                <strong>Константин Бондаренко</strong><br>
+                Копирайтер
+            </div>
+
+            <div class="footer-links">
+                <a href="https://wa.me/79912810796" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                <a href="https://t.me/whity14" target="_blank" rel="noopener noreferrer">Telegram</a>
+                <a href="mailto:byxapckuu@gmail.com">byxapckuu@gmail.com</a>
+                <a href="tel:+79912810796">+7 (991) 281-07-96</a>
+            </div>
+
+            <div class="footer-copy">
+                © 2025 · Все права защищены.
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="modal-close" id="modalClose" aria-label="Закрыть окно">&times;</button>
+
+        <h2 id="modalTitle">Обсудим вашу задачу</h2>
+
+        <div id="formMessage" class="form-message" aria-live="polite"></div>
+
+        <form id="contactForm" class="modal-form" novalidate>
+            <div class="hp-field" aria-hidden="true">
+                <label for="company">Company</label>
+                <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
+            </div>
+            <input type="hidden" id="clientTs" name="client_ts" value="">
+            <div class="modal-field">
+                <label for="name">Ваше имя<span class="req">*</span></label>
+                <input class="modal-input" type="text" id="name" name="name" required placeholder="Например: Иван">
+            </div>
+
+            <div class="modal-field">
+                <label for="email">Ваш email<span class="req">*</span></label>
+                <input class="modal-input" type="email" id="email" name="email" required placeholder="mail@example.com">
+            </div>
+
+            <div class="modal-field">
+                <label for="message">Ваше сообщение<span class="req">*</span></label>
+                <textarea class="modal-textarea" id="message" name="message" required placeholder="Коротко опишите задачу"></textarea>
+            </div>
+
+            <button type="submit" class="modal-submit">Отправить сообщение</button>
+        </form>
+
+        <div class="modal-divider"></div>
+
+        <p class="modal-subtitle">Или напишите в удобный мессенджер:</p>
+        <div class="modal-contacts">
+            <a class="circle-messenger circle-whatsapp" href="https://wa.me/79912810796" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"></a>
+            <a class="circle-messenger circle-telegram" href="https://t.me/whity14" target="_blank" rel="noopener noreferrer" aria-label="Telegram"></a>
+            <a class="modal-phone" href="tel:+79912810796">📞 +7 (991) 281-07-96</a>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // =========================
+    // Config
+    // =========================
+    // По умолчанию — для Cloudflare Pages (Functions/Worker binding): "/api/lead"
+    // Если воркер вынесен отдельно — замените на полный URL одной строкой:
+    // const LEAD_ENDPOINT = "https://xxx.workers.dev/api/lead";
+    const LEAD_ENDPOINT = "/api/lead";
+
+    // =========================
+    // Mobile menu (A11y)
+    // =========================
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    function setMobileNavState(isOpen) {
+        if (!mobileNav || !hamburger) return;
+        mobileNav.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+    }
+
+    function toggleMobileNav() {
+        if (!mobileNav || !hamburger) return;
+        const isOpen = !mobileNav.classList.contains('open');
+        setMobileNavState(isOpen);
+    }
+
+    if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', function () {
+            toggleMobileNav();
+        });
+
+        const mobileLinks = mobileNav.querySelectorAll('a');
+        mobileLinks.forEach(function (link) {
+            link.addEventListener('click', function () {
+                setMobileNavState(false);
+            });
+        });
+    }
+
+    // =========================
+    // Modal controls (Focus trap + restore focus)
+    // =========================
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+
+    let modalTriggerEl = null;
+
+    function showMessage(type, text) {
+        if (!formMessage) return;
+        formMessage.className = 'form-message ' + type;
+        formMessage.textContent = text;
+    }
+
+    function clearMessage() {
+        if (!formMessage) return;
+        formMessage.className = 'form-message';
+        formMessage.textContent = '';
+    }
+
+    function getFocusableElements(container) {
+        if (!container) return [];
+        const selectors = [
+            'a[href]',
+            'button:not([disabled])',
+            'input:not([disabled]):not([type="hidden"])',
+            'select:not([disabled])',
+            'textarea:not([disabled])',
+            '[tabindex]:not([tabindex="-1"])'
+        ];
+        return Array.from(container.querySelectorAll(selectors.join(',')))
+            .filter(function (el) { return el.offsetParent !== null; });
+    }
+
+    function openModal(event, triggerEl) {
+        if (event) event.preventDefault();
+        if (!modalOverlay) return;
+
+        modalTriggerEl = triggerEl || document.activeElement;
+
+        modalOverlay.classList.add('visible');
+        document.body.classList.add('modal-open');
+
+        clearMessage();
+
+        // Anti-spam: client timestamp (used by Worker)
+        const clientTsEl = document.getElementById('clientTs');
+        if (clientTsEl) clientTsEl.value = String(Date.now());
+
+        const firstField = document.getElementById('name');
+        if (firstField) {
+            setTimeout(function () { firstField.focus(); }, 0);
+        }
+    }
+
+    function closeModal() {
+        if (!modalOverlay) return;
+
+        modalOverlay.classList.remove('visible');
+        document.body.classList.remove('modal-open');
+
+        if (modalTriggerEl && typeof modalTriggerEl.focus === 'function') {
+            setTimeout(function () { modalTriggerEl.focus(); }, 0);
+        }
+        modalTriggerEl = null;
+    }
+
+    document.addEventListener('click', function (e) {
+        const trigger = e.target.closest('.open-modal');
+        if (!trigger) return;
+        openModal(e, trigger);
+    });
+
+    if (modalClose) {
+        modalClose.addEventListener('click', function (e) {
+            e.preventDefault();
+            closeModal();
+        });
+    }
+
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', function (e) {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', function (e) {
+        const isModalOpen = modalOverlay && modalOverlay.classList.contains('visible');
+
+        if ((e.key === 'Escape' || e.key === 'Esc') && isModalOpen) {
+            closeModal();
+            return;
+        }
+
+        if (e.key === 'Tab' && isModalOpen) {
+            const modal = modalOverlay.querySelector('.modal');
+            const focusables = getFocusableElements(modal);
+
+            if (!focusables.length) return;
+
+            const firstEl = focusables[0];
+            const lastEl = focusables[focusables.length - 1];
+
+            if (e.shiftKey && document.activeElement === firstEl) {
+                e.preventDefault();
+                lastEl.focus();
+                return;
+            }
+
+            if (!e.shiftKey && document.activeElement === lastEl) {
+                e.preventDefault();
+                firstEl.focus();
+            }
+        }
+    });
+
+    // =========================
+    // Form submit (via Cloudflare Worker)
+    // =========================
+    function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    async function submitLead(payload) {
+        const res = await fetch(LEAD_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        let data = null;
+        try { data = await res.json(); } catch (_) { data = null; }
+
+        if (res.ok && data && data.ok) {
+            return { ok: true };
+        }
+
+        const errorMsg = (data && data.error) ? data.error : 'Ошибка отправки';
+        return { ok: false, error: errorMsg, status: res.status };
+    }
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            clearMessage();
+
+            const nameEl = document.getElementById('name');
+            const emailEl = document.getElementById('email');
+            const msgEl = document.getElementById('message');
+            const companyEl = document.getElementById('company');
+            const clientTsEl = document.getElementById('clientTs');
+
+            const name = (nameEl && nameEl.value ? nameEl.value.trim() : '');
+            const email = (emailEl && emailEl.value ? emailEl.value.trim() : '');
+            const message = (msgEl && msgEl.value ? msgEl.value.trim() : '');
+            const company = (companyEl && companyEl.value ? companyEl.value.trim() : '');
+            const clientTs = (clientTsEl && clientTsEl.value ? Number(clientTsEl.value) : null);
+
+            if (name.length < 2) {
+                showMessage('error', 'Ошибка: имя должно быть не короче 2 символов.');
+                if (nameEl) nameEl.focus();
+                return;
+            }
+
+            if (!email || !validateEmail(email)) {
+                showMessage('error', 'Ошибка: укажите корректный email.');
+                if (emailEl) emailEl.focus();
+                return;
+            }
+
+            if (message.length < 10) {
+                showMessage('error', 'Ошибка: сообщение должно быть не короче 10 символов.');
+                if (msgEl) msgEl.focus();
+                return;
+            }
+
+            // Honeypot (must stay empty)
+            if (company) {
+                showMessage('error', 'Ошибка отправки.');
+                return;
+            }
+
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            if (submitBtn) submitBtn.disabled = true;
+
+            try {
+                const result = await submitLead({
+                    name: name,
+                    email: email,
+                    message: message,
+                    page: window.location.pathname,
+                    company: company,
+                    client_ts: clientTs
+                });
+
+                if (result.ok) {
+                    showMessage('success', 'Заявка отправлена!');
+                    contactForm.reset();
+                } else {
+                    showMessage('error', result.error || 'Ошибка отправки');
+                }
+            } catch (_) {
+                showMessage('error', 'Ошибка соединения');
+            } finally {
+                if (submitBtn) submitBtn.disabled = false;
+            }
+        });
+    }
+
+    // =========================
+    // Floating letters layer (по всему сайту, только desktop/tablet)
+    // =========================
+    const lettersLayer = document.getElementById('lettersLayer');
+
+    if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 769px)').matches) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const count = 24;
+
+        for (let i = 0; i < count; i++) {
+            const span = document.createElement('span');
+            span.className = 'floating-letter';
+            span.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
+
+            const left = 5 + Math.random() * 90;
+            const top = 5 + Math.random() * 90;
+
+            const fontSize = 8 + Math.random() * 18;
+            const delay = Math.random() * 20;
+
+            span.style.left = left + '%';
+            span.style.top = top + '%';
+            span.style.fontSize = fontSize + 'px';
+            span.style.animationDelay = delay + 's';
+
+            lettersLayer.appendChild(span);
+        }
+    }
+});
+</script>
+
+</body>
+</html>

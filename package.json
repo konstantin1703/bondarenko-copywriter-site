@@ -1,0 +1,27 @@
+{
+  "name": "bondarenko-copywriter-site",
+  "version": "1.0.0",
+  "description": "Professional copywriter portfolio website for Konstantin Bondarenko",
+  "main": "index.html",
+  "scripts": {
+    "dev": "echo 'Development server not configured yet'",
+    "build": "echo 'Build process not configured yet'",
+    "preview": "echo 'Preview not configured yet'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/konstantin1703/bondarenko-copywriter-site.git"
+  },
+  "keywords": [
+    "copywriting",
+    "portfolio",
+    "landing-page",
+    "website"
+  ],
+  "author": "Konstantin Bondarenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/konstantin1703/bondarenko-copywriter-site/issues"
+  },
+  "homepage": "https://konstantin1703.github.io/bondarenko-copywriter-site/"
+}

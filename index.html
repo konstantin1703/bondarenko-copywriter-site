@@ -479,16 +479,46 @@
         }
 
         /* ----------------------
-           BLOG (заглушка)
+           BLOG
         ---------------------- */
 
         .blog {
             background-color: var(--bg-primary);
         }
 
-        .blog-placeholder {
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .blog-card {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            padding: 24px;
+            transition: box-shadow 0.2s ease, transform 0.1s ease;
+        }
+
+        .blog-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .blog-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .blog-card p {
             color: var(--text-secondary);
-            font-size: 15px;
+            font-size: 14px;
+            margin-bottom: 14px;
+        }
+
+        .blog-card a {
+            font-size: 14px;
+            font-weight: 500;
         }
 
         /* ----------------------
@@ -1071,19 +1101,19 @@
         </div>
         <div class="portfolio-grid">
             <div class="portfolio-card">
-                <h3>Лендинг коммерческого копирайтера</h3>
-                <p>Структура и тексты для личного лендинга копирайтера. Фокус на спокойной подаче и заявках через мессенджер.</p>
-                <a href="https://konstantin1703.github.io/anna-copywriter-landing/" target="_blank" rel="noopener noreferrer">Смотреть пример →</a>
+                <h3>Текст для landing-страницы</h3>
+                <p>Пример структуры и содержания продающего лендинга: блоки, заголовки, CTA и работа с возражениями.</p>
+                <a href="portfolio/example-1-landing-text.html">Смотреть пример →</a>
             </div>
             <div class="portfolio-card">
-                <h3>Одностраничник для услуги</h3>
-                <p>Лендинг для нишевой услуги с акцентом на выгоды, социальное доказательство и понятное УТП.</p>
-                <a href="#" target="_blank" rel="noopener noreferrer">Смотреть пример →</a>
+                <h3>Статья для блога</h3>
+                <p>Экспертная статья с четкой структурой, которая отвечает на вопрос и позиционирует автора как специалиста.</p>
+                <a href="portfolio/example-2-article.html">Смотреть пример →</a>
             </div>
             <div class="portfolio-card">
-                <h3>Статьи и экспертный контент</h3>
-                <p>Подборка материалов для блога и рассылки: объясняем продукт и снимаем сомнения у читателя.</p>
-                <a href="#" target="_blank" rel="noopener noreferrer">Смотреть пример →</a>
+                <h3>Посты для соцсетей</h3>
+                <p>Примеры коротких текстов для Instagram, TikTok и других платформ — увлекающие, легкие, с призывом к действию.</p>
+                <a href="portfolio/example-3-social-posts.html">Смотреть пример →</a>
             </div>
         </div>
     </div>
@@ -1142,15 +1172,30 @@
 </section>
 
 <!-- =========================
-     BLOG (заглушка)
+     BLOG
 ========================= -->
 <section class="blog" id="blog">
     <div class="container">
         <div class="section-header">
             <h2>Блог</h2>
-            <p class="blog-placeholder">
-                Здесь будут статьи о текстах, структуре лендингов и работе с контентом. Раздел в разработке.
-            </p>
+            <p>Статьи о текстах, структуре лендингов и работе с контентом.</p>
+        </div>
+        <div class="blog-grid">
+            <div class="blog-card">
+                <h3>5 советов по контент-стратегии</h3>
+                <p>Как спланировать контент так, чтобы он приносил результат, а не просто заполнял пространство.</p>
+                <a href="blog/content-strategy-tips.html">Читать статью →</a>
+            </div>
+            <div class="blog-card">
+                <h3>Ошибки начинающих копирайтеров</h3>
+                <p>Разбираю популярные промахи и объясняю, как их избежать на старте карьеры.</p>
+                <a href="blog/copywriting-mistakes.html">Читать статью →</a>
+            </div>
+            <div class="blog-card">
+                <h3>Как написать текст для лендинга</h3>
+                <p>Пошаговая инструкция: от исследования аудитории до финальных правок продающего текста.</p>
+                <a href="blog/how-to-write-landing-copy.html">Читать статью →</a>
+            </div>
         </div>
     </div>
 </section>

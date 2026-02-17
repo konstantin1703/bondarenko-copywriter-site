@@ -6,4 +6,40 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://konstantin1703.github.io/bondarenko-copywriter-site/blog/content-strategy-tips.html</loc>
+    <lastmod>2026-02-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://konstantin1703.github.io/bondarenko-copywriter-site/blog/copywriting-mistakes.html</loc>
+    <lastmod>2026-02-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://konstantin1703.github.io/bondarenko-copywriter-site/blog/how-to-write-landing-copy.html</loc>
+    <lastmod>2026-02-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://konstantin1703.github.io/bondarenko-copywriter-site/portfolio/example-1-landing-text.html</loc>
+    <lastmod>2026-02-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://konstantin1703.github.io/bondarenko-copywriter-site/portfolio/example-2-article.html</loc>
+    <lastmod>2026-02-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://konstantin1703.github.io/bondarenko-copywriter-site/portfolio/example-3-social-posts.html</loc>
+    <lastmod>2026-02-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

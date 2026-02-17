@@ -6,12 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Константин Бондаренко — копирайтер. Пишу тексты для продающих страниц, статьи, email-рассылки и контент для соцсетей, которые приводят клиентов.">
 
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=1">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon.png?v=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=1">
+
+    <link rel="manifest" href="site.webmanifest">
+
     <!-- Open Graph -->
     <meta property="og:title" content="Константин Бондаренко — копирайтер">
     <meta property="og:description" content="Пишу тексты, которые приводят клиентов: продающие страницы, статьи, email-рассылки, контент для соцсетей, редактура и рерайт.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://konstantin1703.github.io/bondarenko-copywriter-site/">
-    <meta property="og:image" content="https://konstantin1703.github.io/bondarenko-copywriter-site/og-image.png">
+    <meta property="og:image" content="https://konstantin1703.github.io/bondarenko-copywriter-site/og-preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -215,7 +224,8 @@
             outline: 2px solid var(--accent);
             outline-offset: 4px;
         }
-.hamburger span {
+
+        .hamburger span {
             width: 20px;
             height: 2px;
             background-color: var(--text-primary);
@@ -865,6 +875,7 @@
             .letters-layer { display: none; }
             .modal { max-width: 90%; }
         }
+
         .hp-field {
             position: absolute;
             left: -9999px;
@@ -872,8 +883,7 @@
             height: 1px;
             overflow: hidden;
         }
-
-</style>
+    </style>
 </head>
 <body>
 
@@ -1311,6 +1321,7 @@
                 <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
             </div>
             <input type="hidden" id="clientTs" name="client_ts" value="">
+
             <div class="modal-field">
                 <label for="name">Ваше имя<span class="req">*</span></label>
                 <input class="modal-input" type="text" id="name" name="name" required placeholder="Например: Иван">
@@ -1343,12 +1354,9 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     // =========================
-    // Config
+    // Config - Production Worker endpoint
     // =========================
-    // По умолчанию — для Cloudflare Pages (Functions/Worker binding): "/api/lead"
-    // Если воркер вынесен отдельно — замените на полный URL одной строкой:
-    // const LEAD_ENDPOINT = "https://xxx.workers.dev/api/lead";
-    const LEAD_ENDPOINT = "/api/lead";
+    const LEAD_ENDPOINT = "https://leads-inbox.byxapckuu.workers.dev";
 
     // =========================
     // Mobile menu (A11y)
@@ -1596,7 +1604,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // =========================
-    // Floating letters layer (по всему сайту, только desktop/tablet)
+    // Floating letters layer (desktop/tablet only)
     // =========================
     const lettersLayer = document.getElementById('lettersLayer');
 

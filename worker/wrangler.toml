@@ -1,0 +1,16 @@
+name = "bondarenko-leads"
+main = "src/index.js"
+compatibility_date = "2026-01-23"
+
+# ✅ Опционально: KV rate limit (5 запросов/мин на IP)
+# 1) wrangler kv:namespace create LEAD_RATELIMIT
+# 2) вставьте полученный id ниже и раскомментируйте блок
+#
+# kv_namespaces = [
+#   { binding = "LEAD_RATELIMIT", id = "PASTE_KV_NAMESPACE_ID_HERE" }
+# ]
+
+[vars]
+# CORS allow-list (comma-separated). Добавьте ваши домены.
+# Для same-origin (когда сайт и /api/lead на одном домене) конфиг не обязателен.
+ALLOWED_ORIGINS = "https://konstantin1703.github.io"

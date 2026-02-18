@@ -7,7 +7,7 @@
     <meta name="description" content="Константин Бондаренко — копирайтер. Лендинги, статьи, описания услуг, которые приводят клиентов.">
     
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https://leads-inbox.byxapckuu.workers.dev;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https://leads-inbox.byxapckuu.workers.dev; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://leads-inbox.byxapckuu.workers.dev;">
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
 
@@ -37,13 +37,13 @@
 
     <style>
 :root {
-            --bg-primary: #F8FAFC;      /* Основной фон */
-            --bg-white: #FFFFFF;        /* Белый */
-            --text-primary: #1F2937;    /* Основной текст */
-            --text-secondary: #6B7280;  /* Вторичный текст */
-            --accent: #2563EB;          /* Синий (кнопки, ссылки) */
-            --accent-hover: #1D4ED8;    /* Синий (hover) */
-            --border: #E5E7EB;          /* Разделители */
+            --bg-primary: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --accent: #2563EB;
+            --accent-hover: #1D4ED8;
+            --border: #E5E7EB;
         }
 
         * {
@@ -58,7 +58,6 @@
             line-height: 1.6;
         }
 
-        /* Блокировка скролла при открытой модалке */
         body.modal-open {
             overflow: hidden;
         }
@@ -104,10 +103,6 @@
             margin: 0 auto;
             padding: 0 20px;
         }
-
-        /* ----------------------
-           HEADER + NAV
-        ---------------------- */
 
         header {
             position: sticky;
@@ -229,7 +224,6 @@
             color: var(--accent-hover);
         }
 
-        /* Hamburger (mobile) */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -265,10 +259,6 @@
             font-size: 14px;
             color: var(--text-secondary);
         }
-
-        /* ----------------------
-           HERO
-        ---------------------- */
 
         .hero {
             position: relative;
@@ -315,10 +305,6 @@
             margin-bottom: 32px;
         }
 
-        /* ----------------------
-           SECTION WRAPPER
-        ---------------------- */
-
         section {
             padding: 80px 0;
         }
@@ -330,10 +316,6 @@
         .section-header p {
             color: var(--text-secondary);
         }
-
-        /* ----------------------
-           GUARANTEE
-        ---------------------- */
 
         .guarantee {
             background-color: #FFFFFF;
@@ -356,10 +338,6 @@
             font-size: 24px;
             margin-bottom: 12px;
         }
-
-        /* ----------------------
-           SERVICES
-        ---------------------- */
 
         .services {
             background-color: var(--bg-primary);
@@ -401,10 +379,6 @@
             gap: 8px;
         }
 
-        /* ----------------------
-           PORTFOLIO
-        ---------------------- */
-
         .portfolio {
             background-color: #FFFFFF;
         }
@@ -437,10 +411,6 @@
             font-weight: 500;
         }
 
-        /* ----------------------
-           PHILOSOPHY
-        ---------------------- */
-
         .philosophy {
             background-color: var(--bg-primary);
         }
@@ -467,10 +437,6 @@
             color: var(--text-secondary);
         }
 
-        /* ----------------------
-           FAQ
-        ---------------------- */
-
         .faq {
             background-color: #FFFFFF;
         }
@@ -488,10 +454,6 @@
         .faq-a {
             color: var(--text-secondary);
         }
-
-        /* ----------------------
-           BLOG
-        ---------------------- */
 
         .blog {
             background-color: var(--bg-primary);
@@ -532,10 +494,6 @@
             font-weight: 500;
         }
 
-        /* ----------------------
-           FOOTER
-        ---------------------- */
-
         footer {
             background-color: #1F2937;
             color: #FFFFFF;
@@ -569,10 +527,6 @@
             font-size: 13px;
         }
 
-        /* ----------------------
-           LETTERS LAYER (облако букв)
-        ---------------------- */
-
         .letters-layer {
             position: fixed;
             inset: 0;
@@ -581,7 +535,6 @@
             overflow: hidden;
         }
 
-        /* FIX #1: Весь основной контент выше слоя букв, но не перекрываем модалку */
         body > *:not(.letters-layer):not(.modal-overlay) {
             position: relative;
             z-index: 1;
@@ -617,10 +570,6 @@
             }
         }
 
-        /* ----------------------
-           MODAL
-        ---------------------- */
-
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -629,7 +578,7 @@
             justify-content: center;
             align-items: center;
             padding: 16px;
-            z-index: 1100; /* 1000+ */
+            z-index: 1100;
         }
 
         .modal-overlay.visible {
@@ -676,7 +625,6 @@
             font-weight: 700;
         }
 
-        /* Форма */
         .modal-form {
             display: flex;
             flex-direction: column;
@@ -786,10 +734,6 @@
             margin-bottom: 6px;
         }
 
-        /* ----------------------
-           ICON / MESSENGER STYLES
-        ---------------------- */
-
         .circle-messenger {
             width: 32px;
             height: 32px;
@@ -834,10 +778,6 @@
             transform: translateY(-1px);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
         }
-
-        /* ----------------------
-           ADAPTIVE
-        ---------------------- */
 
         @media (max-width: 1024px) {
             .guarantee-grid,
@@ -902,7 +842,6 @@
                 display: none;
             }
 
-            /* Модалка: max-width 90% на маленьких экранах */
             .modal {
                 max-width: 90%;
             }
@@ -944,7 +883,6 @@
             </div>
         </div>
 
-        <!-- Mobile nav -->
         <div class="mobile-nav" id="mobileNav">
             <a href="#portfolio">Портфолио</a>
             <a href="#services">Услуги</a>
@@ -961,12 +899,8 @@
     </div>
 </header>
 
-<!-- Общий слой с плавающими буквами -->
 <div class="letters-layer" id="lettersLayer"></div>
 
-<!-- =========================
-     HERO
-========================= -->
 <section class="hero">
     <div class="container">
         <div class="hero-inner">
@@ -982,9 +916,6 @@
     </div>
 </section>
 
-<!-- =========================
-     GUARANTEE
-========================= -->
 <section class="guarantee">
     <div class="container">
         <div class="section-header">
@@ -1011,9 +942,6 @@
     </div>
 </section>
 
-<!-- =========================
-     SERVICES
-========================= -->
 <section class="services" id="services">
     <div class="container">
         <div class="section-header">
@@ -1101,9 +1029,6 @@
     </div>
 </section>
 
-<!-- =========================
-     PORTFOLIO
-========================= -->
 <section class="portfolio" id="portfolio">
     <div class="container">
         <div class="section-header">
@@ -1130,9 +1055,6 @@
     </div>
 </section>
 
-<!-- =========================
-     PHILOSOPHY
-========================= -->
 <section class="philosophy">
     <div class="container">
         <div class="section-header">
@@ -1159,9 +1081,6 @@
     </div>
 </section>
 
-<!-- =========================
-     FAQ
-========================= -->
 <section class="faq">
     <div class="container">
         <div class="section-header">
@@ -1182,9 +1101,6 @@
     </div>
 </section>
 
-<!-- =========================
-     BLOG
-========================= -->
 <section class="blog" id="blog">
     <div class="container">
         <div class="section-header">
@@ -1211,9 +1127,6 @@
     </div>
 </section>
 
-<!-- =========================
-     FOOTER / CONTACTS
-========================= -->
 <footer id="contacts">
     <div class="container">
         <div class="footer-inner">
@@ -1234,9 +1147,6 @@
     </div>
 </footer>
 
-<!-- =========================
-     MODAL
-========================= -->
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <button class="modal-close" id="modalClose" aria-label="Закрыть окно">&times;</button>
@@ -1281,9 +1191,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // =========================
-    // Mobile menu
-    // =========================
     const hamburger = document.getElementById('hamburger');
     const mobileNav = document.getElementById('mobileNav');
 
@@ -1300,9 +1207,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // =========================
-    // Modal controls
-    // =========================
     const modalOverlay = document.getElementById('modalOverlay');
     const modalClose = document.getElementById('modalClose');
 
@@ -1373,9 +1277,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // =========================
-    // Form submit через Cloudflare Worker
-    // =========================
     if (contactForm) {
         contactForm.addEventListener('submit', async function (e) {
             e.preventDefault();
@@ -1390,7 +1291,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 message: formData.get('message') || ''
             };
 
-            // Базовая валидация
             if (!payload.name.trim()) {
                 showMessage('error', 'Ошибка: заполните поле "Ваше имя".');
                 document.getElementById('name').focus();
@@ -1416,7 +1316,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Показываем статус отправки
             showMessage('success', 'Отправляем заявку…');
 
             try {
@@ -1441,9 +1340,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // =========================
-    // Floating letters layer
-    // =========================
     const lettersLayer = document.getElementById('lettersLayer');
 
     if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 769px)').matches) {

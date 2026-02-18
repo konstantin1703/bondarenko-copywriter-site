@@ -779,6 +779,8 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
         }
 
+        .hp-field { display: none !important; }
+
         @media (max-width: 1024px) {
             .guarantee-grid,
             .philosophy-grid {
@@ -1141,7 +1143,7 @@
                 <a href="tel:+79531509213">+7 (991) 281-07-96</a>
             </div>
             <div class="footer-copy">
-                © 2025 · Все права защищены.
+                © 2026 · Все права защищены.
             </div>
         </div>
     </div>
@@ -1149,31 +1151,33 @@
 
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <button class="modal-close" id="modalClose" aria-label="Закрыть окно">&times;</button>
+        <button type="button" class="modal-close" id="modalClose" aria-label="Закрыть окно">&times;</button>
 
         <h2 id="modalTitle">Обсудим вашу задачу</h2>
 
         <div id="formMessage" class="form-message" aria-live="polite"></div>
 
         <form id="contactForm" class="modal-form" novalidate>
+            <input type="text" id="company" name="company" class="hp-field" autocomplete="off" tabindex="-1" aria-hidden="true">
+
             <div class="modal-field">
                 <label for="name">Ваше имя<span class="req">*</span></label>
-                <input class="modal-input" type="text" id="name" name="name" required placeholder="Например: Иван">
+                <input class="modal-input" type="text" id="name" name="name" required autocomplete="name" placeholder="Например: Иван">
             </div>
 
             <div class="modal-field">
                 <label for="email">Ваш email<span class="req">*</span></label>
-                <input class="modal-input" type="email" id="email" name="email" required placeholder="mail@example.com">
+                <input class="modal-input" type="email" id="email" name="email" required autocomplete="email" placeholder="mail@example.com">
             </div>
 
             <div class="modal-field">
                 <label for="phone">Ваш телефон<span class="req">*</span></label>
-                <input class="modal-input" type="tel" id="phone" name="phone" required placeholder="+7 (999) 123-45-67">
+                <input class="modal-input" type="tel" id="phone" name="phone" required autocomplete="tel" inputmode="tel" placeholder="+7 (999) 123-45-67">
             </div>
 
             <div class="modal-field">
                 <label for="message">Ваше сообщение<span class="req">*</span></label>
-                <textarea class="modal-textarea" id="message" name="message" required placeholder="Коротко опишите задачу"></textarea>
+                <textarea class="modal-textarea" id="message" name="message" required minlength="10" placeholder="Коротко опишите задачу"></textarea>
             </div>
 
             <button type="submit" class="modal-submit">Отправить сообщение</button>
@@ -1288,7 +1292,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 name: formData.get('name') || '',
                 email: formData.get('email') || '',
                 phone: formData.get('phone') || '',
-                message: formData.get('message') || ''
+                message: formData.get('message') || '',
+                page: location.href,
+                company: formData.get('company') || ''
             };
 
             if (!payload.name.trim()) {
@@ -1297,7 +1303,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email);
+            const emailOk = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(payload.email);
             if (!payload.email.trim() || !emailOk) {
                 showMessage('error', 'Ошибка: укажите корректный email.');
                 document.getElementById('email').focus();
@@ -1310,8 +1316,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            if (!payload.message.trim()) {
-                showMessage('error', 'Ошибка: заполните поле "Ваше сообщение".');
+            if (!payload.message.trim() || payload.message.trim().length < 10) {
+                showMessage('error', 'Ошибка: сообщение должно содержать минимум 10 символов.');
                 document.getElementById('message').focus();
                 return;
             }

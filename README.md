@@ -36,19 +36,29 @@ npx http-server -p 8000
 
 ```
 bondarenko-copywriter-site/
-├── index.html           # Главная страница
-├── robots.txt          # SEO: правила для поисковых роботов
-├── sitemap.xml         # SEO: карта сайта
-├── site.webmanifest    # PWA манифест
-├── package.json        # Метаданные проекта
-├── .gitignore         # Игнорируемые файлы Git
-└── README.md          # Документация проекта
+├── index.html              # Главная страница
+├── scroll-to-anchor.js     # Скрипт для плавной прокрутки к якорям
+├── blog/                   # Статьи блога
+│   ├── content-strategy-tips.html
+│   ├── copywriting-mistakes.html
+│   └── how-to-write-landing-copy.html
+├── portfolio/              # Примеры работ
+│   ├── example-1-landing-text.html
+│   ├── example-2-article.html
+│   └── example-3-social-posts.html
+├── robots.txt              # SEO: правила для поисковых роботов
+├── sitemap.xml             # SEO: карта сайта
+├── site.webmanifest        # PWA манифест
+├── package.json            # Метаданные проекта
+├── .gitignore             # Игнорируемые файлы Git
+└── README.md              # Документация проекта
 ```
 
 ## 🛠️ Технологии
 
-- **Frontend**: HTML5, CSS3, JavaScript
+- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
 - **Хостинг**: GitHub Pages
+- **Формы**: Cloudflare Workers (lead capture API)
 - **Version Control**: Git
 
 ## 📝 Workflow разработки
@@ -56,15 +66,14 @@ bondarenko-copywriter-site/
 ### Ветки
 
 - `main` - production-версия (деплоится на GitHub Pages)
-- `dev-restructure` - разработка новых функций
-- `jarvis/*` - экспериментальные ветки
+- Feature branches - разработка новых функций
 
 ### Процесс внесения изменений
 
-1. Создайте новую ветку от `dev-restructure`:
+1. Создайте новую ветку от `main`:
 ```bash
-git checkout dev-restructure
-git pull origin dev-restructure
+git checkout main
+git pull origin main
 git checkout -b feature/your-feature-name
 ```
 
@@ -79,7 +88,7 @@ git commit -m "feat: описание изменений"
 git push origin feature/your-feature-name
 ```
 
-4. Создайте Pull Request в `dev-restructure`
+4. Создайте Pull Request в `main`
 
 ### Соглашения о коммитах
 
@@ -104,21 +113,26 @@ git push origin feature/your-feature-name
 ### Текущая версия (v1.0.0)
 - ✅ Базовая структура сайта
 - ✅ SEO-оптимизация (robots.txt, sitemap.xml)
-- ✅ Документация проекта
+- ✅ Favicon и Open Graph изображения
+- ✅ PWA манифест
+- ✅ Блог (3 статьи)
+- ✅ Портфолио (3 примера работ)
+- ✅ Форма обратной связи (Cloudflare Workers API)
+- ✅ Плавная прокрутка к якорям
+- ✅ Адаптивная верстка для мобильных устройств
 
 ### Планируется (v1.1.0)
-- [ ] Разделение на модули (CSS, JS в отдельных файлах)
-- [ ] Добавление favicon и Open Graph изображений
-- [ ] Настройка системы сборки (Vite/Webpack)
-- [ ] Оптимизация производительности
-- [ ] Адаптивная верстка для мобильных устройств
+- [ ] Разделение CSS в отдельные файлы
+- [ ] Добавление анимаций (GSAP/Framer Motion)
+- [ ] Оптимизация производительности (lazy loading)
+- [ ] Темная тема
 
 ### Будущие улучшения (v2.0.0)
 - [ ] CI/CD через GitHub Actions
-- [ ] Автоматические тесты
-- [ ] PWA функциональность
+- [ ] Автоматические тесты (Playwright)
+- [ ] Расширенная PWA функциональность (offline mode)
 - [ ] Многоязычность (RU/EN)
-- [ ] Блог с системой управления контентом
+- [ ] CMS для блога
 
 ## 🤝 Вклад в проект
 
@@ -129,14 +143,13 @@ git push origin feature/your-feature-name
 3. Закоммитьте изменения
 4. Создайте Pull Request
 
-## 📄 Лицензия
-
-MIT License - см. файл LICENSE для деталей
-
 ## 📧 Контакты
 
+- **Автор**: Константин Бондаренко
+- **Email**: byxapckuu@gmail.com
+- **WhatsApp**: +7 (991) 281-07-96
+- **Telegram**: [@whity14](https://t.me/whity14)
 - **GitHub**: [@konstantin1703](https://github.com/konstantin1703)
-- **Email**: irisinsightai@gmail.com
 
 ---
 

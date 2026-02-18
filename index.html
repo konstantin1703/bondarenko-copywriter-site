@@ -1303,7 +1303,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            const emailOk = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(payload.email);
+            const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email);
             if (!payload.email.trim() || !emailOk) {
                 showMessage('error', 'Ошибка: укажите корректный email.');
                 document.getElementById('email').focus();

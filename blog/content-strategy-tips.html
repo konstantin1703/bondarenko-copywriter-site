@@ -5,6 +5,7 @@
     <title>Блог — Контент-стратегия для фрилансера | Константин Бондаренко</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Контент-стратегия для фрилансера: позиционирование, рубрики, план, примеры тем и метрики. Автор: Константин Бондаренко.">
+    <meta name="robots" content="index, follow">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Контент-стратегия для фрилансера">
@@ -15,13 +16,13 @@
 
     <style>
         :root {
-            --bg-primary: #F8FAFC;      /* Основной фон */
-            --bg-white: #FFFFFF;        /* Белый */
-            --text-primary: #1F2937;    /* Основной текст */
-            --text-secondary: #6B7280;  /* Вторичный текст */
-            --accent: #2563EB;          /* Синий (кнопки, ссылки) */
-            --accent-hover: #1D4ED8;    /* Синий (hover) */
-            --border: #E5E7EB;          /* Разделители */
+            --bg-primary: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --accent: #2563EB;
+            --accent-hover: #1D4ED8;
+            --border: #E5E7EB;
         }
 
         * { box-sizing: border-box; }
@@ -57,10 +58,6 @@
             padding: 0 20px;
         }
 
-        /* ----------------------
-           HEADER + NAV
-        ---------------------- */
-
         header {
             position: sticky;
             top: 0;
@@ -85,7 +82,10 @@
             font-size: 18px;
             color: var(--text-primary);
             white-space: nowrap;
+            text-decoration: none;
         }
+
+        .logo:hover { color: var(--text-primary); }
 
         .logo-mark {
             width: 32px;
@@ -175,7 +175,6 @@
             transform: translateY(-1px);
         }
 
-        /* Hamburger (mobile) */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -193,7 +192,8 @@
             outline: 2px solid var(--accent);
             outline-offset: 4px;
         }
-.hamburger span {
+
+        .hamburger span {
             width: 20px;
             height: 2px;
             background-color: var(--text-primary);
@@ -230,10 +230,6 @@
             flex-wrap: wrap;
             padding-top: 6px;
         }
-
-        /* ----------------------
-           HERO
-        ---------------------- */
 
         .hero {
             position: relative;
@@ -272,10 +268,6 @@
             gap: 12px;
             flex-wrap: wrap;
         }
-
-        /* ----------------------
-           CONTENT
-        ---------------------- */
 
         section { padding: 80px 0; }
 
@@ -383,10 +375,6 @@
             flex-wrap: wrap;
         }
 
-        /* ----------------------
-           FOOTER
-        ---------------------- */
-
         footer {
             background-color: #1F2937;
             color: #FFFFFF;
@@ -417,10 +405,6 @@
             color: #9CA3AF;
             font-size: 13px;
         }
-
-        /* ----------------------
-           LETTERS LAYER
-        ---------------------- */
 
         .letters-layer {
             position: fixed;
@@ -453,10 +437,6 @@
             50% { transform: translate3d(40px, -30px, 0) rotate(120deg); opacity: 0.09; }
             100% { transform: translate3d(-40px, 30px, 0) rotate(360deg); opacity: 0; }
         }
-
-        /* ----------------------
-           MODAL
-        ---------------------- */
 
         .modal-overlay {
             position: fixed;
@@ -625,10 +605,6 @@
 
         .modal-phone:hover { color: var(--accent); }
 
-        /* ----------------------
-           ICON / MESSENGER STYLES
-        ---------------------- */
-
         .circle-messenger {
             width: 32px;
             height: 32px;
@@ -668,10 +644,6 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
         }
 
-        /* ----------------------
-           ADAPTIVE
-        ---------------------- */
-
         @media (max-width: 1024px) {
             section { padding: 60px 0; }
             .grid-2 { grid-template-columns: 1fr; }
@@ -690,6 +662,7 @@
             .letters-layer { display: none; }
             .modal { max-width: 90%; }
         }
+
         .hp-field {
             position: absolute;
             left: -9999px;
@@ -697,18 +670,17 @@
             height: 1px;
             overflow: hidden;
         }
-
-</style>
+    </style>
 </head>
 <body>
 
 <header>
     <div class="container">
         <div class="header-inner">
-            <div class="logo">
+            <a href="../index.html" class="logo" aria-label="Константин Бондаренко — на главную">
                 <div class="logo-mark">Kb</div>
                 <div>Константин Бондаренко</div>
-            </div>
+            </a>
 
             <nav>
                 <a href="../index.html#portfolio">Портфолио</a>
@@ -812,7 +784,7 @@
                         <strong>Проверка:</strong> если вы можете заменить свой профиль на профиль другого автора — позиционирование слишком общее.
                     </div>
 
-                    <h2>2) Определите “воронку” контента</h2>
+                    <h2>2) Определите "воронку" контента</h2>
                     <p>
                         У фрилансера обычно три уровня аудитории:
                         <strong>холодная</strong> (не знает вас), <strong>тёплая</strong> (читает/смотрит),
@@ -855,7 +827,7 @@
 
                         <div class="card">
                             <h3>Удержание</h3>
-                            <p class="lead">Цель — оставаться “в голове”, не раздражая.</p>
+                            <p class="lead">Цель — оставаться "в голове", не раздражая.</p>
                             <div class="pill-row">
                                 <span class="pill">разборы примеров</span>
                                 <span class="pill">ответы на вопросы</span>
@@ -881,7 +853,7 @@
                     </ul>
 
                     <div class="callout">
-                        <strong>Важно:</strong> рубрика не должна быть “про жизнь”. Она должна отвечать на вопрос клиента: “мне это поможет?”
+                        <strong>Важно:</strong> рубрика не должна быть "про жизнь". Она должна отвечать на вопрос клиента: "мне это поможет?"
                     </div>
 
                     <h2>4) План на месяц: мало, но регулярно</h2>
@@ -904,14 +876,14 @@
 
                     <h2>5) Темы, которые приводят заявки (а не лайки)</h2>
                     <p>
-                        Лайки приятны, но заявки важнее. “Заявочные” темы — это те, где клиент узнаёт себя и проблему.
+                        Лайки приятны, но заявки важнее. "Заявочные" темы — это те, где клиент узнаёт себя и проблему.
                         В идеале человек читает и думает: «да, это про меня; надо обсудить».
                     </p>
 
                     <h3>Примеры тем</h3>
                     <ul>
                         <li>«Почему у страницы есть просмотры, но нет заявок: 5 причин»</li>
-                        <li>«Как понять, что текст “водянистый”: чек-лист»</li>
+                        <li>«Как понять, что текст "водянистый": чек-лист»</li>
                         <li>«Как собрать оффер за 15 минут: схема и примеры»</li>
                         <li>«Какие вопросы я задаю перед началом работы (и зачем)»</li>
                         <li>«Как выглядит нормальный процесс правок: правила и сроки»</li>
@@ -919,12 +891,12 @@
                     </ul>
 
                     <div class="callout">
-                        <strong>Фокус:</strong> пишите темы вокруг боли/риска/сомнений клиента, а не вокруг “я молодец”.
+                        <strong>Фокус:</strong> пишите темы вокруг боли/риска/сомнений клиента, а не вокруг "я молодец".
                     </div>
 
                     <h2>6) Упаковка: один смысл — в разные форматы</h2>
                     <p>
-                        Чтобы не придумывать всё с нуля, используйте принцип “одна мысль — много носителей”.
+                        Чтобы не придумывать всё с нуля, используйте принцип "одна мысль — много носителей".
                         Это экономит время и делает контент плотным.
                     </p>
 
@@ -933,7 +905,7 @@
                         <li><strong>Статья:</strong> «5 ошибок, которые убивают конверсию»</li>
                         <li><strong>Пост:</strong> короткий разбор одной ошибки</li>
                         <li><strong>Сторис/короткий формат:</strong> чек-лист на 5 пунктов</li>
-                        <li><strong>Карточки:</strong> “ошибка → почему → как исправить”</li>
+                        <li><strong>Карточки:</strong> "ошибка → почему → как исправить"</li>
                     </ul>
 
                     <h2>7) Метрики: что считать, чтобы понимать эффект</h2>
@@ -947,14 +919,14 @@
                         <li><strong>Обращения:</strong> сколько людей написали/оставили заявку.</li>
                         <li><strong>Переходы:</strong> клики на сайт/портфолио/контакты.</li>
                         <li><strong>Сохранения:</strong> сигнал полезности (особенно для чек-листов).</li>
-                        <li><strong>Досмотры/дочитывания:</strong> понимаете, где “проседает” интерес.</li>
+                        <li><strong>Досмотры/дочитывания:</strong> понимаете, где "проседает" интерес.</li>
                     </ul>
 
                     <div class="callout">
-                        <strong>Нормально:</strong> первые 2–4 недели эффект может быть “тихий”. Контент работает накоплением доверия.
+                        <strong>Нормально:</strong> первые 2–4 недели эффект может быть "тихий". Контент работает накоплением доверия.
                     </div>
 
-                    <h2>8) Простой “скрипт” продаж в контенте</h2>
+                    <h2>8) Простой "скрипт" продаж в контенте</h2>
                     <p>
                         Продажи в контенте — это не давление. Это ясный следующий шаг. В конце части материалов
                         достаточно одного предложения: кому вы помогаете и как начать.
@@ -1005,7 +977,7 @@
             </div>
 
             <div class="footer-copy">
-                © 2025 · Все права защищены.
+                © 2026 · Все права защищены.
             </div>
         </div>
     </div>
@@ -1056,17 +1028,8 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // =========================
-    // Config
-    // =========================
-    // По умолчанию — для Cloudflare Pages (Functions/Worker binding): "/api/lead"
-    // Если воркер вынесен отдельно — замените на полный URL одной строкой:
-    // const LEAD_ENDPOINT = "https://xxx.workers.dev/api/lead";
     const LEAD_ENDPOINT = "/api/lead";
 
-    // =========================
-    // Mobile menu (A11y)
-    // =========================
     const hamburger = document.getElementById('hamburger');
     const mobileNav = document.getElementById('mobileNav');
 
@@ -1095,9 +1058,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // =========================
-    // Modal controls (Focus trap + restore focus)
-    // =========================
     const modalOverlay = document.getElementById('modalOverlay');
     const modalClose = document.getElementById('modalClose');
 
@@ -1143,7 +1103,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         clearMessage();
 
-        // Anti-spam: client timestamp (used by Worker)
         const clientTsEl = document.getElementById('clientTs');
         if (clientTsEl) clientTsEl.value = String(Date.now());
 
@@ -1216,9 +1175,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // =========================
-    // Form submit (via Cloudflare Worker)
-    // =========================
     function validateEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
@@ -1276,7 +1232,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Honeypot (must stay empty)
             if (company) {
                 showMessage('error', 'Ошибка отправки.');
                 return;
@@ -1309,9 +1264,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // =========================
-    // Floating letters layer (по всему сайту, только desktop/tablet)
-    // =========================
     const lettersLayer = document.getElementById('lettersLayer');
 
     if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 769px)').matches) {

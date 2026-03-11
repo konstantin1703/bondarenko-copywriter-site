@@ -5,7 +5,8 @@
     <title>Константин Бондаренко — копирайтер</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Константин Бондаренко — копирайтер. Лендинги, статьи, описания услуг, которые приводят клиентов.">
-    
+    <meta name="author" content="Константин Бондаренко">
+
     <!-- Security Headers -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https://leads-inbox.byxapckuu.workers.dev; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://leads-inbox.byxapckuu.workers.dev;">
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
@@ -17,6 +18,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=1">
 
     <link rel="manifest" href="site.webmanifest">
+    <link rel="canonical" href="https://konstantin1703.github.io/bondarenko-copywriter-site/">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Константин Бондаренко — копирайтер">
@@ -26,14 +28,21 @@
     <meta property="og:image" content="https://konstantin1703.github.io/bondarenko-copywriter-site/og-preview.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="ru_RU">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Константин Бондаренко — копирайтер">
+    <meta name="twitter:description" content="Пишу тексты, которые приносят клиентов. Лендинги, статьи, email, описания товаров, рерайт, контент для соцсетей.">
+    <meta name="twitter:image" content="https://konstantin1703.github.io/bondarenko-copywriter-site/og-preview.png">
 
     <!-- Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Scroll to anchor -->
-    <script src="scroll-to-anchor.js"></script>
+    <script src="scroll-to-anchor.js" defer></script>
 
     <style>
 :root {
@@ -1140,7 +1149,7 @@
                 <a href="https://wa.me/79912810796" target="_blank" rel="noopener noreferrer">WhatsApp</a>
                 <a href="https://t.me/whity14" target="_blank" rel="noopener noreferrer">Telegram</a>
                 <a href="mailto:byxapckuu@gmail.com">byxapckuu@gmail.com</a>
-                <a href="tel:+79531509213">+7 (991) 281-07-96</a>
+                <a href="tel:+79912810796">+7 (991) 281-07-96</a>
             </div>
             <div class="footer-copy">
                 © 2026 · Все права защищены.
@@ -1213,7 +1222,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const modalOverlay = document.getElementById('modalOverlay');
     const modalClose = document.getElementById('modalClose');
-
     const contactForm = document.getElementById('contactForm');
     const formMessage = document.getElementById('formMessage');
 
@@ -1232,12 +1240,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function openModal(event) {
         if (event) event.preventDefault();
         if (!modalOverlay) return;
-
         modalOverlay.classList.add('visible');
         document.body.classList.add('modal-open');
-
         clearMessage();
-
         const firstField = document.getElementById('name');
         if (firstField) {
             setTimeout(function () { firstField.focus(); }, 0);
@@ -1246,7 +1251,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function closeModal() {
         if (!modalOverlay) return;
-
         modalOverlay.classList.remove('visible');
         document.body.classList.remove('modal-open');
     }
@@ -1254,7 +1258,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (e) {
         const trigger = e.target.closest('.open-modal');
         if (!trigger) return;
-
         openModal(e);
     });
 
@@ -1298,7 +1301,7 @@ document.addEventListener('DOMContentLoaded', function () {
             };
 
             if (!payload.name.trim()) {
-                showMessage('error', 'Ошибка: заполните поле "Ваше имя".');
+                showMessage('error', 'Ошибка: заполните поле «Ваше имя».');
                 document.getElementById('name').focus();
                 return;
             }
@@ -1311,7 +1314,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             if (!payload.phone.trim()) {
-                showMessage('error', 'Ошибка: заполните поле "Ваш телефон".');
+                showMessage('error', 'Ошибка: заполните поле «Ваш телефон».');
                 document.getElementById('phone').focus();
                 return;
             }
@@ -1332,7 +1335,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
                 const data = await resp.json().catch(() => ({}));
-                
+
                 if (!resp.ok || data.ok !== true) {
                     throw new Error(data.error || 'Ошибка отправки');
                 }
@@ -1359,7 +1362,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const left = 5 + Math.random() * 90;
             const top = 5 + Math.random() * 90;
-
             const fontSize = 8 + Math.random() * 18;
             const delay = Math.random() * 20;
 

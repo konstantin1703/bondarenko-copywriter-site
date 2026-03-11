@@ -2,8 +2,10 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="../favicon.ico">
-    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico?v=1">
+    <link rel="icon" type="image/png" sizes="192x192" href="../favicon.png?v=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png?v=1">
+    <link rel="manifest" href="../site.webmanifest">
     <title>Блог — Контент-стратегия для фрилансера | Константин Бондаренко</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Контент-стратегия для фрилансера: позиционирование, рубрики, план, примеры тем и метрики. Автор: Константин Бондаренко.">
@@ -550,6 +552,12 @@
             transform: translateY(-1px);
         }
 
+        .modal-submit:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .modal-submit:focus-visible {
             outline: 2px solid rgba(37, 99, 235, 0.7);
             outline-offset: 2px;
@@ -1031,7 +1039,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const LEAD_ENDPOINT = "/api/lead";
+    const LEAD_ENDPOINT = "https://leads-inbox.byxapckuu.workers.dev/api/lead";
 
     const hamburger = document.getElementById('hamburger');
     const mobileNav = document.getElementById('mobileNav');
@@ -1040,6 +1048,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!mobileNav || !hamburger) return;
         mobileNav.classList.toggle('open', isOpen);
         hamburger.setAttribute('aria-expanded', String(isOpen));
+        hamburger.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
     }
 
     function toggleMobileNav() {
@@ -1241,35 +1250,42 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const submitBtn = contactForm.querySelector('button[type="submit"]');
-            if (submitBtn) submitBtn.disabled = true;
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Отправляем…';
+            }
 
             try {
                 const result = await submitLead({
                     name: name,
                     email: email,
                     message: message,
-                    page: window.location.pathname,
+                    page: window.location.href,
                     company: company,
                     client_ts: clientTs
                 });
 
                 if (result.ok) {
-                    showMessage('success', 'Заявка отправлена!');
+                    showMessage('success', 'Заявка отправлена! Свяжусь с вами в ближайшее время.');
                     contactForm.reset();
+                    setTimeout(function () { closeModal(); }, 2000);
                 } else {
                     showMessage('error', result.error || 'Ошибка отправки');
                 }
             } catch (_) {
-                showMessage('error', 'Ошибка соединения');
+                showMessage('error', 'Ошибка соединения. Попробуйте ещё раз.');
             } finally {
-                if (submitBtn) submitBtn.disabled = false;
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Отправить сообщение';
+                }
             }
         });
     }
 
     const lettersLayer = document.getElementById('lettersLayer');
 
-    if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 769px)').matches) {
+    if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 768px)').matches) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         const count = 24;
 

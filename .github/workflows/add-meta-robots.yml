@@ -3,12 +3,17 @@ name: Add meta robots (one-time)
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   patch:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Insert meta robots into files that lack it
         run: |
@@ -24,11 +29,11 @@ jobs:
               sed -i 's|\(<meta name="description"\)|<meta name="robots" content="index, follow">\n    \1|' "$f"
               echo "Patched: $f"
             else
-              echo "Already has robots: $f — skipped"
+              echo "Already has robots: $f - skipped"
             fi
           done
 
-      - name: Commit changes
+      - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

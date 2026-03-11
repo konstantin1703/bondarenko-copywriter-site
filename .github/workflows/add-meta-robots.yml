@@ -1,0 +1,41 @@
+name: Add meta robots (one-time)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Insert meta robots into files that lack it
+        run: |
+          FILES=(
+            "blog/copywriting-mistakes.html"
+            "blog/how-to-write-landing-copy.html"
+            "portfolio/example-1-landing-text.html"
+            "portfolio/example-2-article.html"
+            "portfolio/example-3-social-posts.html"
+          )
+          for f in "${FILES[@]}"; do
+            if ! grep -q 'meta name="robots"' "$f"; then
+              sed -i 's|\(<meta name="description"\)|<meta name="robots" content="index, follow">\n    \1|' "$f"
+              echo "Patched: $f"
+            else
+              echo "Already has robots: $f — skipped"
+            fi
+          done
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add blog/copywriting-mistakes.html \
+                  blog/how-to-write-landing-copy.html \
+                  portfolio/example-1-landing-text.html \
+                  portfolio/example-2-article.html \
+                  portfolio/example-3-social-posts.html
+          git diff --cached --quiet && echo "Nothing to commit" || git commit -m "seo: add meta robots to remaining blog and portfolio pages"
+          git push

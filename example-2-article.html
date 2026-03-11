@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<title>Статья: «Как выбрать CRM для малого бизнеса: 5 критериев без переплаты» — кейс | Константин Бондаренко</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Статья для блога: вводные + полный текст с критериями, ошибками и чек‑листом." name="description"/>
+<meta content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https://leads-inbox.byxapckuu.workers.dev; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://leads-inbox.byxapckuu.workers.dev;" http-equiv="Content-Security-Policy"/>
+<meta content="SAMEORIGIN" http-equiv="X-Frame-Options"/>
+<meta content="nosniff" http-equiv="X-Content-Type-Options"/>
+<link href="../favicon.ico?v=1" rel="icon" type="image/x-icon"/>
+<link href="../favicon.png?v=1" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../apple-touch-icon.png?v=1" rel="apple-touch-icon" sizes="180x180"/>
+<link href="../site.webmanifest" rel="manifest"/>
+<meta content="Статья: «Как выбрать CRM для малого бизнеса: 5 критериев без переплаты» — кейс | Константин Бондаренко" property="og:title"/>
+<meta content="Статья для блога: вводные + полный текст с критериями, ошибками и чек‑листом." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://konstantin1703.github.io/bondarenko-copywriter-site/portfolio/example-2-article.html" property="og:url"/>
+<meta content="https://konstantin1703.github.io/bondarenko-copywriter-site/og-preview.png" property="og:image"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="../scroll-to-anchor.js"></script>
+<style>
+:root {
+    --bg-primary: #F8FAFC;
+    --bg-white: #FFFFFF;
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    --accent: #2563EB;
+    --accent-hover: #1D4ED8;
+    --border: #E5E7EB;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text-primary); background-color: var(--bg-primary); line-height: 1.6; }
+body.modal-open { overflow: hidden; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); }
+img { max-width: 100%; display: block; }
+h1, h2, h3 { margin: 0 0 16px; font-weight: 700; }
+h1 { font-size: 48px; }
+h2 { font-size: 32px; }
+h3 { font-size: 22px; }
+p { margin: 0 0 12px; }
+.container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+header { position: sticky; top: 0; z-index: 50; background-color: var(--bg-white); border-bottom: 1px solid var(--border); }
+.header-inner { height: 80px; display: flex; align-items: center; justify-content: space-between; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; color: var(--text-primary); }
+.logo-mark { width: 32px; height: 32px; border-radius: 8px; background: var(--accent); display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-weight: 700; font-size: 16px; }
+nav { display: flex; align-items: center; gap: 24px; font-size: 14px; }
+nav a { color: var(--text-primary); font-weight: 500; }
+nav a:hover { color: var(--accent); }
+.header-right { display: flex; align-items: center; gap: 16px; font-size: 14px; }
+.header-links { display: flex; align-items: center; gap: 10px; }
+.phone { color: var(--text-secondary); font-weight: 500; }
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 6px; border: none; cursor: pointer; font-weight: 500; font-size: 14px; transition: background-color 0.2s ease, transform 0.1s ease; text-decoration: none; }
+.btn-primary { background-color: var(--accent); color: #FFFFFF; }
+.btn-primary:hover { background-color: var(--accent-hover); color: #FFFFFF; transform: translateY(-1px); }
+.btn-primary:focus-visible { outline: 2px solid rgba(37, 99, 235, 0.7); outline-offset: 2px; }
+.btn-link { background: transparent; border: none; padding: 0; margin-top: 8px; color: var(--accent); font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+.btn-link:hover { color: var(--accent-hover); }
+.hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; }
+.hamburger span { width: 20px; height: 2px; background-color: var(--text-primary); }
+.mobile-nav { display: none; flex-direction: column; gap: 12px; padding: 12px 0 20px; border-top: 1px solid var(--border); }
+.mobile-nav.open { display: flex !important; background-color: #FFFFFF; }
+.mobile-nav a { font-size: 15px; color: var(--text-primary); }
+.mobile-nav .mobile-contacts { font-size: 14px; color: var(--text-secondary); }
+footer { background-color: #1F2937; color: #FFFFFF; padding: 60px 0; }
+.footer-inner { display: flex; flex-direction: column; gap: 12px; font-size: 14px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 12px; }
+.footer-links a { color: #E5E7EB; font-size: 14px; }
+.footer-links a:hover { color: #FFFFFF; }
+.footer-copy { color: #9CA3AF; font-size: 13px; }
+.letters-layer { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+body > *:not(.letters-layer):not(.modal-overlay) { position: relative; z-index: 1; }
+.floating-letter { position: absolute; color: var(--text-primary); opacity: 0.05; font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-weight: 300; letter-spacing: 2px; user-select: none; line-height: 1; animation: floatLetter 18s linear 3; }
+@keyframes floatLetter { 0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; } 10% { opacity: 0.07; } 50% { transform: translate3d(40px, -30px, 0) rotate(120deg); opacity: 0.09; } 100% { transform: translate3d(-40px, 30px, 0) rotate(360deg); opacity: 0; } }
+.modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5); display: none; justify-content: center; align-items: center; padding: 16px; z-index: 1100; }
+.modal-overlay.visible { display: flex; }
+.modal { background: #FFFFFF; border-radius: 12px; max-width: 560px; width: 100%; padding: 22px 20px 18px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); position: relative; animation: modalFade 0.25s ease-out; }
+@keyframes modalFade { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
+.modal-close { position: absolute; top: 10px; right: 12px; background: transparent; border: none; font-size: 20px; cursor: pointer; color: var(--text-secondary); line-height: 1; }
+.modal h2 { margin: 0 0 12px; font-size: 20px; font-weight: 700; }
+.modal-form { display: flex; flex-direction: column; gap: 12px; margin-bottom: 14px; }
+.modal-field label { display: block; font-size: 13px; font-weight: 500; color: var(--text-secondary); margin-bottom: 6px; }
+.modal-field .req { color: var(--accent); margin-left: 2px; }
+.modal-input, .modal-textarea { width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 12px; font-size: 14px; font-family: inherit; color: var(--text-primary); background: #FFFFFF; outline: none; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
+.modal-textarea { min-height: 120px; resize: vertical; }
+.modal-input:focus, .modal-textarea:focus { border-color: rgba(37, 99, 235, 0.65); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14); }
+.modal-submit { width: 100%; border: none; border-radius: 10px; padding: 12px 14px; font-size: 14px; font-weight: 600; cursor: pointer; background: var(--accent); color: #FFFFFF; transition: background-color 0.2s ease, transform 0.1s ease; }
+.modal-submit:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.modal-submit:focus-visible { outline: 2px solid rgba(37, 99, 235, 0.7); outline-offset: 2px; }
+.form-message { display: none; margin: 0 0 8px; padding: 10px 12px; border-radius: 10px; font-size: 13px; line-height: 1.4; }
+.form-message.error { display: block; background: rgba(220, 38, 38, 0.08); border: 1px solid rgba(220, 38, 38, 0.25); color: #991B1B; }
+.form-message.success { display: block; background: rgba(22, 163, 74, 0.08); border: 1px solid rgba(22, 163, 74, 0.25); color: #166534; }
+.modal-divider { margin: 10px 0 10px; border-top: 1px solid var(--border); }
+.modal-subtitle { margin: 0 0 10px; color: var(--text-secondary); font-size: 14px; }
+.modal-contacts { display: flex; gap: 12px; align-items: center; margin-bottom: 6px; }
+.circle-messenger { width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25); }
+.circle-messenger::before { content: ''; display: block; width: 70%; height: 70%; background-size: contain; background-repeat: no-repeat; background-position: center; }
+.circle-whatsapp { background-color: #25D366; }
+.circle-whatsapp::before { background-image: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg'); filter: invert(1); }
+.circle-telegram { background-color: #0088cc; }
+.circle-telegram::before { background-image: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg'); filter: invert(1); }
+.circle-messenger:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35); }
+@media (max-width: 768px) { h1 { font-size: 32px; } h2 { font-size: 24px; } .header-inner { height: 64px; } nav, .header-right { display: none; } .hamburger { display: flex; } section { padding: 60px 0; } .letters-layer { display: none; } .modal { max-width: 90%; } }
+/* ===== Portfolio case pages ===== */
+.case-hero { background: linear-gradient(135deg, #F8FAFC 0%, #F0F9FF 100%); padding: 70px 0 40px; }
+.case-hero h1 { margin-bottom: 10px; }
+.case-meta { display:flex; flex-wrap:wrap; gap:10px; color: var(--text-secondary); font-size: 14px; margin: 10px 0 18px; }
+.case-badge { display:inline-flex; align-items:center; gap:8px; padding: 6px 10px; border-radius: 999px; border: 1px solid rgba(37,99,235,.18); background: rgba(37,99,235,.06); color: var(--accent); font-weight: 600; font-size: 12px; }
+.case-note { background: #FFFFFF; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; color: var(--text-secondary); }
+.case-note b { color: var(--text-primary); }
+.case-grid { display:grid; grid-template-columns: 1.25fr .75fr; gap: 24px; padding: 50px 0 20px; }
+@media (max-width: 1024px) { .case-grid { grid-template-columns: 1fr; } }
+.case-card { background: #FFFFFF; border: 1px solid var(--border); border-radius: 12px; padding: 22px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.case-card h2 { font-size: 22px; margin-bottom: 12px; }
+.case-card h3 { font-size: 18px; margin: 18px 0 10px; }
+.case-card p, .case-card li { color: var(--text-secondary); }
+.case-two { display:grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px; }
+@media (max-width: 768px) { .case-two { grid-template-columns: 1fr; } }
+.case-box { background: #FAFBFC; border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.case-box h3 { margin: 0 0 8px; font-size: 16px; }
+details.case-details { margin-top: 14px; border: 1px solid var(--border); border-radius: 12px; background: #FFFFFF; padding: 12px 14px; }
+details.case-details summary { cursor:pointer; font-weight: 600; color: var(--text-primary); }
+details.case-details summary::-webkit-details-marker { display:none; }
+details.case-details summary::after { content:"▾"; float:right; color: var(--text-secondary); }
+details.case-details[open] summary::after { content:"▴"; }
+.deliverable { margin-top: 18px; border: 1px solid rgba(37,99,235,.18); background: rgba(37,99,235,.04); border-radius: 12px; padding: 16px; }
+.deliverable h3 { margin: 0 0 10px; font-size: 18px; }
+.block { background: #FFFFFF; border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-top: 12px; }
+.label { display:inline-flex; align-items:center; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(37,99,235,.18); background: rgba(37,99,235,.06); color: var(--accent); font-weight: 600; font-size: 12px; margin-bottom: 8px; }
+.breadcrumbs { margin-top: 16px; font-size: 14px; color: var(--text-secondary); }
+.breadcrumbs a { color: var(--accent); font-weight: 500; }
+.hp-field { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+<div class="container">
+<div class="header-inner">
+<a class="logo" href="../index.html">
+<div class="logo-mark">Kb</div>
+<div>Константин Бондаренко</div>
+</a>
+<nav>
+<a href="../index.html#portfolio">Портфолио</a>
+<a href="../index.html#services">Услуги</a>
+<a href="../index.html#blog">Блог</a>
+<a href="../index.html#contacts">Контакты</a>
+</nav>
+<div class="header-right">
+<div class="header-links">
+<a aria-label="WhatsApp" class="circle-messenger circle-whatsapp" href="https://wa.me/79912810796" rel="noopener noreferrer" target="_blank"></a>
+<a aria-label="Telegram" class="circle-messenger circle-telegram" href="https://t.me/whity14" rel="noopener noreferrer" target="_blank"></a>
+</div>
+<div class="phone"><a href="tel:+79912810796" style="color: inherit;">+7 (991) 281-07-96</a></div>
+<a class="btn btn-primary open-modal" href="#">Заказать звонок</a>
+</div>
+<div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</div>
+<div class="mobile-nav" id="mobileNav">
+<a href="../index.html#portfolio">Портфолио</a>
+<a href="../index.html#services">Услуги</a>
+<a href="../index.html#blog">Блог</a>
+<a href="../index.html#contacts">Контакты</a>
+<div class="mobile-contacts">
+<div><a href="https://wa.me/79912810796" rel="noopener noreferrer" target="_blank">WhatsApp</a> · <a href="https://t.me/whity14" rel="noopener noreferrer" target="_blank">Telegram</a></div>
+<div><a href="tel:+79912810796" style="color: inherit;">+7 (991) 281-07-96</a></div>
+</div>
+</div>
+</div>
+</header>
+<div class="letters-layer" id="lettersLayer"></div>
+<section class="case-hero">
+<div class="container">
+<div class="case-meta">
+<span class="case-badge">Портфолио</span>
+<span>Услуга: <b style="color:var(--text-primary)">Статьи и контент</b></span>
+</div>
+<h1>Статья: «Как выбрать CRM для малого бизнеса: 5 критериев без переплаты»</h1>
+<p style="color:var(--text-secondary); font-size:16px; max-width: 860px;">Статья для блога: вводные + полный текст с критериями, ошибками и чек‑листом.</p>
+<div class="breadcrumbs"><a href="../index.html#portfolio">← Назад к портфолио</a></div>
+<div class="case-note" style="margin-top:16px;">
+<b>Формат "кейс + готовый текст".</b> Сверху — вводные и логика, ниже — полностью готовый материал, который можно брать в работу.
+</div>
+</div>
+</section>
+<section>
+<div class="container">
+<div class="case-grid">
+<div class="case-card">
+<h2>Вводные</h2>
+<p><b>Задача:</b> написать экспертный материал для блога компании: полезно, практично, читабельно. Никаких "статей ради ключей".</p>
+<div class="case-two">
+<div class="case-box">
+<h3>ЦА</h3>
+<ul>
+<li>Собственники малого бизнеса</li>
+<li>Руководители продаж</li>
+<li>Операционные менеджеры</li>
+</ul>
+</div>
+<div class="case-box">
+<h3>Подход</h3>
+<ul>
+<li>5 критериев + примеры</li>
+<li>Типовые ошибки внедрения</li>
+<li>Чек‑лист для самопроверки</li>
+<li>Мягкий CTA к консультации</li>
+</ul>
+</div>
+</div>
+<details class="case-details">
+<summary>Что бы измеряли (KPI‑план)</summary>
+<ul>
+<li>Время на странице и глубина чтения</li>
+<li>Клики по CTA (консультация/аудит)</li>
+<li>Органический трафик и позиции по релевантным запросам</li>
+</ul>
+</details>
+<div class="deliverable">
+<h3>Готовый вариант</h3>
+<div class="block">
+<div class="label">H1</div>
+<p><b>Как выбрать CRM для малого бизнеса: 5 критериев без переплаты</b></p>
+</div>
+<div class="block">
+<div class="label">Вступление</div>
+<p>CRM обычно покупают в двух состояниях: <b>"всё горит"</b> и <b>"вроде надо, но страшно"</b>. В обоих случаях легко сделать одинаковую ошибку — взять "самую популярную", заплатить за лишнее и через месяц вернуться в Excel, потому что "не взлетело".</p>
+<p>Ниже — 5 критериев, которые помогают выбрать CRM под вашу реальность, а не под рекламный ролик.</p>
+</div>
+<div class="block">
+<div class="label">Критерий 1: сценарий продаж</div>
+<p>Перед выбором ответьте на 3 вопроса:</p>
+<ul>
+<li>Откуда приходят заявки (сайт, мессенджеры, звонки, маркетплейсы)?</li>
+<li>Сколько этапов в сделке (2 шага или 7 согласований)?</li>
+<li>Кто ведёт клиента (один менеджер или цепочка "менеджер → бухгалтер → доставка")?</li>
+</ul>
+</div>
+<div class="block">
+<div class="label">Критерий 2: запуск за 7–14 дней</div>
+<p>Для малого бизнеса хороший ориентир — <b>быстрый старт</b> без "армии консультантов". Проверьте:</p>
+<ul>
+<li>есть ли готовые шаблоны воронок</li>
+<li>можно ли быстро добавлять поля/этапы</li>
+<li>насколько удобно работать менеджеру</li>
+</ul>
+</div>
+<div class="block">
+<div class="label">Критерий 3: интеграции</div>
+<p>Минимум, который нужен большинству:</p>
+<ul>
+<li>звонки / телефония</li>
+<li>почта</li>
+<li>мессенджеры</li>
+<li>формы с сайта</li>
+<li>отчётность по источникам</li>
+</ul>
+</div>
+<div class="block">
+<div class="label">Критерий 4: отчётность</div>
+<p>3–5 метрик, которые вы хотите видеть каждую неделю:</p>
+<ul>
+<li>сколько заявок и откуда</li>
+<li>сколько дошло до сделки</li>
+<li>средний чек</li>
+<li>причины отказов</li>
+<li>загрузка менеджеров</li>
+</ul>
+</div>
+<div class="block">
+<div class="label">Критерий 5: стоимость владения</div>
+<p>Смотрите не только на тариф, а на общую цену: лицензии, внедрение, обучение, поддержка и доработки.</p>
+</div>
+<div class="block">
+<div class="label">Частые ошибки внедрения</div>
+<ul>
+<li>покупают CRM, не описав процесс продаж</li>
+<li>пытаются автоматизировать хаос вместо наведения порядка</li>
+<li>не назначают ответственного</li>
+<li>делают слишком сложную воронку — менеджеры обходят систему</li>
+</ul>
+</div>
+<div class="block">
+<div class="label">Чек‑лист перед выбором CRM</div>
+<ul>
+<li>[ ] описан путь заявки от входа до оплаты</li>
+<li>[ ] понятны этапы сделки и ответственные</li>
+<li>[ ] определён набор интеграций</li>
+<li>[ ] выбраны 3–5 ключевых отчётов</li>
+<li>[ ] понятна стоимость запуска + поддержка</li>
+<li>[ ] есть план обучения команды</li>
+</ul>
+</div>
+<div class="block">
+<div class="label">Мягкий CTA</div>
+<p>Если хотите — можем за 30 минут разобрать ваш процесс и подсказать 2–3 CRM‑варианта без переплаты. Без "продающих презентаций", просто по делу.</p>
+</div>
+<div style="margin-top:14px;">
+<a class="btn btn-primary open-modal" href="#">Обсудить похожую задачу</a>
+</div>
+</div>
+</div>
+<aside class="case-card">
+<h2>Сводка</h2>
+<div class="case-box" style="margin-top:12px;"><h3>Что сделано</h3><p>Полная статья + чек‑лист + блок ошибок + CTA к консультации.</p></div>
+<div class="case-box" style="margin-top:12px;"><h3>Почему это работает</h3><p>Польза → доверие → мягкий следующий шаг (консультация) без давления.</p></div>
+<div class="case-box" style="margin-top:12px;"><h3>Можно усилить</h3><p>Добавить таблицу сравнения 3 "типов CRM" (без брендов) и мини‑кейсы "было/стало".</p></div>
+</aside>
+</div>
+</div>
+</section>
+<footer id="contacts">
+<div class="container">
+<div class="footer-inner">
+<div><strong>Константин Бондаренко</strong><br/>Копирайтер</div>
+<div class="footer-links">
+<a href="https://wa.me/79912810796" rel="noopener noreferrer" target="_blank">WhatsApp</a>
+<a href="https://t.me/whity14" rel="noopener noreferrer" target="_blank">Telegram</a>
+<a href="mailto:byxapckuu@gmail.com">byxapckuu@gmail.com</a>
+<a href="tel:+79912810796">+7 (991) 281-07-96</a>
+</div>
+<div class="footer-copy">© 2026 · Все права защищены.</div>
+</div>
+</div>
+</footer>
+<div class="modal-overlay" id="modalOverlay">
+<div aria-labelledby="modalTitle" aria-modal="true" class="modal" role="dialog">
+<button aria-label="Закрыть окно" class="modal-close" id="modalClose" type="button">&times;</button>
+<h2 id="modalTitle">Обсудим вашу задачу</h2>
+<div aria-live="polite" class="form-message" id="formMessage"></div>
+<form class="modal-form" id="contactForm" novalidate>
+<input aria-hidden="true" autocomplete="off" class="hp-field" id="company" name="company" tabindex="-1" type="text"/>
+<div class="modal-field">
+<label for="name">Ваше имя<span class="req">*</span></label>
+<input autocomplete="name" class="modal-input" id="name" name="name" placeholder="Например: Иван" required type="text"/>
+</div>
+<div class="modal-field">
+<label for="email">Ваш email<span class="req">*</span></label>
+<input autocomplete="email" class="modal-input" id="email" name="email" placeholder="mail@example.com" required type="email"/>
+</div>
+<div class="modal-field">
+<label for="phone">Ваш телефон<span class="req">*</span></label>
+<input autocomplete="tel" class="modal-input" id="phone" inputmode="tel" name="phone" placeholder="+7 (999) 123-45-67" required type="tel"/>
+</div>
+<div class="modal-field">
+<label for="message">Ваше сообщение<span class="req">*</span></label>
+<textarea class="modal-textarea" id="message" minlength="10" name="message" placeholder="Коротко опишите задачу" required></textarea>
+</div>
+<button class="modal-submit" type="submit">Отправить сообщение</button>
+</form>
+<div class="modal-divider"></div>
+<p class="modal-subtitle">Или напишите в удобный мессенджер:</p>
+<div class="modal-contacts">
+<a aria-label="WhatsApp" class="circle-messenger circle-whatsapp" href="https://wa.me/79912810796" rel="noopener noreferrer" target="_blank"></a>
+<a aria-label="Telegram" class="circle-messenger circle-telegram" href="https://t.me/whity14" rel="noopener noreferrer" target="_blank"></a>
+</div>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', function () { mobileNav.classList.toggle('open'); });
+        mobileNav.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () { mobileNav.classList.remove('open'); });
+        });
+    }
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+    function showMessage(type, text) { if (!formMessage) return; formMessage.className = 'form-message ' + type; formMessage.textContent = text; }
+    function clearMessage() { if (!formMessage) return; formMessage.className = 'form-message'; formMessage.textContent = ''; }
+    function openModal(event) {
+        if (event) event.preventDefault();
+        if (!modalOverlay) return;
+        modalOverlay.classList.add('visible');
+        document.body.classList.add('modal-open');
+        clearMessage();
+        const firstField = document.getElementById('name');
+        if (firstField) setTimeout(function () { firstField.focus(); }, 0);
+    }
+    function closeModal() { if (!modalOverlay) return; modalOverlay.classList.remove('visible'); document.body.classList.remove('modal-open'); }
+    document.addEventListener('click', function (e) { const trigger = e.target.closest('.open-modal'); if (!trigger) return; openModal(e); });
+    if (modalClose) { modalClose.addEventListener('click', function (e) { e.preventDefault(); closeModal(); }); }
+    if (modalOverlay) { modalOverlay.addEventListener('click', function (e) { if (e.target === modalOverlay) closeModal(); }); }
+    document.addEventListener('keydown', function (e) { if ((e.key === 'Escape' || e.key === 'Esc') && modalOverlay && modalOverlay.classList.contains('visible')) closeModal(); });
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            clearMessage();
+            const formData = new FormData(contactForm);
+            const payload = {
+                name: formData.get('name') || '',
+                email: formData.get('email') || '',
+                phone: formData.get('phone') || '',
+                message: formData.get('message') || '',
+                page: location.href,
+                company: formData.get('company') || ''
+            };
+            if (!payload.name.trim()) { showMessage('error', 'Ошибка: заполните поле "Ваше имя".'); document.getElementById('name').focus(); return; }
+            const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email);
+            if (!payload.email.trim() || !emailOk) { showMessage('error', 'Ошибка: укажите корректный email.'); document.getElementById('email').focus(); return; }
+            if (!payload.phone.trim()) { showMessage('error', 'Ошибка: заполните поле "Ваш телефон".'); document.getElementById('phone').focus(); return; }
+            if (!payload.message.trim() || payload.message.trim().length < 10) { showMessage('error', 'Ошибка: сообщение должно содержать минимум 10 символов.'); document.getElementById('message').focus(); return; }
+            showMessage('success', 'Отправляем заявку…');
+            try {
+                const resp = await fetch('https://leads-inbox.byxapckuu.workers.dev/api/lead', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await resp.json().catch(() => ({}));
+                if (!resp.ok || data.ok !== true) throw new Error(data.error || 'Ошибка отправки');
+                showMessage('success', 'Заявка отправлена! Я свяжусь с вами в ближайшее время.');
+                contactForm.reset();
+            } catch (err) {
+                console.error(err);
+                showMessage('error', 'Не удалось отправить заявку. Попробуйте ещё раз.');
+            }
+        });
+    }
+    const lettersLayer = document.getElementById('lettersLayer');
+    if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 769px)').matches) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        for (let i = 0; i < 24; i++) {
+            const span = document.createElement('span');
+            span.className = 'floating-letter';
+            span.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
+            span.style.left = (5 + Math.random() * 90) + '%';
+            span.style.top = (5 + Math.random() * 90) + '%';
+            span.style.fontSize = (8 + Math.random() * 18) + 'px';
+            span.style.animationDelay = (Math.random() * 20) + 's';
+            lettersLayer.appendChild(span);
+        }
+    }
+});
+</script>
+</body>
+</html>

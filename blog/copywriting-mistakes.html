@@ -2,6 +2,10 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico?v=1">
+    <link rel="icon" type="image/png" sizes="192x192" href="../favicon.png?v=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png?v=1">
+    <link rel="manifest" href="../site.webmanifest">
     <title>Блог — 5 ошибок в копирайтинге, которые убивают конверсию | Константин Бондаренко</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow">
@@ -9,20 +13,20 @@
 
     <!-- Open Graph -->
     <meta property="og:title" content="5 ошибок в копирайтинге, которые убивают конверсию">
-    <meta property="og:description" content="Практический разбор: что ломает тексты и как исправить без “магических” обещаний.">
+    <meta property="og:description" content="Практический разбор: что ломает тексты и как исправить без &quot;магических&quot; обещаний.">
     <meta property="og:type" content="article">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg-primary: #F8FAFC;      /* Основной фон */
-            --bg-white: #FFFFFF;        /* Белый */
-            --text-primary: #1F2937;    /* Основной текст */
-            --text-secondary: #6B7280;  /* Вторичный текст */
-            --accent: #2563EB;          /* Синий (кнопки, ссылки) */
-            --accent-hover: #1D4ED8;    /* Синий (hover) */
-            --border: #E5E7EB;          /* Разделители */
+            --bg-primary: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --accent: #2563EB;
+            --accent-hover: #1D4ED8;
+            --border: #E5E7EB;
         }
 
         * { box-sizing: border-box; }
@@ -58,10 +62,6 @@
             padding: 0 20px;
         }
 
-        /* ----------------------
-           HEADER + NAV
-        ---------------------- */
-
         header {
             position: sticky;
             top: 0;
@@ -86,7 +86,10 @@
             font-size: 18px;
             color: var(--text-primary);
             white-space: nowrap;
+            text-decoration: none;
         }
+
+        .logo:hover { color: var(--text-primary); }
 
         .logo-mark {
             width: 32px;
@@ -176,7 +179,6 @@
             transform: translateY(-1px);
         }
 
-        /* Hamburger (mobile) */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -194,7 +196,8 @@
             outline: 2px solid var(--accent);
             outline-offset: 4px;
         }
-.hamburger span {
+
+        .hamburger span {
             width: 20px;
             height: 2px;
             background-color: var(--text-primary);
@@ -231,10 +234,6 @@
             flex-wrap: wrap;
             padding-top: 6px;
         }
-
-        /* ----------------------
-           HERO
-        ---------------------- */
 
         .hero {
             position: relative;
@@ -273,10 +272,6 @@
             gap: 12px;
             flex-wrap: wrap;
         }
-
-        /* ----------------------
-           CONTENT
-        ---------------------- */
 
         section { padding: 80px 0; }
 
@@ -378,10 +373,6 @@
             flex-wrap: wrap;
         }
 
-        /* ----------------------
-           FOOTER
-        ---------------------- */
-
         footer {
             background-color: #1F2937;
             color: #FFFFFF;
@@ -412,10 +403,6 @@
             color: #9CA3AF;
             font-size: 13px;
         }
-
-        /* ----------------------
-           LETTERS LAYER
-        ---------------------- */
 
         .letters-layer {
             position: fixed;
@@ -448,10 +435,6 @@
             50% { transform: translate3d(40px, -30px, 0) rotate(120deg); opacity: 0.09; }
             100% { transform: translate3d(-40px, 30px, 0) rotate(360deg); opacity: 0; }
         }
-
-        /* ----------------------
-           MODAL
-        ---------------------- */
 
         .modal-overlay {
             position: fixed;
@@ -563,6 +546,12 @@
             transform: translateY(-1px);
         }
 
+        .modal-submit:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .modal-submit:focus-visible {
             outline: 2px solid rgba(37, 99, 235, 0.7);
             outline-offset: 2px;
@@ -620,10 +609,6 @@
 
         .modal-phone:hover { color: var(--accent); }
 
-        /* ----------------------
-           ICON / MESSENGER STYLES
-        ---------------------- */
-
         .circle-messenger {
             width: 32px;
             height: 32px;
@@ -663,10 +648,6 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
         }
 
-        /* ----------------------
-           ADAPTIVE
-        ---------------------- */
-
         @media (max-width: 1024px) {
             section { padding: 60px 0; }
         }
@@ -684,6 +665,7 @@
             .letters-layer { display: none; }
             .modal { max-width: 90%; }
         }
+
         .hp-field {
             position: absolute;
             left: -9999px;
@@ -691,8 +673,7 @@
             height: 1px;
             overflow: hidden;
         }
-
-</style>
+    </style>
     <link rel="canonical" href="https://konstantin1703.github.io/bondarenko-copywriter-site/blog/copywriting-mistakes.html">
 </head>
 <body>
@@ -700,10 +681,10 @@
 <header>
     <div class="container">
         <div class="header-inner">
-            <div class="logo">
+            <a href="../index.html" class="logo" aria-label="Константин Бондаренко — на главную">
                 <div class="logo-mark">Kb</div>
                 <div>Константин Бондаренко</div>
-            </div>
+            </a>
 
             <nav>
                 <a href="../index.html#portfolio">Портфолио</a>
@@ -821,7 +802,7 @@
                         Про себя — коротко и по делу, как элемент доверия, а не главный смысл.
                     </div>
 
-                    <h2>Ошибка №3. Мало конкретики, много “воды”</h2>
+                    <h2>Ошибка №3. Мало конкретики, много "воды"</h2>
                     <p>
                         «Быстро», «надёжно», «эффективно», «удобно», «профессионально» — это оценочные слова. Они не спорят с реальностью,
                         но и не дают понимания. Когда конкретики нет — доверие падает.
@@ -836,7 +817,7 @@
                     </ul>
 
                     <div class="callout">
-                        <strong>Как исправить:</strong> заменяйте “оценки” на факты: сроки, шаги, объём, что входит в работу.
+                        <strong>Как исправить:</strong> заменяйте "оценки" на факты: сроки, шаги, объём, что входит в работу.
                     </div>
 
                     <h2>Ошибка №4. Возражения игнорируются</h2>
@@ -854,7 +835,7 @@
                     </ul>
 
                     <div class="callout">
-                        <strong>Как исправить:</strong> добавьте блок “Как мы работаем” + “FAQ” + гарантии/правила. Это снижает риск и повышает доверие.
+                        <strong>Как исправить:</strong> добавьте блок "Как мы работаем" + "FAQ" + гарантии/правила. Это снижает риск и повышает доверие.
                     </div>
 
                     <h2>Ошибка №5. CTA непонятный или их слишком много</h2>
@@ -866,7 +847,7 @@
                     <h3>Принцип рабочего CTA</h3>
                     <ul>
                         <li><strong>Один основной шаг:</strong> например, «обсудить задачу».</li>
-                        <li><strong>Понятная формулировка:</strong> без “купить прямо сейчас”, если аудитория не готова.</li>
+                        <li><strong>Понятная формулировка:</strong> без "купить прямо сейчас", если аудитория не готова.</li>
                         <li><strong>Снижение риска:</strong> «ответим в течение дня», «согласуем сроки до старта».</li>
                     </ul>
 
@@ -875,7 +856,7 @@
                         В тексте объясните, что будет после обращения.
                     </div>
 
-                    <h2>Итог: тексты “ломаются” логикой, а чинятся ясностью</h2>
+                    <h2>Итог: тексты "ломаются" логикой, а чинятся ясностью</h2>
                     <p>
                         Если коротко: оффер должен быть понятным, структура — вести читателя, конкретика — держать доверие,
                         возражения — снижать риск, CTA — давать следующий шаг.
@@ -912,7 +893,7 @@
             </div>
 
             <div class="footer-copy">
-                © 2025 · Все права защищены.
+                © 2026 · Все права защищены.
             </div>
         </div>
     </div>
@@ -963,17 +944,8 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // =========================
-    // Config
-    // =========================
-    // По умолчанию — для Cloudflare Pages (Functions/Worker binding): "/api/lead"
-    // Если воркер вынесен отдельно — замените на полный URL одной строкой:
-    // const LEAD_ENDPOINT = "https://xxx.workers.dev/api/lead";
-    const LEAD_ENDPOINT = "/api/lead";
+    const LEAD_ENDPOINT = "https://leads-inbox.byxapckuu.workers.dev/api/lead";
 
-    // =========================
-    // Mobile menu (A11y)
-    // =========================
     const hamburger = document.getElementById('hamburger');
     const mobileNav = document.getElementById('mobileNav');
 
@@ -981,6 +953,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!mobileNav || !hamburger) return;
         mobileNav.classList.toggle('open', isOpen);
         hamburger.setAttribute('aria-expanded', String(isOpen));
+        hamburger.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
     }
 
     function toggleMobileNav() {
@@ -1002,12 +975,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // =========================
-    // Modal controls (Focus trap + restore focus)
-    // =========================
     const modalOverlay = document.getElementById('modalOverlay');
     const modalClose = document.getElementById('modalClose');
-
     const contactForm = document.getElementById('contactForm');
     const formMessage = document.getElementById('formMessage');
 
@@ -1050,7 +1019,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         clearMessage();
 
-        // Anti-spam: client timestamp (used by Worker)
         const clientTsEl = document.getElementById('clientTs');
         if (clientTsEl) clientTsEl.value = String(Date.now());
 
@@ -1123,9 +1091,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // =========================
-    // Form submit (via Cloudflare Worker)
-    // =========================
     function validateEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
@@ -1183,45 +1148,48 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Honeypot (must stay empty)
             if (company) {
                 showMessage('error', 'Ошибка отправки.');
                 return;
             }
 
             const submitBtn = contactForm.querySelector('button[type="submit"]');
-            if (submitBtn) submitBtn.disabled = true;
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Отправляем…';
+            }
 
             try {
                 const result = await submitLead({
                     name: name,
                     email: email,
                     message: message,
-                    page: window.location.pathname,
+                    page: window.location.href,
                     company: company,
                     client_ts: clientTs
                 });
 
                 if (result.ok) {
-                    showMessage('success', 'Заявка отправлена!');
+                    showMessage('success', 'Заявка отправлена! Свяжусь с вами в ближайшее время.');
                     contactForm.reset();
+                    setTimeout(function () { closeModal(); }, 2000);
                 } else {
                     showMessage('error', result.error || 'Ошибка отправки');
                 }
             } catch (_) {
-                showMessage('error', 'Ошибка соединения');
+                showMessage('error', 'Ошибка соединения. Попробуйте ещё раз.');
             } finally {
-                if (submitBtn) submitBtn.disabled = false;
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Отправить сообщение';
+                }
             }
         });
     }
 
-    // =========================
-    // Floating letters layer (по всему сайту, только desktop/tablet)
-    // =========================
     const lettersLayer = document.getElementById('lettersLayer');
 
-    if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 769px)').matches) {
+    if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 768px)').matches) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         const count = 24;
 
@@ -1232,7 +1200,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const left = 5 + Math.random() * 90;
             const top = 5 + Math.random() * 90;
-
             const fontSize = 8 + Math.random() * 18;
             const delay = Math.random() * 20;
 

@@ -244,6 +244,9 @@
             flex-direction: column;
             gap: 4px;
             cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 4px;
         }
 
         .hamburger span {
@@ -564,7 +567,7 @@
             letter-spacing: 2px;
             user-select: none;
             line-height: 1;
-            animation: floatLetter 18s linear 3;
+            animation: floatLetter 18s linear infinite;
         }
 
         @keyframes floatLetter {
@@ -701,6 +704,12 @@
         .modal-submit:hover {
             background: var(--accent-hover);
             transform: translateY(-1px);
+        }
+
+        .modal-submit:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .modal-submit:focus-visible {
@@ -893,11 +902,11 @@
                 <a href="#" class="btn btn-primary open-modal">Заказать звонок</a>
             </div>
 
-            <div class="hamburger" id="hamburger">
+            <button class="hamburger" id="hamburger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileNav">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
 
         <div class="mobile-nav" id="mobileNav">
@@ -1215,13 +1224,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (hamburger && mobileNav) {
         hamburger.addEventListener('click', function () {
-            mobileNav.classList.toggle('open');
+            const isOpen = mobileNav.classList.toggle('open');
+            hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            hamburger.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
         });
 
         const mobileLinks = mobileNav.querySelectorAll('a');
         mobileLinks.forEach(function (link) {
             link.addEventListener('click', function () {
                 mobileNav.classList.remove('open');
+                hamburger.setAttribute('aria-expanded', 'false');
+                hamburger.setAttribute('aria-label', 'Открыть меню');
             });
         });
     }
@@ -1230,6 +1243,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalClose = document.getElementById('modalClose');
     const contactForm = document.getElementById('contactForm');
     const formMessage = document.getElementById('formMessage');
+    const submitBtn = contactForm ? contactForm.querySelector('.modal-submit') : null;
 
     function showMessage(type, text) {
         if (!formMessage) return;
@@ -1331,6 +1345,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Отправляем…';
+            }
             showMessage('success', 'Отправляем заявку…');
 
             try {
@@ -1348,16 +1366,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 showMessage('success', 'Заявка отправлена! Я свяжусь с вами в ближайшее время.');
                 contactForm.reset();
+                setTimeout(function () { closeModal(); }, 2000);
             } catch (err) {
                 console.error(err);
                 showMessage('error', 'Не удалось отправить заявку. Попробуйте ещё раз.');
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Отправить сообщение';
+                }
             }
         });
     }
 
     const lettersLayer = document.getElementById('lettersLayer');
 
-    if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 769px)').matches) {
+    if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 768px)').matches) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         const count = 24;
 

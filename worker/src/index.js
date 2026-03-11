@@ -108,7 +108,8 @@ function normalizePhone(value) {
 function isValidLead({ name, email, phone, message }) {
   if (name.length < 2) return { ok: false, error: 'Имя должно быть не короче 2 символов.' };
   if (!EMAIL_RE.test(email)) return { ok: false, error: 'Некорректный email.' };
-  if (!phone || !PHONE_RE.test(phone)) return { ok: false, error: 'Некорректный номер телефона.' };
+  // phone is optional — validate only if provided
+  if (phone && !PHONE_RE.test(phone)) return { ok: false, error: 'Некорректный номер телефона.' };
   if (message.length < 10) return { ok: false, error: 'Сообщение должно быть не короче 10 символов.' };
   return { ok: true };
 }
@@ -211,11 +212,12 @@ export default {
     }
 
     const ua = request.headers.get('User-Agent') || '';
+    const phoneLine = phone ? `📱 Телефон: ${phone}\n` : '';
     const text =
       `📬 Новая заявка\n` +
       `👤 Имя: ${name}\n` +
       `📧 Email: ${email}\n` +
-      `📱 Телефон: ${phone}\n` +
+      phoneLine +
       `💬 Сообщение: ${message}\n` +
       `📄 Страница: ${page}\n` +
       `🌐 IP: ${ip}\n` +

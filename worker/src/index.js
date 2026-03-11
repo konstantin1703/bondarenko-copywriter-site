@@ -14,6 +14,7 @@
  * - LEAD_RATELIMIT (for simple rate limiting)
  */
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_RE = /^(\+7|8|7)\d{10}$/;
 
 function jsonResponse(body, { status = 200, corsOrigin = null } = {}) {
   const headers = new Headers({
@@ -61,11 +62,9 @@ function getCorsOrigin(request, env) {
   const origin = request.headers.get('Origin');
   if (!origin) return null;
 
-  // ✅ Always allow same-origin requests (Cloudflare Pages / same domain).
   const requestOrigin = new URL(request.url).origin;
   if (origin === requestOrigin) return origin;
 
-  // ✅ Allow-list for cross-origin (your site domain -> worker domain).
   const allowed = getAllowedOrigins(env);
   return allowed.includes(origin) ? origin : null;
 }
@@ -79,7 +78,6 @@ function getClientIp(request) {
 }
 
 async function enforceRateLimit(env, ip) {
-  // Optional KV-based limiter: 5 req/min per IP
   if (!env.LEAD_RATELIMIT) return { ok: true };
 
   const key = `rl:${ip}`;
@@ -103,9 +101,14 @@ function normalizeString(value) {
   return typeof value === 'string' ? value.trim() : '';
 }
 
-function isValidLead({ name, email, message }) {
+function normalizePhone(value) {
+  return normalizeString(value).replace(/[\s\-\(\)]/g, '');
+}
+
+function isValidLead({ name, email, phone, message }) {
   if (name.length < 2) return { ok: false, error: 'Имя должно быть не короче 2 символов.' };
   if (!EMAIL_RE.test(email)) return { ok: false, error: 'Некорректный email.' };
+  if (!phone || !PHONE_RE.test(phone)) return { ok: false, error: 'Некорректный номер телефона.' };
   if (message.length < 10) return { ok: false, error: 'Сообщение должно быть не короче 10 символов.' };
   return { ok: true };
 }
@@ -115,7 +118,7 @@ async function sendToTelegram(env, text) {
     throw new Error('Missing TELEGRAM_TOKEN / TELEGRAM_CHAT_ID');
   }
 
-    const baseUrl = 'https://api.telegram.org';
+  const baseUrl = 'https://api.telegram.org';
   const url = baseUrl + '/bot' + env.TELEGRAM_TOKEN + '/sendMessage';
 
   const res = await fetch(url, {
@@ -143,7 +146,6 @@ export default {
     const url = new URL(request.url);
     const corsOrigin = getCorsOrigin(request, env);
 
-    // Block cross-origin requests by default (no Origin header is allowed for same-origin/server-to-server).
     const hasOrigin = Boolean(request.headers.get('Origin'));
     if (hasOrigin && !corsOrigin) {
       return jsonResponse(
@@ -178,6 +180,7 @@ export default {
 
     const name = normalizeString(body.name);
     const email = normalizeString(body.email);
+    const phone = normalizePhone(body.phone);
     const message = normalizeString(body.message);
     const page = normalizeString(body.page) || '(unknown)';
 
@@ -187,7 +190,7 @@ export default {
       return jsonResponse({ ok: false, error: 'Spam detected' }, { status: 400, corsOrigin });
     }
 
-    // Time-based quick-submit protection (optional field)
+    // Time-based quick-submit protection
     const clientTs = Number(body.client_ts);
     if (Number.isFinite(clientTs)) {
       const delta = Date.now() - clientTs;
@@ -196,7 +199,7 @@ export default {
       }
     }
 
-    const valid = isValidLead({ name, email, message });
+    const valid = isValidLead({ name, email, phone, message });
     if (!valid.ok) {
       return jsonResponse({ ok: false, error: valid.error }, { status: 400, corsOrigin });
     }
@@ -212,6 +215,7 @@ export default {
       `📬 Новая заявка\n` +
       `👤 Имя: ${name}\n` +
       `📧 Email: ${email}\n` +
+      `📱 Телефон: ${phone}\n` +
       `💬 Сообщение: ${message}\n` +
       `📄 Страница: ${page}\n` +
       `🌐 IP: ${ip}\n` +

@@ -788,6 +788,8 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
         }
 
+        .hp-field { display: none !important; }
+
         @media (max-width: 1024px) {
             .guarantee-grid,
             .philosophy-grid {
@@ -1052,12 +1054,12 @@
             </div>
             <div class="portfolio-card">
                 <h3>Статья для блога</h3>
-                <p>Экспертная статья с четкой структурой, которая отвечает на вопрос и позиционирует автора как специалиста.</p>
+                <p>Экспертная статья с чёткой структурой, которая отвечает на вопрос и позиционирует автора как специалиста.</p>
                 <a href="portfolio/example-2-article.html">Смотреть пример →</a>
             </div>
             <div class="portfolio-card">
                 <h3>Посты для соцсетей</h3>
-                <p>Примеры коротких текстов для Instagram, TikTok и других платформ — увлекающие, легкие, с призывом к действию.</p>
+                <p>Примеры коротких текстов для Instagram, TikTok и других платформ — увлекающие, лёгкие, с призывом к действию.</p>
                 <a href="portfolio/example-3-social-posts.html">Смотреть пример →</a>
             </div>
         </div>
@@ -1158,31 +1160,33 @@
 
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <button class="modal-close" id="modalClose" aria-label="Закрыть окно">&times;</button>
+        <button type="button" class="modal-close" id="modalClose" aria-label="Закрыть окно">&times;</button>
 
         <h2 id="modalTitle">Обсудим вашу задачу</h2>
 
         <div id="formMessage" class="form-message" aria-live="polite"></div>
 
         <form id="contactForm" class="modal-form" novalidate>
+            <input type="text" id="company" name="company" class="hp-field" autocomplete="off" tabindex="-1" aria-hidden="true">
+
             <div class="modal-field">
                 <label for="name">Ваше имя<span class="req">*</span></label>
-                <input class="modal-input" type="text" id="name" name="name" required placeholder="Например: Иван">
+                <input class="modal-input" type="text" id="name" name="name" required autocomplete="name" placeholder="Например: Иван">
             </div>
 
             <div class="modal-field">
                 <label for="email">Ваш email<span class="req">*</span></label>
-                <input class="modal-input" type="email" id="email" name="email" required placeholder="mail@example.com">
+                <input class="modal-input" type="email" id="email" name="email" required autocomplete="email" placeholder="mail@example.com">
             </div>
 
             <div class="modal-field">
                 <label for="phone">Ваш телефон<span class="req">*</span></label>
-                <input class="modal-input" type="tel" id="phone" name="phone" required placeholder="+7 (999) 123-45-67">
+                <input class="modal-input" type="tel" id="phone" name="phone" required autocomplete="tel" inputmode="tel" placeholder="+7 (999) 123-45-67">
             </div>
 
             <div class="modal-field">
                 <label for="message">Ваше сообщение<span class="req">*</span></label>
-                <textarea class="modal-textarea" id="message" name="message" required placeholder="Коротко опишите задачу"></textarea>
+                <textarea class="modal-textarea" id="message" name="message" required minlength="10" placeholder="Коротко опишите задачу"></textarea>
             </div>
 
             <button type="submit" class="modal-submit">Отправить сообщение</button>
@@ -1218,7 +1222,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const modalOverlay = document.getElementById('modalOverlay');
     const modalClose = document.getElementById('modalClose');
-
     const contactForm = document.getElementById('contactForm');
     const formMessage = document.getElementById('formMessage');
 
@@ -1237,12 +1240,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function openModal(event) {
         if (event) event.preventDefault();
         if (!modalOverlay) return;
-
         modalOverlay.classList.add('visible');
         document.body.classList.add('modal-open');
-
         clearMessage();
-
         const firstField = document.getElementById('name');
         if (firstField) {
             setTimeout(function () { firstField.focus(); }, 0);
@@ -1251,7 +1251,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function closeModal() {
         if (!modalOverlay) return;
-
         modalOverlay.classList.remove('visible');
         document.body.classList.remove('modal-open');
     }
@@ -1259,7 +1258,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (e) {
         const trigger = e.target.closest('.open-modal');
         if (!trigger) return;
-
         openModal(e);
     });
 
@@ -1297,7 +1295,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 name: formData.get('name') || '',
                 email: formData.get('email') || '',
                 phone: formData.get('phone') || '',
-                message: formData.get('message') || ''
+                message: formData.get('message') || '',
+                page: location.href,
+                company: formData.get('company') || ''
             };
 
             if (!payload.name.trim()) {
@@ -1313,16 +1313,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            const phoneClean = payload.phone.replace(/[\s\-\(\)]/g, '');
-            const phoneOk = /^(\+7|8|7)\d{10}$/.test(phoneClean);
-            if (!payload.phone.trim() || !phoneOk) {
-                showMessage('error', 'Ошибка: укажите корректный номер телефона (например, +7 999 123-45-67).');
+            if (!payload.phone.trim()) {
+                showMessage('error', 'Ошибка: заполните поле «Ваш телефон».');
                 document.getElementById('phone').focus();
                 return;
             }
 
-            if (!payload.message.trim()) {
-                showMessage('error', 'Ошибка: заполните поле «Ваше сообщение».');
+            if (!payload.message.trim() || payload.message.trim().length < 10) {
+                showMessage('error', 'Ошибка: сообщение должно содержать минимум 10 символов.');
                 document.getElementById('message').focus();
                 return;
             }
@@ -1364,7 +1362,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const left = 5 + Math.random() * 90;
             const top = 5 + Math.random() * 90;
-
             const fontSize = 8 + Math.random() * 18;
             const delay = Math.random() * 20;
 

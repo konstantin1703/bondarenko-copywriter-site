@@ -562,7 +562,7 @@
         }
 
         .modal-divider {
-            margin: 10px 0 10px;
+            margin: 10px 0;
             border-top: 1px solid var(--border);
         }
 
@@ -580,16 +580,6 @@
             margin-bottom: 6px;
         }
 
-        .modal-phone {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .modal-phone:hover { color: var(--accent); }
-
         .circle-messenger {
             width: 32px;
             height: 32px;
@@ -602,12 +592,23 @@
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
         }
 
+        .circle-messenger::before {
+            content: '';
+            display: block;
+            width: 70%;
+            height: 70%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
         .circle-messenger:hover {
             transform: translateY(-1px);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
         }
 
         .circle-telegram { background-color: #0088cc; }
+        .circle-telegram::before { background-image: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg'); filter: invert(1); }
 
         @media (max-width: 1024px) {
             section { padding: 60px 0; }
@@ -656,9 +657,7 @@
 
             <div class="header-right">
                 <div class="header-links">
-                    <a href="https://t.me/whity14" class="circle-messenger circle-telegram" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18"><path d="M21.944 2.506a1.5 1.5 0 0 0-1.52-.232L2.43 9.227a1.5 1.5 0 0 0 .09 2.79l4.155 1.354 1.91 5.733a1 1 0 0 0 1.698.377l2.378-2.514 4.657 3.43a1.5 1.5 0 0 0 2.327-1.02l2.5-15a1.5 1.5 0 0 0-.201-1.871ZM10.1 14.752l-.8 2.394-.9-2.699 7.504-6.962-5.804 7.267Z" fill="#fff"/></svg>
-                    </a>
+                    <a href="https://t.me/whity14" class="circle-messenger circle-telegram" target="_blank" rel="noopener noreferrer" aria-label="Telegram"></a>
                 </div>
                 <div class="phone">
                     <a href="tel:+79912810796" style="color: inherit;">+7 (991) 281-07-96</a>
@@ -844,10 +843,16 @@
             <div><strong>Константин Бондаренко</strong></div>
             <div class="footer-contacts">
                 <a href="https://t.me/whity14" class="footer-icon-link footer-icon-tg" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.944 2.506a1.5 1.5 0 0 0-1.52-.232L2.43 9.227a1.5 1.5 0 0 0 .09 2.79l4.155 1.354 1.91 5.733a1 1 0 0 0 1.698.377l2.378-2.514 4.657 3.43a1.5 1.5 0 0 0 2.327-1.02l2.5-15a1.5 1.5 0 0 0-.201-1.871ZM10.1 14.752l-.8 2.394-.9-2.699 7.504-6.962-5.804 7.267Z" fill="#fff"/></svg>
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
                 </a>
                 <a href="mailto:byxapckuu@gmail.com" class="footer-icon-link footer-icon-email" aria-label="Gmail">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.910 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/></svg>
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+                        <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/>
+                        <path d="M12 9.548L0 1.09V5.457c0-2.023 2.309-3.178 3.927-1.964L12 9.548z" fill="#FBBC05"/>
+                        <path d="M24 5.457L12 9.548l8.073-6.055C21.69 2.28 24 3.434 24 5.457z" fill="#34A853"/>
+                        <path d="M0 5.457v13.909c0 .904.732 1.636 1.636 1.636H5.455V11.73L0 5.457z" fill="#4285F4"/>
+                        <path d="M18.545 11.73v9.273h3.819A1.636 1.636 0 0 0 24 19.366V5.457l-5.455 6.273z" fill="#C5221F"/>
+                    </svg>
                 </a>
                 <a href="tel:+79912810796" class="footer-phone">+7 (991) 281-07-96</a>
             </div>
@@ -895,12 +900,9 @@
 
         <div class="modal-divider"></div>
 
-        <p class="modal-subtitle">Или напишите в удобный мессенджер:</p>
+        <p class="modal-subtitle">Или напишите в Telegram — отвечу в ближайшее время.</p>
         <div class="modal-contacts">
-            <a class="circle-messenger circle-telegram" href="https://t.me/whity14" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18"><path d="M21.944 2.506a1.5 1.5 0 0 0-1.52-.232L2.43 9.227a1.5 1.5 0 0 0 .09 2.79l4.155 1.354 1.91 5.733a1 1 0 0 0 1.698.377l2.378-2.514 4.657 3.43a1.5 1.5 0 0 0 2.327-1.02l2.5-15a1.5 1.5 0 0 0-.201-1.871ZM10.1 14.752l-.8 2.394-.9-2.699 7.504-6.962-5.804 7.267Z" fill="#fff"/></svg>
-            </a>
-            <a class="modal-phone" href="tel:+79912810796">📞 +7 (991) 281-07-96</a>
+            <a class="circle-messenger circle-telegram" href="https://t.me/whity14" target="_blank" rel="noopener noreferrer" aria-label="Telegram"></a>
         </div>
     </div>
 </div>

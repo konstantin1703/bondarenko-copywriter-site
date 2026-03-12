@@ -363,6 +363,10 @@
                 <input class="modal-input" type="email" id="email" name="email" required placeholder="mail@example.com">
             </div>
             <div class="modal-field">
+                <label for="phone">Ваш телефон</label>
+                <input class="modal-input" type="tel" id="phone" name="phone" placeholder="+7 (999) 123-45-67">
+            </div>
+            <div class="modal-field">
                 <label for="message">Ваше сообщение<span class="req">*</span></label>
                 <textarea class="modal-textarea" id="message" name="message" required placeholder="Коротко опишите задачу"></textarea>
             </div>
@@ -430,11 +434,13 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault(); clearMessage();
             const nameEl = document.getElementById('name');
             const emailEl = document.getElementById('email');
+            const phoneEl = document.getElementById('phone');
             const msgEl = document.getElementById('message');
             const companyEl = document.getElementById('company');
             const clientTsEl = document.getElementById('clientTs');
             const name = nameEl ? nameEl.value.trim() : '';
             const email = emailEl ? emailEl.value.trim() : '';
+            const phone = phoneEl ? phoneEl.value.trim() : '';
             const message = msgEl ? msgEl.value.trim() : '';
             const company = companyEl ? companyEl.value.trim() : '';
             const clientTs = clientTsEl ? Number(clientTsEl.value) : null;
@@ -445,7 +451,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const submitBtn = contactForm.querySelector('button[type="submit"]');
             if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправляем…'; }
             try {
-                const res = await fetch(LEAD_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email, message, page: window.location.href, company, client_ts: clientTs }) });
+                const res = await fetch(LEAD_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email, phone, message, page: window.location.href, company, client_ts: clientTs }) });
                 let data = null; try { data = await res.json(); } catch (_) {}
                 if (res.ok && data && data.ok) { showMessage('success', 'Заявка отправлена! Свяжусь с вами в ближайшее время.'); contactForm.reset(); setTimeout(function () { closeModal(); }, 2000); }
                 else { showMessage('error', (data && data.error) ? data.error : 'Ошибка отправки'); }

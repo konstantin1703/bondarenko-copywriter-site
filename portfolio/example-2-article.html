@@ -21,7 +21,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-<script src="../scroll-to-anchor.js"></script>
+<script src="../scroll-to-anchor.js" defer></script>
 <style>
 :root {
     --bg-primary: #F8FAFC;
@@ -45,32 +45,35 @@ h3 { font-size: 22px; }
 p { margin: 0 0 12px; }
 .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 header { position: sticky; top: 0; z-index: 50; background-color: var(--bg-white); border-bottom: 1px solid var(--border); }
-.header-inner { height: 80px; display: flex; align-items: center; justify-content: space-between; }
-.logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; color: var(--text-primary); }
+.header-inner { height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; color: var(--text-primary); white-space: nowrap; text-decoration: none; }
+.logo:hover { color: var(--text-primary); }
 .logo-mark { width: 32px; height: 32px; border-radius: 8px; background: var(--accent); display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-weight: 700; font-size: 16px; }
 nav { display: flex; align-items: center; gap: 24px; font-size: 14px; }
 nav a { color: var(--text-primary); font-weight: 500; }
 nav a:hover { color: var(--accent); }
 .header-right { display: flex; align-items: center; gap: 16px; font-size: 14px; }
 .header-links { display: flex; align-items: center; gap: 10px; }
-.phone { color: var(--text-secondary); font-weight: 500; }
+.phone { color: var(--text-secondary); font-weight: 500; white-space: nowrap; }
 .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 6px; border: none; cursor: pointer; font-weight: 500; font-size: 14px; transition: background-color 0.2s ease, transform 0.1s ease; text-decoration: none; }
 .btn-primary { background-color: var(--accent); color: #FFFFFF; }
 .btn-primary:hover { background-color: var(--accent-hover); color: #FFFFFF; transform: translateY(-1px); }
 .btn-primary:focus-visible { outline: 2px solid rgba(37, 99, 235, 0.7); outline-offset: 2px; }
-.btn-link { background: transparent; border: none; padding: 0; margin-top: 8px; color: var(--accent); font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
-.btn-link:hover { color: var(--accent-hover); }
-.hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; }
+.hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; flex: 0 0 auto; background: transparent; border: 0; padding: 0; appearance: none; -webkit-appearance: none; }
+.hamburger:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 .hamburger span { width: 20px; height: 2px; background-color: var(--text-primary); }
 .mobile-nav { display: none; flex-direction: column; gap: 12px; padding: 12px 0 20px; border-top: 1px solid var(--border); }
 .mobile-nav.open { display: flex !important; background-color: #FFFFFF; }
 .mobile-nav a { font-size: 15px; color: var(--text-primary); }
-.mobile-nav .mobile-contacts { font-size: 14px; color: var(--text-secondary); }
+.mobile-nav .mobile-contacts { font-size: 14px; color: var(--text-secondary); display: grid; gap: 6px; }
 footer { background-color: #1F2937; color: #FFFFFF; padding: 60px 0; }
 .footer-inner { display: flex; flex-direction: column; gap: 12px; font-size: 14px; }
-.footer-links { display: flex; flex-wrap: wrap; gap: 12px; }
-.footer-links a { color: #E5E7EB; font-size: 14px; }
-.footer-links a:hover { color: #FFFFFF; }
+.footer-contacts { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+.footer-icon-link { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; transition: transform 0.15s ease, box-shadow 0.15s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.25); }
+.footer-icon-link:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.35); }
+.footer-icon-link svg { width: 18px; height: 18px; }
+.footer-icon-tg { background-color: #0088cc; }
+.footer-icon-email { background-color: #FFFFFF; border: 1px solid #E5E7EB; }
 .footer-copy { color: #9CA3AF; font-size: 13px; }
 .letters-layer { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
 body > *:not(.letters-layer):not(.modal-overlay) { position: relative; z-index: 1; }
@@ -90,6 +93,7 @@ body > *:not(.letters-layer):not(.modal-overlay) { position: relative; z-index: 
 .modal-input:focus, .modal-textarea:focus { border-color: rgba(37, 99, 235, 0.65); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14); }
 .modal-submit { width: 100%; border: none; border-radius: 10px; padding: 12px 14px; font-size: 14px; font-weight: 600; cursor: pointer; background: var(--accent); color: #FFFFFF; transition: background-color 0.2s ease, transform 0.1s ease; }
 .modal-submit:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.modal-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
 .modal-submit:focus-visible { outline: 2px solid rgba(37, 99, 235, 0.7); outline-offset: 2px; }
 .form-message { display: none; margin: 0 0 8px; padding: 10px 12px; border-radius: 10px; font-size: 13px; line-height: 1.4; }
 .form-message.error { display: block; background: rgba(220, 38, 38, 0.08); border: 1px solid rgba(220, 38, 38, 0.25); color: #991B1B; }
@@ -99,11 +103,10 @@ body > *:not(.letters-layer):not(.modal-overlay) { position: relative; z-index: 
 .modal-contacts { display: flex; gap: 12px; align-items: center; margin-bottom: 6px; }
 .circle-messenger { width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25); }
 .circle-messenger::before { content: ''; display: block; width: 70%; height: 70%; background-size: contain; background-repeat: no-repeat; background-position: center; }
-.circle-whatsapp { background-color: #25D366; }
-.circle-whatsapp::before { background-image: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg'); filter: invert(1); }
 .circle-telegram { background-color: #0088cc; }
 .circle-telegram::before { background-image: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg'); filter: invert(1); }
 .circle-messenger:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35); }
+.hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 @media (max-width: 768px) { h1 { font-size: 32px; } h2 { font-size: 24px; } .header-inner { height: 64px; } nav, .header-right { display: none; } .hamburger { display: flex; } section { padding: 60px 0; } .letters-layer { display: none; } .modal { max-width: 90%; } }
 /* ===== Portfolio case pages ===== */
 .case-hero { background: linear-gradient(135deg, #F8FAFC 0%, #F0F9FF 100%); padding: 70px 0 40px; }
@@ -133,7 +136,6 @@ details.case-details[open] summary::after { content:"▴"; }
 .label { display:inline-flex; align-items:center; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(37,99,235,.18); background: rgba(37,99,235,.06); color: var(--accent); font-weight: 600; font-size: 12px; margin-bottom: 8px; }
 .breadcrumbs { margin-top: 16px; font-size: 14px; color: var(--text-secondary); }
 .breadcrumbs a { color: var(--accent); font-weight: 500; }
-.hp-field { display: none !important; }
 </style>
     <link rel="canonical" href="https://konstantin1703.github.io/bondarenko-copywriter-site/portfolio/example-2-article.html">
 </head>
@@ -141,7 +143,7 @@ details.case-details[open] summary::after { content:"▴"; }
 <header>
 <div class="container">
 <div class="header-inner">
-<a class="logo" href="../index.html">
+<a class="logo" href="../index.html" aria-label="Константин Бондаренко — на главную">
 <div class="logo-mark">Kb</div>
 <div>Константин Бондаренко</div>
 </a>
@@ -153,13 +155,12 @@ details.case-details[open] summary::after { content:"▴"; }
 </nav>
 <div class="header-right">
 <div class="header-links">
-<a aria-label="WhatsApp" class="circle-messenger circle-whatsapp" href="https://wa.me/79912810796" rel="noopener noreferrer" target="_blank"></a>
 <a aria-label="Telegram" class="circle-messenger circle-telegram" href="https://t.me/whity14" rel="noopener noreferrer" target="_blank"></a>
 </div>
 <div class="phone"><a href="tel:+79912810796" style="color: inherit;">+7 (991) 281-07-96</a></div>
 <a class="btn btn-primary open-modal" href="#">Заказать звонок</a>
 </div>
-<div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+<button class="hamburger" id="hamburger" type="button" aria-controls="mobileNav" aria-expanded="false" aria-label="Открыть меню"><span></span><span></span><span></span></button>
 </div>
 <div class="mobile-nav" id="mobileNav">
 <a href="../index.html#portfolio">Портфолио</a>
@@ -167,7 +168,7 @@ details.case-details[open] summary::after { content:"▴"; }
 <a href="../index.html#blog">Блог</a>
 <a href="../index.html#contacts">Контакты</a>
 <div class="mobile-contacts">
-<div><a href="https://wa.me/79912810796" rel="noopener noreferrer" target="_blank">WhatsApp</a> · <a href="https://t.me/whity14" rel="noopener noreferrer" target="_blank">Telegram</a></div>
+<div><a href="https://t.me/whity14" rel="noopener noreferrer" target="_blank">Telegram</a></div>
 <div><a href="tel:+79912810796" style="color: inherit;">+7 (991) 281-07-96</a></div>
 </div>
 </div>
@@ -318,11 +319,19 @@ details.case-details[open] summary::after { content:"▴"; }
 <div class="container">
 <div class="footer-inner">
 <div><strong>Константин Бондаренко</strong><br/>Копирайтер</div>
-<div class="footer-links">
-<a href="https://wa.me/79912810796" rel="noopener noreferrer" target="_blank">WhatsApp</a>
-<a href="https://t.me/whity14" rel="noopener noreferrer" target="_blank">Telegram</a>
-<a href="mailto:byxapckuu@gmail.com">byxapckuu@gmail.com</a>
-<a href="tel:+79912810796">+7 (991) 281-07-96</a>
+<div class="footer-contacts">
+<a href="https://t.me/whity14" class="footer-icon-link footer-icon-tg" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+</a>
+<a href="mailto:byxapckuu@gmail.com" class="footer-icon-link footer-icon-email" aria-label="Gmail">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+<path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/>
+<path d="M12 9.548L0 1.09V5.457c0-2.023 2.309-3.178 3.927-1.964L12 9.548z" fill="#FBBC05"/>
+<path d="M24 5.457L12 9.548l8.073-6.055C21.69 2.28 24 3.434 24 5.457z" fill="#34A853"/>
+<path d="M0 5.457v13.909c0 .904.732 1.636 1.636 1.636H5.455V11.73L0 5.457z" fill="#4285F4"/>
+<path d="M18.545 11.73v9.273h3.819A1.636 1.636 0 0 0 24 19.366V5.457l-5.455 6.273z" fill="#C5221F"/>
+</svg>
+</a>
 </div>
 <div class="footer-copy">© 2026 · Все права защищены.</div>
 </div>
@@ -334,7 +343,8 @@ details.case-details[open] summary::after { content:"▴"; }
 <h2 id="modalTitle">Обсудим вашу задачу</h2>
 <div aria-live="polite" class="form-message" id="formMessage"></div>
 <form class="modal-form" id="contactForm" novalidate>
-<input aria-hidden="true" autocomplete="off" class="hp-field" id="company" name="company" tabindex="-1" type="text"/>
+<div class="hp-field" aria-hidden="true"><label for="company">Company</label><input type="text" id="company" name="company" tabindex="-1" autocomplete="off"/></div>
+<input type="hidden" id="clientTs" name="client_ts" value=""/>
 <div class="modal-field">
 <label for="name">Ваше имя<span class="req">*</span></label>
 <input autocomplete="name" class="modal-input" id="name" name="name" placeholder="Например: Иван" required type="text"/>
@@ -344,8 +354,8 @@ details.case-details[open] summary::after { content:"▴"; }
 <input autocomplete="email" class="modal-input" id="email" name="email" placeholder="mail@example.com" required type="email"/>
 </div>
 <div class="modal-field">
-<label for="phone">Ваш телефон<span class="req">*</span></label>
-<input autocomplete="tel" class="modal-input" id="phone" inputmode="tel" name="phone" placeholder="+7 (999) 123-45-67" required type="tel"/>
+<label for="phone">Ваш телефон</label>
+<input autocomplete="tel" class="modal-input" id="phone" inputmode="tel" name="phone" placeholder="+7 (999) 123-45-67" type="tel"/>
 </div>
 <div class="modal-field">
 <label for="message">Ваше сообщение<span class="req">*</span></label>
@@ -354,76 +364,89 @@ details.case-details[open] summary::after { content:"▴"; }
 <button class="modal-submit" type="submit">Отправить сообщение</button>
 </form>
 <div class="modal-divider"></div>
-<p class="modal-subtitle">Или напишите в удобный мессенджер:</p>
+<p class="modal-subtitle">Или напишите в Telegram — отвечу в ближайшее время.</p>
 <div class="modal-contacts">
-<a aria-label="WhatsApp" class="circle-messenger circle-whatsapp" href="https://wa.me/79912810796" rel="noopener noreferrer" target="_blank"></a>
 <a aria-label="Telegram" class="circle-messenger circle-telegram" href="https://t.me/whity14" rel="noopener noreferrer" target="_blank"></a>
 </div>
 </div>
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    const LEAD_ENDPOINT = "https://leads-inbox.byxapckuu.workers.dev/api/lead";
     const hamburger = document.getElementById('hamburger');
     const mobileNav = document.getElementById('mobileNav');
+    function setMobileNavState(isOpen) {
+        if (!mobileNav || !hamburger) return;
+        mobileNav.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+        hamburger.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
+    }
     if (hamburger && mobileNav) {
-        hamburger.addEventListener('click', function () { mobileNav.classList.toggle('open'); });
-        mobileNav.querySelectorAll('a').forEach(function (link) {
-            link.addEventListener('click', function () { mobileNav.classList.remove('open'); });
-        });
+        hamburger.addEventListener('click', function () { setMobileNavState(!mobileNav.classList.contains('open')); });
+        mobileNav.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', function () { setMobileNavState(false); }); });
     }
     const modalOverlay = document.getElementById('modalOverlay');
     const modalClose = document.getElementById('modalClose');
     const contactForm = document.getElementById('contactForm');
     const formMessage = document.getElementById('formMessage');
+    let modalTriggerEl = null;
     function showMessage(type, text) { if (!formMessage) return; formMessage.className = 'form-message ' + type; formMessage.textContent = text; }
     function clearMessage() { if (!formMessage) return; formMessage.className = 'form-message'; formMessage.textContent = ''; }
-    function openModal(event) {
+    function openModal(event, triggerEl) {
         if (event) event.preventDefault();
         if (!modalOverlay) return;
+        modalTriggerEl = triggerEl || document.activeElement;
         modalOverlay.classList.add('visible');
         document.body.classList.add('modal-open');
         clearMessage();
+        const clientTsEl = document.getElementById('clientTs');
+        if (clientTsEl) clientTsEl.value = String(Date.now());
         const firstField = document.getElementById('name');
         if (firstField) setTimeout(function () { firstField.focus(); }, 0);
     }
-    function closeModal() { if (!modalOverlay) return; modalOverlay.classList.remove('visible'); document.body.classList.remove('modal-open'); }
-    document.addEventListener('click', function (e) { const trigger = e.target.closest('.open-modal'); if (!trigger) return; openModal(e); });
-    if (modalClose) { modalClose.addEventListener('click', function (e) { e.preventDefault(); closeModal(); }); }
-    if (modalOverlay) { modalOverlay.addEventListener('click', function (e) { if (e.target === modalOverlay) closeModal(); }); }
-    document.addEventListener('keydown', function (e) { if ((e.key === 'Escape' || e.key === 'Esc') && modalOverlay && modalOverlay.classList.contains('visible')) closeModal(); });
+    function closeModal() {
+        if (!modalOverlay) return;
+        modalOverlay.classList.remove('visible');
+        document.body.classList.remove('modal-open');
+        if (modalTriggerEl && typeof modalTriggerEl.focus === 'function') setTimeout(function () { modalTriggerEl.focus(); }, 0);
+        modalTriggerEl = null;
+    }
+    document.addEventListener('click', function (e) { const trigger = e.target.closest('.open-modal'); if (!trigger) return; openModal(e, trigger); });
+    if (modalClose) modalClose.addEventListener('click', function (e) { e.preventDefault(); closeModal(); });
+    if (modalOverlay) modalOverlay.addEventListener('click', function (e) { if (e.target === modalOverlay) closeModal(); });
+    document.addEventListener('keydown', function (e) {
+        const isOpen = modalOverlay && modalOverlay.classList.contains('visible');
+        if ((e.key === 'Escape' || e.key === 'Esc') && isOpen) { closeModal(); return; }
+    });
+    function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
     if (contactForm) {
         contactForm.addEventListener('submit', async function (e) {
-            e.preventDefault();
-            clearMessage();
-            const formData = new FormData(contactForm);
-            const payload = {
-                name: formData.get('name') || '',
-                email: formData.get('email') || '',
-                phone: formData.get('phone') || '',
-                message: formData.get('message') || '',
-                page: location.href,
-                company: formData.get('company') || ''
-            };
-            if (!payload.name.trim()) { showMessage('error', 'Ошибка: заполните поле "Ваше имя".'); document.getElementById('name').focus(); return; }
-            const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email);
-            if (!payload.email.trim() || !emailOk) { showMessage('error', 'Ошибка: укажите корректный email.'); document.getElementById('email').focus(); return; }
-            if (!payload.phone.trim()) { showMessage('error', 'Ошибка: заполните поле "Ваш телефон".'); document.getElementById('phone').focus(); return; }
-            if (!payload.message.trim() || payload.message.trim().length < 10) { showMessage('error', 'Ошибка: сообщение должно содержать минимум 10 символов.'); document.getElementById('message').focus(); return; }
-            showMessage('success', 'Отправляем заявку…');
+            e.preventDefault(); clearMessage();
+            const nameEl = document.getElementById('name');
+            const emailEl = document.getElementById('email');
+            const phoneEl = document.getElementById('phone');
+            const msgEl = document.getElementById('message');
+            const companyEl = document.getElementById('company');
+            const clientTsEl = document.getElementById('clientTs');
+            const name = nameEl ? nameEl.value.trim() : '';
+            const email = emailEl ? emailEl.value.trim() : '';
+            const phone = phoneEl ? phoneEl.value.trim() : '';
+            const message = msgEl ? msgEl.value.trim() : '';
+            const company = companyEl ? companyEl.value.trim() : '';
+            const clientTs = clientTsEl ? Number(clientTsEl.value) : null;
+            if (name.length < 2) { showMessage('error', 'Ошибка: имя должно быть не короче 2 символов.'); if (nameEl) nameEl.focus(); return; }
+            if (!email || !validateEmail(email)) { showMessage('error', 'Ошибка: укажите корректный email.'); if (emailEl) emailEl.focus(); return; }
+            if (message.length < 10) { showMessage('error', 'Ошибка: сообщение должно быть не короче 10 символов.'); if (msgEl) msgEl.focus(); return; }
+            if (company) { showMessage('error', 'Ошибка отправки.'); return; }
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправляем…'; }
             try {
-                const resp = await fetch('https://leads-inbox.byxapckuu.workers.dev/api/lead', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const data = await resp.json().catch(() => ({}));
-                if (!resp.ok || data.ok !== true) throw new Error(data.error || 'Ошибка отправки');
-                showMessage('success', 'Заявка отправлена! Я свяжусь с вами в ближайшее время.');
-                contactForm.reset();
-            } catch (err) {
-                console.error(err);
-                showMessage('error', 'Не удалось отправить заявку. Попробуйте ещё раз.');
-            }
+                const res = await fetch(LEAD_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email, phone, message, page: window.location.href, company, client_ts: clientTs }) });
+                let data = null; try { data = await res.json(); } catch (_) {}
+                if (res.ok && data && data.ok) { showMessage('success', 'Заявка отправлена! Свяжусь с вами в ближайшее время.'); contactForm.reset(); setTimeout(function () { closeModal(); }, 2000); }
+                else { showMessage('error', (data && data.error) ? data.error : 'Ошибка отправки'); }
+            } catch (_) { showMessage('error', 'Ошибка соединения. Попробуйте ещё раз.'); }
+            finally { if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Отправить сообщение'; } }
         });
     }
     const lettersLayer = document.getElementById('lettersLayer');

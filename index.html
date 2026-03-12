@@ -515,13 +515,13 @@
         footer {
             background-color: #1F2937;
             color: #FFFFFF;
-            padding: 32px 0;
+            padding: 20px 0;
         }
 
         .footer-inner {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             font-size: 14px;
         }
 
@@ -554,18 +554,13 @@
             fill: #FFFFFF;
         }
 
-        .footer-icon-link img {
-            width: 18px;
-            height: 18px;
-            display: block;
-        }
-
         .footer-icon-tg {
             background-color: #0088cc;
         }
 
         .footer-icon-email {
-            background-color: #374151;
+            background-color: #FFFFFF;
+            border: 1px solid #E5E7EB;
         }
 
         .footer-phone {
@@ -609,27 +604,16 @@
         }
 
         @keyframes floatLetter {
-            0% {
-                transform: translate3d(0, 0, 0) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.07;
-            }
-            50% {
-                transform: translate3d(40px, -30px, 0) rotate(120deg);
-                opacity: 0.09;
-            }
-            100% {
-                transform: translate3d(-40px, 30px, 0) rotate(360deg);
-                opacity: 0;
-            }
+            0% { transform: translate3d(0,0,0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.07; }
+            50% { transform: translate3d(40px,-30px,0) rotate(120deg); opacity: 0.09; }
+            100% { transform: translate3d(-40px,30px,0) rotate(360deg); opacity: 0; }
         }
 
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.5);
+            background: rgba(15,23,42,0.5);
             display: none;
             justify-content: center;
             align-items: center;
@@ -637,9 +621,7 @@
             z-index: 1100;
         }
 
-        .modal-overlay.visible {
-            display: flex;
-        }
+        .modal-overlay.visible { display: flex; }
 
         .modal {
             background: #FFFFFF;
@@ -647,20 +629,14 @@
             max-width: 560px;
             width: 100%;
             padding: 22px 20px 18px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
             position: relative;
             animation: modalFade 0.25s ease-out;
         }
 
         @keyframes modalFade {
-            0% {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         .modal-close {
@@ -675,11 +651,7 @@
             line-height: 1;
         }
 
-        .modal h2 {
-            margin: 0 0 12px;
-            font-size: 20px;
-            font-weight: 700;
-        }
+        .modal h2 { margin: 0 0 12px; font-size: 20px; font-weight: 700; }
 
         .modal-form {
             display: flex;
@@ -696,10 +668,7 @@
             margin-bottom: 6px;
         }
 
-        .modal-field .req {
-            color: var(--accent);
-            margin-left: 2px;
-        }
+        .modal-field .req { color: var(--accent); margin-left: 2px; }
 
         .modal-input,
         .modal-textarea {
@@ -715,15 +684,12 @@
             transition: border-color 0.15s ease, box-shadow 0.15s ease;
         }
 
-        .modal-textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
+        .modal-textarea { min-height: 120px; resize: vertical; }
 
         .modal-input:focus,
         .modal-textarea:focus {
-            border-color: rgba(37, 99, 235, 0.65);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+            border-color: rgba(37,99,235,0.65);
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.14);
         }
 
         .modal-submit {
@@ -739,21 +705,9 @@
             transition: background-color 0.2s ease, transform 0.1s ease;
         }
 
-        .modal-submit:hover {
-            background: var(--accent-hover);
-            transform: translateY(-1px);
-        }
-
-        .modal-submit:disabled {
-            opacity: 0.65;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .modal-submit:focus-visible {
-            outline: 2px solid rgba(37, 99, 235, 0.7);
-            outline-offset: 2px;
-        }
+        .modal-submit:hover { background: var(--accent-hover); transform: translateY(-1px); }
+        .modal-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+        .modal-submit:focus-visible { outline: 2px solid rgba(37,99,235,0.7); outline-offset: 2px; }
 
         .form-message {
             display: none;
@@ -766,35 +720,21 @@
 
         .form-message.error {
             display: block;
-            background: rgba(220, 38, 38, 0.08);
-            border: 1px solid rgba(220, 38, 38, 0.25);
+            background: rgba(220,38,38,0.08);
+            border: 1px solid rgba(220,38,38,0.25);
             color: #991B1B;
         }
 
         .form-message.success {
             display: block;
-            background: rgba(22, 163, 74, 0.08);
-            border: 1px solid rgba(22, 163, 74, 0.25);
+            background: rgba(22,163,74,0.08);
+            border: 1px solid rgba(22,163,74,0.25);
             color: #166534;
         }
 
-        .modal-divider {
-            margin: 10px 0 10px;
-            border-top: 1px solid var(--border);
-        }
-
-        .modal-subtitle {
-            margin: 0 0 10px;
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .modal-contacts {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            margin-bottom: 6px;
-        }
+        .modal-divider { margin: 10px 0; border-top: 1px solid var(--border); }
+        .modal-subtitle { margin: 0 0 10px; color: var(--text-secondary); font-size: 14px; }
+        .modal-contacts { display: flex; gap: 12px; align-items: center; margin-bottom: 6px; }
 
         .circle-messenger {
             width: 32px;
@@ -805,7 +745,7 @@
             justify-content: center;
             cursor: pointer;
             transition: transform 0.15s ease, box-shadow 0.15s ease;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
         }
 
         .circle-messenger::before {
@@ -818,88 +758,35 @@
             background-position: center;
         }
 
-        .circle-telegram {
-            background-color: #0088cc;
-        }
+        .circle-telegram { background-color: #0088cc; }
 
         .circle-telegram::before {
             background-image: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg');
             filter: invert(1);
         }
 
-        .circle-messenger:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
-        }
+        .circle-messenger:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.35); }
 
         .hp-field { display: none !important; }
 
         @media (max-width: 1024px) {
-            .guarantee-grid,
-            .philosophy-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-            .services-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
+            .guarantee-grid, .philosophy-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 32px;
-            }
-
-            h2 {
-                font-size: 24px;
-            }
-
-            .hero {
-                padding: 60px 0;
-            }
-
-            .header-inner {
-                height: 64px;
-            }
-
-            nav,
-            .header-right {
-                display: none;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .mobile-nav.open {
-                display: flex;
-            }
-
-            .guarantee-grid,
-            .services-grid,
-            .portfolio-grid,
-            .philosophy-grid {
-                grid-template-columns: 1fr;
-            }
-
-            section {
-                padding: 60px 0;
-            }
-
-            .btn-primary {
-                padding: 12px 24px;
-                font-size: 15px;
-                width: 100%;
-                max-width: 200px;
-            }
-
-            .letters-layer {
-                display: none;
-            }
-
-            .modal {
-                max-width: 90%;
-            }
+            h1 { font-size: 32px; }
+            h2 { font-size: 24px; }
+            .hero { padding: 60px 0; }
+            .header-inner { height: 64px; }
+            nav, .header-right { display: none; }
+            .hamburger { display: flex; }
+            .mobile-nav.open { display: flex; }
+            .guarantee-grid, .services-grid, .portfolio-grid, .philosophy-grid { grid-template-columns: 1fr; }
+            section { padding: 60px 0; }
+            .btn-primary { padding: 12px 24px; font-size: 15px; width: 100%; max-width: 200px; }
+            .letters-layer { display: none; }
+            .modal { max-width: 90%; }
         }
     </style>
 </head>
@@ -912,14 +799,12 @@
                 <div class="logo-mark">Kb</div>
                 <div>Константин Бондаренко</div>
             </a>
-
             <nav>
                 <a href="#portfolio">Портфолио</a>
                 <a href="#services">Услуги</a>
                 <a href="#blog">Блог</a>
                 <a href="#contacts">Контакты</a>
             </nav>
-
             <div class="header-right">
                 <div class="header-links">
                     <a href="https://t.me/whity14" class="circle-messenger circle-telegram" target="_blank" rel="noopener noreferrer" aria-label="Telegram"></a>
@@ -929,23 +814,17 @@
                 </div>
                 <a href="#" class="btn btn-primary open-modal">Заказать звонок</a>
             </div>
-
             <button class="hamburger" id="hamburger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileNav">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
         </div>
-
         <div class="mobile-nav" id="mobileNav">
             <a href="#portfolio">Портфолио</a>
             <a href="#services">Услуги</a>
             <a href="#blog">Блог</a>
             <a href="#contacts">Контакты</a>
             <div class="mobile-contacts">
-                <div>
-                    <a href="https://t.me/whity14" target="_blank" rel="noopener noreferrer">Telegram</a>
-                </div>
+                <div><a href="https://t.me/whity14" target="_blank" rel="noopener noreferrer">Telegram</a></div>
                 <div><a href="tel:+79912810796" style="color: inherit;">+7 (991) 281-07-96</a></div>
             </div>
         </div>
@@ -961,9 +840,7 @@
             <div class="hero-role">Копирайтер</div>
             <h1>Пишу тексты, которые приносят клиентов.</h1>
             <p class="hero-tags">Лендинги • Статьи • Описания услуг</p>
-            <p class="hero-text">
-                Помогаю бизнесу объяснить продукт простым языком и аккуратно довести читателя до заявки — без лишнего шума и «креативности ради креативности».
-            </p>
+            <p class="hero-text">Помогаю бизнесу объяснить продукт простым языком и аккуратно довести читателя до заявки — без лишнего шума и «креативности ради креативности».</p>
             <a href="#" class="btn btn-primary open-modal">Заказать консультацию</a>
         </div>
     </div>
@@ -1012,7 +889,6 @@
                     <button type="button" class="btn-link open-modal">Подробнее →</button>
                 </div>
             </div>
-
             <div class="service-card">
                 <div>
                     <h3>Email-рассылка</h3>
@@ -1023,7 +899,6 @@
                     <button type="button" class="btn-link open-modal">Подробнее →</button>
                 </div>
             </div>
-
             <div class="service-card">
                 <div>
                     <h3>Статьи и контент</h3>
@@ -1034,7 +909,6 @@
                     <button type="button" class="btn-link open-modal">Подробнее →</button>
                 </div>
             </div>
-
             <div class="service-card">
                 <div>
                     <h3>Описания товаров/услуг</h3>
@@ -1045,7 +919,6 @@
                     <button type="button" class="btn-link open-modal">Подробнее →</button>
                 </div>
             </div>
-
             <div class="service-card">
                 <div>
                     <h3>Рерайт текстов</h3>
@@ -1056,7 +929,6 @@
                     <button type="button" class="btn-link open-modal">Подробнее →</button>
                 </div>
             </div>
-
             <div class="service-card">
                 <div>
                     <h3>Копирайт для соцсетей</h3>
@@ -1067,7 +939,6 @@
                     <button type="button" class="btn-link open-modal">Подробнее →</button>
                 </div>
             </div>
-
             <div class="service-card">
                 <div>
                     <h3>Редактура и доработка</h3>
@@ -1136,9 +1007,7 @@
 
 <section class="faq">
     <div class="container">
-        <div class="section-header">
-            <h2>Частые вопросы</h2>
-        </div>
+        <div class="section-header"><h2>Частые вопросы</h2></div>
         <div class="faq-item">
             <div class="faq-q">Сколько времени занимает работа над текстом?</div>
             <div class="faq-a">Обычно 3–5 дней, в зависимости от объёма и сложности задачи. Сроки фиксируем до старта.</div>
@@ -1183,21 +1052,23 @@
 <footer id="contacts">
     <div class="container">
         <div class="footer-inner">
-            <div>
-                <strong>Константин Бондаренко</strong>
-            </div>
+            <div><strong>Константин Бондаренко</strong></div>
             <div class="footer-contacts">
                 <a href="https://t.me/whity14" class="footer-icon-link footer-icon-tg" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
                 </a>
-                <a href="mailto:byxapckuu@gmail.com" class="footer-icon-link footer-icon-email" aria-label="Email">
-                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/gmail.svg" width="18" height="18" alt="Gmail" style="filter: brightness(0) invert(1);">
+                <a href="mailto:byxapckuu@gmail.com" class="footer-icon-link footer-icon-email" aria-label="Gmail">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+                        <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/>
+                        <path d="M12 9.548L0 1.09V5.457c0-2.023 2.309-3.178 3.927-1.964L12 9.548z" fill="#FBBC05"/>
+                        <path d="M24 5.457L12 9.548l8.073-6.055C21.69 2.28 24 3.434 24 5.457z" fill="#34A853"/>
+                        <path d="M0 5.457v13.909c0 .904.732 1.636 1.636 1.636H5.455V11.73L0 5.457z" fill="#4285F4"/>
+                        <path d="M18.545 11.73v9.273h3.819A1.636 1.636 0 0 0 24 19.366V5.457l-5.455 6.273z" fill="#C5221F"/>
+                    </svg>
                 </a>
                 <a href="tel:+79912810796" class="footer-phone">+7 (991) 281-07-96</a>
             </div>
-            <div class="footer-copy">
-                © 2026 · Все права защищены.
-            </div>
+            <div class="footer-copy">© 2026 · Все права защищены.</div>
         </div>
     </div>
 </footer>
@@ -1205,39 +1076,29 @@
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <button type="button" class="modal-close" id="modalClose" aria-label="Закрыть окно">&times;</button>
-
         <h2 id="modalTitle">Обсудим вашу задачу</h2>
-
         <div id="formMessage" class="form-message" aria-live="polite"></div>
-
         <form id="contactForm" class="modal-form" novalidate>
             <input type="text" id="company" name="company" class="hp-field" autocomplete="off" tabindex="-1" aria-hidden="true">
-
             <div class="modal-field">
                 <label for="name">Ваше имя<span class="req">*</span></label>
                 <input class="modal-input" type="text" id="name" name="name" required autocomplete="name" placeholder="Например: Иван">
             </div>
-
             <div class="modal-field">
                 <label for="email">Ваш email<span class="req">*</span></label>
                 <input class="modal-input" type="email" id="email" name="email" required autocomplete="email" placeholder="mail@example.com">
             </div>
-
             <div class="modal-field">
                 <label for="phone">Ваш телефон<span class="req">*</span></label>
                 <input class="modal-input" type="tel" id="phone" name="phone" required autocomplete="tel" inputmode="tel" placeholder="+7 (999) 123-45-67">
             </div>
-
             <div class="modal-field">
                 <label for="message">Ваше сообщение<span class="req">*</span></label>
                 <textarea class="modal-textarea" id="message" name="message" required minlength="10" placeholder="Коротко опишите задачу"></textarea>
             </div>
-
             <button type="submit" class="modal-submit">Отправить сообщение</button>
         </form>
-
         <div class="modal-divider"></div>
-
         <p class="modal-subtitle">Или напишите в Telegram — отвечу в ближайшее время.</p>
         <div class="modal-contacts">
             <a class="circle-messenger circle-telegram" href="https://t.me/whity14" target="_blank" rel="noopener noreferrer" aria-label="Telegram"></a>
@@ -1256,9 +1117,7 @@ document.addEventListener('DOMContentLoaded', function () {
             hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
             hamburger.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
         });
-
-        const mobileLinks = mobileNav.querySelectorAll('a');
-        mobileLinks.forEach(function (link) {
+        mobileNav.querySelectorAll('a').forEach(function (link) {
             link.addEventListener('click', function () {
                 mobileNav.classList.remove('open');
                 hamburger.setAttribute('aria-expanded', 'false');
@@ -1292,9 +1151,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.classList.add('modal-open');
         clearMessage();
         const firstField = document.getElementById('name');
-        if (firstField) {
-            setTimeout(function () { firstField.focus(); }, 0);
-        }
+        if (firstField) setTimeout(function () { firstField.focus(); }, 0);
     }
 
     function closeModal() {
@@ -1309,36 +1166,21 @@ document.addEventListener('DOMContentLoaded', function () {
         openModal(e);
     });
 
-    if (modalClose) {
-        modalClose.addEventListener('click', function (e) {
-            e.preventDefault();
-            closeModal();
-        });
-    }
+    if (modalClose) modalClose.addEventListener('click', function (e) { e.preventDefault(); closeModal(); });
 
-    if (modalOverlay) {
-        modalOverlay.addEventListener('click', function (e) {
-            if (e.target === modalOverlay) {
-                closeModal();
-            }
-        });
-    }
+    if (modalOverlay) modalOverlay.addEventListener('click', function (e) {
+        if (e.target === modalOverlay) closeModal();
+    });
 
     document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' || e.key === 'Esc') {
-            if (modalOverlay && modalOverlay.classList.contains('visible')) {
-                closeModal();
-            }
-        }
+        if ((e.key === 'Escape' || e.key === 'Esc') && modalOverlay && modalOverlay.classList.contains('visible')) closeModal();
     });
 
     if (contactForm) {
         contactForm.addEventListener('submit', async function (e) {
             e.preventDefault();
             clearMessage();
-
             const formData = new FormData(contactForm);
-
             const payload = {
                 name: formData.get('name') || '',
                 email: formData.get('email') || '',
@@ -1347,51 +1189,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 page: location.href,
                 company: formData.get('company') || ''
             };
-
-            if (!payload.name.trim()) {
-                showMessage('error', 'Ошибка: заполните поле «Ваше имя».');
-                document.getElementById('name').focus();
-                return;
-            }
-
+            if (!payload.name.trim()) { showMessage('error', 'Ошибка: заполните поле «Ваше имя».'); document.getElementById('name').focus(); return; }
             const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email);
-            if (!payload.email.trim() || !emailOk) {
-                showMessage('error', 'Ошибка: укажите корректный email.');
-                document.getElementById('email').focus();
-                return;
-            }
-
-            if (!payload.phone.trim()) {
-                showMessage('error', 'Ошибка: заполните поле «Ваш телефон».');
-                document.getElementById('phone').focus();
-                return;
-            }
-
-            if (!payload.message.trim() || payload.message.trim().length < 10) {
-                showMessage('error', 'Ошибка: сообщение должно содержать минимум 10 символов.');
-                document.getElementById('message').focus();
-                return;
-            }
-
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Отправляем…';
-            }
+            if (!payload.email.trim() || !emailOk) { showMessage('error', 'Ошибка: укажите корректный email.'); document.getElementById('email').focus(); return; }
+            if (!payload.phone.trim()) { showMessage('error', 'Ошибка: заполните поле «Ваш телефон».'); document.getElementById('phone').focus(); return; }
+            if (!payload.message.trim() || payload.message.trim().length < 10) { showMessage('error', 'Ошибка: сообщение должно содержать минимум 10 символов.'); document.getElementById('message').focus(); return; }
+            if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправляем…'; }
             showMessage('success', 'Отправляем заявку…');
-
             try {
                 const resp = await fetch('https://leads-inbox.byxapckuu.workers.dev/api/lead', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-
                 const data = await resp.json().catch(() => ({}));
-
-                if (!resp.ok || data.ok !== true) {
-                    throw new Error(data.error || 'Ошибка отправки');
-                }
-
+                if (!resp.ok || data.ok !== true) throw new Error(data.error || 'Ошибка отправки');
                 showMessage('success', 'Заявка отправлена! Я свяжусь с вами в ближайшее время.');
                 contactForm.reset();
                 setTimeout(function () { closeModal(); }, 2000);
@@ -1399,35 +1211,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error(err);
                 showMessage('error', 'Не удалось отправить заявку. Попробуйте ещё раз.');
             } finally {
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Отправить сообщение';
-                }
+                if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Отправить сообщение'; }
             }
         });
     }
 
     const lettersLayer = document.getElementById('lettersLayer');
-
     if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 768px)').matches) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const count = 24;
-
-        for (let i = 0; i < count; i++) {
+        for (let i = 0; i < 24; i++) {
             const span = document.createElement('span');
             span.className = 'floating-letter';
             span.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
-
-            const left = 5 + Math.random() * 90;
-            const top = 5 + Math.random() * 90;
-            const fontSize = 8 + Math.random() * 18;
-            const delay = Math.random() * 20;
-
-            span.style.left = left + '%';
-            span.style.top = top + '%';
-            span.style.fontSize = fontSize + 'px';
-            span.style.animationDelay = delay + 's';
-
+            span.style.left = (5 + Math.random() * 90) + '%';
+            span.style.top = (5 + Math.random() * 90) + '%';
+            span.style.fontSize = (8 + Math.random() * 18) + 'px';
+            span.style.animationDelay = (Math.random() * 20) + 's';
             lettersLayer.appendChild(span);
         }
     }

@@ -68,30 +68,16 @@ nav a:hover { color: var(--accent); }
 .mobile-nav.open { display: flex !important; background-color: #FFFFFF; }
 .mobile-nav a { font-size: 15px; color: var(--text-primary); }
 .mobile-nav .mobile-contacts { font-size: 14px; color: var(--text-secondary); display: grid; gap: 6px; }
-.hero { position: relative; overflow: hidden; background: linear-gradient(135deg, #F8FAFC 0%, #F0F9FF 100%); padding: 120px 0; }
-.hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
-.hero-subtitle { font-size: 18px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
-.hero h1 { margin-bottom: 10px; }
-.hero-role { font-size: 22px; font-weight: 500; margin-bottom: 16px; }
-.hero-text { font-size: 16px; color: var(--text-secondary); margin-bottom: 24px; }
-.hero-tags { font-size: 15px; color: var(--text-secondary); margin-bottom: 32px; }
-section { padding: 80px 0; }
-.section-header { margin-bottom: 32px; }
-.section-header p { color: var(--text-secondary); }
-.portfolio { background-color: #FFFFFF; }
-.portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
-.portfolio-card { background-color: #FFFFFF; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); padding: 24px; transition: box-shadow 0.2s ease, transform 0.1s ease; }
-.portfolio-card:hover { box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); transform: translateY(-4px); }
-.portfolio-card p { color: var(--text-secondary); }
-.portfolio-card a { font-size: 14px; font-weight: 500; }
-footer { background-color: #1F2937; color: #FFFFFF; padding: 60px 0; }
-.footer-inner { display: flex; flex-direction: column; gap: 12px; font-size: 14px; }
+footer { background-color: #1F2937; color: #FFFFFF; padding: 20px 0; }
+.footer-inner { display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
 .footer-contacts { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
 .footer-icon-link { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; transition: transform 0.15s ease, box-shadow 0.15s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.25); }
 .footer-icon-link:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.35); }
 .footer-icon-link svg { width: 18px; height: 18px; }
 .footer-icon-tg { background-color: #0088cc; }
 .footer-icon-email { background-color: #FFFFFF; border: 1px solid #E5E7EB; }
+.footer-phone { color: #E5E7EB; font-size: 14px; font-weight: 500; }
+.footer-phone:hover { color: #FFFFFF; }
 .footer-copy { color: #9CA3AF; font-size: 13px; }
 .letters-layer { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
 body > *:not(.letters-layer):not(.modal-overlay) { position: relative; z-index: 1; }
@@ -314,7 +300,7 @@ details.case-details[open] summary::after { content:"▴"; }
 <footer id="contacts">
 <div class="container">
 <div class="footer-inner">
-<div><strong>Константин Бондаренко</strong><br/>Копирайтер</div>
+<div><strong>Константин Бондаренко</strong></div>
 <div class="footer-contacts">
 <a href="https://t.me/whity14" class="footer-icon-link footer-icon-tg" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
@@ -328,6 +314,7 @@ details.case-details[open] summary::after { content:"▴"; }
 <path d="M18.545 11.73v9.273h3.819A1.636 1.636 0 0 0 24 19.366V5.457l-5.455 6.273z" fill="#C5221F"/>
 </svg>
 </a>
+<a href="tel:+79912810796" class="footer-phone">+7 (991) 281-07-96</a>
 </div>
 <div class="footer-copy">© 2026 · Все права защищены.</div>
 </div>

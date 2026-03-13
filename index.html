@@ -767,7 +767,7 @@
 
         .circle-messenger:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.35); }
 
-        .hp-field { display: none !important; }
+        .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
         @media (max-width: 1024px) {
             .guarantee-grid, .philosophy-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1079,22 +1079,23 @@
         <h2 id="modalTitle">Обсудим вашу задачу</h2>
         <div id="formMessage" class="form-message" aria-live="polite"></div>
         <form id="contactForm" class="modal-form" novalidate>
-            <input type="text" id="company" name="company" class="hp-field" autocomplete="off" tabindex="-1" aria-hidden="true">
+            <div class="hp-field" aria-hidden="true"><label for="company">Company</label><input type="text" id="company" name="company" tabindex="-1" autocomplete="off"></div>
+            <input type="hidden" id="clientTs" name="client_ts" value="">
             <div class="modal-field">
                 <label for="name">Ваше имя<span class="req">*</span></label>
-                <input class="modal-input" type="text" id="name" name="name" required autocomplete="name" placeholder="Например: Иван">
+                <input class="modal-input" type="text" id="name" name="name" required placeholder="Например: Иван">
             </div>
             <div class="modal-field">
                 <label for="email">Ваш email<span class="req">*</span></label>
-                <input class="modal-input" type="email" id="email" name="email" required autocomplete="email" placeholder="mail@example.com">
+                <input class="modal-input" type="email" id="email" name="email" required placeholder="mail@example.com">
             </div>
             <div class="modal-field">
-                <label for="phone">Ваш телефон<span class="req">*</span></label>
-                <input class="modal-input" type="tel" id="phone" name="phone" required autocomplete="tel" inputmode="tel" placeholder="+7 (999) 123-45-67">
+                <label for="phone">Ваш телефон</label>
+                <input class="modal-input" type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="+7 (999) 123-45-67">
             </div>
             <div class="modal-field">
                 <label for="message">Ваше сообщение<span class="req">*</span></label>
-                <textarea class="modal-textarea" id="message" name="message" required minlength="10" placeholder="Коротко опишите задачу"></textarea>
+                <textarea class="modal-textarea" id="message" name="message" required placeholder="Коротко опишите задачу"></textarea>
             </div>
             <button type="submit" class="modal-submit">Отправить сообщение</button>
         </form>
@@ -1108,21 +1109,20 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    const LEAD_ENDPOINT = "https://leads-inbox.byxapckuu.workers.dev/api/lead";
     const hamburger = document.getElementById('hamburger');
     const mobileNav = document.getElementById('mobileNav');
 
+    function setMobileNavState(isOpen) {
+        if (!mobileNav || !hamburger) return;
+        mobileNav.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+        hamburger.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
+    }
     if (hamburger && mobileNav) {
-        hamburger.addEventListener('click', function () {
-            const isOpen = mobileNav.classList.toggle('open');
-            hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-            hamburger.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
-        });
+        hamburger.addEventListener('click', function () { setMobileNavState(!mobileNav.classList.contains('open')); });
         mobileNav.querySelectorAll('a').forEach(function (link) {
-            link.addEventListener('click', function () {
-                mobileNav.classList.remove('open');
-                hamburger.setAttribute('aria-expanded', 'false');
-                hamburger.setAttribute('aria-label', 'Открыть меню');
-            });
+            link.addEventListener('click', function () { setMobileNavState(false); });
         });
     }
 
@@ -1130,7 +1130,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalClose = document.getElementById('modalClose');
     const contactForm = document.getElementById('contactForm');
     const formMessage = document.getElementById('formMessage');
-    const submitBtn = contactForm ? contactForm.querySelector('.modal-submit') : null;
+    let modalTriggerEl = null;
 
     function showMessage(type, text) {
         if (!formMessage) return;
@@ -1144,12 +1144,15 @@ document.addEventListener('DOMContentLoaded', function () {
         formMessage.textContent = '';
     }
 
-    function openModal(event) {
+    function openModal(event, triggerEl) {
         if (event) event.preventDefault();
         if (!modalOverlay) return;
+        modalTriggerEl = triggerEl || document.activeElement;
         modalOverlay.classList.add('visible');
         document.body.classList.add('modal-open');
         clearMessage();
+        const clientTsEl = document.getElementById('clientTs');
+        if (clientTsEl) clientTsEl.value = String(Date.now());
         const firstField = document.getElementById('name');
         if (firstField) setTimeout(function () { firstField.focus(); }, 0);
     }
@@ -1158,12 +1161,14 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!modalOverlay) return;
         modalOverlay.classList.remove('visible');
         document.body.classList.remove('modal-open');
+        if (modalTriggerEl && typeof modalTriggerEl.focus === 'function') setTimeout(function () { modalTriggerEl.focus(); }, 0);
+        modalTriggerEl = null;
     }
 
     document.addEventListener('click', function (e) {
         const trigger = e.target.closest('.open-modal');
         if (!trigger) return;
-        openModal(e);
+        openModal(e, trigger);
     });
 
     if (modalClose) modalClose.addEventListener('click', function (e) { e.preventDefault(); closeModal(); });
@@ -1173,46 +1178,40 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.addEventListener('keydown', function (e) {
-        if ((e.key === 'Escape' || e.key === 'Esc') && modalOverlay && modalOverlay.classList.contains('visible')) closeModal();
+        const isOpen = modalOverlay && modalOverlay.classList.contains('visible');
+        if ((e.key === 'Escape' || e.key === 'Esc') && isOpen) { closeModal(); return; }
     });
+
+    function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
 
     if (contactForm) {
         contactForm.addEventListener('submit', async function (e) {
-            e.preventDefault();
-            clearMessage();
-            const formData = new FormData(contactForm);
-            const payload = {
-                name: formData.get('name') || '',
-                email: formData.get('email') || '',
-                phone: formData.get('phone') || '',
-                message: formData.get('message') || '',
-                page: location.href,
-                company: formData.get('company') || ''
-            };
-            if (!payload.name.trim()) { showMessage('error', 'Ошибка: заполните поле «Ваше имя».'); document.getElementById('name').focus(); return; }
-            const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email);
-            if (!payload.email.trim() || !emailOk) { showMessage('error', 'Ошибка: укажите корректный email.'); document.getElementById('email').focus(); return; }
-            if (!payload.phone.trim()) { showMessage('error', 'Ошибка: заполните поле «Ваш телефон».'); document.getElementById('phone').focus(); return; }
-            if (!payload.message.trim() || payload.message.trim().length < 10) { showMessage('error', 'Ошибка: сообщение должно содержать минимум 10 символов.'); document.getElementById('message').focus(); return; }
+            e.preventDefault(); clearMessage();
+            const nameEl = document.getElementById('name');
+            const emailEl = document.getElementById('email');
+            const phoneEl = document.getElementById('phone');
+            const msgEl = document.getElementById('message');
+            const companyEl = document.getElementById('company');
+            const clientTsEl = document.getElementById('clientTs');
+            const name = nameEl ? nameEl.value.trim() : '';
+            const email = emailEl ? emailEl.value.trim() : '';
+            const phone = phoneEl ? phoneEl.value.trim() : '';
+            const message = msgEl ? msgEl.value.trim() : '';
+            const company = companyEl ? companyEl.value.trim() : '';
+            const clientTs = clientTsEl ? Number(clientTsEl.value) : null;
+            if (name.length < 2) { showMessage('error', 'Ошибка: имя должно быть не короче 2 символов.'); if (nameEl) nameEl.focus(); return; }
+            if (!email || !validateEmail(email)) { showMessage('error', 'Ошибка: укажите корректный email.'); if (emailEl) emailEl.focus(); return; }
+            if (message.length < 10) { showMessage('error', 'Ошибка: сообщение должно быть не короче 10 символов.'); if (msgEl) msgEl.focus(); return; }
+            if (company) { showMessage('error', 'Ошибка отправки.'); return; }
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
             if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправляем…'; }
-            showMessage('success', 'Отправляем заявку…');
             try {
-                const resp = await fetch('https://leads-inbox.byxapckuu.workers.dev/api/lead', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const data = await resp.json().catch(() => ({}));
-                if (!resp.ok || data.ok !== true) throw new Error(data.error || 'Ошибка отправки');
-                showMessage('success', 'Заявка отправлена! Я свяжусь с вами в ближайшее время.');
-                contactForm.reset();
-                setTimeout(function () { closeModal(); }, 2000);
-            } catch (err) {
-                console.error(err);
-                showMessage('error', 'Не удалось отправить заявку. Попробуйте ещё раз.');
-            } finally {
-                if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Отправить сообщение'; }
-            }
+                const res = await fetch(LEAD_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email, phone, message, page: window.location.href, company, client_ts: clientTs }) });
+                let data = null; try { data = await res.json(); } catch (_) {}
+                if (res.ok && data && data.ok) { showMessage('success', 'Заявка отправлена! Свяжусь с вами в ближайшее время.'); contactForm.reset(); setTimeout(function () { closeModal(); }, 2000); }
+                else { showMessage('error', (data && data.error) ? data.error : 'Ошибка отправки'); }
+            } catch (_) { showMessage('error', 'Ошибка соединения. Попробуйте ещё раз.'); }
+            finally { if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Отправить сообщение'; } }
         });
     }
 

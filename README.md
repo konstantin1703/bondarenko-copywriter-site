@@ -147,7 +147,6 @@ git push origin feature/your-feature-name
 
 - **Автор**: Константин Бондаренко
 - **Email**: byxapckuu@gmail.com
-- **WhatsApp**: +7 (991) 281-07-96
 - **Telegram**: [@whity14](https://t.me/whity14)
 - **GitHub**: [@konstantin1703](https://github.com/konstantin1703)
 

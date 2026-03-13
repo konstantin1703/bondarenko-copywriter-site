@@ -193,19 +193,18 @@
         .anim-fade {
             opacity: 1;
             transform: translateY(0);
+            transition: opacity 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .js-anim .anim-fade:not(.is-visible) {
             opacity: 0;
-            transform: translateY(16px);
-            transition: opacity 0.45s ease, transform 0.45s ease;
+            transform: translateY(14px);
             will-change: opacity, transform;
         }
 
         .js-anim .anim-fade.is-visible {
             opacity: 1;
             transform: translateY(0);
-            transition: opacity 0.45s ease, transform 0.45s ease;
         }
 
         .anim-fade[data-delay="1"] { transition-delay: 0.05s; }
@@ -213,6 +212,15 @@
         .anim-fade[data-delay="3"] { transition-delay: 0.15s; }
         .anim-fade[data-delay="4"] { transition-delay: 0.2s; }
         .anim-fade[data-delay="5"] { transition-delay: 0.25s; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .anim-fade,
+            .js-anim .anim-fade:not(.is-visible),
+            .js-anim .anim-fade.is-visible {
+                transition: none;
+                transform: none;
+            }
+        }
 
         .btn {
             display: inline-flex;
@@ -874,11 +882,11 @@
                 <a href="#blog">Блог</a>
                 <a href="#contacts">Контакты</a>
             </nav>
-            <div class="header-right anim-fade is-visible" data-delay="1">
-                <div class="header-links anim-fade is-visible" data-delay="2">
-                    <a href="https://t.me/whity14" class="circle-messenger circle-telegram anim-fade is-visible" data-delay="3" target="_blank" rel="noopener noreferrer" aria-label="Telegram"></a>
+            <div class="header-right anim-fade" data-delay="1">
+                <div class="header-links anim-fade" data-delay="2">
+                    <a href="https://t.me/whity14" class="circle-messenger circle-telegram anim-fade" data-delay="3" target="_blank" rel="noopener noreferrer" aria-label="Telegram"></a>
                 </div>
-                <div class="phone anim-fade is-visible" data-delay="4">
+                <div class="phone anim-fade" data-delay="4">
                     <a href="tel:+79912810796" style="color: inherit;">+7 (991) 281-07-96</a>
                 </div>
                 <a href="#" class="btn btn-primary open-modal">Заказать звонок</a>
@@ -918,7 +926,7 @@
 <section class="guarantee">
     <div class="container">
         <div class="section-header">
-            <h2>Гарантии работы</h2>
+            <h2 class="anim-fade">Гарантии работы</h2>
             <p>Спокойный, предсказуемый процесс и понятные правила.</p>
         </div>
         <div class="guarantee-grid">
@@ -944,7 +952,7 @@
 <section class="services" id="services">
     <div class="container">
         <div class="section-header">
-            <h2>Что я делаю</h2>
+            <h2 class="anim-fade">Что я делаю</h2>
             <p>Помогаю упаковать ваши продукты и услуги в понятные и работающие тексты.</p>
         </div>
         <div class="services-grid">
@@ -1051,7 +1059,7 @@
 <section class="philosophy">
     <div class="container">
         <div class="section-header">
-            <h2>Моя философия</h2>
+            <h2 class="anim-fade">Моя философия</h2>
             <p>Как я подхожу к работе с текстами и проектами.</p>
         </div>
         <div class="philosophy-grid">
@@ -1076,18 +1084,18 @@
 
 <section class="faq">
     <div class="container">
-        <div class="section-header"><h2>Частые вопросы</h2></div>
+        <div class="section-header"><h2 class="anim-fade">Частые вопросы</h2></div>
         <div class="faq-item anim-fade" data-delay="1">
-            <div class="faq-q">Сколько времени занимает работа над текстом?</div>
-            <div class="faq-a">Обычно 3–5 дней, в зависимости от объёма и сложности задачи. Сроки фиксируем до старта.</div>
+            <div class="faq-q anim-fade" data-delay="1">Сколько времени занимает работа над текстом?</div>
+            <div class="faq-a anim-fade" data-delay="2">Обычно 3–5 дней, в зависимости от объёма и сложности задачи. Сроки фиксируем до старта.</div>
         </div>
         <div class="faq-item anim-fade" data-delay="2">
-            <div class="faq-q">Можно ли вернуть деньги, если текст не подойдёт?</div>
-            <div class="faq-a">Да. Если после правок формат вам не подходит, я возвращаю оплату.</div>
+            <div class="faq-q anim-fade" data-delay="1">Можно ли вернуть деньги, если текст не подойдёт?</div>
+            <div class="faq-a anim-fade" data-delay="2">Да. Если после правок формат вам не подходит, я возвращаю оплату.</div>
         </div>
         <div class="faq-item anim-fade" data-delay="3">
-            <div class="faq-q">Вы только пишете текст или помогаете со структурой?</div>
-            <div class="faq-a">В большинстве случаев мы сначала обсуждаем структуру и логику, а потом я пишу текст под эту структуру.</div>
+            <div class="faq-q anim-fade" data-delay="1">Вы только пишете текст или помогаете со структурой?</div>
+            <div class="faq-a anim-fade" data-delay="2">В большинстве случаев мы сначала обсуждаем структуру и логику, а потом я пишу текст под эту структуру.</div>
         </div>
     </div>
 </section>

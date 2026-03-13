@@ -59,6 +59,8 @@ nav a:hover { color: var(--accent); }
 .btn-primary { background-color: var(--accent); color: #FFFFFF; }
 .btn-primary:hover { background-color: var(--accent-hover); color: #FFFFFF; transform: translateY(-1px); }
 .btn-primary:focus-visible { outline: 2px solid rgba(37, 99, 235, 0.7); outline-offset: 2px; }
+.btn-secondary { background: #EFF6FF; color: var(--accent); border: 1px solid rgba(37,99,235,0.18); }
+.btn-secondary:hover { background: #DBEAFE; color: var(--accent-hover); transform: translateY(-1px); }
 .btn-link { background: transparent; border: none; padding: 0; margin-top: 8px; color: var(--accent); font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
 .btn-link:hover { color: var(--accent-hover); }
 .hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; flex: 0 0 auto; background: transparent; border: 0; padding: 0; appearance: none; -webkit-appearance: none; }
@@ -142,8 +144,8 @@ details.case-details[open] summary::after { content:"▴"; }
 .table th, .table td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text-secondary); vertical-align: top; }
 .table th { color: var(--text-primary); background:#FAFBFC; font-weight: 600; }
 .table tr:last-child td { border-bottom:none; }
-.breadcrumbs { margin-top: 16px; font-size: 14px; color: var(--text-secondary); }
-.breadcrumbs a { color: var(--accent); font-weight: 500; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+.back-wrap { margin-top: 18px; display: flex; gap: 12px; flex-wrap: wrap; }
 </style>
     <link rel="canonical" href="https://konstantin1703.github.io/bondarenko-copywriter-site/portfolio/example-1-landing-text.html">
 </head>
@@ -191,7 +193,10 @@ details.case-details[open] summary::after { content:"▴"; }
 </div>
 <h1>Лендинг для онлайн‑курса «Excel для работы без боли»</h1>
 <p style="color:var(--text-secondary); font-size:16px; max-width: 860px;">Лендинг: упаковка задачи + готовый текст блоками (оффер, выгоды, программа, FAQ, CTA).</p>
-<div class="breadcrumbs"><a href="../index.html#portfolio">← Назад к портфолио</a></div>
+<div class="hero-actions">
+<a class="btn btn-secondary" href="../index.html#portfolio">← Вернуться на главную</a>
+<a class="btn btn-primary open-modal" href="#">Заказать звонок</a>
+</div>
 <div class="case-note" style="margin-top:16px;">
 <b>Формат "кейс + готовый текст".</b> Сверху — вводные и логика, ниже — полностью готовый материал, который можно брать в работу.
 </div>
@@ -297,6 +302,11 @@ details.case-details[open] summary::after { content:"▴"; }
 </div>
 </div>
 </section>
+<div class="container">
+<div class="back-wrap">
+<a class="btn btn-secondary" href="../index.html#portfolio">← Вернуться на главную</a>
+</div>
+</div>
 <footer id="contacts">
 <div class="container">
 <div class="footer-inner">

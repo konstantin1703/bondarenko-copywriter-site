@@ -59,6 +59,8 @@ nav a:hover { color: var(--accent); }
 .btn-primary { background-color: var(--accent); color: #FFFFFF; }
 .btn-primary:hover { background-color: var(--accent-hover); color: #FFFFFF; transform: translateY(-1px); }
 .btn-primary:focus-visible { outline: 2px solid rgba(37, 99, 235, 0.7); outline-offset: 2px; }
+.btn-secondary { background: #EFF6FF; color: var(--accent); border: 1px solid rgba(37,99,235,0.18); }
+.btn-secondary:hover { background: #DBEAFE; color: var(--accent-hover); transform: translateY(-1px); }
 .hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; flex: 0 0 auto; background: transparent; border: 0; padding: 0; appearance: none; -webkit-appearance: none; }
 .hamburger:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 .hamburger span { width: 20px; height: 2px; background-color: var(--text-primary); }
@@ -136,8 +138,8 @@ details.case-details[open] summary::after { content:"▴"; }
 .deliverable h3 { margin: 0 0 10px; font-size: 18px; }
 .block { background: #FFFFFF; border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-top: 12px; }
 .label { display:inline-flex; align-items:center; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(37,99,235,.18); background: rgba(37,99,235,.06); color: var(--accent); font-weight: 600; font-size: 12px; margin-bottom: 8px; }
-.breadcrumbs { margin-top: 16px; font-size: 14px; color: var(--text-secondary); }
-.breadcrumbs a { color: var(--accent); font-weight: 500; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+.back-wrap { margin-top: 18px; display: flex; gap: 12px; flex-wrap: wrap; }
 </style>
     <link rel="canonical" href="https://konstantin1703.github.io/bondarenko-copywriter-site/portfolio/example-2-article.html">
 </head>
@@ -185,7 +187,10 @@ details.case-details[open] summary::after { content:"▴"; }
 </div>
 <h1>Статья: «Как выбрать CRM для малого бизнеса: 5 критериев без переплаты»</h1>
 <p style="color:var(--text-secondary); font-size:16px; max-width: 860px;">Статья для блога: вводные + полный текст с критериями, ошибками и чек‑листом.</p>
-<div class="breadcrumbs"><a href="../index.html#portfolio">← Назад к портфолио</a></div>
+<div class="hero-actions">
+<a class="btn btn-secondary" href="../index.html#portfolio">← Вернуться на главную</a>
+<a class="btn btn-primary open-modal" href="#">Заказать звонок</a>
+</div>
 <div class="case-note" style="margin-top:16px;">
 <b>Формат "кейс + готовый текст".</b> Сверху — вводные и логика, ниже — полностью готовый материал, который можно брать в работу.
 </div>
@@ -317,6 +322,11 @@ details.case-details[open] summary::after { content:"▴"; }
 </div>
 </div>
 </section>
+<div class="container">
+<div class="back-wrap">
+<a class="btn btn-secondary" href="../index.html#portfolio">← Вернуться на главную</a>
+</div>
+</div>
 <footer id="contacts">
 <div class="container">
 <div class="footer-inner">

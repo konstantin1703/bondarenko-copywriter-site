@@ -193,12 +193,12 @@
         .anim-fade {
             opacity: 1;
             transform: translateY(0);
-            transition: opacity 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .js-anim .anim-fade:not(.is-visible) {
             opacity: 0;
-            transform: translateY(14px);
+            transform: translateY(24px);
             will-change: opacity, transform;
         }
 
@@ -213,10 +213,30 @@
         .anim-fade[data-delay="4"] { transition-delay: 0.2s; }
         .anim-fade[data-delay="5"] { transition-delay: 0.25s; }
 
+        .anim-pop {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.65s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .js-anim .anim-pop:not(.is-visible) {
+            opacity: 0;
+            transform: scale(0.88);
+            will-change: opacity, transform;
+        }
+
+        .js-anim .anim-pop.is-visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
         @media (prefers-reduced-motion: reduce) {
             .anim-fade,
+            .anim-pop,
             .js-anim .anim-fade:not(.is-visible),
-            .js-anim .anim-fade.is-visible {
+            .js-anim .anim-fade.is-visible,
+            .js-anim .anim-pop:not(.is-visible),
+            .js-anim .anim-pop.is-visible {
                 transition: none;
                 transform: none;
             }
@@ -884,12 +904,12 @@
             </nav>
             <div class="header-right anim-fade" data-delay="1">
                 <div class="header-links anim-fade" data-delay="2">
-                    <a href="https://t.me/whity14" class="circle-messenger circle-telegram anim-fade" data-delay="3" target="_blank" rel="noopener noreferrer" aria-label="Telegram"></a>
+                    <a href="https://t.me/whity14" class="circle-messenger circle-telegram anim-pop" data-delay="3" target="_blank" rel="noopener noreferrer" aria-label="Telegram"></a>
                 </div>
                 <div class="phone anim-fade" data-delay="4">
                     <a href="tel:+79912810796" style="color: inherit;">+7 (991) 281-07-96</a>
                 </div>
-                <a href="#" class="btn btn-primary open-modal">Заказать звонок</a>
+                <a href="#" class="btn btn-primary open-modal anim-fade" data-delay="5">Заказать звонок</a>
             </div>
             <button class="hamburger" id="hamburger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileNav">
                 <span></span><span></span><span></span>
@@ -931,17 +951,17 @@
         </div>
         <div class="guarantee-grid">
             <div class="guarantee-item anim-fade" data-delay="1">
-                <div class="guarantee-icon anim-fade" data-delay="2">✅</div>
+                <div class="guarantee-icon anim-pop" data-delay="2">✅</div>
                 <h3>Первый черновик — за 3 дня</h3>
                 <p>Согласуем задачу, и вы получаете первый вариант текста в оговорённый срок.</p>
             </div>
             <div class="guarantee-item anim-fade" data-delay="2">
-                <div class="guarantee-icon anim-fade" data-delay="3">✅</div>
+                <div class="guarantee-icon anim-pop" data-delay="3">✅</div>
                 <h3>Правки до результата</h3>
                 <p>Не ограничиваю количество правок по мелочам. Доводим текст до того состояния, в котором вам спокойно.</p>
             </div>
             <div class="guarantee-item anim-fade" data-delay="3">
-                <div class="guarantee-icon anim-fade" data-delay="4">✅</div>
+                <div class="guarantee-icon anim-pop" data-delay="4">✅</div>
                 <h3>100% возврат, если не заходит</h3>
                 <p>Если формат моей работы вам не подойдёт, возвращаю оплату без споров.</p>
             </div>
@@ -1064,17 +1084,17 @@
         </div>
         <div class="philosophy-grid">
             <div class="philosophy-item anim-fade" data-delay="1">
-                <div class="philosophy-icon anim-fade" data-delay="2">🎯</div>
+                <div class="philosophy-icon anim-pop" data-delay="2">🎯</div>
                 <h3>Результат, а не красивость</h3>
                 <p>Тексты должны помогать бизнесу: приводить клиентов, объяснять продукт, поддерживать продажи.</p>
             </div>
             <div class="philosophy-item anim-fade" data-delay="2">
-                <div class="philosophy-icon anim-fade" data-delay="3">📝</div>
+                <div class="philosophy-icon anim-pop" data-delay="3">📝</div>
                 <h3>Ясность в каждом слове</h3>
                 <p>Без воды, без перегруза, без сложных конструкций. Простые фразы, понятные людям.</p>
             </div>
             <div class="philosophy-item anim-fade" data-delay="3">
-                <div class="philosophy-icon anim-fade" data-delay="4">⚡</div>
+                <div class="philosophy-icon anim-pop" data-delay="4">⚡</div>
                 <h3>Быстро и аккуратно</h3>
                 <p>Сроки держу, на связь выхожу вовремя, правки вношу без лишней драмы и споров.</p>
             </div>
@@ -1086,16 +1106,16 @@
     <div class="container">
         <div class="section-header"><h2 class="anim-fade">Частые вопросы</h2></div>
         <div class="faq-item anim-fade" data-delay="1">
-            <div class="faq-q anim-fade" data-delay="1">Сколько времени занимает работа над текстом?</div>
-            <div class="faq-a anim-fade" data-delay="2">Обычно 3–5 дней, в зависимости от объёма и сложности задачи. Сроки фиксируем до старта.</div>
+            <div class="faq-q">Сколько времени занимает работа над текстом?</div>
+            <div class="faq-a">Обычно 3–5 дней, в зависимости от объёма и сложности задачи. Сроки фиксируем до старта.</div>
         </div>
         <div class="faq-item anim-fade" data-delay="2">
-            <div class="faq-q anim-fade" data-delay="1">Можно ли вернуть деньги, если текст не подойдёт?</div>
-            <div class="faq-a anim-fade" data-delay="2">Да. Если после правок формат вам не подходит, я возвращаю оплату.</div>
+            <div class="faq-q">Можно ли вернуть деньги, если текст не подойдёт?</div>
+            <div class="faq-a">Да. Если после правок формат вам не подходит, я возвращаю оплату.</div>
         </div>
         <div class="faq-item anim-fade" data-delay="3">
-            <div class="faq-q anim-fade" data-delay="1">Вы только пишете текст или помогаете со структурой?</div>
-            <div class="faq-a anim-fade" data-delay="2">В большинстве случаев мы сначала обсуждаем структуру и логику, а потом я пишу текст под эту структуру.</div>
+            <div class="faq-q">Вы только пишете текст или помогаете со структурой?</div>
+            <div class="faq-a">В большинстве случаев мы сначала обсуждаем структуру и логику, а потом я пишу текст под эту структуру.</div>
         </div>
     </div>
 </section>
@@ -1294,7 +1314,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    const animatedElements = document.querySelectorAll('.anim-fade:not(.is-visible)');
+    const animatedElements = document.querySelectorAll('.anim-fade:not(.is-visible), .anim-pop:not(.is-visible)');
     if (animatedElements.length) {
         if ('IntersectionObserver' in window) {
             const observer = new IntersectionObserver(function (entries, obs) {
@@ -1304,7 +1324,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         obs.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+            }, { threshold: 0.12, rootMargin: "0px 0px -5% 0px" });
             animatedElements.forEach(function (el) { observer.observe(el); });
         } else {
             animatedElements.forEach(function (el) { el.classList.add('is-visible'); });

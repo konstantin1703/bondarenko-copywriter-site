@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Автор — копирайтер</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Автор — копирайтер. Лендинги, статьи, описания услуг, которые приводят клиентов.">
+    <meta name="author" content="Автор">
+    <meta name="robots" content="index, follow">
+
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https://removed-endpoint.invalid; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://removed-endpoint.invalid;">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=1">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon.png?v=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=1">
+
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="canonical" href="https://konstantin1703.github.io/bondarenko-copywriter-site/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Автор — копирайтер">
+    <meta property="og:description" content="Пишу тексты, которые приносят клиентов. Лендинги, статьи, email, описания товаров, рерайт, контент для соцсетей.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://konstantin1703.github.io/bondarenko-copywriter-site/">
+    <meta property="og:image" content="https://konstantin1703.github.io/bondarenko-copywriter-site/og-preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="ru_RU">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Автор — копирайтер">
+    <meta name="twitter:description" content="Пишу тексты, которые приносят клиентов. Лендинги, статьи, email, описания товаров, рерайт, контент для соцсетей.">
+    <meta name="twitter:image" content="https://konstantin1703.github.io/bondarenko-copywriter-site/og-preview.png">
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Scroll to anchor -->
+    <script src="scroll-to-anchor.js" defer></script>
+
+    <style>
+:root {
+            --bg-primary: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --accent: #2563EB;
+            --accent-hover: #1D4ED8;
+            --border: #E5E7EB;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            line-height: 1.6;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--accent-hover);
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        h1, h2, h3 {
+            margin: 0 0 16px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 48px;
+        }
+
+        h2 {
+            font-size: 32px;
+        }
+
+        h3 {
+            font-size: 22px;
+        }
+
+        p {
+            margin: 0 0 12px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: var(--bg-white);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo:hover {
+            color: var(--text-primary);
+        }
+
+        .logo-mark {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            font-size: 14px;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 14px;
+        }
+
+        .header-links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .phone {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .anim-fade {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .js-anim .anim-fade:not(.is-visible) {
+            opacity: 0;
+            transform: translateY(24px);
+            will-change: opacity, transform;
+        }
+
+        .js-anim .anim-fade.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .anim-fade[data-delay="1"] { transition-delay: 0.05s; }
+        .anim-fade[data-delay="2"] { transition-delay: 0.1s; }
+        .anim-fade[data-delay="3"] { transition-delay: 0.15s; }
+        .anim-fade[data-delay="4"] { transition-delay: 0.2s; }
+        .anim-fade[data-delay="5"] { transition-delay: 0.25s; }
+
+        .anim-pop {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.65s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .js-anim .anim-pop:not(.is-visible) {
+            opacity: 0;
+            transform: scale(0.88);
+            will-change: opacity, transform;
+        }
+
+        .js-anim .anim-pop.is-visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .anim-fade,
+            .anim-pop,
+            .js-anim .anim-fade:not(.is-visible),
+            .js-anim .anim-fade.is-visible,
+            .js-anim .anim-pop:not(.is-visible),
+            .js-anim .anim-pop.is-visible {
+                transition: none;
+                transform: none;
+            }
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            color: #FFFFFF;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:focus-visible {
+            outline: 2px solid rgba(37, 99, 235, 0.7);
+            outline-offset: 2px;
+        }
+
+        .btn-link {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin-top: 8px;
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-link:hover {
+            color: var(--accent-hover);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            width: 20px;
+            height: 2px;
+            background-color: var(--text-primary);
+        }
+
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            padding: 12px 0 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .mobile-nav.open {
+            display: flex !important;
+            background-color: #FFFFFF;
+        }
+
+        .mobile-nav a {
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+
+        .mobile-nav .mobile-contacts {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #F8FAFC 0%, #F0F9FF 100%);
+            padding: 100px 0 72px;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .hero h1 {
+            margin-bottom: 10px;
+        }
+
+        .hero-role {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .hero-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .hero-tags {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        section {
+            padding: 64px 0;
+        }
+
+        .guarantee, .services, .portfolio, .philosophy {
+            padding: 50px 0;
+        }
+
+        .faq, .blog {
+            padding: 46px 0;
+        }
+
+        .section-header {
+            margin-bottom: 32px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+        }
+
+        .guarantee {
+            background-color: #FFFFFF;
+        }
+
+        .guarantee-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .guarantee-item {
+            background-color: #FAFBFC;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            transition: box-shadow 0.2s ease, transform 0.15s ease;
+        }
+
+        .guarantee-item:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transform: translateY(-3px);
+        }
+
+        .guarantee-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .guarantee-item:hover .guarantee-icon {
+            transform: translateY(-1px) scale(1.06);
+        }
+
+        .services {
+            background-color: var(--bg-primary);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .service-card {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px 24px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 200px;
+            transition: box-shadow 0.2s ease, transform 0.15s ease;
+        }
+
+        .service-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+        }
+
+        .service-price {
+            margin-top: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .service-card-footer {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .portfolio {
+            background-color: #FFFFFF;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .portfolio-card {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            padding: 24px;
+            transition: box-shadow 0.2s ease, transform 0.1s ease;
+        }
+
+        .portfolio-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .portfolio-card p {
+            color: var(--text-secondary);
+        }
+
+        .portfolio-card a {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .philosophy {
+            background-color: var(--bg-primary);
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .philosophy-item {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            padding: 28px;
+            border: 1px solid var(--border);
+            transition: box-shadow 0.2s ease, transform 0.15s ease;
+        }
+
+        .philosophy-item:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transform: translateY(-3px);
+        }
+
+        .philosophy-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .philosophy-item:hover .philosophy-icon {
+            transform: translateY(-1px) scale(1.06);
+        }
+
+        .philosophy-item p {
+            color: var(--text-secondary);
+        }
+
+        .faq {
+            background-color: #FFFFFF;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 16px 10px;
+            border-radius: 8px;
+            transition: background-color 0.2s ease, transform 0.15s ease;
+        }
+
+        .faq-item:hover {
+            background-color: #F8FAFC;
+            transform: translateX(4px);
+        }
+
+        .faq-q {
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .faq-a {
+            color: var(--text-secondary);
+        }
+
+        .blog {
+            background-color: var(--bg-primary);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .blog-card {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            padding: 24px;
+            transition: box-shadow 0.2s ease, transform 0.1s ease;
+        }
+
+        .blog-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .blog-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .blog-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 14px;
+        }
+
+        .blog-card a {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        footer {
+            background-color: #1F2937;
+            color: #FFFFFF;
+            padding: 16px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .footer-contacts {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .footer-icon-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        }
+
+        .footer-icon-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+        }
+
+        .footer-icon-link svg {
+            width: 18px;
+            height: 18px;
+            fill: #FFFFFF;
+        }
+
+        .footer-icon-tg {
+            background-color: #0088cc;
+        }
+
+        .footer-icon-email {
+            background-color: #FFFFFF;
+            border: 1px solid #E5E7EB;
+        }
+
+        .footer-phone {
+            color: #E5E7EB;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .footer-phone:hover {
+            color: #FFFFFF;
+        }
+
+        .footer-copy {
+            color: #9CA3AF;
+            font-size: 13px;
+        }
+
+        .letters-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        body > *:not(.letters-layer):not(.modal-overlay) {
+            position: relative;
+            z-index: 1;
+        }
+
+        .floating-letter {
+            position: absolute;
+            color: var(--text-primary);
+            opacity: 0.05;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-weight: 300;
+            letter-spacing: 2px;
+            user-select: none;
+            line-height: 1;
+            animation: floatLetter 18s linear infinite;
+        }
+
+        @keyframes floatLetter {
+            0% { transform: translate3d(0,0,0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.07; }
+            50% { transform: translate3d(40px,-30px,0) rotate(120deg); opacity: 0.09; }
+            100% { transform: translate3d(-40px,30px,0) rotate(360deg); opacity: 0; }
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15,23,42,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            z-index: 1100;
+        }
+
+        .modal-overlay.visible { display: flex; }
+
+        .modal {
+            background: #FFFFFF;
+            border-radius: 12px;
+            max-width: 560px;
+            width: 100%;
+            padding: 22px 20px 18px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            position: relative;
+            animation: modalFade 0.25s ease-out;
+        }
+
+        @keyframes modalFade {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            line-height: 1;
+        }
+
+        .modal h2 { margin: 0 0 12px; font-size: 20px; font-weight: 700; }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .modal-field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .modal-field .req { color: var(--accent); margin-left: 2px; }
+
+        .modal-input,
+        .modal-textarea {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--text-primary);
+            background: #FFFFFF;
+            outline: none;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .modal-textarea { min-height: 120px; resize: vertical; }
+
+        .modal-input:focus,
+        .modal-textarea:focus {
+            border-color: rgba(37,99,235,0.65);
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.14);
+        }
+
+        .modal-submit {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--accent);
+            color: #FFFFFF;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .modal-submit:hover { background: var(--accent-hover); transform: translateY(-1px); }
+        .modal-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+        .modal-submit:focus-visible { outline: 2px solid rgba(37,99,235,0.7); outline-offset: 2px; }
+
+        .form-message {
+            display: none;
+            margin: 0 0 8px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .form-message.error {
+            display: block;
+            background: rgba(220,38,38,0.08);
+            border: 1px solid rgba(220,38,38,0.25);
+            color: #991B1B;
+        }
+
+        .form-message.success {
+            display: block;
+            background: rgba(22,163,74,0.08);
+            border: 1px solid rgba(22,163,74,0.25);
+            color: #166534;
+        }
+
+        .modal-divider { margin: 10px 0; border-top: 1px solid var(--border); }
+        .modal-subtitle { margin: 0 0 10px; color: var(--text-secondary); font-size: 14px; }
+        .modal-contacts { display: flex; gap: 12px; align-items: center; margin-bottom: 6px; }
+
+        .circle-messenger {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        }
+
+        .circle-messenger::before {
+            content: '';
+            display: block;
+            width: 70%;
+            height: 70%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .circle-telegram { background-color: #0088cc; }
+
+        .circle-telegram::before {
+            background-image: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg');
+            filter: invert(1);
+        }
+
+        .circle-messenger:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.35); }
+
+        .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+        @media (max-width: 1024px) {
+            .guarantee-grid, .philosophy-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 32px; }
+            h2 { font-size: 24px; }
+            .hero { padding: 48px 0 38px; }
+            .header-inner { height: 64px; }
+            nav, .header-right { display: none; }
+            .hamburger { display: flex; }
+            .mobile-nav.open { display: flex; }
+            .guarantee-grid, .services-grid, .portfolio-grid, .philosophy-grid { grid-template-columns: 1fr; }
+            section { padding: 48px 0; }
+            .guarantee, .services, .portfolio, .philosophy { padding: 40px 0; }
+            .faq, .blog { padding: 36px 0; }
+            .btn-primary { padding: 12px 24px; font-size: 15px; width: 100%; max-width: 200px; }
+            .letters-layer { display: none; }
+            .modal { max-width: 90%; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="header-inner">
+            <a href="#" class="logo" aria-label="Автор — на главную">
+                <div class="logo-mark">Kb</div>
+                <div>Автор</div>
+            </a>
+            <nav>
+                <a href="#portfolio">Портфолио</a>
+                <a href="#services">Услуги</a>
+                <a href="#blog">Блог</a>
+                <a href="#contacts">Контакты</a>
+            </nav>
+            <div class="header-right anim-fade" data-delay="1">
+                <div class="header-links anim-fade" data-delay="2">
+                    
+                </div>
+                <div class="phone anim-fade" data-delay="4">
+                    
+                </div>
+                <a href="#" class="btn btn-primary open-modal anim-fade" data-delay="5">Заказать звонок</a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileNav">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#portfolio">Портфолио</a>
+            <a href="#services">Услуги</a>
+            <a href="#blog">Блог</a>
+            <a href="#contacts">Контакты</a>
+            <div class="mobile-contacts">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="letters-layer" id="lettersLayer"></div>
+
+<section class="hero">
+    <div class="container">
+        <div class="hero-inner">
+            <div class="hero-subtitle">Автор</div>
+            <div class="hero-role">Копирайтер</div>
+            <h1>Пишу тексты, которые приносят клиентов.</h1>
+            <p class="hero-tags">Лендинги • Статьи • Описания услуг</p>
+            <p class="hero-text">Помогаю бизнесу объяснить продукт простым языком и аккуратно довести читателя до заявки — без лишнего шума и «креативности ради креативности».</p>
+            <a href="#" class="btn btn-primary open-modal">Заказать консультацию</a>
+        </div>
+    </div>
+</section>
+
+<section class="guarantee">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="anim-fade">Гарантии работы</h2>
+            <p>Спокойный, предсказуемый процесс и понятные правила.</p>
+        </div>
+        <div class="guarantee-grid">
+            <div class="guarantee-item anim-fade" data-delay="1">
+                <div class="guarantee-icon anim-pop" data-delay="2">✅</div>
+                <h3>Первый черновик — за 3 дня</h3>
+                <p>Согласуем задачу, и вы получаете первый вариант текста в оговорённый срок.</p>
+            </div>
+            <div class="guarantee-item anim-fade" data-delay="2">
+                <div class="guarantee-icon anim-pop" data-delay="3">✅</div>
+                <h3>Правки до результата</h3>
+                <p>Не ограничиваю количество правок по мелочам. Доводим текст до того состояния, в котором вам спокойно.</p>
+            </div>
+            <div class="guarantee-item anim-fade" data-delay="3">
+                <div class="guarantee-icon anim-pop" data-delay="4">✅</div>
+                <h3>100% возврат, если не заходит</h3>
+                <p>Если формат моей работы вам не подойдёт, возвращаю оплату без споров.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="services" id="services">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="anim-fade">Что я делаю</h2>
+            <p>Помогаю упаковать ваши продукты и услуги в понятные и работающие тексты.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card anim-fade" data-delay="1">
+                <div>
+                    <h3>Лендинг-копирайт</h3>
+                    <p>Пишу продающие тексты для посадочных страниц: от структуры блоков до финальных формулировок, которые приводят клиентов.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 5 000 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+            <div class="service-card anim-fade" data-delay="2">
+                <div>
+                    <h3>Email-рассылка</h3>
+                    <p>Создаю цепочки писем, автоворонки и коммерческие письма, которые люди открывают и читают до конца.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 2 500 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+            <div class="service-card anim-fade" data-delay="3">
+                <div>
+                    <h3>Статьи и контент</h3>
+                    <p>Структурирую идеи и опыт в аккуратные тексты: статьи, полезные материалы, контент для блога.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 3 000 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+            <div class="service-card anim-fade" data-delay="1">
+                <div>
+                    <h3>Описания товаров/услуг</h3>
+                    <p>Пишу ясные описания для маркетплейсов, каталогов и сайтов — чтобы люди сразу поняли ценность.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 1 000 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+            <div class="service-card anim-fade" data-delay="2">
+                <div>
+                    <h3>Рерайт текстов</h3>
+                    <p>Переписываю текст с сохранением смысла, но с новым стилем, ясностью и ударными фразами.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 2 000 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+            <div class="service-card anim-fade" data-delay="3">
+                <div>
+                    <h3>Копирайт для соцсетей</h3>
+                    <p>Создаю посты, описания и сценарии для Instagram, TikTok, YouTube — контент, который люди лайкают и шерят.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 2 000 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+            <div class="service-card anim-fade" data-delay="4">
+                <div>
+                    <h3>Редактура и доработка</h3>
+                    <p>Улучшаю уже написанный текст: чистка воды, логика, акценты, ясность и читабельность.</p>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-price">от 1 500 ₽</span>
+                    <button type="button" class="btn-link open-modal">Подробнее →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="portfolio" id="portfolio">
+    <div class="container">
+        <div class="section-header">
+            <h2>Портфолио</h2>
+            <p>Несколько примеров задач, с которыми я работал.</p>
+        </div>
+        <div class="portfolio-grid">
+            <div class="portfolio-card">
+                <h3>Текст для landing-страницы</h3>
+                <p>Пример структуры и содержания продающего лендинга: блоки, заголовки, CTA и работа с возражениями.</p>
+                <a href="portfolio/example-1-landing-text.html">Смотреть пример →</a>
+            </div>
+            <div class="portfolio-card">
+                <h3>Статья для блога</h3>
+                <p>Экспертная статья с чёткой структурой, которая отвечает на вопрос и позиционирует автора как специалиста.</p>
+                <a href="portfolio/example-2-article.html">Смотреть пример →</a>
+            </div>
+            <div class="portfolio-card">
+                <h3>Посты для соцсетей</h3>
+                <p>Примеры коротких текстов для Instagram, TikTok и других платформ — увлекающие, лёгкие, с призывом к действию.</p>
+                <a href="portfolio/example-3-social-posts.html">Смотреть пример →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="philosophy">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="anim-fade">Моя философия</h2>
+            <p>Как я подхожу к работе с текстами и проектами.</p>
+        </div>
+        <div class="philosophy-grid">
+            <div class="philosophy-item anim-fade" data-delay="1">
+                <div class="philosophy-icon anim-pop" data-delay="2">🎯</div>
+                <h3>Результат, а не красивость</h3>
+                <p>Тексты должны помогать бизнесу: приводить клиентов, объяснять продукт, поддерживать продажи.</p>
+            </div>
+            <div class="philosophy-item anim-fade" data-delay="2">
+                <div class="philosophy-icon anim-pop" data-delay="3">📝</div>
+                <h3>Ясность в каждом слове</h3>
+                <p>Без воды, без перегруза, без сложных конструкций. Простые фразы, понятные людям.</p>
+            </div>
+            <div class="philosophy-item anim-fade" data-delay="3">
+                <div class="philosophy-icon anim-pop" data-delay="4">⚡</div>
+                <h3>Быстро и аккуратно</h3>
+                <p>Сроки держу, на связь выхожу вовремя, правки вношу без лишней драмы и споров.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="faq">
+    <div class="container">
+        <div class="section-header"><h2 class="anim-fade">Частые вопросы</h2></div>
+        <div class="faq-item anim-fade" data-delay="1">
+            <div class="faq-q">Сколько времени занимает работа над текстом?</div>
+            <div class="faq-a">Обычно 3–5 дней, в зависимости от объёма и сложности задачи. Сроки фиксируем до старта.</div>
+        </div>
+        <div class="faq-item anim-fade" data-delay="2">
+            <div class="faq-q">Можно ли вернуть деньги, если текст не подойдёт?</div>
+            <div class="faq-a">Да. Если после правок формат вам не подходит, я возвращаю оплату.</div>
+        </div>
+        <div class="faq-item anim-fade" data-delay="3">
+            <div class="faq-q">Вы только пишете текст или помогаете со структурой?</div>
+            <div class="faq-a">В большинстве случаев мы сначала обсуждаем структуру и логику, а потом я пишу текст под эту структуру.</div>
+        </div>
+    </div>
+</section>
+
+<section class="blog" id="blog">
+    <div class="container">
+        <div class="section-header">
+            <h2>Блог</h2>
+            <p>Статьи о текстах, структуре лендингов и работе с контентом.</p>
+        </div>
+        <div class="blog-grid">
+            <div class="blog-card">
+                <h3>5 советов по контент-стратегии</h3>
+                <p>Как спланировать контент так, чтобы он приносил результат, а не просто заполнял пространство.</p>
+                <a href="blog/content-strategy-tips.html">Читать статью →</a>
+            </div>
+            <div class="blog-card">
+                <h3>Ошибки начинающих копирайтеров</h3>
+                <p>Разбираю популярные промахи и объясняю, как их избежать на старте карьеры.</p>
+                <a href="blog/copywriting-mistakes.html">Читать статью →</a>
+            </div>
+            <div class="blog-card">
+                <h3>Как написать текст для лендинга</h3>
+                <p>Пошаговая инструкция: от исследования аудитории до финальных правок продающего текста.</p>
+                <a href="blog/how-to-write-landing-copy.html">Читать статью →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer id="contacts">
+    <div class="container">
+        <div class="footer-inner">
+            <div><strong>Автор</strong></div>
+            <div class="footer-contacts">
+                
+                
+                
+            </div>
+            <div class="footer-copy">© 2026 · Все права защищены.</div>
+        </div>
+    </div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button type="button" class="modal-close" id="modalClose" aria-label="Закрыть окно">&times;</button>
+        <h2 id="modalTitle">Обсудим вашу задачу</h2>
+        <div id="formMessage" class="form-message" aria-live="polite"></div>
+        <form id="contactForm" class="modal-form" novalidate>
+            <div class="hp-field" aria-hidden="true"><label for="company">Company</label><input type="text" id="company" name="company" tabindex="-1" autocomplete="off"></div>
+            <input type="hidden" id="clientTs" name="client_ts" value="">
+            <div class="modal-field">
+                <label for="name">Ваше имя<span class="req">*</span></label>
+                <input class="modal-input" type="text" id="name" name="name" required placeholder="Например: Иван">
+            </div>
+            <div class="modal-field">
+                <label for="email">Ваш email<span class="req">*</span></label>
+                <input class="modal-input" type="email" id="email" name="email" required placeholder="mail@example.com">
+            </div>
+            <div class="modal-field">
+                <label for="phone">Ваш телефон</label>
+                <input class="modal-input" type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="+7 (999) 123-45-67">
+            </div>
+            <div class="modal-field">
+                <label for="message">Ваше сообщение<span class="req">*</span></label>
+                <textarea class="modal-textarea" id="message" name="message" required placeholder="Коротко опишите задачу"></textarea>
+            </div>
+            <button type="submit" class="modal-submit">Отправить сообщение</button>
+        </form>
+        <div class="modal-divider"></div>
+        <p class="modal-subtitle">Или напишите в Telegram — отвечу в ближайшее время.</p>
+        <div class="modal-contacts">
+            
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.body.classList.add('js-anim');
+
+    const LEAD_ENDPOINT = "https://removed-endpoint.invalid/api/lead";
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    function setMobileNavState(isOpen) {
+        if (!mobileNav || !hamburger) return;
+        mobileNav.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+        hamburger.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
+    }
+    if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', function () { setMobileNavState(!mobileNav.classList.contains('open')); });
+        mobileNav.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () { setMobileNavState(false); });
+        });
+    }
+
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+    let modalTriggerEl = null;
+
+    function showMessage(type, text) {
+        if (!formMessage) return;
+        formMessage.className = 'form-message ' + type;
+        formMessage.textContent = text;
+    }
+
+    function clearMessage() {
+        if (!formMessage) return;
+        formMessage.className = 'form-message';
+        formMessage.textContent = '';
+    }
+
+    function openModal(event, triggerEl) {
+        if (event) event.preventDefault();
+        if (!modalOverlay) return;
+        modalTriggerEl = triggerEl || document.activeElement;
+        modalOverlay.classList.add('visible');
+        document.body.classList.add('modal-open');
+        clearMessage();
+        const clientTsEl = document.getElementById('clientTs');
+        if (clientTsEl) clientTsEl.value = String(Date.now());
+        const firstField = document.getElementById('name');
+        if (firstField) setTimeout(function () { firstField.focus(); }, 0);
+    }
+
+    function closeModal() {
+        if (!modalOverlay) return;
+        modalOverlay.classList.remove('visible');
+        document.body.classList.remove('modal-open');
+        if (modalTriggerEl && typeof modalTriggerEl.focus === 'function') setTimeout(function () { modalTriggerEl.focus(); }, 0);
+        modalTriggerEl = null;
+    }
+
+    document.addEventListener('click', function (e) {
+        const trigger = e.target.closest('.open-modal');
+        if (!trigger) return;
+        openModal(e, trigger);
+    });
+
+    if (modalClose) modalClose.addEventListener('click', function (e) { e.preventDefault(); closeModal(); });
+
+    if (modalOverlay) modalOverlay.addEventListener('click', function (e) {
+        if (e.target === modalOverlay) closeModal();
+    });
+
+    document.addEventListener('keydown', function (e) {
+        const isOpen = modalOverlay && modalOverlay.classList.contains('visible');
+        if ((e.key === 'Escape' || e.key === 'Esc') && isOpen) { closeModal(); return; }
+    });
+
+    function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function (e) {
+            e.preventDefault(); clearMessage();
+            const nameEl = document.getElementById('name');
+            const emailEl = document.getElementById('email');
+            const phoneEl = document.getElementById('phone');
+            const msgEl = document.getElementById('message');
+            const companyEl = document.getElementById('company');
+            const clientTsEl = document.getElementById('clientTs');
+            const name = nameEl ? nameEl.value.trim() : '';
+            const email = emailEl ? emailEl.value.trim() : '';
+            const phone = phoneEl ? phoneEl.value.trim() : '';
+            const message = msgEl ? msgEl.value.trim() : '';
+            const company = companyEl ? companyEl.value.trim() : '';
+            const clientTs = clientTsEl ? Number(clientTsEl.value) : null;
+            if (name.length < 2) { showMessage('error', 'Ошибка: имя должно быть не короче 2 символов.'); if (nameEl) nameEl.focus(); return; }
+            if (!email || !validateEmail(email)) { showMessage('error', 'Ошибка: укажите корректный email.'); if (emailEl) emailEl.focus(); return; }
+            if (message.length < 10) { showMessage('error', 'Ошибка: сообщение должно быть не короче 10 символов.'); if (msgEl) msgEl.focus(); return; }
+            if (company) { showMessage('error', 'Ошибка отправки.'); return; }
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправляем…'; }
+            try {
+                const res = await fetch(LEAD_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email, phone, message, page: window.location.href, company, client_ts: clientTs }) });
+                let data = null; try { data = await res.json(); } catch (_) {}
+                if (res.ok && data && data.ok) { showMessage('success', 'Заявка отправлена! Свяжусь с вами в ближайшее время.'); contactForm.reset(); setTimeout(function () { closeModal(); }, 2000); }
+                else { showMessage('error', (data && data.error) ? data.error : 'Ошибка отправки'); }
+            } catch (_) { showMessage('error', 'Ошибка соединения. Попробуйте ещё раз.'); }
+            finally { if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Отправить сообщение'; } }
+        });
+    }
+
+    const animatedElements = document.querySelectorAll('.anim-fade:not(.is-visible), .anim-pop:not(.is-visible)');
+    if (animatedElements.length) {
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver(function (entries, obs) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: "0px 0px -5% 0px" });
+            animatedElements.forEach(function (el) { observer.observe(el); });
+        } else {
+            animatedElements.forEach(function (el) { el.classList.add('is-visible'); });
+        }
+    }
+
+    const lettersLayer = document.getElementById('lettersLayer');
+    if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 768px)').matches) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        for (let i = 0; i < 24; i++) {
+            const span = document.createElement('span');
+            span.className = 'floating-letter';
+            span.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
+            span.style.left = (5 + Math.random() * 90) + '%';
+            span.style.top = (5 + Math.random() * 90) + '%';
+            span.style.fontSize = (8 + Math.random() * 18) + 'px';
+            span.style.animationDelay = (Math.random() * 20) + 's';
+            lettersLayer.appendChild(span);
+        }
+    }
+});
+</script>
+
+</body>
+</html>

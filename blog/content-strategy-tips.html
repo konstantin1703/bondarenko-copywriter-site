@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico?v=1">
+    <link rel="icon" type="image/png" sizes="192x192" href="../favicon.png?v=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png?v=1">
+    <link rel="manifest" href="../site.webmanifest">
+    <title>Блог — Контент-стратегия для фрилансера | Автор</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Контент-стратегия для фрилансера: позиционирование, рубрики, план, примеры тем и метрики. Автор: Автор.">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Контент-стратегия для фрилансера">
+    <meta property="og:description" content="Как построить систему контента, которая приводит заявки и укрепляет доверие — без ежедневного выгорания.">
+    <meta property="og:type" content="article">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --accent: #2563EB;
+            --accent-hover: #1D4ED8;
+            --border: #E5E7EB;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            line-height: 1.6;
+        }
+        body.modal-open { overflow: hidden; }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { color: var(--accent-hover); }
+        h1, h2, h3 { margin: 0 0 16px; font-weight: 700; }
+        h1 { font-size: 48px; }
+        h2 { font-size: 32px; }
+        h3 { font-size: 22px; }
+        p { margin: 0 0 12px; }
+        .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        header { position: sticky; top: 0; z-index: 50; background-color: var(--bg-white); border-bottom: 1px solid var(--border); }
+        .header-inner { height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+        .logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; color: var(--text-primary); white-space: nowrap; text-decoration: none; }
+        .logo:hover { color: var(--text-primary); }
+        .logo-mark { width: 32px; height: 32px; border-radius: 8px; background: var(--accent); display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-weight: 700; font-size: 16px; }
+        nav { display: flex; align-items: center; gap: 24px; font-size: 14px; }
+        nav a { color: var(--text-primary); font-weight: 500; }
+        nav a:hover { color: var(--accent); }
+        .header-right { display: flex; align-items: center; gap: 16px; font-size: 14px; }
+        .header-links { display: flex; align-items: center; gap: 10px; }
+        .phone { color: var(--text-secondary); font-weight: 500; white-space: nowrap; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 6px; border: none; cursor: pointer; font-weight: 500; font-size: 14px; transition: background-color 0.2s ease, transform 0.1s ease; text-decoration: none; }
+        .btn-primary { background-color: var(--accent); color: #FFFFFF; }
+        .btn-primary:hover { background-color: var(--accent-hover); color: #FFFFFF; transform: translateY(-1px); }
+        .btn-primary:focus-visible { outline: 2px solid rgba(37,99,235,0.7); outline-offset: 2px; }
+        .btn-secondary { background: #EFF6FF; color: var(--accent); border: 1px solid rgba(37,99,235,0.18); }
+        .btn-secondary:hover { background: #DBEAFE; color: var(--accent-hover); transform: translateY(-1px); }
+        .hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; flex: 0 0 auto; background: transparent; border: 0; padding: 0; appearance: none; -webkit-appearance: none; }
+        .hamburger:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+        .hamburger span { width: 20px; height: 2px; background-color: var(--text-primary); }
+        .mobile-nav { display: none; flex-direction: column; gap: 12px; padding: 12px 0 20px; border-top: 1px solid var(--border); }
+        .mobile-nav.open { display: flex !important; background-color: #FFFFFF; }
+        .mobile-nav a { font-size: 15px; color: var(--text-primary); }
+        .mobile-nav .mobile-contacts { font-size: 14px; color: var(--text-secondary); display: grid; gap: 6px; }
+        .mobile-actions { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 6px; }
+        .hero { position: relative; overflow: hidden; background: linear-gradient(135deg, #F8FAFC 0%, #F0F9FF 100%); padding: 90px 0 70px; }
+        .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; text-align: left; max-width: 900px; }
+        .hero-subtitle { font-size: 18px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+        .hero h1 { margin-bottom: 10px; }
+        .hero-text { font-size: 16px; color: var(--text-secondary); margin-bottom: 22px; }
+        .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        section { padding: 80px 0; }
+        .content { background: #FFFFFF; }
+        .content-wrap { background: #FFFFFF; border: 1px solid var(--border); border-radius: 12px; padding: 26px; }
+        .post-meta { display: flex; flex-wrap: wrap; gap: 10px 12px; font-size: 13px; color: var(--text-secondary); margin: 10px 0 18px; }
+        .post-meta span { background: #F8FAFC; border: 1px solid rgba(229,231,235,0.7); border-radius: 999px; padding: 6px 10px; }
+        .lead { font-size: 16px; color: var(--text-secondary); margin-bottom: 18px; }
+        .hr { height: 1px; background: var(--border); margin: 18px 0; }
+        article h2 { font-size: 24px; margin-top: 22px; }
+        article h3 { font-size: 18px; margin-top: 18px; }
+        article ul, article ol { margin: 10px 0 14px; padding-left: 18px; color: var(--text-secondary); }
+        article li { margin-bottom: 8px; }
+        .callout { background: #F8FAFC; border: 1px solid rgba(229,231,235,0.8); border-left: 4px solid rgba(37,99,235,0.7); border-radius: 12px; padding: 14px 16px; margin: 14px 0; color: var(--text-secondary); }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 14px 0; }
+        .card { background: #FFFFFF; border: 1px solid rgba(229,231,235,0.95); border-radius: 12px; padding: 16px; }
+        .card h3 { margin-bottom: 8px; }
+        .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .pill { font-size: 12px; color: var(--text-secondary); background: #F8FAFC; border: 1px solid rgba(229,231,235,0.7); border-radius: 999px; padding: 6px 10px; }
+        .back-wrap { margin-top: 18px; display: flex; gap: 12px; flex-wrap: wrap; }
+        footer { background-color: #1F2937; color: #FFFFFF; padding: 20px 0; }
+        .footer-inner { display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
+        .footer-contacts { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+        .footer-icon-link { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; transition: transform 0.15s ease, box-shadow 0.15s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.25); }
+        .footer-icon-link:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.35); }
+        .footer-icon-link svg { width: 18px; height: 18px; }
+        .footer-icon-tg { background-color: #0088cc; }
+        .footer-icon-email { background-color: #FFFFFF; border: 1px solid #E5E7EB; }
+        .footer-phone { color: #E5E7EB; font-size: 14px; font-weight: 500; }
+        .footer-phone:hover { color: #FFFFFF; }
+        .footer-copy { color: #9CA3AF; font-size: 13px; }
+        .letters-layer { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        body > *:not(header):not(.letters-layer):not(.modal-overlay) { position: relative; z-index: 1; }
+        .floating-letter { position: absolute; color: var(--text-primary); opacity: 0.05; font-family: 'Inter', system-ui, sans-serif; font-weight: 300; letter-spacing: 2px; user-select: none; line-height: 1; animation: floatLetter 18s linear 3; }
+        @keyframes floatLetter {
+            0% { transform: translate3d(0,0,0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.07; }
+            50% { transform: translate3d(40px,-30px,0) rotate(120deg); opacity: 0.09; }
+            100% { transform: translate3d(-40px,30px,0) rotate(360deg); opacity: 0; }
+        }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.5); display: none; justify-content: center; align-items: center; padding: 16px; z-index: 1100; }
+        .modal-overlay.visible { display: flex; }
+        .modal { background: #FFFFFF; border-radius: 12px; max-width: 560px; width: 100%; padding: 22px 20px 18px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); position: relative; animation: modalFade 0.25s ease-out; }
+        @keyframes modalFade { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
+        .modal-close { position: absolute; top: 10px; right: 12px; background: transparent; border: none; font-size: 20px; cursor: pointer; color: var(--text-secondary); line-height: 1; }
+        .modal h2 { margin: 0 0 12px; font-size: 20px; font-weight: 700; }
+        .modal-form { display: flex; flex-direction: column; gap: 12px; margin-bottom: 14px; }
+        .modal-field label { display: block; font-size: 13px; font-weight: 500; color: var(--text-secondary); margin-bottom: 6px; }
+        .modal-field .req { color: var(--accent); margin-left: 2px; }
+        .modal-input, .modal-textarea { width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 12px; font-size: 14px; font-family: inherit; color: var(--text-primary); background: #FFFFFF; outline: none; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
+        .modal-textarea { min-height: 120px; resize: vertical; }
+        .modal-input:focus, .modal-textarea:focus { border-color: rgba(37,99,235,0.65); box-shadow: 0 0 0 3px rgba(37,99,235,0.14); }
+        .modal-submit { width: 100%; border: none; border-radius: 10px; padding: 12px 14px; font-size: 14px; font-weight: 600; cursor: pointer; background: var(--accent); color: #FFFFFF; transition: background-color 0.2s ease, transform 0.1s ease; }
+        .modal-submit:hover { background: var(--accent-hover); transform: translateY(-1px); }
+        .modal-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+        .modal-submit:focus-visible { outline: 2px solid rgba(37,99,235,0.7); outline-offset: 2px; }
+        .form-message { display: none; margin: 0 0 8px; padding: 10px 12px; border-radius: 10px; font-size: 13px; line-height: 1.4; }
+        .form-message.error { display: block; background: rgba(220,38,38,0.08); border: 1px solid rgba(220,38,38,0.25); color: #991B1B; }
+        .form-message.success { display: block; background: rgba(22,163,74,0.08); border: 1px solid rgba(22,163,74,0.25); color: #166534; }
+        .modal-divider { margin: 10px 0; border-top: 1px solid var(--border); }
+        .modal-subtitle { margin: 0 0 10px; color: var(--text-secondary); font-size: 14px; }
+        .modal-contacts { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 6px; }
+        .circle-messenger { width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.25); }
+        .circle-messenger::before { content: ''; display: block; width: 70%; height: 70%; background-size: contain; background-repeat: no-repeat; background-position: center; }
+        .circle-telegram { background-color: #0088cc; }
+        .circle-telegram::before { background-image: url('https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg'); filter: invert(1); }
+        .circle-messenger:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.35); }
+        .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+        @media (max-width: 1024px) { section { padding: 60px 0; } .grid-2 { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) {
+            h1 { font-size: 32px; } h2 { font-size: 24px; }
+            .hero { padding: 60px 0; } .header-inner { height: 64px; }
+            nav, .header-right { display: none; } .hamburger { display: flex; }
+            .letters-layer { display: none; } .modal { max-width: 90%; }
+        }
+    </style>
+    <link rel="canonical" href="https://konstantin1703.github.io/bondarenko-copywriter-site/blog/content-strategy-tips.html">
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="header-inner">
+            <a href="../index.html" class="logo" aria-label="Автор — на главную">
+                <div class="logo-mark">Kb</div>
+                <div>Автор</div>
+            </a>
+            <nav>
+                <a href="../index.html#portfolio">Портфолио</a>
+                <a href="../index.html#services">Услуги</a>
+                <a href="../index.html#blog">Блог</a>
+                <a href="../index.html#contacts">Контакты</a>
+            </nav>
+            <div class="header-right">
+                <div class="header-links">
+                    
+                </div>
+                <div class="phone">
+                    
+                </div>
+                <a href="#" class="btn btn-primary open-modal">Заказать звонок</a>
+            </div>
+            <button class="hamburger" id="hamburger" type="button" aria-controls="mobileNav" aria-expanded="false" aria-label="Открыть меню">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <div class="mobile-nav" id="mobileNav">
+            <a href="../index.html#portfolio">Портфолио</a>
+            <a href="../index.html#services">Услуги</a>
+            <a href="../index.html#blog">Блог</a>
+            <a href="../index.html#contacts">Контакты</a>
+            <div class="mobile-contacts">
+                <div></div>
+                <div></div>
+            </div>
+            <div class="mobile-actions">
+                <a href="#" class="btn btn-primary open-modal">Заказать звонок</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="letters-layer" id="lettersLayer"></div>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-inner">
+                <div class="hero-subtitle">БЛОГ</div>
+                <h1>Контент-стратегия для фрилансера</h1>
+                <p class="hero-text">Как построить систему контента, которая приводит заявки и укрепляет доверие. Без ежедневной гонки и выгорания.</p>
+                <div class="hero-actions">
+                    <a class="btn btn-secondary" href="../index.html#blog">← Вернуться на главную</a>
+                    <a class="btn btn-primary open-modal" href="#">Заказать звонок</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container">
+            <div class="content-wrap">
+                <div class="post-meta" aria-label="Метаданные статьи">
+                    <span>Автор: Автор</span>
+                    <span>Дата: 24.12.2025</span>
+                    <span>Время чтения: ~10 минут</span>
+                </div>
+                <p class="lead">Контент-стратегия — это не «постить чаще». Это система: что вы говорите, кому, зачем, в каком порядке и как измеряете результат. Ниже — практичный план, который подходит фрилансеру: минимальные ресурсы, понятные шаги, предсказуемый эффект.</p>
+                <div class="hr"></div>
+                <article>
+                    <h2>1) Сначала позиционирование, потом темы</h2>
+                    <p>Если позиционирование размыто, контент будет таким же: сегодня про одно, завтра про другое, а аудитория не понимает, зачем подписываться. Позиционирование — это 2–3 ясные фразы, которые описывают: кому вы помогаете, с чем и какой результат даёте.</p>
+                    <h3>Мини-формула позиционирования</h3>
+                    <ul>
+                        <li><strong>Кому:</strong> «экспертам / услугам / малому бизнесу»</li>
+                        <li><strong>Что делаю:</strong> «пишу тексты (страницы, статьи, рассылки, посты)»</li>
+                        <li><strong>Результат:</strong> «чтобы читатель понимал ценность и делал следующий шаг»</li>
+                    </ul>
+                    <div class="callout"><strong>Проверка:</strong> если вы можете заменить свой профиль на профиль другого автора — позиционирование слишком общее.</div>
+                    <h2>2) Определите "воронку" контента</h2>
+                    <p>У фрилансера обычно три уровня аудитории: <strong>холодная</strong> (не знает вас), <strong>тёплая</strong> (читает/смотрит), <strong>горячая</strong> (готова обсудить задачу). Контент должен вести человека между этими уровнями.</p>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3>Холодная аудитория</h3>
+                            <p class="lead">Цель — дать пользу и показать компетентность.</p>
+                            <div class="pill-row">
+                                <span class="pill">обучающие посты</span>
+                                <span class="pill">разборы ошибок</span>
+                                <span class="pill">чек-листы</span>
+                                <span class="pill">мифы</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3>Тёплая аудитория</h3>
+                            <p class="lead">Цель — сформировать доверие и снять риски.</p>
+                            <div class="pill-row">
+                                <span class="pill">кейсы</span>
+                                <span class="pill">процесс работы</span>
+                                <span class="pill">FAQ</span>
+                                <span class="pill">истории задач</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3>Горячая аудитория</h3>
+                            <p class="lead">Цель — дать понятный шаг и условия.</p>
+                            <div class="pill-row">
+                                <span class="pill">пакеты/цены</span>
+                                <span class="pill">как начать</span>
+                                <span class="pill">сроки</span>
+                                <span class="pill">CTA</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3>Удержание</h3>
+                            <p class="lead">Цель — оставаться "в голове", не раздражая.</p>
+                            <div class="pill-row">
+                                <span class="pill">разборы примеров</span>
+                                <span class="pill">ответы на вопросы</span>
+                                <span class="pill">наблюдения</span>
+                                <span class="pill">подборки</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>3) Выберите 3–5 рубрик и держитесь их</h2>
+                    <p>Рубрики — это каркас. Они помогают писать быстрее и делают контент узнаваемым. Для фрилансера достаточно 3–5 рубрик, которые закрывают ключевые вопросы клиента.</p>
+                    <h3>Пример набора рубрик</h3>
+                    <ul>
+                        <li><strong>Обучение:</strong> разборы, схемы, чек-листы.</li>
+                        <li><strong>Доверие:</strong> кейсы, процесс работы, правила.</li>
+                        <li><strong>Ошибки/мифы:</strong> что люди делают не так и почему.</li>
+                        <li><strong>Инструменты:</strong> шаблоны брифа, структура текста, примеры.</li>
+                        <li><strong>Продажи:</strong> оффер, условия, как начать.</li>
+                    </ul>
+                    <div class="callout"><strong>Важно:</strong> рубрика не должна быть "про жизнь". Она должна отвечать на вопрос клиента: "мне это поможет?"</div>
+                    <h2>4) План на месяц: мало, но регулярно</h2>
+                    <p>Частая ошибка — пытаться публиковать каждый день, а затем выгорать и пропадать. Лучше меньше, но стабильно. Для старта достаточно 2–3 единиц контента в неделю.</p>
+                    <h3>Простой план на неделю</h3>
+                    <ul>
+                        <li><strong>1 обучающий пост</strong> (чек-лист/разбор)</li>
+                        <li><strong>1 доверительный пост</strong> (процесс/кейсовая история)</li>
+                        <li><strong>1 продающий пост</strong> (условия/формат/CTA)</li>
+                    </ul>
+                    <p>Если ресурсов мало — делайте 2: обучающий + доверительный. Продающий добавляйте раз в 2 недели. Главное — системность.</p>
+                    <h2>5) Темы, которые приводят заявки (а не лайки)</h2>
+                    <p>Лайки приятны, но заявки важнее. "Заявочные" темы — это те, где клиент узнаёт себя и проблему. В идеале человек читает и думает: «да, это про меня; надо обсудить».</p>
+                    <h3>Примеры тем</h3>
+                    <ul>
+                        <li>«Почему у страницы есть просмотры, но нет заявок: 5 причин»</li>
+                        <li>«Как понять, что текст "водянистый": чек-лист»</li>
+                        <li>«Как собрать оффер за 15 минут: схема и примеры»</li>
+                        <li>«Какие вопросы я задаю перед началом работы (и зачем)»</li>
+                        <li>«Как выглядит нормальный процесс правок: правила и сроки»</li>
+                        <li>«Что входит в текст продающей страницы: по пунктам»</li>
+                    </ul>
+                    <div class="callout"><strong>Фокус:</strong> пишите темы вокруг боли/риска/сомнений клиента, а не вокруг "я молодец".</div>
+                    <h2>6) Упаковка: один смысл — в разные форматы</h2>
+                    <p>Чтобы не придумывать всё с нуля, используйте принцип "одна мысль — много носителей". Это экономит время и делает контент плотным.</p>
+                    <h3>Пример переработки одной темы</h3>
+                    <ul>
+                        <li><strong>Статья:</strong> «5 ошибок, которые убивают конверсию»</li>
+                        <li><strong>Пост:</strong> короткий разбор одной ошибки</li>
+                        <li><strong>Сторис/короткий формат:</strong> чек-лист на 5 пунктов</li>
+                        <li><strong>Карточки:</strong> "ошибка → почему → как исправить"</li>
+                    </ul>
+                    <h2>7) Метрики: что считать, чтобы понимать эффект</h2>
+                    <p>Контент — это система. Системе нужна обратная связь. Для фрилансера достаточно 3–4 метрик, чтобы не утонуть в цифрах.</p>
+                    <h3>Базовый набор метрик</h3>
+                    <ul>
+                        <li><strong>Обращения:</strong> сколько людей написали/оставили заявку.</li>
+                        <li><strong>Переходы:</strong> клики на сайт/портфолио/контакты.</li>
+                        <li><strong>Сохранения:</strong> сигнал полезности (особенно для чек-листов).</li>
+                        <li><strong>Досмотры/дочитывания:</strong> понимаете, где "проседает" интерес.</li>
+                    </ul>
+                    <div class="callout"><strong>Нормально:</strong> первые 2–4 недели эффект может быть "тихий". Контент работает накоплением доверия.</div>
+                    <h2>8) Простой "скрипт" продаж в контенте</h2>
+                    <p>Продажи в контенте — это не давление. Это ясный следующий шаг. В конце части материалов достаточно одного предложения: кому вы помогаете и как начать.</p>
+                    <h3>Примеры мягкого CTA</h3>
+                    <ul>
+                        <li>«Если хотите — разберём вашу ситуацию и соберём структуру текста.»</li>
+                        <li>«Напишите в мессенджер, и я задам 5 вопросов, чтобы оценить задачу.»</li>
+                        <li>«Могу посмотреть ваш текст и подсказать, где теряется смысл.»</li>
+                    </ul>
+                    <h2>Итог: стратегия — это спокойствие</h2>
+                    <p>Когда есть позиционирование, рубрики и план, контент перестаёт быть стрессом. Вы пишете быстрее, аудитория понимает, кто вы, а заявки становятся ожидаемым результатом, а не счастливой случайностью.</p>
+                    <p>Если хотите — могу помочь собрать контент-стратегию под вашу нишу: рубрики, темы на месяц, оффер и тексты для ключевых точек контакта.</p>
+                    <div class="back-wrap">
+                        <a class="btn btn-secondary" href="../index.html#blog">← Вернуться на главную</a>
+                        <a class="btn btn-primary open-modal" href="#">Оставить заявку</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-inner">
+            <div><strong>Автор</strong></div>
+            <div class="footer-contacts">
+                
+                
+                
+            </div>
+            <div class="footer-copy">© 2026 · Все права защищены.</div>
+        </div>
+    </div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="modal-close" id="modalClose" aria-label="Закрыть окно">&times;</button>
+        <h2 id="modalTitle">Обсудим вашу задачу</h2>
+        <div id="formMessage" class="form-message" aria-live="polite"></div>
+        <form id="contactForm" class="modal-form" novalidate>
+            <div class="hp-field" aria-hidden="true"><label for="company">Company</label><input type="text" id="company" name="company" tabindex="-1" autocomplete="off"></div>
+            <input type="hidden" id="clientTs" name="client_ts" value="">
+            <div class="modal-field">
+                <label for="name">Ваше имя<span class="req">*</span></label>
+                <input class="modal-input" type="text" id="name" name="name" required placeholder="Например: Иван">
+            </div>
+            <div class="modal-field">
+                <label for="email">Ваш email<span class="req">*</span></label>
+                <input class="modal-input" type="email" id="email" name="email" required placeholder="mail@example.com">
+            </div>
+            <div class="modal-field">
+                <label for="phone">Ваш телефон</label>
+                <input class="modal-input" type="tel" id="phone" name="phone" placeholder="+7 (999) 123-45-67">
+            </div>
+            <div class="modal-field">
+                <label for="message">Ваше сообщение<span class="req">*</span></label>
+                <textarea class="modal-textarea" id="message" name="message" required placeholder="Коротко опишите задачу"></textarea>
+            </div>
+            <button type="submit" class="modal-submit">Отправить сообщение</button>
+        </form>
+        <div class="modal-divider"></div>
+        <p class="modal-subtitle">Или напишите в Telegram — отвечу в ближайшее время.</p>
+        <div class="modal-contacts">
+            
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const LEAD_ENDPOINT = "https://removed-endpoint.invalid/api/lead";
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    function setMobileNavState(isOpen) {
+        if (!mobileNav || !hamburger) return;
+        mobileNav.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+        hamburger.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
+    }
+    if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', function () { setMobileNavState(!mobileNav.classList.contains('open')); });
+        mobileNav.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', function () { setMobileNavState(false); }); });
+    }
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+    let modalTriggerEl = null;
+    function showMessage(type, text) { if (!formMessage) return; formMessage.className = 'form-message ' + type; formMessage.textContent = text; }
+    function clearMessage() { if (!formMessage) return; formMessage.className = 'form-message'; formMessage.textContent = ''; }
+    function openModal(event, triggerEl) {
+        if (event) event.preventDefault();
+        if (!modalOverlay) return;
+        modalTriggerEl = triggerEl || document.activeElement;
+        modalOverlay.classList.add('visible');
+        document.body.classList.add('modal-open');
+        clearMessage();
+        const clientTsEl = document.getElementById('clientTs');
+        if (clientTsEl) clientTsEl.value = String(Date.now());
+        const firstField = document.getElementById('name');
+        if (firstField) setTimeout(function () { firstField.focus(); }, 0);
+    }
+    function closeModal() {
+        if (!modalOverlay) return;
+        modalOverlay.classList.remove('visible');
+        document.body.classList.remove('modal-open');
+        if (modalTriggerEl && typeof modalTriggerEl.focus === 'function') setTimeout(function () { modalTriggerEl.focus(); }, 0);
+        modalTriggerEl = null;
+    }
+    document.addEventListener('click', function (e) { const trigger = e.target.closest('.open-modal'); if (!trigger) return; openModal(e, trigger); });
+    if (modalClose) modalClose.addEventListener('click', function (e) { e.preventDefault(); closeModal(); });
+    if (modalOverlay) modalOverlay.addEventListener('click', function (e) { if (e.target === modalOverlay) closeModal(); });
+    document.addEventListener('keydown', function (e) {
+        const isOpen = modalOverlay && modalOverlay.classList.contains('visible');
+        if ((e.key === 'Escape' || e.key === 'Esc') && isOpen) { closeModal(); return; }
+    });
+    function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function (e) {
+            e.preventDefault(); clearMessage();
+            const nameEl = document.getElementById('name');
+            const emailEl = document.getElementById('email');
+            const phoneEl = document.getElementById('phone');
+            const msgEl = document.getElementById('message');
+            const companyEl = document.getElementById('company');
+            const clientTsEl = document.getElementById('clientTs');
+            const name = nameEl ? nameEl.value.trim() : '';
+            const email = emailEl ? emailEl.value.trim() : '';
+            const phone = phoneEl ? phoneEl.value.trim() : '';
+            const message = msgEl ? msgEl.value.trim() : '';
+            const company = companyEl ? companyEl.value.trim() : '';
+            const clientTs = clientTsEl ? Number(clientTsEl.value) : null;
+            if (name.length < 2) { showMessage('error', 'Ошибка: имя должно быть не короче 2 символов.'); if (nameEl) nameEl.focus(); return; }
+            if (!email || !validateEmail(email)) { showMessage('error', 'Ошибка: укажите корректный email.'); if (emailEl) emailEl.focus(); return; }
+            if (message.length < 10) { showMessage('error', 'Ошибка: сообщение должно быть не короче 10 символов.'); if (msgEl) msgEl.focus(); return; }
+            if (company) { showMessage('error', 'Ошибка отправки.'); return; }
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправляем…'; }
+            try {
+                const res = await fetch(LEAD_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email, phone, message, page: window.location.href, company, client_ts: clientTs }) });
+                let data = null; try { data = await res.json(); } catch (_) {}
+                if (res.ok && data && data.ok) { showMessage('success', 'Заявка отправлена! Свяжусь с вами в ближайшее время.'); contactForm.reset(); setTimeout(function () { closeModal(); }, 2000); }
+                else { showMessage('error', (data && data.error) ? data.error : 'Ошибка отправки'); }
+            } catch (_) { showMessage('error', 'Ошибка соединения. Попробуйте ещё раз.'); }
+            finally { if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Отправить сообщение'; } }
+        });
+    }
+    const lettersLayer = document.getElementById('lettersLayer');
+    if (lettersLayer && window.matchMedia && window.matchMedia('(min-width: 768px)').matches) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        for (let i = 0; i < 24; i++) {
+            const span = document.createElement('span');
+            span.className = 'floating-letter';
+            span.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
+            span.style.left = (5 + Math.random() * 90) + '%';
+            span.style.top = (5 + Math.random() * 90) + '%';
+            span.style.fontSize = (8 + Math.random() * 18) + 'px';
+            span.style.animationDelay = (Math.random() * 20) + 's';
+            lettersLayer.appendChild(span);
+        }
+    }
+});
+</script>
+
+</body>
+</html>

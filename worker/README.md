@@ -35,7 +35,7 @@
   ```json
   {
     "name": "Иван",
-    "email": "mail@example.com",
+
     "message": "Хочу лендинг для услуги...",
     "page": "/index.html",
     "company": "",

@@ -1,4 +1,4 @@
-name: Privacy deep clean
+name: Privacy deep clean v2
 
 on:
   push:
@@ -16,117 +16,76 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Sanitize current tree
+      - name: Sanitize every readable file
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
           import re
-
-          ROOT = Path('.')
-          skip_dirs = {'.git', 'node_modules'}
-          text_exts = {'.html','.htm','.md','.txt','.js','.mjs','.cjs','.css','.json','.xml','.yml','.yaml','.toml','.ini','.conf','.svg','.webmanifest'}
-
-          name_patterns = [
-              'Константин Бондаренко', 'Бондаренко Константин',
-              'КОНСТАНТИН БОНДАРЕНКО', 'БОНДАРЕНКО КОНСТАНТИН'
-          ]
-          emails = ['byxapckuu@gmail.com', 'privacy-removed@example.invalid']
-          phone_literals = ['+79912810796', '79912810796', '+7 (991) 281-07-96', '+7(991)281-07-96', '+7 (000) 000-00-00', '+70000000000']
-          tg_literals = ['https://t.me/whity14', 'http://t.me/whity14', 't.me/whity14', '@whity14', 'whity14']
-
-          anchor_contact = re.compile(
-              r'<a\b(?=[^>]*(?:href=["\'](?:mailto:|tel:|https?://t\.me/whity14)[^"\']*["\']|data-contact=["\'](?:email|phone)["\']))[^>]*>.*?</a>',
-              re.I | re.S
-          )
-          json_contact = re.compile(r'^\s*["\']?(?:email|telephone|phone)["\']?\s*[:=].*$', re.I | re.M)
-          line_personal = re.compile(r'^.*(?:byxapckuu@gmail\.com|privacy-removed@example\.invalid|\+7\s*\(?991\)?[\s\-]*281[\s\-]*07[\s\-]*96|79912810796|t\.me/whity14|@whity14).*$' , re.I | re.M)
-
-          changed = []
-          for p in ROOT.rglob('*'):
-              if not p.is_file() or any(part in skip_dirs for part in p.parts):
-                  continue
-              if p.suffix.lower() not in text_exts and p.name not in {'README','LICENSE'}:
-                  continue
-              try:
-                  s = p.read_text(encoding='utf-8')
-              except Exception:
-                  continue
-              orig = s
-
-              s = anchor_contact.sub('', s)
-              s = line_personal.sub('', s)
-              s = json_contact.sub('', s)
-
-              for x in name_patterns:
-                  s = s.replace(x, 'Автор')
-              for x in emails + phone_literals + tg_literals:
-                  s = s.replace(x, '')
-
-              s = s.replace('leads-inbox.byxapckuu.workers.dev', 'removed-endpoint.invalid')
-              s = s.replace('byxapckuu', 'removed')
-              s = re.sub(r'\n{4,}', '\n\n\n', s)
-
-              if s != orig:
-                  p.write_text(s, encoding='utf-8')
-                  changed.append(str(p))
-
-          print(f'changed_files={len(changed)}')
+          root=Path('.')
+          skip={'.git','node_modules'}
+          names=['Константин Бондаренко','Бондаренко Константин','КОНСТАНТИН БОНДАРЕНКО','БОНДАРЕНКО КОНСТАНТИН']
+          exact=['byxapckuu@gmail.com','privacy-removed@example.invalid','+79912810796','79912810796','+7 (991) 281-07-96','+7(991)281-07-96','+7 (000) 000-00-00','+70000000000','https://t.me/whity14','http://t.me/whity14','t.me/whity14','@whity14','whity14']
+          anchor=re.compile(r'<a\b(?=[^>]*(?:href=["\'](?:mailto:|tel:|https?://t\.me/whity14)[^"\']*["\']|data-contact=["\'](?:email|phone)["\']))[^>]*>.*?</a>',re.I|re.S)
+          personal_line=re.compile(r'^.*(?:byxapckuu@gmail\.com|privacy-removed@example\.invalid|\+7\s*\(?991\)?[\s\-]*281[\s\-]*07[\s\-]*96|79912810796|t\.me/whity14|@whity14).*$' ,re.I|re.M)
+          structured=re.compile(r'^\s*["\']?(?:email|telephone|phone)["\']?\s*[:=].*$',re.I|re.M)
+          changed=[]
+          for p in root.rglob('*'):
+            if not p.is_file() or any(x in skip for x in p.parts): continue
+            try:
+              if p.stat().st_size > 8_000_000: continue
+              s=p.read_text(encoding='utf-8')
+            except Exception: continue
+            o=s
+            s=anchor.sub('',s)
+            s=personal_line.sub('',s)
+            s=structured.sub('',s)
+            for x in names: s=s.replace(x,'Автор')
+            for x in exact: s=s.replace(x,'')
+            s=s.replace('leads-inbox.byxapckuu.workers.dev','removed-endpoint.invalid')
+            s=s.replace('byxapckuu','removed')
+            s=re.sub(r'\n{4,}','\n\n\n',s)
+            if s!=o:
+              p.write_text(s,encoding='utf-8'); changed.append(str(p))
+          print('changed_files='+str(len(changed)))
           PY
 
-      - name: Audit sanitized tree
+      - name: Audit all readable files
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
-          import re, sys
-
-          forbidden = [
-              re.compile(r'Константин\s+Бондаренко', re.I),
-              re.compile(r'Бондаренко\s+Константин', re.I),
-              re.compile(r'byxapckuu@gmail\.com', re.I),
-              re.compile(r'byxapckuu', re.I),
-              re.compile(r'\+7\s*\(?991\)?[\s\-]*281[\s\-]*07[\s\-]*96'),
-              re.compile(r'79912810796'),
-              re.compile(r't\.me/whity14', re.I),
-              re.compile(r'@whity14', re.I),
-              re.compile(r'\bwhity14\b', re.I),
-          ]
+          import re,sys
+          pats=[re.compile(r'Константин\s+Бондаренко',re.I),re.compile(r'Бондаренко\s+Константин',re.I),re.compile(r'byxapckuu',re.I),re.compile(r'\+7\s*\(?991\)?[\s\-]*281[\s\-]*07[\s\-]*96'),re.compile(r'79912810796'),re.compile(r't\.me/whity14',re.I),re.compile(r'@whity14',re.I),re.compile(r'\bwhity14\b',re.I)]
           hits=[]
           for p in Path('.').rglob('*'):
-              if not p.is_file() or '.git' in p.parts or 'node_modules' in p.parts:
-                  continue
-              try: s=p.read_text(encoding='utf-8')
-              except Exception: continue
-              for pat in forbidden:
-                  if pat.search(s):
-                      hits.append(str(p)); break
-          print(f'forbidden_hits={len(hits)}')
+            if not p.is_file() or '.git' in p.parts or 'node_modules' in p.parts: continue
+            try:
+              if p.stat().st_size > 8_000_000: continue
+              s=p.read_text(encoding='utf-8')
+            except Exception: continue
+            if any(x.search(s) for x in pats): hits.append(str(p))
+          print('forbidden_hits='+str(len(hits)))
           if hits:
-              print('\n'.join(hits[:100]))
-              sys.exit(1)
+            print('\n'.join(hits[:200])); sys.exit(1)
           PY
 
-      - name: Rewrite main as a clean root commit
+      - name: Commit clean current tree and publish clean root branch
         shell: bash
         run: |
           git config user.name "privacy-cleanup"
           git config user.email "privacy-cleanup@users.noreply.github.com"
           rm -f .github/workflows/privacy-deep-clean.yml
+          git add -A
+          git commit -m "Remove all personal identifiers" || true
+          git push origin HEAD:main
           git checkout --orphan privacy-clean-root
           git rm -rf --cached . >/dev/null 2>&1 || true
           git add -A
           git commit -m "Privacy-clean repository snapshot"
-          git push --force origin privacy-clean-root:main
-
-      - name: Remove other branches and tags
-        shell: bash
-        run: |
+          git push --force origin privacy-clean-root:privacy-clean-root
           git fetch --prune origin '+refs/heads/*:refs/remotes/origin/*' '+refs/tags/*:refs/tags/*'
-          for ref in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin | grep '^origin/' | grep -v '^origin/main$' | grep -v '^origin/HEAD$' || true); do
-            b=${ref#origin/}
-            git push origin --delete "$b" || true
+          for ref in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin | grep '^origin/' | grep -v '^origin/main$' | grep -v '^origin/privacy-clean-root$' | grep -v '^origin/HEAD$' || true); do
+            git push origin --delete "${ref#origin/}" || true
           done
-          for t in $(git tag -l); do
-            git push origin --delete "$t" || true
-          done
+          for t in $(git tag -l); do git push origin --delete "$t" || true; done

@@ -1,7 +1,7 @@
 {
   "name": "bondarenko-copywriter-site",
   "version": "1.0.0",
-  "description": "Professional copywriter portfolio website for Konstantin Bondarenko",
+  "description": "Professional copywriter portfolio website for Автор",
   "main": "index.html",
   "scripts": {
     "dev": "echo 'Development server not configured yet'",
@@ -18,7 +18,7 @@
     "landing-page",
     "website"
   ],
-  "author": "Konstantin Bondarenko",
+  "author": "Автор",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/konstantin1703/bondarenko-copywriter-site/issues"

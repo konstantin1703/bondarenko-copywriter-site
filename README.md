@@ -145,8 +145,8 @@ git push origin feature/your-feature-name
 
 ## 📧 Контакты
 
-- **Автор**: Константин Бондаренко
-- **Email**: byxapckuu@gmail.com
+- **Автор**: Автор
+- **Email**: privacy-removed@example.invalid
 - **Telegram**: [@whity14](https://t.me/whity14)
 - **GitHub**: [@konstantin1703](https://github.com/konstantin1703)
 

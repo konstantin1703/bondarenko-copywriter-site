@@ -1,0 +1,386 @@
+/* VANTA R1 / final composition pass */
+
+/* Dual-language microcopy stays quiet; Russian explains, English keeps brand tone. */
+.dash__identity {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dash__identity strong {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  color: rgba(255,255,255,.82);
+}
+
+.dash__identity span,
+.dash__kicker,
+.dash__power span,
+.dash__power small,
+.dash__side small,
+.mode span {
+  font-size: 8px;
+  letter-spacing: .12em;
+  color: rgba(255,255,255,.42);
+}
+
+/* Dashboard: recognizable instrument cluster, not an abstract decoration. */
+.dash {
+  overflow: hidden;
+}
+
+.dash__top {
+  min-height: 58px;
+  height: auto;
+  gap: 20px;
+}
+
+.dash__body {
+  grid-template-columns: minmax(0, 1.2fr) minmax(250px, .8fr);
+  gap: clamp(36px, 5vw, 76px);
+  min-height: 400px;
+}
+
+.dash__primary {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+}
+
+.dash__kicker {
+  display: block;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.dash__speed {
+  align-items: flex-end;
+}
+
+.dash__speed strong {
+  font-weight: 300;
+}
+
+.dash__speed span {
+  padding-bottom: 11px;
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: rgba(255,255,255,.56);
+}
+
+.dash__power {
+  width: min(500px, 100%);
+  margin-top: 58px;
+}
+
+.dash__power > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: baseline;
+}
+
+.dash__power small {
+  white-space: nowrap;
+}
+
+.dash__power-track {
+  position: relative;
+  height: 3px;
+  margin-top: 12px;
+  background: rgba(255,255,255,.12);
+  overflow: hidden;
+}
+
+.dash__power-track i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 62%;
+  background: var(--dash-accent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--dash-accent) 55%, transparent);
+  transition: width .5s var(--ease), background .3s ease;
+}
+
+.dash__side {
+  min-width: 0;
+  width: 100%;
+}
+
+.dash__side div {
+  align-items: end;
+  padding: 18px 0;
+}
+
+.dash__side span {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 10px;
+  letter-spacing: .1em;
+  color: rgba(255,255,255,.7);
+}
+
+.dash__side strong {
+  font-size: clamp(17px, 1.8vw, 24px);
+  font-weight: 500;
+  letter-spacing: -.025em;
+  text-align: right;
+}
+
+.dash__arc {
+  display: none;
+}
+
+.mode {
+  height: 68px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.mode strong {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .16em;
+}
+
+.mode.active span,
+.mode.active strong {
+  color: #fff;
+}
+
+/* The light performance chapter now dissolves into the product scene. */
+.intro {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 640px) {
+  /* HERO: keep the motorcycle to the right and the headline in its own readable lane. */
+  .hero__media {
+    background-position: 78% 50%;
+  }
+
+  .hero__shade {
+    background:
+      linear-gradient(90deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.78) 38%, rgba(0,0,0,.32) 70%, rgba(0,0,0,.18) 100%),
+      linear-gradient(180deg, rgba(0,0,0,.18) 0%, transparent 35%, rgba(0,0,0,.84) 100%);
+  }
+
+  .hero__copy {
+    padding-top: 4vh;
+    transform: translateY(-4vh);
+  }
+
+  .hero__title {
+    width: min(330px, 91vw);
+    max-width: 330px;
+    font-size: clamp(44px, 12.8vw, 52px);
+    line-height: .89;
+    letter-spacing: -.065em;
+  }
+
+  .hero__lead {
+    width: min(310px, 86vw);
+    max-width: 310px;
+    margin-top: 17px;
+    font-size: 13px;
+  }
+
+  .hero__meta {
+    max-width: 82%;
+    line-height: 1.35;
+  }
+
+  .hero__footer {
+    position: relative;
+    z-index: 3;
+  }
+
+  .hero__spec span {
+    line-height: 1.25;
+  }
+
+  /* White -> motorcycle: a deliberate optical bridge instead of a hard cut. */
+  .intro {
+    padding-bottom: 70px;
+  }
+
+  .intro::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -76px;
+    height: 78px;
+    z-index: 5;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      #f1f0ec 0%,
+      rgba(241,240,236,.94) 15%,
+      rgba(177,176,172,.78) 38%,
+      rgba(66,65,63,.48) 68%,
+      rgba(5,5,5,0) 100%
+    );
+  }
+
+  .cinema__image {
+    min-height: 410px;
+    height: min(64svh, 550px);
+  }
+
+  .cinema__image::after {
+    background: linear-gradient(180deg, rgba(5,5,5,.08) 0%, transparent 18%, transparent 62%, rgba(5,5,5,.25) 80%, #050505 100%);
+  }
+
+  /* Material study: show the whole motorcycle instead of cropping its front wheel. */
+  .detail__image {
+    aspect-ratio: 3 / 2;
+    min-height: 0;
+    background-color: #080808;
+    background-size: 100% 100%, 96% auto;
+    background-repeat: no-repeat, no-repeat;
+    background-position: center, center;
+    border: 1px solid rgba(255,255,255,.08);
+  }
+
+  .detail__media figcaption {
+    line-height: 1.35;
+  }
+
+  .detail__rail div {
+    grid-template-columns: 116px 1fr;
+    gap: 12px;
+  }
+
+  .detail__rail span {
+    line-height: 1.3;
+  }
+
+  /* Ride System becomes a compact, self-explanatory instrument cluster. */
+  .system {
+    padding-top: 46px;
+  }
+
+  .system__header .display-heading {
+    font-size: clamp(39px, 11vw, 46px);
+    line-height: .92;
+  }
+
+  .system__header > p {
+    max-width: 36ch;
+    font-size: 14px;
+  }
+
+  .dash {
+    margin-top: 30px;
+    border-color: rgba(255,255,255,.18);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.018), transparent 34%),
+      #050505;
+    box-shadow: 0 24px 70px rgba(0,0,0,.42);
+  }
+
+  .dash__top {
+    min-height: 54px;
+    padding: 10px 14px;
+  }
+
+  .dash__identity strong {
+    font-size: 9px;
+  }
+
+  .dash__identity span {
+    font-size: 7px;
+  }
+
+  .dash__body {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 0;
+    gap: 28px;
+    padding: 26px 16px 22px;
+  }
+
+  .dash__kicker {
+    margin-bottom: 11px;
+  }
+
+  .dash__speed strong {
+    font-size: clamp(86px, 27vw, 105px);
+    line-height: .76;
+  }
+
+  .dash__speed span {
+    padding-bottom: 8px;
+  }
+
+  .dash__power {
+    margin-top: 32px;
+  }
+
+  .dash__side {
+    border-top: 1px solid var(--line);
+  }
+
+  .dash__side div {
+    padding: 12px 0;
+  }
+
+  .dash__side strong {
+    font-size: 17px;
+  }
+
+  .dash__modes {
+    border-top-color: rgba(255,255,255,.18);
+  }
+
+  .mode {
+    height: 58px;
+  }
+
+  .mode strong {
+    font-size: 9px;
+  }
+
+  .mode span {
+    font-size: 7px;
+  }
+
+  .manifesto__meta {
+    line-height: 1.45;
+  }
+
+  .manifesto__meta span:last-child {
+    max-width: 32ch;
+  }
+}
+
+@media (max-width: 390px) {
+  .hero__title {
+    max-width: 300px;
+    font-size: 44px;
+  }
+
+  .hero__lead {
+    max-width: 285px;
+  }
+
+  .detail__rail div {
+    grid-template-columns: 104px 1fr;
+  }
+
+  .dash__speed strong {
+    font-size: 88px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dash__power-track i {
+    transition: none;
+  }
+}

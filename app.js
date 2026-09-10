@@ -131,9 +131,14 @@
   ignite?.addEventListener('click', () => {
     const live = !finale?.classList.contains('is-live');
     finale?.classList.toggle('is-live', live);
-    if (status) status.textContent = live ? 'СИСТЕМА АКТИВНА / READY TO MOVE' : 'СИСТЕМА ГОТОВА / STANDBY';
+    ignite.setAttribute('aria-pressed', String(live));
+    if (status) {
+      status.textContent = live
+        ? 'Демо-режим активен: сцена подсвечена, система R1 запущена.'
+        : 'Демо-режим: свет и система активируются прямо на этом экране.';
+    }
     const label = ignite.querySelector('span');
-    if (label) label.textContent = live ? 'СИСТЕМА АКТИВНА' : 'ЗАПУСТИТЬ / IGNITE';
+    if (label) label.textContent = live ? 'ОТКЛЮЧИТЬ DEMO' : 'АКТИВИРОВАТЬ R1';
   });
 
   if (!reduceMotion) {

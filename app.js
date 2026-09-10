@@ -89,24 +89,30 @@
   }
 
   const modes = {
-    road: { speed: '084', battery: '78%', range: '214 km', regen: 'MID', accent: '#ff2b17' },
-    attack: { speed: '146', battery: '61%', range: '128 km', regen: 'LOW', accent: '#ff3b21' },
-    range: { speed: '062', battery: '84%', range: '286 km', regen: 'HIGH', accent: '#d8ff54' }
+    road: { speed: '084', battery: '78%', range: '214 км', regen: 'СРЕДНЯЯ', power: '62%', accent: '#ff2b17' },
+    attack: { speed: '146', battery: '61%', range: '128 км', regen: 'НИЗКАЯ', power: '94%', accent: '#ff3b21' },
+    range: { speed: '062', battery: '84%', range: '286 км', regen: 'ВЫСОКАЯ', power: '42%', accent: '#d8ff54' }
   };
   const dash = document.getElementById('dash');
   const speed = document.getElementById('speedValue');
   const battery = document.getElementById('batteryValue');
   const range = document.getElementById('rangeValue');
   const regen = document.getElementById('regenValue');
+  const powerBar = document.getElementById('powerBar');
   document.querySelectorAll('.mode').forEach((button) => {
     button.addEventListener('click', () => {
       const state = modes[button.dataset.mode];
       if (!state) return;
-      document.querySelectorAll('.mode').forEach((b) => b.classList.toggle('active', b === button));
+      document.querySelectorAll('.mode').forEach((b) => {
+        const active = b === button;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-pressed', String(active));
+      });
       if (speed) speed.textContent = state.speed;
       if (battery) battery.textContent = state.battery;
       if (range) range.textContent = state.range;
       if (regen) regen.textContent = state.regen;
+      if (powerBar) powerBar.style.width = state.power;
       dash?.style.setProperty('--dash-accent', state.accent);
     });
   });
@@ -125,9 +131,9 @@
   ignite?.addEventListener('click', () => {
     const live = !finale?.classList.contains('is-live');
     finale?.classList.toggle('is-live', live);
-    if (status) status.textContent = live ? 'SYSTEM LIVE / READY TO MOVE' : 'SYSTEM STANDBY';
+    if (status) status.textContent = live ? 'СИСТЕМА АКТИВНА / READY TO MOVE' : 'СИСТЕМА ГОТОВА / STANDBY';
     const label = ignite.querySelector('span');
-    if (label) label.textContent = live ? 'SYSTEM LIVE' : 'IGNITE SYSTEM';
+    if (label) label.textContent = live ? 'СИСТЕМА АКТИВНА' : 'ЗАПУСТИТЬ / IGNITE';
   });
 
   if (!reduceMotion) {

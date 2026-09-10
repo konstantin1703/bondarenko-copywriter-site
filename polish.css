@@ -1,0 +1,469 @@
+/* VANTA R1 / polish layer — responsive rhythm, product focus, iOS fixes */
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+}
+
+@supports (overflow: clip) {
+  html,
+  body,
+  main {
+    overflow-x: clip;
+  }
+}
+
+main,
+section {
+  max-width: 100%;
+}
+
+main {
+  overflow-x: hidden;
+}
+
+.display-heading,
+.hero__title,
+.cinema__copy h2,
+.detail h2,
+.finale h2 {
+  text-wrap: balance;
+}
+
+.site-header.is-scrolled {
+  background: rgba(5, 5, 5, .88);
+}
+
+.desktop-nav a.is-active {
+  color: #fff;
+}
+
+.desktop-nav a.is-active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Deliver lighter, CDN-optimized product imagery. */
+.hero__media,
+.finale__media {
+  background-image: url('https://res.cloudinary.com/dg9shucn/image/upload/f_auto,q_auto:good,w_2200/v1789055688/vanta-hero.jpg');
+}
+
+.cinema__image--studio {
+  background-image: url('https://res.cloudinary.com/dg9shucn/image/upload/f_auto,q_auto:good,w_2200/v1789055696/vanta-studio.jpg');
+}
+
+.detail__image {
+  background-image: linear-gradient(180deg, transparent 60%, rgba(0,0,0,.42)), url('https://res.cloudinary.com/dg9shucn/image/upload/f_auto,q_auto:good,w_1600/v1789055707/vanta-detail.jpg');
+}
+
+/* Cleaner transitions between major chapters. */
+.intro {
+  padding-bottom: clamp(78px, 8vw, 126px);
+}
+
+.cinema,
+.detail,
+.system,
+.manifesto,
+.finale {
+  border-top: 1px solid rgba(255,255,255,.045);
+}
+
+.cinema__image,
+.finale__media {
+  transition: transform 1.8s cubic-bezier(.2,.75,.2,1), filter 1.2s ease;
+}
+
+.cinema.is-inview .cinema__image {
+  transform: scale(1.012);
+}
+
+.detail__image {
+  transition: filter .8s ease, transform 1.4s cubic-bezier(.2,.75,.2,1);
+  filter: saturate(.82) contrast(1.04);
+}
+
+.detail.is-inview .detail__image {
+  filter: saturate(.96) contrast(1.02);
+}
+
+.hotspots b,
+.detail__rail strong,
+.dash__side strong {
+  text-wrap: pretty;
+}
+
+/* Tablet: shorten the page without flattening the visual rhythm. */
+@media (max-width: 980px) {
+  .intro {
+    padding-top: 88px;
+    padding-bottom: 70px;
+  }
+
+  .numbers {
+    margin-top: 58px;
+  }
+
+  .cinema,
+  .cinema__content {
+    min-height: 94svh;
+  }
+
+  .detail {
+    min-height: 0;
+    padding-top: 78px;
+    padding-bottom: 78px;
+    gap: 46px;
+  }
+
+  .system {
+    padding-top: 80px;
+    padding-bottom: 82px;
+  }
+
+  .system__header {
+    margin-top: 38px;
+    gap: 28px;
+  }
+
+  .dash {
+    margin-top: 48px;
+  }
+
+  .manifesto {
+    padding-top: 70px;
+    padding-bottom: 70px;
+    overflow: hidden;
+  }
+}
+
+/* Phone composition: media first, typography second. */
+@media (max-width: 640px) {
+  :root {
+    --pad: 20px;
+  }
+
+  body {
+    overscroll-behavior-x: none;
+  }
+
+  .site-header {
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+  }
+
+  .site-header.is-scrolled {
+    background: rgba(5,5,5,.95);
+    backdrop-filter: blur(16px) saturate(1.15);
+  }
+
+  .section-pad {
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+  }
+
+  .hero {
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+  }
+
+  .hero__copy {
+    padding-top: 12vh;
+  }
+
+  .hero__title {
+    font-size: clamp(50px, 14.8vw, 76px);
+    line-height: .86;
+  }
+
+  .hero__lead {
+    margin-top: 20px;
+    max-width: 340px;
+    line-height: 1.45;
+  }
+
+  .hero__footer {
+    padding-top: 13px;
+  }
+
+  .hero__spec strong {
+    font-size: 25px;
+  }
+
+  .intro {
+    padding-top: 68px;
+    padding-bottom: 46px;
+  }
+
+  .intro__grid {
+    margin-top: 30px;
+    gap: 28px;
+  }
+
+  .intro__grid .display-heading {
+    font-size: clamp(44px, 12.5vw, 52px);
+    line-height: .9;
+  }
+
+  .intro__text {
+    padding-top: 18px;
+  }
+
+  .numbers {
+    margin-top: 42px;
+  }
+
+  .number-block {
+    min-height: 120px;
+  }
+
+  .number-block strong {
+    font-size: clamp(43px, 13vw, 50px);
+  }
+
+  /* Architecture: never cover the motorcycle with the headline on phones. */
+  .cinema {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 0;
+    background: #050505;
+    overflow: hidden;
+  }
+
+  .cinema__image {
+    position: relative;
+    inset: auto;
+    z-index: 0;
+    width: 100%;
+    height: min(62svh, 540px);
+    min-height: 390px;
+    background-position: 58% 50%;
+    transform: none !important;
+  }
+
+  .cinema__image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 64%, rgba(5,5,5,.18) 82%, #050505 100%);
+    pointer-events: none;
+  }
+
+  .cinema__overlay {
+    display: none;
+  }
+
+  .cinema__content {
+    min-height: 0;
+    padding-top: 18px;
+    padding-bottom: 48px;
+    background: #050505;
+  }
+
+  .cinema__copy {
+    width: 100%;
+    margin-top: 28px;
+  }
+
+  .cinema__copy h2 {
+    font-size: clamp(43px, 12.5vw, 54px);
+    line-height: .9;
+  }
+
+  .cinema__copy p {
+    margin-top: 19px;
+    max-width: 34ch;
+    line-height: 1.5;
+  }
+
+  .hotspots {
+    margin-top: 26px;
+  }
+
+  .hotspots div {
+    padding: 10px 0;
+  }
+
+  /* Material study: wide product crop first, copy after it. */
+  .detail {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    gap: 30px;
+    padding-top: 48px;
+    padding-bottom: 56px;
+  }
+
+  .detail__media {
+    order: -1;
+    width: 100%;
+    margin: 0;
+  }
+
+  .detail__image {
+    aspect-ratio: 16 / 11;
+    background-position: center 43%;
+  }
+
+  .detail__media figcaption {
+    padding-top: 8px;
+  }
+
+  .detail__copy .section-index {
+    margin-bottom: 28px;
+  }
+
+  .detail h2 {
+    font-size: clamp(42px, 12vw, 50px);
+    line-height: .91;
+  }
+
+  .detail__copy > p {
+    margin-top: 20px;
+    max-width: 35ch;
+    line-height: 1.5;
+  }
+
+  .detail__rail {
+    margin-top: 30px;
+  }
+
+  .detail__rail div {
+    grid-template-columns: 92px 1fr;
+    padding: 12px 0;
+  }
+
+  /* Ride system: tighter and impossible to drag sideways on iOS. */
+  .system {
+    padding-top: 58px;
+    padding-bottom: 66px;
+    overflow: hidden;
+  }
+
+  .system__header {
+    margin-top: 28px;
+    gap: 20px;
+  }
+
+  .system__header .display-heading {
+    max-width: 100%;
+    font-size: clamp(40px, 11.8vw, 49px);
+    line-height: .9;
+    overflow-wrap: anywhere;
+  }
+
+  .system__header > p {
+    max-width: 34ch;
+    line-height: 1.5;
+  }
+
+  .dash {
+    margin-top: 36px;
+    max-width: 100%;
+  }
+
+  .dash__top {
+    height: 40px;
+    padding: 0 14px;
+  }
+
+  .dash__body {
+    min-height: 320px;
+    padding: 28px 14px 24px;
+    gap: 32px;
+  }
+
+  .dash__speed strong {
+    font-size: clamp(76px, 25vw, 94px);
+  }
+
+  .dash__arc {
+    width: 250px;
+    height: 250px;
+    left: 66%;
+    top: 38%;
+    opacity: .82;
+  }
+
+  .dash__side div {
+    padding: 10px 0;
+  }
+
+  .mode {
+    height: 48px;
+  }
+
+  .manifesto {
+    padding-top: 56px;
+    padding-bottom: 56px;
+    overflow: hidden;
+  }
+
+  .manifesto__line {
+    max-width: 100%;
+    font-size: clamp(47px, 14.2vw, 58px);
+    line-height: .86;
+    letter-spacing: -.075em;
+    white-space: nowrap;
+  }
+
+  .manifesto__meta {
+    margin-top: 14px;
+  }
+
+  .finale {
+    min-height: 88svh;
+    padding-top: 40px;
+    padding-bottom: max(40px, env(safe-area-inset-bottom));
+  }
+
+  .finale__content {
+    width: calc(100% - 40px);
+  }
+
+  .finale__eyebrow {
+    margin-bottom: 22px;
+  }
+
+  .finale h2 {
+    font-size: clamp(45px, 12vw, 54px);
+    line-height: .91;
+  }
+
+  .ignite {
+    margin-top: 32px;
+  }
+
+  .site-footer {
+    padding-top: 28px;
+    padding-bottom: max(34px, env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 390px) {
+  .hero__spec strong {
+    font-size: 23px;
+  }
+
+  .hero__spec span {
+    font-size: 6.5px;
+  }
+
+  .cinema__image {
+    height: 58svh;
+    min-height: 365px;
+  }
+
+  .cinema__copy h2,
+  .detail h2,
+  .system__header .display-heading {
+    font-size: 42px;
+  }
+
+  .manifesto__line {
+    font-size: 48px;
+  }
+}

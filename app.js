@@ -1,207 +1,145 @@
 (() => {
   'use strict';
 
-  const root = document.documentElement;
-  const body = document.body;
+  const boot = document.getElementById('boot');
+  const header = document.getElementById('siteHeader');
+  const progress = document.getElementById('scrollProgress');
+  const cursor = document.getElementById('cursor');
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileNav = document.getElementById('mobileNav');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const $ = (s, c = document) => c.querySelector(s);
-  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
   window.addEventListener('load', () => {
-    window.setTimeout(() => $('#boot')?.classList.add('is-done'), reduceMotion ? 0 : 900);
+    window.setTimeout(() => boot?.classList.add('is-gone'), reduceMotion ? 0 : 650);
   });
 
-  const header = $('#siteHeader');
-  const progress = $('#scrollProgress');
-  let ticking = false;
-
-  const updateScroll = () => {
-    const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-    const p = Math.min(1, window.scrollY / max);
-    if (progress) progress.style.transform = `scaleX(${p})`;
-    header?.classList.toggle('is-scrolled', window.scrollY > 16);
-
-    const bike = $('#bikeSvg');
-    if (bike && !reduceMotion) {
-      const y = Math.min(22, window.scrollY * .025);
-      bike.style.setProperty('--bike-y', `${y}px`);
-      $$('.wheel').forEach((wheel) => {
-        wheel.style.transform = `rotate(${window.scrollY * .12}deg)`;
-      });
-    }
-    ticking = false;
+  const onScroll = () => {
+    const y = window.scrollY;
+    header?.classList.toggle('is-scrolled', y > 24);
+    const max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+    if (progress) progress.style.transform = `scaleX(${Math.min(y / max, 1)})`;
   };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
 
-  window.addEventListener('scroll', () => {
-    if (!ticking) { requestAnimationFrame(updateScroll); ticking = true; }
-  }, { passive: true });
-  updateScroll();
-
-  const reveals = $$('.reveal');
-  if ('IntersectionObserver' in window && !reduceMotion) {
-    const io = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: .12, rootMargin: '0px 0px -5% 0px' });
-    reveals.forEach((el) => io.observe(el));
-  } else {
-    reveals.forEach((el) => el.classList.add('is-visible'));
-  }
-
-  const menuToggle = $('#menuToggle');
-  const mobileNav = $('#mobileNav');
-  const setMenu = (open) => {
-    menuToggle?.setAttribute('aria-expanded', String(open));
-    mobileNav?.setAttribute('aria-hidden', String(!open));
-    mobileNav?.classList.toggle('is-open', open);
-    body.classList.toggle('menu-open', open);
-  };
-  menuToggle?.addEventListener('click', () => setMenu(menuToggle.getAttribute('aria-expanded') !== 'true'));
-  $$('#mobileNav a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
-  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
-
-  const cursor = $('#cursor');
-  const cursorDot = $('#cursorDot');
-  if (window.matchMedia('(hover:hover)').matches && cursor && cursorDot) {
-    let cx = innerWidth / 2, cy = innerHeight / 2, tx = cx, ty = cy;
-    body.classList.add('cursor-ready');
-    window.addEventListener('pointermove', (e) => { tx = e.clientX; ty = e.clientY; cursorDot.style.transform = `translate(${tx}px, ${ty}px) translate(-50%,-50%)`; });
-    const loop = () => {
-      cx += (tx - cx) * .16; cy += (ty - cy) * .16;
-      cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%,-50%)`;
-      requestAnimationFrame(loop);
+  if (cursor && window.matchMedia('(pointer:fine)').matches) {
+    let tx = window.innerWidth / 2, ty = window.innerHeight / 2;
+    let x = tx, y = ty;
+    window.addEventListener('pointermove', (e) => { tx = e.clientX; ty = e.clientY; }, { passive: true });
+    const renderCursor = () => {
+      x += (tx - x) * .18;
+      y += (ty - y) * .18;
+      cursor.style.left = `${x}px`;
+      cursor.style.top = `${y}px`;
+      requestAnimationFrame(renderCursor);
     };
-    loop();
-    $$('a, button').forEach((el) => {
-      el.addEventListener('pointerenter', () => body.classList.add('cursor-link'));
-      el.addEventListener('pointerleave', () => body.classList.remove('cursor-link'));
+    renderCursor();
+    document.querySelectorAll('a,button').forEach((el) => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('is-hot'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('is-hot'));
     });
   }
 
-  const bikeStage = $('#bikeStage');
-  if (bikeStage && !reduceMotion && window.matchMedia('(hover:hover)').matches) {
-    bikeStage.addEventListener('pointermove', (e) => {
-      const r = bikeStage.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - .5;
-      const y = (e.clientY - r.top) / r.height - .5;
-      root.style.setProperty('--bike-ry', `${x * 4.5}deg`);
-      root.style.setProperty('--bike-rx', `${-y * 3}deg`);
-    });
-    bikeStage.addEventListener('pointerleave', () => {
-      root.style.setProperty('--bike-ry', '0deg'); root.style.setProperty('--bike-rx', '0deg');
-    });
+  const setNav = (open) => {
+    document.body.classList.toggle('nav-open', open);
+    mobileNav?.classList.toggle('is-open', open);
+    mobileNav?.setAttribute('aria-hidden', String(!open));
+    menuToggle?.setAttribute('aria-expanded', String(open));
+  };
+  menuToggle?.addEventListener('click', () => setNav(!document.body.classList.contains('nav-open')));
+  mobileNav?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setNav(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setNav(false); });
+
+  const reveal = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    const obs = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: .12, rootMargin: '0px 0px -6% 0px' });
+    reveal.forEach((el) => obs.observe(el));
+  } else {
+    reveal.forEach((el) => el.classList.add('is-visible'));
   }
 
-  const powerValue = $('#powerValue');
-  const powerSection = $('.power');
-  if (powerValue && powerSection) {
-    let ran = false;
-    const powerObserver = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && !ran) {
-        ran = true;
-        if (reduceMotion) { powerValue.textContent = '210'; return; }
+  const counters = document.querySelectorAll('[data-count]');
+  if ('IntersectionObserver' in window) {
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = Number(el.dataset.count || 0);
+        const duration = reduceMotion ? 10 : 900;
         const start = performance.now();
-        const dur = 1400;
-        const animate = (now) => {
-          const t = Math.min(1, (now - start) / dur);
-          const eased = 1 - Math.pow(1 - t, 4);
-          powerValue.textContent = String(Math.round(210 * eased));
-          if (t < 1) requestAnimationFrame(animate);
+        const tick = (now) => {
+          const p = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = String(Math.round(target * eased));
+          if (p < 1) requestAnimationFrame(tick);
         };
-        requestAnimationFrame(animate);
-      }
-    }, { threshold: .35 });
-    powerObserver.observe(powerSection);
+        requestAnimationFrame(tick);
+        observer.unobserve(el);
+      });
+    }, { threshold: .5 });
+    counters.forEach((el) => counterObserver.observe(el));
+  } else {
+    counters.forEach((el) => { el.textContent = el.dataset.count || '0'; });
   }
 
   const modes = {
-    road: { speed: 118, battery: '78%', regen: 'MED', range: '241 KM' },
-    attack: { speed: 184, battery: '62%', regen: 'LOW', range: '168 KM' },
-    range: { speed: 92, battery: '84%', regen: 'HIGH', range: '302 KM' }
+    road: { speed: '084', battery: '78%', range: '214 km', regen: 'MID', accent: '#ff2b17' },
+    attack: { speed: '146', battery: '61%', range: '128 km', regen: 'LOW', accent: '#ff3b21' },
+    range: { speed: '062', battery: '84%', range: '286 km', regen: 'HIGH', accent: '#d8ff54' }
   };
-  $$('.mode').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      $$('.mode').forEach((b) => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      const key = btn.dataset.mode;
-      const d = modes[key];
-      $('#dashMode').textContent = key.toUpperCase();
-      $('#dashSpeed').textContent = d.speed;
-      $('#dashBattery').textContent = d.battery;
-      $('#dashRegen').textContent = d.regen;
-      $('#dashRange').textContent = d.range;
+  const dash = document.getElementById('dash');
+  const speed = document.getElementById('speedValue');
+  const battery = document.getElementById('batteryValue');
+  const range = document.getElementById('rangeValue');
+  const regen = document.getElementById('regenValue');
+  document.querySelectorAll('.mode').forEach((button) => {
+    button.addEventListener('click', () => {
+      const state = modes[button.dataset.mode];
+      if (!state) return;
+      document.querySelectorAll('.mode').forEach((b) => b.classList.toggle('active', b === button));
+      if (speed) speed.textContent = state.speed;
+      if (battery) battery.textContent = state.battery;
+      if (range) range.textContent = state.range;
+      if (regen) regen.textContent = state.regen;
+      dash?.style.setProperty('--dash-accent', state.accent);
     });
   });
 
-  const finishes = {
-    obsidian: { color: '#151515', accent: '#ff4a2f', name: 'OBSIDIAN / 01' },
-    silver: { color: '#9a9b98', accent: '#cfd0cc', name: 'LIQUID SILVER / 02' },
-    signal: { color: '#b82014', accent: '#ff3c25', name: 'SIGNAL RED / 03' }
+  const clock = document.getElementById('dashClock');
+  const updateClock = () => {
+    const now = new Date();
+    if (clock) clock.textContent = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
   };
-  $$('.swatch').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const f = finishes[btn.dataset.finish];
-      $$('.swatch').forEach((b) => { b.classList.remove('is-active'); b.setAttribute('aria-pressed', 'false'); });
-      btn.classList.add('is-active'); btn.setAttribute('aria-pressed', 'true');
-      root.style.setProperty('--bike-color', f.color);
-      root.style.setProperty('--accent', f.accent);
-      $('#finishName').textContent = f.name;
-    });
-  });
+  updateClock();
+  window.setInterval(updateClock, 15000);
 
-  const ignite = $('#ignite');
-  const ignitionLayer = $('#ignitionLayer');
-  const stopIgnition = () => {
-    ignitionLayer?.classList.remove('is-on');
-    body.classList.remove('ignited');
-    ignite?.focus({ preventScroll: true });
-  };
+  const ignite = document.getElementById('ignite');
+  const finale = document.querySelector('.finale');
+  const status = document.getElementById('igniteStatus');
   ignite?.addEventListener('click', () => {
-    ignitionLayer?.classList.add('is-on'); body.classList.add('ignited');
-    window.setTimeout(stopIgnition, reduceMotion ? 400 : 2400);
+    const live = !finale?.classList.contains('is-live');
+    finale?.classList.toggle('is-live', live);
+    if (status) status.textContent = live ? 'SYSTEM LIVE / READY TO MOVE' : 'SYSTEM STANDBY';
+    const label = ignite.querySelector('span');
+    if (label) label.textContent = live ? 'SYSTEM LIVE' : 'IGNITE SYSTEM';
   });
-  ignitionLayer?.addEventListener('click', stopIgnition);
 
-  const canvas = $('#signalCanvas');
-  if (canvas && !reduceMotion) {
-    const ctx = canvas.getContext('2d', { alpha: true });
-    let dpr = Math.min(2, devicePixelRatio || 1);
-    let w = 0, h = 0;
-    const points = [];
-    let mouse = { x: .52, y: .45 };
-
-    const resize = () => {
-      const r = canvas.getBoundingClientRect(); w = r.width; h = r.height;
-      canvas.width = Math.max(1, Math.floor(w * dpr)); canvas.height = Math.max(1, Math.floor(h * dpr));
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      points.length = 0;
-      const count = Math.max(22, Math.floor(w / 48));
-      for (let i = 0; i < count; i++) points.push({ x: Math.random()*w, y: Math.random()*h, vx:(Math.random()-.5)*.18, vy:(Math.random()-.5)*.12, a:.08+Math.random()*.18 });
-    };
-    resize();
-    window.addEventListener('resize', resize, { passive:true });
-    $('.hero')?.addEventListener('pointermove', (e) => { const r = canvas.getBoundingClientRect(); mouse = { x:(e.clientX-r.left)/r.width, y:(e.clientY-r.top)/r.height }; });
-
-    const draw = () => {
-      ctx.clearRect(0,0,w,h);
-      const mx = mouse.x*w, my = mouse.y*h;
-      for (let i=0;i<points.length;i++) {
-        const p = points[i]; p.x += p.vx; p.y += p.vy;
-        if (p.x<0) p.x=w; if (p.x>w) p.x=0; if (p.y<0) p.y=h; if (p.y>h) p.y=0;
-        ctx.fillStyle = `rgba(255,255,255,${p.a})`; ctx.fillRect(p.x,p.y,1,1);
-        const dm = Math.hypot(p.x-mx,p.y-my);
-        if (dm<170) { ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(mx,my); ctx.strokeStyle=`rgba(255,74,47,${(1-dm/170)*.09})`; ctx.stroke(); }
-        for (let j=i+1;j<points.length;j++) {
-          const q=points[j], d=Math.hypot(p.x-q.x,p.y-q.y);
-          if (d<120) { ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.strokeStyle=`rgba(255,255,255,${(1-d/120)*.035})`; ctx.stroke(); }
-        }
+  if (!reduceMotion) {
+    const heroMedia = document.querySelector('.hero__media');
+    const finaleMedia = document.querySelector('.finale__media');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (heroMedia && y < window.innerHeight * 1.2) heroMedia.style.transform = `scale(${Math.max(1, 1.035 - y * .000018)}) translateY(${y * .025}px)`;
+      if (finaleMedia) {
+        const rect = finaleMedia.parentElement.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) finaleMedia.style.backgroundPositionY = `${52 + (window.innerHeight - rect.top) * .008}%`;
       }
-      requestAnimationFrame(draw);
-    };
-    requestAnimationFrame(draw);
+    }, { passive: true });
   }
 })();

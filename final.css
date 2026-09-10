@@ -384,3 +384,228 @@
     transition: none;
   }
 }
+
+/* === V6: user-review corrections ======================================== */
+
+/* The final action now has an explicit demo-state purpose. */
+.ignite {
+  position: relative;
+}
+
+.finale__status {
+  line-height: 1.45;
+}
+
+.finale::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    linear-gradient(112deg, transparent 18%, rgba(255,43,23,.10) 45%, rgba(255,255,255,.07) 50%, transparent 57%);
+  transform: translateX(-55%);
+}
+
+.finale.is-live::after {
+  animation: vantaActivationSweep 1.15s var(--ease) both;
+}
+
+.finale.is-live .finale__overlay {
+  background:
+    radial-gradient(circle at 54% 56%, rgba(255,43,23,.10), rgba(0,0,0,.58) 58%, rgba(0,0,0,.80) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.36), rgba(0,0,0,.12) 50%, rgba(0,0,0,.74));
+}
+
+@keyframes vantaActivationSweep {
+  0% { opacity: 0; transform: translateX(-55%); }
+  18% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(55%); }
+}
+
+@media (max-width: 640px) {
+  /* HERO — use the empty upper half instead of covering the motorcycle. */
+  .hero {
+    justify-content: flex-start;
+    padding-top: calc(var(--header-h) + 28px);
+  }
+
+  .hero__media {
+    background-position: 72% 67% !important;
+  }
+
+  .hero__shade {
+    background:
+      linear-gradient(90deg, rgba(0,0,0,.93) 0%, rgba(0,0,0,.70) 44%, rgba(0,0,0,.26) 74%, rgba(0,0,0,.16) 100%),
+      linear-gradient(180deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,.04) 28%, rgba(0,0,0,.66) 76%, rgba(0,0,0,.92) 100%);
+  }
+
+  .hero__copy {
+    padding-top: 6.5vh;
+    transform: none;
+  }
+
+  .hero__title {
+    width: min(322px, 88vw);
+    max-width: 322px;
+    font-size: clamp(43px, 12.3vw, 50px);
+    line-height: .89;
+  }
+
+  .hero__lead {
+    width: min(304px, 84vw);
+    max-width: 304px;
+    margin-top: 15px;
+  }
+
+  .hero__footer {
+    margin-top: auto;
+  }
+
+  /* PERFORMANCE → ARCHITECTURE — clean editorial cut, no fog/blur. */
+  .intro {
+    padding-bottom: 56px;
+  }
+
+  .intro::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  .cinema {
+    position: relative;
+    padding-top: 28px;
+    background: #050505;
+    border-top: 0;
+  }
+
+  .cinema::before {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    top: 14px;
+    left: max(20px, env(safe-area-inset-left));
+    right: max(20px, env(safe-area-inset-right));
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent) 0 54px, rgba(255,255,255,.14) 54px 100%);
+    pointer-events: none;
+  }
+
+  .cinema__image {
+    min-height: 410px;
+    height: min(63svh, 548px);
+  }
+
+  .cinema__image::after {
+    background: linear-gradient(180deg, transparent 72%, rgba(5,5,5,.22) 84%, #050505 100%);
+  }
+
+  /* MATERIAL — respect the portrait source ratio so the wheel stays intact. */
+  .detail__image {
+    aspect-ratio: 3000 / 3751;
+    min-height: 0;
+    background-color: #080808;
+    background-size: 100% 100%, cover;
+    background-repeat: no-repeat, no-repeat;
+    background-position: center, center !important;
+    border: 1px solid rgba(255,255,255,.08);
+  }
+
+  /* RIDE SYSTEM — slightly calmer proportions and stronger hierarchy. */
+  .dash__body {
+    gap: 24px;
+    padding: 24px 16px 20px;
+  }
+
+  .dash__speed strong {
+    font-size: clamp(82px, 25vw, 98px);
+  }
+
+  .dash__power {
+    margin-top: 27px;
+  }
+
+  .dash__side div {
+    padding: 11px 0;
+  }
+
+  /* FINALE — headline above the bike, action below it. */
+  .finale {
+    min-height: 104svh;
+    display: block;
+    padding-top: calc(var(--header-h) + 30px);
+    padding-bottom: max(30px, env(safe-area-inset-bottom));
+  }
+
+  .finale__media {
+    background-position: center 64% !important;
+    transform: scale(1.035);
+  }
+
+  .finale__overlay {
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.58) 0%, rgba(0,0,0,.18) 30%, rgba(0,0,0,.13) 61%, rgba(0,0,0,.90) 100%);
+  }
+
+  .finale__content {
+    width: calc(100% - 40px);
+    min-height: calc(104svh - var(--header-h) - 60px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-rows: auto auto minmax(280px, 1fr) auto auto;
+    justify-items: center;
+    align-items: start;
+  }
+
+  .finale__eyebrow {
+    grid-row: 1;
+    margin: 0 0 18px;
+  }
+
+  .finale h2 {
+    grid-row: 2;
+    max-width: 9.5ch;
+    font-size: clamp(43px, 11.8vw, 52px);
+    line-height: .91;
+  }
+
+  .ignite {
+    grid-row: 4;
+    align-self: end;
+    margin-top: 0;
+    min-width: 226px;
+  }
+
+  .finale__status {
+    grid-row: 5;
+    align-self: end;
+    max-width: 30ch;
+    margin-top: 12px;
+    color: rgba(255,255,255,.58);
+    text-wrap: balance;
+  }
+}
+
+@media (max-width: 390px) {
+  .hero__copy {
+    padding-top: 5.5vh;
+  }
+
+  .hero__title {
+    max-width: 294px;
+    font-size: 42px;
+  }
+
+  .hero__lead {
+    max-width: 282px;
+  }
+
+  .detail__image {
+    aspect-ratio: 3000 / 3751;
+  }
+
+  .finale__content {
+    grid-template-rows: auto auto minmax(250px, 1fr) auto auto;
+  }
+}

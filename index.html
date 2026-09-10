@@ -1,351 +1,188 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#090909" />
-  <meta name="description" content="VANTA R1 — an electric performance motorcycle concept study." />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#050505" />
+  <meta name="description" content="VANTA R1 — демонстрационный digital-концепт электрического superbike." />
   <meta name="robots" content="index, follow" />
   <meta property="og:title" content="VANTA R1 — Electric Performance Concept" />
-  <meta property="og:description" content="A fictional electric performance motorcycle concept, engineered as a digital showcase." />
+  <meta property="og:description" content="Концептуальная digital-презентация электрического superbike VANTA R1." />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <title>VANTA R1 — Electric Performance Concept</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="manifest" href="site.webmanifest" />
+  <link rel="preconnect" href="https://res.cloudinary.com" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="boot" id="boot" aria-hidden="true">
     <div class="boot__brand">VANTA</div>
-    <div class="boot__line"><span></span></div>
-    <div class="boot__meta">R1 / SYSTEM INIT</div>
+    <div class="boot__bar"><span></span></div>
+    <div class="boot__meta">R1 / SYSTEM READY</div>
   </div>
 
   <div class="cursor" id="cursor" aria-hidden="true"></div>
-  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
   <header class="site-header" id="siteHeader">
-    <a class="brand" href="#top" aria-label="VANTA home">VANTA<span>®</span></a>
-    <nav class="desktop-nav" aria-label="Primary navigation">
-      <a href="#machine">R1</a>
-      <a href="#power">Power</a>
-      <a href="#aero">Aero</a>
+    <a class="brand" href="#top" aria-label="VANTA — на главную">VANTA<span>®</span></a>
+    <nav class="desktop-nav" aria-label="Основная навигация">
+      <a href="#r1">R1</a>
+      <a href="#performance">Характер</a>
+      <a href="#design">Архитектура</a>
       <a href="#system">System</a>
     </nav>
+    <a class="header-cta" href="#finale">EXPLORE R1</a>
     <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileNav">
-      <span></span><span></span>
-      <span class="sr-only">Open navigation</span>
+      <span></span><span></span><span class="sr-only">Открыть меню</span>
     </button>
   </header>
 
   <div class="mobile-nav" id="mobileNav" aria-hidden="true">
-    <a href="#machine">01 / R1</a>
-    <a href="#power">02 / Power</a>
-    <a href="#aero">03 / Aero</a>
+    <a href="#r1">01 / R1</a>
+    <a href="#performance">02 / Характер</a>
+    <a href="#design">03 / Архитектура</a>
     <a href="#system">04 / System</a>
+    <a href="#finale">05 / Finale</a>
     <div class="mobile-nav__foot">VANTA R1 / CONCEPT STUDY / 2026</div>
   </div>
 
   <main id="top">
-    <section class="hero" id="machine" aria-labelledby="heroTitle">
-      <canvas id="signalCanvas" class="signal-canvas" aria-hidden="true"></canvas>
-      <div class="hero__grid" aria-hidden="true"></div>
-      <div class="hero__topline reveal">
-        <span>Electric performance machine</span>
-        <span>Concept study / 01</span>
+    <section class="hero" id="r1" aria-labelledby="heroTitle">
+      <div class="hero__media" aria-hidden="true"></div>
+      <div class="hero__shade" aria-hidden="true"></div>
+      <div class="hero__grain" aria-hidden="true"></div>
+
+      <div class="hero__meta reveal">
+        <span>Electric performance concept</span>
+        <span>R1 / 2026</span>
       </div>
 
-      <div class="hero__title-wrap">
-        <h1 id="heroTitle" class="hero__title" data-scramble="R1">R1</h1>
-        <div class="hero__serial">R1—026<br />DEVELOPMENT UNIT</div>
+      <div class="hero__copy">
+        <h1 id="heroTitle" class="hero__title reveal">Тишина.<br><em>До первого импульса.</em></h1>
+        <p class="hero__lead reveal">VANTA R1 — концепт электрического superbike, построенный вокруг мгновенной тяги, минимальной массы и абсолютного контроля.</p>
       </div>
 
-      <div class="bike-stage" id="bikeStage" aria-label="Stylized VANTA R1 motorcycle illustration">
-        <div class="bike-glow" aria-hidden="true"></div>
-        <svg class="bike" id="bikeSvg" viewBox="0 0 1600 760" role="img" aria-labelledby="bikeTitle bikeDesc">
-          <title id="bikeTitle">VANTA R1 electric motorcycle concept</title>
-          <desc id="bikeDesc">A stylized side profile of a black electric performance motorcycle.</desc>
-          <defs>
-            <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#313131" />
-              <stop offset="0.45" stop-color="#0b0b0b" />
-              <stop offset="1" stop-color="#222" />
-            </linearGradient>
-            <linearGradient id="fairing" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="var(--bike-color)" />
-              <stop offset="0.56" stop-color="#171717" />
-              <stop offset="1" stop-color="#050505" />
-            </linearGradient>
-            <radialGradient id="tyre" cx="50%" cy="50%" r="50%">
-              <stop offset="0.6" stop-color="#111" />
-              <stop offset="0.72" stop-color="#050505" />
-              <stop offset="1" stop-color="#1b1b1b" />
-            </radialGradient>
-            <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
-              <feGaussianBlur stdDeviation="18" />
-            </filter>
-          </defs>
-
-          <ellipse cx="820" cy="655" rx="610" ry="28" fill="#000" opacity=".72" filter="url(#softShadow)" />
-
-          <g class="wheel wheel--rear" style="transform-origin: 374px 529px">
-            <circle cx="374" cy="529" r="178" fill="url(#tyre)" stroke="#2d2d2d" stroke-width="5" />
-            <circle cx="374" cy="529" r="139" fill="#080808" stroke="#3c3c3c" stroke-width="2" />
-            <circle cx="374" cy="529" r="96" fill="none" stroke="#292929" stroke-width="3" stroke-dasharray="4 18" />
-            <circle cx="374" cy="529" r="54" fill="#141414" stroke="#525252" stroke-width="2" />
-            <g stroke="#3a3a3a" stroke-width="4" opacity=".9">
-              <path d="M374 390v278M235 529h278M276 431l196 196M472 431L276 627" />
-            </g>
-            <circle cx="374" cy="529" r="17" fill="var(--accent)" />
-          </g>
-
-          <g class="wheel wheel--front" style="transform-origin: 1270px 529px">
-            <circle cx="1270" cy="529" r="178" fill="url(#tyre)" stroke="#2d2d2d" stroke-width="5" />
-            <circle cx="1270" cy="529" r="139" fill="#080808" stroke="#3c3c3c" stroke-width="2" />
-            <circle cx="1270" cy="529" r="104" fill="none" stroke="#393939" stroke-width="6" stroke-dasharray="3 15" />
-            <circle cx="1270" cy="529" r="55" fill="#141414" stroke="#555" stroke-width="2" />
-            <g stroke="#3a3a3a" stroke-width="4" opacity=".9">
-              <path d="M1270 390v278M1131 529h278M1172 431l196 196M1368 431l-196 196" />
-            </g>
-            <circle cx="1270" cy="529" r="17" fill="var(--accent)" />
-          </g>
-
-          <path d="M420 505L666 321L1017 330L1188 487L1104 508L924 420L712 435L546 532Z" fill="#090909" stroke="#343434" stroke-width="3" />
-          <path d="M451 485L684 341L970 348L879 443L621 458Z" fill="none" stroke="#565656" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" opacity=".78" />
-          <path d="M563 514L696 355L813 535" fill="none" stroke="#242424" stroke-width="26" stroke-linecap="round" />
-
-          <g class="power-core">
-            <path d="M694 366L914 360L974 463L896 548L678 514L639 427Z" fill="#090909" stroke="#353535" stroke-width="3" />
-            <path d="M684 389L896 383L929 459L873 514L687 493L663 431Z" fill="#121212" stroke="#2a2a2a" stroke-width="2" />
-            <path d="M694 410H888M688 442H903M699 474H887" stroke="var(--accent)" stroke-width="3" opacity=".8" />
-            <text x="713" y="458" fill="#e7e7e7" font-size="33" font-family="Arial, sans-serif" font-weight="700" letter-spacing="8">VANTA</text>
-          </g>
-
-          <g class="fairing">
-            <path d="M631 321C713 237 847 199 1014 212L1132 265L1074 337L925 365L673 356Z" fill="url(#fairing)" stroke="#2d2d2d" stroke-width="3" />
-            <path d="M991 219L1140 267L1195 313L1101 321L1054 286Z" fill="#080808" stroke="#353535" stroke-width="3" />
-            <path d="M1099 267L1192 295L1164 214L1118 210Z" fill="#0d0d0d" stroke="#454545" stroke-width="2" />
-            <path d="M672 319C737 277 817 249 907 241" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" />
-            <path d="M978 261L1072 274" stroke="#f3f3f3" stroke-width="5" stroke-linecap="round" opacity=".84" />
-          </g>
-
-          <g class="seat">
-            <path d="M522 299C580 281 651 283 716 302L673 348L508 344L454 320Z" fill="#070707" stroke="#303030" stroke-width="3" />
-            <path d="M470 318L364 345L297 398L413 376L528 342Z" fill="#121212" stroke="#363636" stroke-width="3" />
-            <path d="M303 398L246 407L210 435L315 425Z" fill="var(--accent)" opacity=".9" />
-          </g>
-
-          <g class="front-assembly">
-            <path d="M1110 317L1206 497" stroke="#555" stroke-width="18" stroke-linecap="round" />
-            <path d="M1140 309L1235 493" stroke="#1f1f1f" stroke-width="24" stroke-linecap="round" />
-            <path d="M1125 318L1222 501" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" opacity=".72" />
-            <path d="M1198 501L1270 529" stroke="#333" stroke-width="13" stroke-linecap="round" />
-            <path d="M1084 285L1144 272" stroke="#777" stroke-width="8" stroke-linecap="round" />
-            <circle cx="1149" cy="271" r="10" fill="#111" stroke="#777" stroke-width="3" />
-          </g>
-
-          <g class="rear-assembly">
-            <path d="M688 481L397 535" stroke="#2b2b2b" stroke-width="34" stroke-linecap="round" />
-            <path d="M681 477L401 527" stroke="#4b4b4b" stroke-width="5" stroke-linecap="round" />
-            <path d="M585 455L495 384" stroke="#292929" stroke-width="15" stroke-linecap="round" />
-            <circle cx="495" cy="384" r="18" fill="#101010" stroke="var(--accent)" stroke-width="4" />
-          </g>
-
-          <path d="M845 548C890 553 935 549 979 529" fill="none" stroke="#444" stroke-width="10" stroke-linecap="round" />
-          <path d="M974 528L1074 526" stroke="#222" stroke-width="24" stroke-linecap="round" />
-          <path d="M1015 524L1095 524" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" />
-        </svg>
-
-        <div class="bike-label bike-label--a">01 <span>Carbon monocoque</span></div>
-        <div class="bike-label bike-label--b">02 <span>Axial flux drive</span></div>
-        <div class="bike-label bike-label--c">03 <span>Active aero</span></div>
+      <div class="hero__footer reveal">
+        <div class="hero__spec"><strong>210</strong><span>кВт / target</span></div>
+        <div class="hero__spec"><strong>2.7</strong><span>0—100 км/ч</span></div>
+        <div class="hero__spec"><strong>320</strong><span>км / target range</span></div>
+        <a class="scroll-link" href="#performance">SCROLL TO FEEL <i></i></a>
       </div>
-
-      <div class="hero__bottom reveal">
-        <p>Pure electric torque.<br />Zero visual noise.</p>
-        <div class="hero__specs" aria-label="Concept target specifications">
-          <div><strong>210</strong><span>kW target</span></div>
-          <div><strong>2.7</strong><span>0—100 km/h</span></div>
-          <div><strong>320</strong><span>km target range</span></div>
-        </div>
-      </div>
-      <a class="scroll-cue" href="#power"><span>Scroll</span><i></i></a>
     </section>
 
-    <section class="statement section-pad" id="power">
-      <div class="section-index reveal"><span>02</span><span>POWER / DELIVERY</span></div>
-      <div class="statement__copy reveal">
-        <p class="statement__small">Built around immediate response</p>
-        <h2>NO REV.<br />NO DELAY.<br /><em>JUST FORCE.</em></h2>
+    <section class="intro section-pad" id="performance">
+      <div class="section-index reveal"><span>02</span><span>ХАРАКТЕР / PERFORMANCE</span></div>
+      <div class="intro__grid">
+        <h2 class="display-heading reveal">Мощность без шума.<br><em>Скорость без паузы.</em></h2>
+        <div class="intro__text reveal">
+          <p>Электромотор не требует раскрутки. Крутящий момент приходит сразу — без задержки, без переключений, без театра.</p>
+          <p>Вся архитектура R1 подчинена одной идее: меньше инерции, меньше лишнего, больше контроля в каждом миллиметре хода ручки.</p>
+        </div>
       </div>
-      <div class="statement__rail" aria-hidden="true">
-        <div class="marquee-track">
-          <span>210 KW / 390 NM / 800 V / LIQUID COOLED / 17.8 KWH / </span>
-          <span>210 KW / 390 NM / 800 V / LIQUID COOLED / 17.8 KWH / </span>
+
+      <div class="numbers reveal" aria-label="Целевые характеристики концепта">
+        <div class="number-block"><span>PEAK POWER</span><strong data-count="210">0</strong><small>кВт</small></div>
+        <div class="number-block"><span>PEAK TORQUE</span><strong data-count="390">0</strong><small>Н·м</small></div>
+        <div class="number-block"><span>ARCHITECTURE</span><strong data-count="800">0</strong><small>V</small></div>
+        <div class="number-block"><span>10—80%</span><strong data-count="18">0</strong><small>мин / target</small></div>
+      </div>
+    </section>
+
+    <section class="cinema cinema--studio" id="design">
+      <div class="cinema__image cinema__image--studio" aria-hidden="true"></div>
+      <div class="cinema__overlay" aria-hidden="true"></div>
+      <div class="cinema__content section-pad">
+        <div class="section-index reveal"><span>03</span><span>АРХИТЕКТУРА / FORM</span></div>
+        <div class="cinema__copy reveal">
+          <h2>Никакой<br><em>случайной формы.</em></h2>
+          <p>Посадка, аэродинамика, охлаждение и визуальная масса собраны в единый силуэт. Поверхность здесь не украшение — она работает.</p>
+        </div>
+        <div class="hotspots reveal" aria-label="Ключевые зоны конструкции">
+          <div><span>01</span><b>CARBON MONOCOQUE</b><small>Несущая структура</small></div>
+          <div><span>02</span><b>ACTIVE AERO</b><small>Управление потоком</small></div>
+          <div><span>03</span><b>AXIAL FLUX DRIVE</b><small>Компактный силовой узел</small></div>
         </div>
       </div>
     </section>
 
-    <section class="power section-pad">
-      <div class="power__visual reveal">
-        <div class="power-ring" aria-hidden="true">
-          <div class="power-ring__inner"><span id="powerValue">0</span><small>KW</small></div>
-        </div>
-        <div class="power__caption">
-          <span>AXIAL FLUX UNIT</span>
-          <span>01—R1</span>
-        </div>
-      </div>
-      <div class="power__content reveal">
-        <h3>Torque, without the theatre.</h3>
-        <p>The R1 concept is organized around a compact axial-flux motor and an 800-volt architecture. The visual language follows the same rule: remove everything that does not contribute to speed, cooling or control.</p>
-        <div class="spec-list">
-          <div><span>Peak output</span><strong>210 kW</strong></div>
-          <div><span>Peak torque</span><strong>390 Nm</strong></div>
-          <div><span>Architecture</span><strong>800 V</strong></div>
-          <div><span>Charge target</span><strong>10—80% / 18 min</strong></div>
+    <section class="detail section-pad">
+      <div class="detail__copy reveal">
+        <div class="section-index"><span>04</span><span>МАТЕРИАЛ / DETAIL</span></div>
+        <h2>Свет показывает<br><em>только необходимое.</em></h2>
+        <p>Визуальный язык R1 строится на контрасте: матовые поверхности, открытый металл, тонкие световые линии и минимум декоративных элементов.</p>
+        <div class="detail__rail">
+          <div><span>BODY</span><strong>Forged carbon</strong></div>
+          <div><span>FRAME</span><strong>Carbon composite</strong></div>
+          <div><span>ACCENT</span><strong>Signal red</strong></div>
         </div>
       </div>
-    </section>
-
-    <section class="aero section-pad" id="aero">
-      <div class="section-index reveal"><span>03</span><span>AERO / CONTROL</span></div>
-      <div class="aero__header reveal">
-        <h2>FORM<br />FOLLOWS<br /><em>AIR.</em></h2>
-        <p>Every visible surface has a second job. Air is pulled through the front channels, across the battery casing and out through the split tail.</p>
-      </div>
-
-      <div class="aero-lab reveal" id="aeroLab">
-        <div class="aero-lab__hud"><span>CFD_SIM_026</span><span>LIVE VECTOR FIELD</span></div>
-        <svg class="wire-bike" viewBox="0 0 1600 760" aria-hidden="true">
-          <g fill="none" stroke="currentColor" stroke-width="2" opacity=".65">
-            <circle cx="374" cy="529" r="178" /><circle cx="1270" cy="529" r="178" />
-            <circle cx="374" cy="529" r="139" /><circle cx="1270" cy="529" r="139" />
-            <path d="M420 505L666 321L1017 330L1188 487L1104 508L924 420L712 435L546 532Z" />
-            <path d="M631 321C713 237 847 199 1014 212L1132 265L1074 337L925 365L673 356Z" />
-            <path d="M522 299C580 281 651 283 716 302L673 348L508 344L454 320Z" />
-            <path d="M470 318L364 345L297 398L413 376L528 342Z" />
-            <path d="M694 366L914 360L974 463L896 548L678 514L639 427Z" />
-            <path d="M1110 317L1206 497M1140 309L1235 493M688 481L397 535" />
-          </g>
-        </svg>
-        <div class="air-lines" aria-hidden="true">
-          <i style="--y:18%;--delay:-1.2s"></i><i style="--y:27%;--delay:-2.1s"></i><i style="--y:36%;--delay:-.6s"></i><i style="--y:45%;--delay:-2.8s"></i><i style="--y:54%;--delay:-1.7s"></i><i style="--y:63%;--delay:-.2s"></i><i style="--y:72%;--delay:-2.4s"></i>
-        </div>
-        <div class="aero-data aero-data--left"><b>0.27</b><span>Cd target</span></div>
-        <div class="aero-data aero-data--right"><b>38%</b><span>front load @ 180</span></div>
-      </div>
-    </section>
-
-    <section class="anatomy section-pad">
-      <div class="section-index reveal"><span>04</span><span>MACHINE / ANATOMY</span></div>
-      <div class="anatomy__intro reveal">
-        <h2>LESS<br />MACHINE.<br /><em>MORE SIGNAL.</em></h2>
-        <p>Four systems. One response.</p>
-      </div>
-      <div class="anatomy-list">
-        <article class="anatomy-row reveal">
-          <div class="anatomy-row__index">01</div><h3>MONOCOQUE</h3><p>Structural carbon shell carries battery load and removes redundant subframes.</p><span>6.4 KG</span>
-        </article>
-        <article class="anatomy-row reveal">
-          <div class="anatomy-row__index">02</div><h3>ENERGY CORE</h3><p>Cell-to-chassis packaging with direct liquid cooling through the central spine.</p><span>17.8 KWH</span>
-        </article>
-        <article class="anatomy-row reveal">
-          <div class="anatomy-row__index">03</div><h3>ACTIVE AERO</h3><p>Adaptive front surfaces tune stability against speed, braking and lean state.</p><span>12 MS</span>
-        </article>
-        <article class="anatomy-row reveal">
-          <div class="anatomy-row__index">04</div><h3>VANTA OS</h3><p>Ride modes, thermal strategy and energy recovery resolved in one control layer.</p><span>800 HZ</span>
-        </article>
-      </div>
+      <figure class="detail__media reveal">
+        <div class="detail__image" role="img" aria-label="Крупный план спортивного мотоцикла в тёмной студии"></div>
+        <figcaption>VANTA R1 / MATERIAL STUDY</figcaption>
+      </figure>
     </section>
 
     <section class="system section-pad" id="system">
-      <div class="section-index reveal"><span>05</span><span>RIDER / SYSTEM</span></div>
-      <div class="system__layout">
-        <div class="system__copy reveal">
-          <h2>ONE<br />DISPLAY.<br /><em>ZERO CLUTTER.</em></h2>
-          <p>Critical information stays in the center line. Everything else disappears until it matters.</p>
-          <div class="mode-switcher" role="group" aria-label="Select ride mode">
-            <button class="mode is-active" data-mode="road">ROAD</button>
-            <button class="mode" data-mode="attack">ATTACK</button>
-            <button class="mode" data-mode="range">RANGE</button>
+      <div class="section-index reveal"><span>05</span><span>RIDE SYSTEM / CONTROL</span></div>
+      <div class="system__header">
+        <h2 class="display-heading reveal">Меньше информации.<br><em>Больше понимания.</em></h2>
+        <p class="reveal">Интерфейс не конкурирует с дорогой. Он оставляет на экране только то, что влияет на следующий манёвр.</p>
+      </div>
+
+      <div class="dash reveal" id="dash">
+        <div class="dash__top">
+          <span>VANTA RIDE SYSTEM</span>
+          <span id="dashClock">18:42</span>
+        </div>
+        <div class="dash__body">
+          <div class="dash__speed"><strong id="speedValue">084</strong><span>KM/H</span></div>
+          <div class="dash__arc" aria-hidden="true"><span></span></div>
+          <div class="dash__side">
+            <div><span>BATTERY</span><strong id="batteryValue">78%</strong></div>
+            <div><span>RANGE</span><strong id="rangeValue">214 km</strong></div>
+            <div><span>REGEN</span><strong id="regenValue">MID</strong></div>
           </div>
         </div>
-
-        <div class="dash-wrap reveal">
-          <div class="dash" id="dash">
-            <div class="dash__top"><span>VANTA OS</span><span id="dashMode">ROAD</span></div>
-            <div class="dash__center">
-              <div class="dash__gear">D</div>
-              <div class="dash__speed"><strong id="dashSpeed">118</strong><span>KM/H</span></div>
-              <div class="dash__arc"><i></i></div>
-            </div>
-            <div class="dash__bottom">
-              <div><span>BATTERY</span><strong id="dashBattery">78%</strong></div>
-              <div><span>REGEN</span><strong id="dashRegen">MED</strong></div>
-              <div><span>RANGE</span><strong id="dashRange">241 KM</strong></div>
-            </div>
-          </div>
-          <div class="dash-shadow" aria-hidden="true"></div>
+        <div class="dash__modes" role="group" aria-label="Режим движения">
+          <button type="button" class="mode active" data-mode="road">ROAD</button>
+          <button type="button" class="mode" data-mode="attack">ATTACK</button>
+          <button type="button" class="mode" data-mode="range">RANGE</button>
         </div>
       </div>
     </section>
 
-    <section class="config section-pad" id="config">
-      <div class="section-index reveal"><span>06</span><span>CONFIGURATION</span></div>
-      <div class="config__layout">
-        <div class="config__copy reveal">
-          <h2>CHOOSE<br />THE<br /><em>SIGNAL.</em></h2>
-          <p>Three surface studies. Same machine underneath.</p>
-          <div class="swatches" role="group" aria-label="Select concept finish">
-            <button class="swatch is-active" data-finish="obsidian" aria-pressed="true"><i></i><span>Obsidian</span></button>
-            <button class="swatch" data-finish="silver" aria-pressed="false"><i></i><span>Liquid silver</span></button>
-            <button class="swatch" data-finish="signal" aria-pressed="false"><i></i><span>Signal red</span></button>
-          </div>
-        </div>
-        <div class="config-bike reveal">
-          <div class="config-bike__disc" aria-hidden="true"></div>
-          <svg viewBox="0 0 1600 760" aria-hidden="true">
-            <circle cx="374" cy="529" r="178" fill="#090909" stroke="#303030" stroke-width="8" />
-            <circle cx="1270" cy="529" r="178" fill="#090909" stroke="#303030" stroke-width="8" />
-            <path d="M420 505L666 321L1017 330L1188 487L1104 508L924 420L712 435L546 532Z" fill="#101010" stroke="#383838" stroke-width="3" />
-            <path class="config-fairing" d="M631 321C713 237 847 199 1014 212L1132 265L1074 337L925 365L673 356Z" fill="var(--bike-color)" stroke="#343434" stroke-width="3" />
-            <path d="M522 299C580 281 651 283 716 302L673 348L508 344L454 320Z" fill="#080808" stroke="#343434" stroke-width="3" />
-            <path d="M694 366L914 360L974 463L896 548L678 514L639 427Z" fill="#0b0b0b" stroke="#3b3b3b" stroke-width="3" />
-            <path d="M1110 317L1206 497M1140 309L1235 493M688 481L397 535" fill="none" stroke="#4a4a4a" stroke-width="18" stroke-linecap="round" />
-          </svg>
-          <div class="config-bike__name"><span id="finishName">OBSIDIAN / 01</span><small>R1 SURFACE STUDY</small></div>
-        </div>
-      </div>
+    <section class="manifesto section-pad">
+      <div class="manifesto__line reveal">NO EXHAUST.</div>
+      <div class="manifesto__line reveal">NO LAG.</div>
+      <div class="manifesto__line manifesto__line--accent reveal">NO EXCUSES.</div>
+      <div class="manifesto__meta reveal"><span>VANTA R1</span><span>ELECTRIC PERFORMANCE MACHINE</span></div>
     </section>
 
-    <section class="finale">
-      <div class="finale__grid" aria-hidden="true"></div>
-      <div class="finale__content reveal">
-        <div class="finale__meta"><span>VANTA R1</span><span>CONCEPT / 2026</span></div>
-        <h2>START<br />THE<br /><em>MACHINE.</em></h2>
-        <button class="ignite" id="ignite" type="button"><span>IGNITE</span><i></i></button>
-      </div>
-      <div class="ignition-layer" id="ignitionLayer" aria-hidden="true">
-        <div class="ignition-layer__ring"></div>
-        <strong>SYSTEM ARMED</strong>
-        <span>R1 / READY</span>
+    <section class="finale" id="finale">
+      <div class="finale__media" aria-hidden="true"></div>
+      <div class="finale__overlay" aria-hidden="true"></div>
+      <div class="finale__content">
+        <div class="finale__eyebrow reveal">R1 / DEVELOPMENT CONCEPT</div>
+        <h2 class="reveal">Первое движение<br><em>начинается в тишине.</em></h2>
+        <button class="ignite reveal" id="ignite" type="button"><span>IGNITE SYSTEM</span><i></i></button>
+        <div class="finale__status" id="igniteStatus" aria-live="polite">SYSTEM STANDBY</div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="footer__brand">VANTA</div>
-    <div class="footer__meta">
-      <span>Independent digital concept study.</span>
-      <span>Specifications are fictional design targets.</span>
-      <span>2026 / R1—026</span>
+  <footer class="site-footer">
+    <div><a class="brand brand--footer" href="#top">VANTA<span>®</span></a></div>
+    <p>VANTA R1 — вымышленный демонстрационный concept project. Фотографии используются как визуальная постановка и не изображают реальный продукт VANTA.</p>
+    <div class="credits">
+      <a href="https://unsplash.com/photos/a-black-sport-motorcycle-with-red-accents-bIeY7hwTr5o" target="_blank" rel="noopener">Photo / Céline Cao</a>
+      <a href="https://unsplash.com/photos/a-black-sport-motorcycle-on-a-stand-indoors-r0t6vd8k8nc" target="_blank" rel="noopener">Photo / Alessio Zaccaria</a>
+      <a href="https://unsplash.com/photos/shallow-focus-photo-of-black-sports-motorcycle-QDnlR4DA2po" target="_blank" rel="noopener">Photo / Ralph Jones</a>
     </div>
   </footer>
 
-  <noscript><div class="noscript">VANTA R1 uses JavaScript for motion and interactive telemetry. The core page remains readable without it.</div></noscript>
   <script src="app.js" defer></script>
 </body>
 </html>

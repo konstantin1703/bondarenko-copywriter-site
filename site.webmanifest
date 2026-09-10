@@ -1,10 +1,10 @@
 {
   "name": "VANTA R1",
-  "short_name": "VANTA",
-  "description": "Electric performance motorcycle concept study.",
+  "short_name": "VANTA R1",
+  "description": "Демонстрационный digital-концепт электрического superbike.",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#090909",
-  "theme_color": "#090909",
+  "background_color": "#050505",
+  "theme_color": "#050505",
   "icons": []
 }

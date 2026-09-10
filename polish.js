@@ -2,7 +2,7 @@
   'use strict';
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const sections = [...document.querySelectorAll('#r1, #performance, #design, #system, #finale')];
+  const sections = [...document.querySelectorAll('#r1, #performance, #design, #material, #system, #finale')];
   const navLinks = [...document.querySelectorAll('.desktop-nav a[href^="#"]')];
 
   const setActiveNav = (id) => {

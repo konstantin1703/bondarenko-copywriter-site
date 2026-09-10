@@ -1,196 +1,34 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#050505" />
-  <meta name="description" content="VANTA R1 — демонстрационный digital-концепт электрического superbike." />
-  <meta name="robots" content="index, follow" />
-  <meta property="og:title" content="VANTA R1 — Electric Performance Concept" />
-  <meta property="og:description" content="Концептуальная digital-презентация электрического superbike VANTA R1." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://res.cloudinary.com/dg9shucn/image/upload/f_auto,q_auto:good,w_1600/v1789055688/vanta-hero.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <title>VANTA R1 — Electric Performance Concept</title>
-  <link rel="icon" href="favicon.svg?v=2" type="image/svg+xml" />
-  <link rel="manifest" href="site.webmanifest?v=2" />
-  <link rel="preconnect" href="https://res.cloudinary.com" />
-  <link rel="preload" as="image" href="https://res.cloudinary.com/dg9shucn/image/upload/f_auto,q_auto:good,w_1600/v1789055688/vanta-hero.jpg" />
-  <link rel="stylesheet" href="styles.css?v=2" />
-  <link rel="stylesheet" href="polish.css?v=4" />
-  <link rel="stylesheet" href="final.css?v=6" />
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050505"><meta name="description" content="VANTA R1 — концепт электрического superbike нового поколения.">
+<title>VANTA R1 — Electric Superbike Concept</title>
+<link rel="stylesheet" href="v3.css?v=1">
 </head>
 <body>
-  <div class="boot" id="boot" aria-hidden="true">
-    <div class="boot__brand">VANTA</div>
-    <div class="boot__bar"><span></span></div>
-    <div class="boot__meta">R1 / SYSTEM READY</div>
-  </div>
+<div class="progress" id="progress"></div>
+<header class="header" id="header"><a href="#top" class="logo" aria-label="VANTA">V<span>A</span>N<span>T</span>A</a><nav><a href="#performance">Характер</a><a href="#architecture">Архитектура</a><a href="#gallery">Галерея</a><a href="#system">Система</a></nav><a class="header-cta" href="#activate">R1 / ACTIVATE</a><button class="menu" id="menu" aria-label="Меню"><i></i><i></i></button></header>
+<div class="mobile-menu" id="mobileMenu"><a href="#performance">02 / Характер</a><a href="#architecture">03 / Архитектура</a><a href="#materials">04 / Материалы</a><a href="#gallery">05 / Галерея</a><a href="#system">06 / Система</a><a href="#activate">07 / Активация</a></div>
+<main id="top">
+<section class="hero chapter">
+  <div class="hero-copy reveal"><div class="eyebrow">01 / ELECTRIC SUPERBIKE / CONCEPT</div><h1>Тишина.<br><em>До первого<br>импульса.</em></h1><p>VANTA R1 — электрический superbike, созданный вокруг мгновенной тяги, минимальной массы и абсолютного контроля.</p><a class="btn" href="#performance">Исследовать R1 <b>→</b></a></div>
+  <div class="hero-media reveal"><img src="https://res.cloudinary.com/dg9shucn/image/upload/v1789068816/vanta-r1-hero-v3.webp" alt="VANTA R1, вид спереди под углом"><div class="r1-mark">R1<small>A NEW BREED<br>OF MOTION</small></div></div>
+  <div class="hero-specs reveal"><div><strong>210</strong><span>целевая мощность / кВт</span></div><div><strong>2.7</strong><span>0—100 км/ч</span></div><div><strong>320</strong><span>запас хода / км</span></div><div><strong>189</strong><span>масса / кг</span></div></div>
+</section>
 
-  <div class="cursor" id="cursor" aria-hidden="true"></div>
-  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+<section class="performance chapter" id="performance"><div class="copy reveal"><div class="eyebrow">02 / ХАРАКТЕР / PERFORMANCE</div><h2>Мощность,<br><em>которая не шумит.</em></h2><p>Полный момент приходит сразу. Без переключений, без задержки, без лишнего движения между намерением и ускорением.</p><div class="facts"><span><b>390 Н·м</b> пиковый момент</span><span><b>800 V</b> силовая архитектура</span><span><b>18 мин</b> 10—80% / target</span></div></div><div class="perf-media reveal"><img src="https://res.cloudinary.com/dg9shucn/image/upload/v1789068880/vanta-r1-rear-v3.webp" alt="VANTA R1 сзади"><div class="speedlines"></div></div></section>
 
-  <header class="site-header" id="siteHeader">
-    <a class="brand" href="#top" aria-label="VANTA — на главную">VANTA<span>®</span></a>
-    <nav class="desktop-nav" aria-label="Основная навигация">
-      <a href="#r1">R1</a>
-      <a href="#performance">Характер</a>
-      <a href="#design">Архитектура</a>
-      <a href="#material">Материал</a>
-      <a href="#system">Система</a>
-    </nav>
-    <a class="header-cta" href="#finale">СМОТРЕТЬ R1</a>
-    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileNav">
-      <span></span><span></span><span class="sr-only">Открыть меню</span>
-    </button>
-  </header>
+<section class="architecture chapter" id="architecture"><div class="eyebrow reveal">03 / АРХИТЕКТУРА / FORM</div><div class="architecture-grid"><div class="arch-copy reveal"><h2>Инженерия<br><em>без компромиссов.</em></h2><p>Каждая поверхность отвечает за функцию: охлаждение, поток воздуха, жёсткость и контроль массы.</p></div><div class="arch-media reveal"><img src="https://res.cloudinary.com/dg9shucn/image/upload/v1789068816/vanta-r1-hero-v3.webp" alt="Архитектура VANTA R1"><div class="call c1"><b>01</b><span>CARBON MONOCOQUE<small>карбоновый монокок</small></span></div><div class="call c2"><b>02</b><span>ACTIVE AERO<small>активная аэродинамика</small></span></div><div class="call c3"><b>03</b><span>AXIAL DRIVE<small>компактный электропривод</small></span></div></div></div></section>
 
-  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
-    <a href="#r1">01 / R1</a>
-    <a href="#performance">02 / Характер</a>
-    <a href="#design">03 / Архитектура</a>
-    <a href="#material">04 / Материал</a>
-    <a href="#system">05 / Система</a>
-    <a href="#finale">06 / Финал</a>
-    <div class="mobile-nav__foot">VANTA R1 / CONCEPT STUDY / 2026</div>
-  </div>
+<section class="materials chapter" id="materials"><div class="eyebrow reveal">04 / МАТЕРИАЛЫ / DETAIL</div><div class="mat-head reveal"><h2>Материалы.<br><em>Функция. Эстетика.</em></h2><p>Карбон, титан и тактильные поверхности. Ничего декоративного ради декора.</p></div><div class="mat-grid reveal"><article class="carbon"><span>CARBON / КАРБОН</span></article><article class="titanium"><span>TITANIUM / ТИТАН</span></article><article class="alcantara"><span>ALCANTARA / АЛЬКАНТАРА</span></article></div></section>
 
-  <main id="top">
-    <section class="hero" id="r1" aria-labelledby="heroTitle">
-      <div class="hero__media" aria-hidden="true"></div>
-      <div class="hero__shade" aria-hidden="true"></div>
-      <div class="hero__grain" aria-hidden="true"></div>
-      <div class="hero__meta reveal">
-        <span>ЭЛЕКТРИЧЕСКИЙ SUPERBIKE / CONCEPT</span>
-        <span>R1 / 2026</span>
-      </div>
-      <div class="hero__copy">
-        <h1 id="heroTitle" class="hero__title reveal">Тишина.<br><em>До первого импульса.</em></h1>
-        <p class="hero__lead reveal">VANTA R1 — концепт электрического superbike, построенный вокруг мгновенной тяги, минимальной массы и абсолютного контроля.</p>
-      </div>
-      <div class="hero__footer reveal">
-        <div class="hero__spec"><strong>210</strong><span>ЦЕЛЕВАЯ МОЩНОСТЬ / кВт</span></div>
-        <div class="hero__spec"><strong>2.7</strong><span>0—100 КМ/Ч</span></div>
-        <div class="hero__spec"><strong>320</strong><span>ЗАПАС ХОДА / КМ</span></div>
-        <a class="scroll-link" href="#performance">ЛИСТАТЬ ДАЛЬШЕ <i></i></a>
-      </div>
-    </section>
+<section class="gallery chapter" id="gallery"><div class="gallery-head reveal"><div><div class="eyebrow">05 / GALLERY / РАКУРСЫ</div><h2>Один R1.<br><em>Каждый ракурс.</em></h2></div><div class="gallery-controls"><button id="prev" aria-label="Предыдущее">←</button><button id="next" aria-label="Следующее">→</button></div></div><div class="rail reveal" id="rail"><figure><img src="https://res.cloudinary.com/dg9shucn/image/upload/v1789068816/vanta-r1-hero-v3.webp" alt="VANTA R1 три четверти"><figcaption>01 / FRONT 3⁄4</figcaption></figure><figure><img src="https://res.cloudinary.com/dg9shucn/image/upload/v1789068880/vanta-r1-rear-v3.webp" alt="VANTA R1 сзади"><figcaption>02 / REAR 3⁄4</figcaption></figure><figure><img src="https://res.cloudinary.com/dg9shucn/image/upload/v1789068937/vanta-r1-front-v3.webp" alt="VANTA R1 спереди"><figcaption>03 / FRONT / LIGHT SIGNATURE</figcaption></figure><figure><img src="https://res.cloudinary.com/dg9shucn/image/upload/v1789068973/vanta-r1-cockpit-v3.webp" alt="Кокпит VANTA R1"><figcaption>04 / COCKPIT / RIDE SYSTEM</figcaption></figure></div></section>
 
-    <section class="intro section-pad" id="performance">
-      <div class="section-index reveal"><span>02</span><span>ХАРАКТЕР / PERFORMANCE</span></div>
-      <div class="intro__grid">
-        <h2 class="display-heading reveal">Мощность без шума.<br><em>Скорость без паузы.</em></h2>
-        <div class="intro__text reveal">
-          <p>Электромотор не требует раскрутки. Крутящий момент приходит сразу — без задержки, без переключений, без театра.</p>
-          <p>Вся архитектура R1 подчинена одной идее: меньше инерции, меньше лишнего, больше контроля в каждом миллиметре хода ручки.</p>
-        </div>
-      </div>
-      <div class="numbers reveal" aria-label="Целевые характеристики концепта">
-        <div class="number-block"><span>МОЩНОСТЬ / PEAK POWER</span><strong data-count="210">0</strong><small>кВт</small></div>
-        <div class="number-block"><span>МОМЕНТ / PEAK TORQUE</span><strong data-count="390">0</strong><small>Н·м</small></div>
-        <div class="number-block"><span>СИСТЕМА / ARCHITECTURE</span><strong data-count="800">0</strong><small>V</small></div>
-        <div class="number-block"><span>БЫСТРАЯ ЗАРЯДКА / 10—80%</span><strong data-count="18">0</strong><small>мин / target</small></div>
-      </div>
-    </section>
+<section class="system chapter" id="system"><div class="system-copy reveal"><div class="eyebrow">06 / RIDE SYSTEM / БОРТОВАЯ СИСТЕМА</div><h2>Полный контроль.<br><em>Всегда под рукой.</em></h2><p>На экране только то, что влияет на следующий манёвр. Выбери режим — панель изменит характер вместе с мотоциклом.</p></div><div class="dash reveal" id="dash"><div class="dash-top"><span>VANTA RIDE SYSTEM</span><span id="clock">22:18</span></div><div class="dash-main"><div><small>СКОРОСТЬ / SPEED</small><strong id="speed">084</strong><i>км/ч</i></div><div class="dash-stats"><span>ЗАРЯД <b id="battery">78%</b></span><span>ЗАПАС <b id="range">214 км</b></span><span>REGEN <b id="regen">MID</b></span></div></div><div class="power"><i id="power"></i></div><div class="modes"><button class="active" data-mode="road">ROAD<small>ДОРОГА</small></button><button data-mode="attack">ATTACK<small>ТРЕК</small></button><button data-mode="range">RANGE<small>ЭКО</small></button></div></div></section>
 
-    <section class="cinema cinema--studio" id="design">
-      <div class="cinema__image cinema__image--studio" aria-hidden="true"></div>
-      <div class="cinema__overlay" aria-hidden="true"></div>
-      <div class="cinema__content section-pad">
-        <div class="section-index reveal"><span>03</span><span>АРХИТЕКТУРА / FORM</span></div>
-        <div class="cinema__copy reveal">
-          <h2>Никакой<br><em>случайной формы.</em></h2>
-          <p>Посадка, аэродинамика, охлаждение и визуальная масса собраны в единый силуэт. Поверхность здесь не украшение — она работает.</p>
-        </div>
-        <div class="hotspots reveal" aria-label="Ключевые зоны конструкции">
-          <div><span>01</span><b>CARBON MONOCOQUE</b><small>Карбоновый монокок / несущая структура</small></div>
-          <div><span>02</span><b>ACTIVE AERO</b><small>Активная аэродинамика / управление потоком</small></div>
-          <div><span>03</span><b>AXIAL FLUX DRIVE</b><small>Осевой электропривод / компактный силовой узел</small></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="detail section-pad" id="material">
-      <div class="detail__copy reveal">
-        <div class="section-index"><span>04</span><span>МАТЕРИАЛ / DETAIL</span></div>
-        <h2>Свет показывает<br><em>только необходимое.</em></h2>
-        <p>Визуальный язык R1 строится на контрасте: матовые поверхности, открытый металл, тонкие световые линии и минимум декоративных элементов.</p>
-        <div class="detail__rail">
-          <div><span>КУЗОВ / BODY</span><strong>Кованый карбон / Forged carbon</strong></div>
-          <div><span>РАМА / FRAME</span><strong>Карбоновый композит / Carbon composite</strong></div>
-          <div><span>АКЦЕНТ / ACCENT</span><strong>Сигнальный красный / Signal red</strong></div>
-        </div>
-      </div>
-      <figure class="detail__media reveal">
-        <div class="detail__image" role="img" aria-label="Спортивный мотоцикл в тёмной студии"></div>
-        <figcaption>VANTA R1 / ИССЛЕДОВАНИЕ МАТЕРИАЛОВ</figcaption>
-      </figure>
-    </section>
-
-    <section class="system section-pad" id="system">
-      <div class="section-index reveal"><span>05</span><span>БОРТОВАЯ СИСТЕМА / RIDE SYSTEM</span></div>
-      <div class="system__header">
-        <h2 class="display-heading reveal">Приборная панель.<br><em>Только главное.</em></h2>
-        <p class="reveal">VANTA Ride System — цифровой интерфейс перед водителем: скорость, заряд, запас хода и уровень рекуперации. Переключите режим ниже — параметры панели изменятся.</p>
-      </div>
-      <div class="dash reveal" id="dash">
-        <div class="dash__top">
-          <div class="dash__identity"><strong>VANTA RIDE SYSTEM</strong><span>БОРТОВАЯ СИСТЕМА</span></div>
-          <span id="dashClock">18:42</span>
-        </div>
-        <div class="dash__body">
-          <div class="dash__primary">
-            <span class="dash__kicker">СКОРОСТЬ / SPEED</span>
-            <div class="dash__speed"><strong id="speedValue">084</strong><span>км/ч</span></div>
-            <div class="dash__power">
-              <div><span>ОТДАЧА МОЩНОСТИ</span><small>POWER DELIVERY</small></div>
-              <div class="dash__power-track" aria-hidden="true"><i id="powerBar"></i></div>
-            </div>
-          </div>
-          <div class="dash__side">
-            <div><span>ЗАРЯД <small>BATTERY</small></span><strong id="batteryValue">78%</strong></div>
-            <div><span>ЗАПАС ХОДА <small>RANGE</small></span><strong id="rangeValue">214 км</strong></div>
-            <div><span>РЕКУПЕРАЦИЯ <small>REGEN</small></span><strong id="regenValue">СРЕДНЯЯ</strong></div>
-          </div>
-        </div>
-        <div class="dash__modes" role="group" aria-label="Режим движения">
-          <button type="button" class="mode active" data-mode="road" aria-pressed="true"><strong>ROAD</strong><span>ДОРОГА</span></button>
-          <button type="button" class="mode" data-mode="attack" aria-pressed="false"><strong>ATTACK</strong><span>ТРЕК</span></button>
-          <button type="button" class="mode" data-mode="range" aria-pressed="false"><strong>RANGE</strong><span>ЭКО</span></button>
-        </div>
-      </div>
-    </section>
-
-    <section class="manifesto section-pad">
-      <div class="manifesto__line reveal">NO EXHAUST.</div>
-      <div class="manifesto__line reveal">NO LAG.</div>
-      <div class="manifesto__line manifesto__line--accent reveal">NO EXCUSES.</div>
-      <div class="manifesto__meta reveal"><span>VANTA R1</span><span>БЕЗ ВЫХЛОПА / БЕЗ ЗАДЕРЖКИ / БЕЗ ОПРАВДАНИЙ</span></div>
-    </section>
-
-    <section class="finale" id="finale">
-      <div class="finale__media" aria-hidden="true"></div>
-      <div class="finale__overlay" aria-hidden="true"></div>
-      <div class="finale__content">
-        <div class="finale__eyebrow reveal">R1 / КОНЦЕПТ РАЗРАБОТКИ</div>
-        <h2 class="reveal">Первое движение<br><em>начинается в тишине.</em></h2>
-        <button class="ignite reveal" id="ignite" type="button" aria-pressed="false"><span>АКТИВИРОВАТЬ R1</span><i></i></button>
-        <div class="finale__status" id="igniteStatus" aria-live="polite">Демо-режим: свет и система активируются прямо на этом экране.</div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div><a class="brand brand--footer" href="#top">VANTA<span>®</span></a></div>
-    <p>VANTA R1 — вымышленный демонстрационный концепт-проект. Фотографии используются как визуальная постановка и не изображают реальный продукт VANTA.</p>
-    <div class="credits">
-      <a href="https://unsplash.com/photos/a-black-sport-motorcycle-with-red-accents-bIeY7hwTr5o" target="_blank" rel="noopener">Photo / Céline Cao</a>
-      <a href="https://unsplash.com/photos/a-black-sport-motorcycle-on-a-stand-indoors-r0t6vd8k8nc" target="_blank" rel="noopener">Photo / Alessio Zaccaria</a>
-      <a href="https://unsplash.com/photos/shallow-focus-photo-of-black-sports-motorcycle-QDnlR4DA2po" target="_blank" rel="noopener">Photo / Ralph Jones</a>
-    </div>
-  </footer>
-
-  <script src="app.js?v=6" defer></script>
-  <script src="polish.js?v=4" defer></script>
-</body>
-</html>
+<section class="activate chapter" id="activate"><div class="activate-copy reveal"><div class="eyebrow">07 / ACTIVATION / DEMO</div><h2>Готов к первому<br><em>импульсу?</em></h2><p>Запусти демонстрационный режим. R1 включит свет, активирует интерфейс и переключит визуальный характер.</p><div class="swatches" aria-label="Цветовой режим"><button class="sw active" data-color="red" aria-label="Signal Red"></button><button class="sw" data-color="ice" aria-label="Arctic Ice"></button><button class="sw" data-color="stealth" aria-label="Stealth Black"></button></div></div><div class="activation-stage reveal" id="stage"><img src="https://res.cloudinary.com/dg9shucn/image/upload/v1789068937/vanta-r1-front-v3.webp" alt="VANTA R1 спереди"><div class="beam left"></div><div class="beam right"></div><div class="scan"></div><div class="boot-hud"><b>R1</b><span>DRIVE CORE</span><strong id="bootStatus">STANDBY</strong></div></div><button class="activate-btn reveal" id="activateBtn"><span>АКТИВИРОВАТЬ R1</span><i></i></button><p class="activate-note" id="activateNote">Система ожидает запуска.</p></section>
+</main>
+<footer><a class="logo" href="#top">V<span>A</span>N<span>T</span>A</a><p>VANTA R1 — вымышленный демонстрационный product-concept. Визуалы мотоцикла созданы специально для этого проекта.</p><span>CONCEPT / 2026</span></footer>
+<script src="v3.js?v=1" defer></script>
+</body></html>

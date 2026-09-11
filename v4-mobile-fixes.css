@@ -64,6 +64,17 @@
 
   .performance-media figcaption{left:14px;right:auto;bottom:12px;max-width:calc(100% - 28px);padding:7px 9px;background:#050505b8;border-left:1px solid var(--accent);font-size:7px;line-height:1.35;letter-spacing:.16em;color:#b8b8b4}
 
+  .architecture-stage .c2{
+    top:3%;
+    right:2%;
+    left:auto;
+    bottom:auto;
+  }
+
+  .rail figcaption{display:grid;gap:5px;padding:14px 15px 15px}
+  .rail figcaption strong{font-size:10px;font-weight:600;letter-spacing:.12em;color:#f0f0ec}
+  .rail figcaption span{font-size:7px;line-height:1.4;letter-spacing:.1em;color:#73736f}
+
   .system-photo span{top:12px;left:10px;right:auto;bottom:auto;writing-mode:vertical-rl;transform:rotate(180deg);padding:8px 6px;background:#050505b8;border-top:1px solid var(--accent);font-size:7px;line-height:1;letter-spacing:.16em;color:#b8b8b4}
 }
 
@@ -72,5 +83,7 @@
   .hero-mark{top:18px;left:20px}
   .hero-mark b{font-size:27px}
   .performance-media figcaption{left:12px;bottom:10px;max-width:calc(100% - 24px)}
+  .architecture-stage .c2{top:2%;right:2%}
+  .rail figcaption strong{font-size:9px}
   .system-photo span{top:10px;left:8px}
 }

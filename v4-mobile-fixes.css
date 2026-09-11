@@ -7,7 +7,7 @@
     overflow:hidden;
     background:#070707;
     border-top:1px solid #252525;
-    border-bottom:1px solid #252525;
+    border-bottom:0;
     border-left:0;
     border-right:0;
   }
@@ -25,6 +25,13 @@
   }
   .hero-mark{display:none}
 
+  .hero .spec-strip{
+    margin-left:calc(-1*var(--pad));
+    margin-right:calc(-1*var(--pad));
+    width:calc(100% + var(--pad) + var(--pad));
+    max-width:none;
+  }
+  .hero .spec-strip div:nth-child(odd){padding-left:var(--pad)}
   .hero .spec-strip div:nth-last-child(-n+2){border-bottom:0}
 
   .performance-media figcaption{left:14px;right:auto;bottom:12px;max-width:calc(100% - 28px);padding:7px 9px;background:#050505b8;border-left:1px solid var(--accent);font-size:7px;line-height:1.35;letter-spacing:.16em;color:#b8b8b4}

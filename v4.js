@@ -24,7 +24,7 @@ const states={
   attack:{speed:'146',battery:'61%',range:'128 км',regen:'НИЗКАЯ',power:'94%',dial:'232deg',name:'ТРЕК',desc:'Максимальная отдача привода'},
   range:{speed:'062',battery:'84%',range:'286 км',regen:'ВЫСОКАЯ',power:'42%',dial:'106deg',name:'ЭКО',desc:'Приоритет запаса хода'}
 };
-const applyMode=(key)=>{const s=states[key];if(!s)return;speed.textContent=s.speed;battery.textContent=s.battery;range.textContent=s.range;regen.textContent=s.regen;power.style.width=s.power;powerLabel.textContent=s.power;modeName.textContent=s.name;modeDesc.textContent=s.desc;dash.style.setProperty('--dial',s.dial)};
+const applyMode=(key)=>{const s=states[key];if(!s)return;dash.dataset.mode=key;dash.classList.remove('dash-shift');void dash.offsetWidth;dash.classList.add('dash-shift');speed.textContent=s.speed;battery.textContent=s.battery;range.textContent=s.range;regen.textContent=s.regen;power.style.width=s.power;powerLabel.textContent=s.power;modeName.textContent=s.name;modeDesc.textContent=s.desc;dash.style.setProperty('--dial',s.dial)};
 document.querySelectorAll('.modes button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.modes button').forEach(x=>{const active=x===btn;x.classList.toggle('active',active);x.setAttribute('aria-pressed',active)});applyMode(btn.dataset.mode)}));
 applyMode('road');
 

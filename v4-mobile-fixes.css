@@ -23,7 +23,35 @@
     object-position:center;
     filter:none;
   }
-  .hero-mark{display:none}
+  .hero-mark{
+    display:grid;
+    position:absolute;
+    z-index:3;
+    top:22px;
+    left:var(--pad);
+    right:auto;
+    bottom:auto;
+    justify-items:start;
+    text-align:left;
+    pointer-events:none;
+  }
+  .hero-mark b{
+    font-size:30px;
+    line-height:1;
+    letter-spacing:.18em;
+    font-weight:300;
+    color:#f4f4f0;
+    text-shadow:0 1px 12px #000;
+  }
+  .hero-mark small{
+    display:block;
+    margin-top:7px;
+    color:#9d9d99;
+    font-size:7px;
+    line-height:1.55;
+    letter-spacing:.18em;
+    text-shadow:0 1px 10px #000;
+  }
 
   .hero .spec-strip{
     margin-left:calc(-1*var(--pad));
@@ -41,6 +69,8 @@
 
 @media(max-width:420px){
   .hero-media{margin-top:12px}
+  .hero-mark{top:18px;left:20px}
+  .hero-mark b{font-size:27px}
   .performance-media figcaption{left:12px;bottom:10px;max-width:calc(100% - 24px)}
   .system-photo span{top:10px;left:8px}
 }

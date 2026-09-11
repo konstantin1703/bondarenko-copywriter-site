@@ -1,0 +1,53 @@
+/* Final correction pass: responsive engineering callouts + cockpit refinement */
+
+/* --- Architecture annotations: use one SVG map instead of ad-hoc CSS lines --- */
+.architecture-stage .lead{display:none!important}
+.callout-map{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;overflow:visible}
+.callout-map .call-line{fill:none;stroke:rgba(255,46,27,.86);stroke-width:1.6;vector-effect:non-scaling-stroke;filter:drop-shadow(0 0 3px rgba(255,46,27,.26))}
+.callout-map .call-point{fill:var(--accent);filter:drop-shadow(0 0 5px rgba(255,46,27,.55))}
+.architecture-stage .call{z-index:4}
+.architecture-stage .c1{top:7%;left:4%}
+.architecture-stage .c2{top:6%;right:3%}
+.architecture-stage .c3{bottom:6%;left:28%}
+
+/* --- Cockpit image label: no more long vertical label --- */
+.system-photo span{top:14px;left:14px;right:auto;bottom:auto;width:max-content;max-width:none;white-space:nowrap;writing-mode:horizontal-tb;transform:none;padding:6px 8px;background:rgba(5,5,5,.72);border-left:1px solid var(--accent);font-size:6.5px;line-height:1;letter-spacing:.17em;color:#b8b8b4;backdrop-filter:blur(5px)}
+
+/* --- Instrument cluster: stronger product/HMI character --- */
+.dash[data-mode="road"]{--dash-accent:#ff3b2d}
+.dash[data-mode="attack"]{--dash-accent:#ff5a2d}
+.dash[data-mode="range"]{--dash-accent:#60df93}
+.dash[data-mode="road"] .dash-screen{background:radial-gradient(circle at 25% 34%,rgba(255,59,45,.07),transparent 34%),linear-gradient(180deg,#060707 0%,#030404 100%)}
+.dash[data-mode="attack"] .dash-screen{background:radial-gradient(circle at 25% 34%,rgba(255,90,45,.095),transparent 36%),linear-gradient(180deg,#080504 0%,#030303 100%)}
+.dash[data-mode="range"] .dash-screen{background:radial-gradient(circle at 25% 34%,rgba(96,223,147,.075),transparent 36%),linear-gradient(180deg,#040806 0%,#030404 100%)}
+.dash-ready i{background:var(--dash-accent);box-shadow:0 0 9px color-mix(in srgb,var(--dash-accent) 72%,transparent)}
+.dial-ticks{position:absolute;width:min(268px,94%);aspect-ratio:1;border-radius:50%;background:repeating-conic-gradient(from 225deg,rgba(162,169,165,.48) 0 1deg,transparent 1deg 9deg);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 15px),#000 calc(100% - 14px),#000 calc(100% - 9px),transparent calc(100% - 8px));mask:radial-gradient(farthest-side,transparent calc(100% - 15px),#000 calc(100% - 14px),#000 calc(100% - 9px),transparent calc(100% - 8px));opacity:.62;pointer-events:none}
+.speed-readout strong,.mode-readout strong,.dash-stats b,.power-readout b{transition:color .2s,transform .2s,opacity .2s}
+.dash.dash-shift .speed-readout strong{animation:dashPulse .34s ease}
+.dash.dash-shift .mode-readout strong{animation:dashMode .34s ease}
+.dash.dash-shift .dash-stats b{animation:dashValues .34s ease}
+.modes button.active{border-color:color-mix(in srgb,var(--dash-accent) 72%,#323232);background:color-mix(in srgb,var(--dash-accent) 10%,#090a0a);box-shadow:inset 0 -2px 0 var(--dash-accent),0 0 20px color-mix(in srgb,var(--dash-accent) 10%,transparent)}
+.power i{background:var(--dash-accent);box-shadow:0 0 12px color-mix(in srgb,var(--dash-accent) 72%,transparent)}
+.speed-dial:before{background:conic-gradient(from 225deg,var(--dash-accent) 0 var(--dial),#202322 var(--dial) 270deg,transparent 270deg 360deg);filter:drop-shadow(0 0 10px color-mix(in srgb,var(--dash-accent) 38%,transparent))}
+.dash-top{background:linear-gradient(180deg,rgba(255,255,255,.018),transparent)}
+@keyframes dashPulse{0%{opacity:.35;transform:scale(.985)}100%{opacity:1;transform:scale(1)}}
+@keyframes dashMode{0%{opacity:.3;transform:translateY(4px)}100%{opacity:1;transform:none}}
+@keyframes dashValues{0%{opacity:.25}100%{opacity:1}}
+
+@media(max-width:980px){
+  .architecture-stage .c1{top:4.5%;left:4%}
+  .architecture-stage .c2{top:2.4%;right:2.2%}
+  .architecture-stage .c3{bottom:4.7%;left:26%}
+  .system-photo span{top:11px;left:11px;padding:5px 7px;font-size:6px;letter-spacing:.16em}
+  .dial-ticks{width:min(246px,86%)}
+}
+
+@media(max-width:420px){
+  .architecture-stage .c1{top:4%;left:4%}
+  .architecture-stage .c2{top:2%;right:2%}
+  .architecture-stage .c3{bottom:4.5%;left:26%}
+  .callout-map .call-line{stroke-width:1.35}
+  .callout-map .call-point{r:4px}
+  .system-photo span{top:10px;left:10px;font-size:5.8px;padding:5px 6px}
+  .dial-ticks{width:232px}
+}

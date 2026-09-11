@@ -1,0 +1,11 @@
+/* Ride System mobile spacing fix: keep power delivery separated from the speed dial. */
+@media(max-width:980px){
+  .speed-dial{min-height:310px}
+  .power-readout{left:14%;right:14%;bottom:20px}
+  .power{left:14%;right:14%;bottom:5px}
+}
+@media(max-width:420px){
+  .speed-dial{min-height:310px}
+  .power-readout{left:14%;right:14%;bottom:20px}
+  .power{left:14%;right:14%;bottom:5px}
+}

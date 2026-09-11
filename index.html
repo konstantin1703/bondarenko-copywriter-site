@@ -12,6 +12,7 @@
 <title>VANTA R1 — Electric Superbike Concept</title>
 <link rel="stylesheet" href="v4.css?v=1">
 <link rel="stylesheet" href="v4-mobile-fixes.css?v=5">
+<link rel="stylesheet" href="v4-polish.css?v=1">
 </head>
 <body>
 <div class="progress" id="progress" aria-hidden="true"></div>
@@ -60,9 +61,9 @@
   <div class="section-head reveal"><div class="eyebrow">03 / АРХИТЕКТУРА / FORM</div><h2>Инженерия<br><em>без компромиссов.</em></h2><p>Каждая поверхность отвечает за функцию: охлаждение, поток воздуха, жёсткость и контроль массы.</p></div>
   <div class="architecture-stage reveal">
     <img src="https://res.cloudinary.com/dg9shucn/image/upload/v1789100561/vanta-r1-hq-architecture.jpg" alt="VANTA R1 в архитектурной студии" loading="lazy" decoding="async">
-    <div class="call c1"><b>01</b><span>CARBON MONOCOQUE<small>карбоновый монокок</small></span></div>
-    <div class="call c2"><b>02</b><span>ACTIVE AERO<small>направленный воздушный поток</small></span></div>
-    <div class="call c3"><b>03</b><span>AXIAL DRIVE<small>компактный электропривод</small></span></div>
+    <div class="call c1"><b>01</b><span>CARBON MONOCOQUE<small>карбоновый монокок</small></span><i class="lead" aria-hidden="true"></i></div>
+    <div class="call c2"><b>02</b><span>ACTIVE AERO<small>направленный воздушный поток</small></span><i class="lead" aria-hidden="true"></i></div>
+    <div class="call c3"><b>03</b><span>AXIAL DRIVE<small>компактный электропривод</small></span><i class="lead" aria-hidden="true"></i></div>
   </div>
 </section>
 
@@ -86,7 +87,6 @@
     <figure><img src="https://res.cloudinary.com/dg9shucn/image/upload/v1789100569/vanta-r1-hq-cockpit.jpg" alt="Кокпит VANTA R1" loading="lazy" decoding="async"><figcaption><strong>05 / ТОЧКА КОНТРОЛЯ</strong><span>Информация только по делу.</span></figcaption></figure>
     <figure><img src="https://res.cloudinary.com/dg9shucn/image/upload/v1789100585/vanta-r1-hq-headlight.jpg" alt="Оптика VANTA R1" loading="lazy" decoding="async"><figcaption><strong>06 / СВЕТ КАК ПОДПИСЬ</strong><span>Узкая LED-графика R1.</span></figcaption></figure>
   </div>
-  <div class="swipe-hint">ЛИСТАЙ / SWIPE</div>
 </section>
 
 <section class="system chapter" id="system">
@@ -94,12 +94,31 @@
   <div class="system-ui reveal">
     <div class="eyebrow">06 / RIDE SYSTEM / БОРТОВАЯ СИСТЕМА</div>
     <h2>Полный контроль.<br><em>Всегда под рукой.</em></h2>
-    <p>На экране только то, что влияет на следующий манёвр. Режим меняет отклик, рекуперацию и запас хода.</p>
-    <div class="dash" id="dash">
-      <div class="dash-top"><span>VANTA RIDE SYSTEM</span><span id="clock">00:00</span></div>
-      <div class="dash-main"><div><small>СКОРОСТЬ / SPEED</small><strong id="speed">084</strong><i>км/ч</i></div><div class="dash-stats"><span>ЗАРЯД <b id="battery">78%</b></span><span>ЗАПАС <b id="range">214 км</b></span><span>REGEN <b id="regen">MID</b></span></div></div>
-      <div class="power"><i id="power"></i></div>
-      <div class="modes"><button class="active" data-mode="road" aria-pressed="true">ROAD<small>ДОРОГА</small></button><button data-mode="attack" aria-pressed="false">ATTACK<small>ТРЕК</small></button><button data-mode="range" aria-pressed="false">RANGE<small>ЭКО</small></button></div>
+    <p>Цифровая приборка R1 показывает только то, что нужно в движении: скорость, заряд, запас хода, рекуперацию и активный режим. Переключи режим — телеметрия изменится.</p>
+    <div class="dash" id="dash" aria-label="Интерактивная приборная панель VANTA R1">
+      <div class="dash-screen">
+        <div class="dash-top"><span>R1 // RIDE SYSTEM</span><span class="dash-ready"><i></i>READY</span><span id="clock">00:00</span></div>
+        <div class="dash-main">
+          <div class="speed-dial">
+            <div class="speed-readout"><small>СКОРОСТЬ</small><strong id="speed">084</strong><i>км/ч</i></div>
+            <div class="power-readout"><span>МОЩНОСТЬ</span><b id="powerLabel">62%</b></div>
+            <div class="power"><i id="power"></i></div>
+          </div>
+          <div class="dash-side">
+            <div class="mode-readout"><small>АКТИВНЫЙ РЕЖИМ</small><strong id="modeName">ДОРОГА</strong><span id="modeDesc">Сбалансированный отклик</span></div>
+            <div class="dash-stats">
+              <span><small>ЗАРЯД</small><b id="battery">78%</b></span>
+              <span><small>ЗАПАС ХОДА</small><b id="range">214 км</b></span>
+              <span><small>РЕКУПЕРАЦИЯ</small><b id="regen">СРЕДНЯЯ</b></span>
+            </div>
+          </div>
+        </div>
+        <div class="modes" aria-label="Режим движения">
+          <button class="active" data-mode="road" aria-pressed="true">ДОРОГА<small>ROAD</small></button>
+          <button data-mode="attack" aria-pressed="false">ТРЕК<small>ATTACK</small></button>
+          <button data-mode="range" aria-pressed="false">ЭКО<small>RANGE</small></button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -109,7 +128,7 @@
     <div class="eyebrow">07 / ACTIVATION / DEMO</div>
     <h2>Готов к первому<br><em>импульсу?</em></h2>
     <p>Запусти демонстрационный режим: оптика проснётся, световая система активируется, а цветовой характер сцены изменится.</p>
-    <div class="swatches" aria-label="Цветовой режим"><button class="sw active" data-color="red" aria-label="Signal Red" aria-pressed="true"></button><button class="sw" data-color="ice" aria-label="Arctic Ice" aria-pressed="false"></button><button class="sw" data-color="stealth" aria-label="Stealth Black" aria-pressed="false"></button></div>
+    <div class="swatches" aria-label="Цветовой режим"><button class="sw active" data-color="red" aria-label="Красная подсветка" aria-pressed="true"></button><button class="sw" data-color="green" aria-label="Зелёная подсветка" aria-pressed="false"></button><button class="sw" data-color="stealth" aria-label="Stealth Black" aria-pressed="false"></button></div>
   </div>
   <div class="activation-stage reveal" id="stage">
     <div class="stage-inner"><img src="https://res.cloudinary.com/dg9shucn/image/upload/v1789100551/vanta-r1-hq-activation.jpg" alt="VANTA R1 — финальный активационный ракурс" loading="lazy" decoding="async"><div class="beam beam-left"></div><div class="beam beam-right"></div><div class="scan"></div><div class="ambient"></div></div>
@@ -121,6 +140,6 @@
 </main>
 
 <footer><a href="#top" class="brand"><span>V</span><span>A</span><span>N</span><span>T</span><span>A</span><sup>R1</sup></a><p>VANTA R1 — вымышленный демонстрационный product-concept. Все изображения мотоцикла созданы специально для этого проекта.</p><span>CONCEPT / 2026</span></footer>
-<script src="v4.js?v=1" defer></script>
+<script src="v4.js?v=2" defer></script>
 </body>
 </html>

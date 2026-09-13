@@ -1,20 +1,47 @@
-/* VANTA R1 — cockpit HMI polish: dual dial logic, energy flow and display depth. */
+/* VANTA R1 — cockpit HMI refinement: separated speed/power rings, bidirectional energy flow, restrained OEM depth. */
 
 @property --power-angle{syntax:"<angle>";inherits:true;initial-value:167.4deg}
 @property --power-half{syntax:"<percentage>";inherits:true;initial-value:31%}
-@property --regen-half{syntax:"<percentage>";inherits:true;initial-value:28%}
+@property --regen-half{syntax:"<percentage>";inherits:true;initial-value:24%}
 
 .dash{
   --power-angle:167.4deg;
   --power-half:31%;
-  --regen-half:28%;
-  --hmi-grid:.58;
-  --hmi-glow:.34;
-  transition:--power-angle .52s cubic-bezier(.2,.75,.2,1),--power-half .46s cubic-bezier(.2,.75,.2,1),--regen-half .46s cubic-bezier(.2,.75,.2,1),border-color .3s ease,box-shadow .3s ease;
+  --regen-half:24%;
+  --hmi-grid:.34;
+  --outer-ring-opacity:.72;
+  --regen-opacity:.72;
+  transition:--power-angle .56s cubic-bezier(.2,.75,.2,1),--power-half .5s cubic-bezier(.2,.75,.2,1),--regen-half .5s cubic-bezier(.2,.75,.2,1),border-color .3s ease,box-shadow .35s ease;
 }
 
-/* More physical display depth: deep black, anti-glare coat, restrained upper glass highlight. */
-.dash-screen{background-color:#020303!important;box-shadow:inset 0 0 54px rgba(0,0,0,.78),inset 0 1px 0 rgba(255,255,255,.026)}
+/* Mode calibration: ROAD is mature/deep red, ATTACK is hotter, RANGE stays saturated without neon spill. */
+.dash[data-mode="road"]{
+  --dash-accent:#e4473b;
+  --dash-glow:rgba(228,71,59,.24);
+  --hmi-grid:.34;
+  --outer-ring-opacity:.72;
+  --regen-opacity:.72;
+  box-shadow:0 28px 58px rgba(0,0,0,.56),0 0 20px rgba(228,71,59,.05),inset 0 1px 0 rgba(255,255,255,.05);
+}
+.dash[data-mode="attack"]{
+  --dash-accent:#ff2518;
+  --dash-glow:rgba(255,37,24,.44);
+  --hmi-grid:.68;
+  --outer-ring-opacity:.92;
+  --regen-opacity:.46;
+  box-shadow:0 28px 58px rgba(0,0,0,.58),0 0 34px rgba(255,37,24,.095),inset 0 1px 0 rgba(255,255,255,.05);
+}
+.dash[data-mode="range"]{
+  --dash-accent:#2edc7f;
+  --dash-glow:rgba(46,220,127,.25);
+  --hmi-grid:.26;
+  --outer-ring-opacity:.64;
+  --regen-opacity:.9;
+  box-shadow:0 28px 58px rgba(0,0,0,.56),0 0 22px rgba(46,220,127,.055),inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+/* Physical display depth: deep panel black, light anti-glare texture, restrained glass highlight. */
+.dash-screen{background-color:#020303!important;box-shadow:inset 0 0 58px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.024)}
 .dash-screen:after{
   content:"";
   position:absolute;
@@ -22,58 +49,81 @@
   z-index:5;
   pointer-events:none;
   background:
-    linear-gradient(180deg,rgba(255,255,255,.035) 0,rgba(255,255,255,.012) 9%,transparent 25%),
-    linear-gradient(112deg,rgba(255,255,255,.018),transparent 26% 72%,rgba(255,255,255,.01));
+    linear-gradient(180deg,rgba(255,255,255,.03) 0,rgba(255,255,255,.01) 9%,transparent 24%),
+    linear-gradient(112deg,rgba(255,255,255,.015),transparent 27% 74%,rgba(255,255,255,.008));
   mix-blend-mode:screen;
-  opacity:.72;
+  opacity:.66;
 }
 .dash-screen:before{opacity:var(--hmi-grid);transition:opacity .32s ease,background-size .32s ease,filter .32s ease}
+.dash[data-mode="road"] .dash-screen:before{background-size:auto,46px 46px,46px 46px}
+.dash[data-mode="attack"] .dash-screen:before{background-size:auto,34px 34px,34px 34px;filter:contrast(1.06)}
+.dash[data-mode="range"] .dash-screen:before{background-size:auto,52px 52px,52px 52px}
 
-/* Inner ring = live power delivery. Outer ring remains speed/dynamic emphasis. */
-.dial-ticks:before{
-  content:"";
-  position:absolute;
-  inset:27px;
-  border-radius:50%;
-  background:conic-gradient(from 225deg,
-    color-mix(in srgb,var(--dash-accent) 72%,#fff) 0 2deg,
-    var(--dash-accent) 2deg var(--power-angle),
-    rgba(112,119,114,.15) var(--power-angle) 270deg,
-    transparent 270deg 360deg);
-  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px));
-  mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px));
-  filter:drop-shadow(0 0 7px color-mix(in srgb,var(--dash-accent) 34%,transparent));
-  opacity:.92;
-  transition:filter .32s ease,opacity .32s ease;
+/* Outer ring = speed/dynamic emphasis. It is deliberately calmer and thinner than before. */
+.speed-dial:before{
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 7px),#000 calc(100% - 6px));
+  mask:radial-gradient(farthest-side,transparent calc(100% - 7px),#000 calc(100% - 6px));
+  opacity:var(--outer-ring-opacity);
+  filter:drop-shadow(0 0 8px color-mix(in srgb,var(--dash-accent) 27%,transparent));
 }
+.dash[data-mode="attack"] .speed-dial:before{filter:drop-shadow(0 0 12px rgba(255,37,24,.4))}
+.dash[data-mode="range"] .speed-dial:before{filter:drop-shadow(0 0 8px rgba(46,220,127,.2))}
 
-/* Keep the speed dial physically above the energy-flow meter. */
-.speed-dial{min-height:320px}
+/* The previous pseudo arc lived inside a masked tick layer and could disappear on Safari. Kill it. */
+.dial-ticks:before{content:none!important}
+
+/* Independent inner ring = POWER DELIVERY. Separate DOM layer avoids clipping by the tick mask. */
+.power-arc{
+  position:absolute;
+  z-index:1;
+  left:50%;
+  top:50%;
+  width:min(198px,70%);
+  aspect-ratio:1;
+  border-radius:50%;
+  transform:translate(-50%,-50%) translateY(-18px);
+  pointer-events:none;
+  background:conic-gradient(from 225deg,
+    color-mix(in srgb,var(--dash-accent) 70%,#fff) 0 1.5deg,
+    var(--dash-accent) 1.5deg var(--power-angle),
+    rgba(122,130,124,.17) var(--power-angle) 270deg,
+    transparent 270deg 360deg);
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px),#000 calc(100% - 1px),transparent 100%);
+  mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px),#000 calc(100% - 1px),transparent 100%);
+  filter:drop-shadow(0 0 7px color-mix(in srgb,var(--dash-accent) 34%,transparent));
+  opacity:.94;
+  transition:filter .3s ease,opacity .3s ease;
+}
+.dash[data-mode="attack"] .power-arc{filter:drop-shadow(0 0 11px rgba(255,37,24,.48));opacity:1}
+.dash[data-mode="range"] .power-arc{filter:drop-shadow(0 0 7px rgba(46,220,127,.28));opacity:.9}
+
+/* Keep both rings and the readout physically clear of the energy meter. */
+.speed-dial{min-height:322px}
 .speed-dial:before,.speed-dial:after,.dial-ticks{transform:translateY(-18px)}
 .speed-readout{transform:translateY(-22px)}
 
-/* REGEN ← | → POWER: one energy system rather than two unrelated readouts. */
+/* REGEN ← | → POWER: one centered energy-flow system with independent directions. */
 .power-readout{
-  left:11%;right:11%;bottom:28px;
+  left:11%;right:11%;bottom:30px;
   align-items:center;
   font-size:6.5px;
   letter-spacing:.14em;
   color:#727974;
   text-transform:uppercase;
 }
-.power-readout span{font-size:0;color:#7d847f}
+.power-readout span{font-size:0;color:#848b86}
 .power-readout span:after{content:"REGEN ←";font-size:6.5px;letter-spacing:.14em}
-.power-readout b{display:flex;align-items:center;gap:5px;font-size:8px;color:var(--dash-accent);font-variant-numeric:tabular-nums}
-.power-readout b:before{content:"→ POWER";font-size:6.5px;font-weight:500;letter-spacing:.14em;color:#7d847f}
+.power-readout b{display:flex;align-items:center;gap:5px;font-size:8px;font-weight:600;color:var(--dash-accent);font-variant-numeric:tabular-nums}
+.power-readout b:before{content:"→ POWER";font-size:6.5px;font-weight:500;letter-spacing:.14em;color:#848b86}
 .power{
   position:absolute;
   z-index:3;
-  left:11%;right:11%;bottom:12px;
+  left:11%;right:11%;bottom:13px;
   height:3px;
   margin:0;
   overflow:visible;
   border-radius:99px;
-  background:linear-gradient(90deg,#171a19 0 49.65%,#343a36 49.65% 50.35%,#171a19 50.35% 100%);
+  background:linear-gradient(90deg,#171a19 0 49.55%,#505651 49.55% 50.45%,#171a19 50.45% 100%);
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.012);
 }
 .power:before{
@@ -83,16 +133,18 @@
   width:var(--regen-half);
   height:100%;
   border-radius:99px 0 0 99px;
-  background:linear-gradient(90deg,color-mix(in srgb,var(--dash-accent) 34%,#616662),color-mix(in srgb,var(--dash-accent) 70%,#bfc5c0));
+  background:linear-gradient(90deg,color-mix(in srgb,var(--dash-accent) 30%,#5d625e),color-mix(in srgb,var(--dash-accent) 58%,#c0c5c1));
   box-shadow:0 0 9px color-mix(in srgb,var(--dash-accent) 18%,transparent);
+  opacity:var(--regen-opacity);
+  transition:opacity .3s ease,filter .3s ease;
 }
 .power:after{
   content:"";
   position:absolute;
-  left:50%;top:-3px;
-  width:1px;height:9px;
-  background:#5f6661;
-  box-shadow:0 0 7px rgba(255,255,255,.08);
+  left:50%;top:-4px;
+  width:1px;height:11px;
+  background:#777e78;
+  box-shadow:0 0 7px rgba(255,255,255,.1);
 }
 .power i{
   position:absolute;
@@ -101,54 +153,58 @@
   width:var(--power-half)!important;
   height:100%;
   border-radius:0 99px 99px 0;
-  background:linear-gradient(90deg,color-mix(in srgb,var(--dash-accent) 72%,#fff),var(--dash-accent));
-  box-shadow:0 0 13px color-mix(in srgb,var(--dash-accent) 62%,transparent);
-  transition:none;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--dash-accent) 68%,#fff),var(--dash-accent));
+  box-shadow:0 0 11px color-mix(in srgb,var(--dash-accent) 48%,transparent);
+  transition:filter .3s ease,opacity .3s ease;
 }
+.dash[data-mode="attack"] .power i{box-shadow:0 0 14px rgba(255,37,24,.5)}
+.dash[data-mode="range"] .power:before{box-shadow:0 0 10px rgba(46,220,127,.24)}
+.dash[data-mode="range"] .power i{opacity:.82;box-shadow:0 0 9px rgba(46,220,127,.28)}
 
-/* Mode personality: same OEM system, clearly different calibration. */
-.dash[data-mode="road"]{--hmi-grid:.58;--hmi-glow:.28}
-.dash[data-mode="road"] .dash-screen:before{background-size:auto,42px 42px,42px 42px}
-.dash[data-mode="road"] .dial-ticks:before{filter:drop-shadow(0 0 7px rgba(255,61,46,.24))}
+/* Telemetry cards: same hierarchy, less visual weight. */
+.dash-stats b{font-weight:600;letter-spacing:.015em}
+.dash-stats span{background:linear-gradient(180deg,rgba(10,11,11,.72),rgba(6,7,7,.72))}
 
-.dash[data-mode="attack"]{--hmi-grid:.84;--hmi-glow:.48}
-.dash[data-mode="attack"] .dash-screen:before{background-size:auto,34px 34px,34px 34px;filter:contrast(1.08)}
-.dash[data-mode="attack"] .dial-ticks{opacity:.86}
-.dash[data-mode="attack"] .dial-ticks:before{filter:drop-shadow(0 0 12px rgba(255,24,8,.52));opacity:1}
-.dash[data-mode="attack"] .speed-readout strong{text-shadow:0 0 31px rgba(255,24,8,.24)}
-.dash[data-mode="attack"] .power i{box-shadow:0 0 16px rgba(255,24,8,.62)}
+/* Mode buttons stay premium: active state is clear without a game-HUD halo. */
+.modes button.active{
+  border-color:color-mix(in srgb,var(--dash-accent) 58%,#303330);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--dash-accent) 12%,#101111),color-mix(in srgb,var(--dash-accent) 5%,#080909));
+  box-shadow:inset 0 -2px 0 color-mix(in srgb,var(--dash-accent) 88%,#fff),inset 0 0 12px color-mix(in srgb,var(--dash-accent) 5%,transparent),0 0 11px color-mix(in srgb,var(--dash-accent) 8%,transparent);
+}
+.dash[data-mode="attack"] .modes button.active{box-shadow:inset 0 -2px 0 var(--dash-accent),inset 0 0 13px rgba(255,37,24,.07),0 0 14px rgba(255,37,24,.12)}
+.dash[data-mode="range"] .modes button.active{box-shadow:inset 0 -2px 0 var(--dash-accent),inset 0 0 11px rgba(46,220,127,.05),0 0 9px rgba(46,220,127,.08)}
 
-.dash[data-mode="range"]{--hmi-grid:.42;--hmi-glow:.22}
-.dash[data-mode="range"] .dash-screen:before{background-size:auto,48px 48px,48px 48px}
-.dash[data-mode="range"] .dial-ticks{opacity:.58}
-.dash[data-mode="range"] .dial-ticks:before{filter:drop-shadow(0 0 8px rgba(37,235,131,.28));opacity:.86}
-.dash[data-mode="range"] .speed-readout strong{text-shadow:0 0 22px rgba(37,235,131,.13)}
-.dash[data-mode="range"] .power:before{box-shadow:0 0 10px rgba(37,235,131,.22)}
-
-/* Existing data pulse is retained; energy system gets one restrained settling motion. */
-.dash.dash-shift .power-readout{animation:energyCopy .34s ease}
-.dash.dash-shift .power{animation:energySettle .42s ease}
-@keyframes energyCopy{0%{opacity:.38}100%{opacity:1}}
-@keyframes energySettle{0%{opacity:.55;filter:brightness(.82)}100%{opacity:1;filter:none}}
+/* Existing number pulse is retained; energy system gets a restrained settling motion. */
+.dash.dash-shift .power-readout{animation:energyCopy .3s ease}
+.dash.dash-shift .power{animation:energySettle .4s ease}
+.dash.dash-shift .power-arc{animation:arcSettle .42s ease}
+@keyframes energyCopy{0%{opacity:.42}100%{opacity:1}}
+@keyframes energySettle{0%{opacity:.62;filter:brightness(.86)}100%{opacity:1;filter:none}}
+@keyframes arcSettle{0%{opacity:.58}100%{opacity:.94}}
 
 @media(max-width:980px){
   .speed-dial{min-height:326px}
   .speed-dial:before,.speed-dial:after,.dial-ticks{transform:translateY(-20px)}
   .speed-readout{transform:translateY(-24px)}
-  .power-readout{left:14%;right:14%;bottom:29px}
-  .power{left:14%;right:14%;bottom:12px}
-  .dial-ticks:before{inset:29px}
+  .power-arc{width:184px;transform:translate(-50%,-50%) translateY(-20px)}
+  .power-readout{left:14%;right:14%;bottom:30px}
+  .power{left:14%;right:14%;bottom:13px}
+  .dash-stats b{font-size:12.5px}
 }
 
 @media(max-width:420px){
   .speed-dial{min-height:324px}
   .speed-dial:before,.speed-dial:after,.dial-ticks{transform:translateY(-20px)}
   .speed-readout{transform:translateY(-24px)}
-  .power-readout{left:13%;right:13%;bottom:29px}
-  .power{left:13%;right:13%;bottom:12px}
+  .power-arc{width:172px;transform:translate(-50%,-50%) translateY(-20px)}
+  .power-readout{left:13%;right:13%;bottom:30px}
+  .power{left:13%;right:13%;bottom:13px}
   .power-readout span:after,.power-readout b:before{font-size:6px}
   .power-readout b{font-size:7.5px;gap:4px}
-  .dial-ticks:before{inset:27px}
+  .dash-stats b{font-size:11.5px;font-weight:600}
 }
 
-@media(prefers-reduced-motion:reduce){.dash{transition:none}.dash.dash-shift .power-readout,.dash.dash-shift .power{animation:none}}
+@media(prefers-reduced-motion:reduce){
+  .dash{transition:none}
+  .dash.dash-shift .power-readout,.dash.dash-shift .power,.dash.dash-shift .power-arc{animation:none}
+}

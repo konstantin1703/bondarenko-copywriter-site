@@ -661,3 +661,14 @@ section[id]{scroll-margin-top:calc(var(--header) + 18px)}.header.scrolled .brand
 @media(max-width:390px){
   .signature-copy span{line-height:1.05!important;letter-spacing:-.035em!important;font-size:clamp(38px,10.4vw,48px)!important}
 }
+
+
+/* VANTA R1 — gallery focus + exact OEM divider geometry 2026-09 */
+.dash-stats,.modes{position:relative}
+.dash-stats span+span,.modes button+button{border-left:0!important}
+.dash-stats::before,.dash-stats::after,.modes::before,.modes::after{content:"";position:absolute;z-index:4;top:0;bottom:0;width:1px;background:var(--oem-divider);pointer-events:none}
+.dash-stats::before,.modes::before{left:33.333333%}
+.dash-stats::after,.modes::after{left:66.666667%}
+.rail{outline:none!important;-webkit-tap-highlight-color:transparent}
+.rail:focus{outline:none!important}
+@media(hover:hover) and (pointer:fine){.rail:focus-visible{box-shadow:0 0 0 1px rgba(255,255,255,.22);outline:none!important}}

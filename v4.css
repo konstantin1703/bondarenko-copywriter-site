@@ -672,3 +672,63 @@ section[id]{scroll-margin-top:calc(var(--header) + 18px)}.header.scrolled .brand
 .rail{outline:none!important;-webkit-tap-highlight-color:transparent}
 .rail:focus{outline:none!important}
 @media(hover:hover) and (pointer:fine){.rail:focus-visible{box-shadow:0 0 0 1px rgba(255,255,255,.22);outline:none!important}}
+
+
+/* VANTA R1 — gallery close + single OEM mode indicator 2026-09 */
+.modes button.active{box-shadow:none!important}
+.modes button.active:after{
+  content:""!important;
+  position:absolute!important;
+  left:20%!important;
+  right:20%!important;
+  bottom:7px!important;
+  height:2px!important;
+  border-radius:999px!important;
+  background:var(--dash-accent)!important;
+  box-shadow:0 0 6px color-mix(in srgb,var(--dash-accent) 24%,transparent)!important;
+}
+.gallery-lightbox-close{
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  border:1px solid #4a4d4a;
+  background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.055),transparent 34%),#090a09;
+  color:transparent;
+  font-size:0;
+  line-height:0;
+  appearance:none;
+  -webkit-appearance:none;
+  -webkit-tap-highlight-color:transparent;
+  outline:none!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 8px 22px rgba(0,0,0,.28);
+  transition:transform .18s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease;
+}
+.gallery-lightbox-close:before,.gallery-lightbox-close:after{
+  content:"";
+  position:absolute;
+  width:17px;
+  height:1.5px;
+  border-radius:99px;
+  background:#e8eae7;
+  box-shadow:0 0 5px rgba(255,255,255,.08);
+}
+.gallery-lightbox-close:before{transform:rotate(45deg)}
+.gallery-lightbox-close:after{transform:rotate(-45deg)}
+.gallery-lightbox-close:focus{outline:none!important}
+.gallery-lightbox-close:active{
+  transform:scale(.94);
+  border-color:color-mix(in srgb,var(--accent) 70%,#575957);
+  background:#0d0908;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 22%,transparent),0 0 16px color-mix(in srgb,var(--accent) 12%,transparent);
+}
+@media(hover:hover) and (pointer:fine){
+  .gallery-lightbox-close:hover{border-color:#777b77;background:#101110;transform:translateY(-1px)}
+  .gallery-lightbox-close:focus-visible{outline:none!important;box-shadow:0 0 0 1px #c9ccc9,0 0 0 4px rgba(255,46,27,.12),0 8px 22px rgba(0,0,0,.28)}
+}
+@media(max-width:520px){
+  .modes button.active:after{left:18%!important;right:18%!important;bottom:7px!important;height:2px!important}
+  .gallery-lightbox-close{width:44px;height:44px}
+}

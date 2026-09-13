@@ -1,0 +1,109 @@
+name: Tech close and speed alignment
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply UI fixes
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          cssp=Path('v4.css')
+          htmlp=Path('index.html')
+          css=cssp.read_text()
+          html=htmlp.read_text()
+          marker='/* VANTA R1 — shared close control + mobile speed alignment 2026-09 */'
+          block=r'''
+
+/* VANTA R1 — shared close control + mobile speed alignment 2026-09 */
+.gallery-lightbox-close,#techClose{
+  position:relative!important;
+  display:grid!important;
+  place-items:center!important;
+  width:46px!important;
+  height:46px!important;
+  min-width:46px!important;
+  min-height:46px!important;
+  padding:0!important;
+  border-radius:50%!important;
+  border:1px solid #4a4d4a!important;
+  background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.055),transparent 34%),#090a09!important;
+  color:transparent!important;
+  font-size:0!important;
+  line-height:0!important;
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  -webkit-tap-highlight-color:transparent!important;
+  outline:none!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 8px 22px rgba(0,0,0,.28)!important;
+  transition:transform .18s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease!important;
+  cursor:pointer;
+}
+.gallery-lightbox-close:before,.gallery-lightbox-close:after,#techClose:before,#techClose:after{
+  content:""!important;
+  position:absolute!important;
+  width:17px!important;
+  height:1.5px!important;
+  border-radius:99px!important;
+  background:#e8eae7!important;
+  box-shadow:0 0 5px rgba(255,255,255,.08)!important;
+}
+.gallery-lightbox-close:before,#techClose:before{transform:rotate(45deg)!important}
+.gallery-lightbox-close:after,#techClose:after{transform:rotate(-45deg)!important}
+.gallery-lightbox-close:focus,#techClose:focus{outline:none!important}
+.gallery-lightbox-close:active,#techClose:active{
+  transform:scale(.94)!important;
+  border-color:color-mix(in srgb,var(--accent) 70%,#575957)!important;
+  background:#0d0908!important;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 22%,transparent),0 0 16px color-mix(in srgb,var(--accent) 12%,transparent)!important;
+}
+@media(hover:hover) and (pointer:fine){
+  .gallery-lightbox-close:hover,#techClose:hover{border-color:#777b77!important;background:#101110!important;transform:translateY(-1px)}
+  .gallery-lightbox-close:focus-visible,#techClose:focus-visible{outline:none!important;box-shadow:0 0 0 1px #c9ccc9,0 0 0 4px rgba(255,46,27,.12),0 8px 22px rgba(0,0,0,.28)!important}
+}
+@media(max-width:520px){
+  .gallery-lightbox-close,#techClose{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important}
+  .speed-readout{transform:translateY(-27px)!important}
+  .speed-readout strong{font-size:clamp(62px,16vw,68px)!important;line-height:.8!important;letter-spacing:-.065em!important;transform:scaleX(.9)!important;transform-origin:center!important}
+  .speed-readout small{letter-spacing:.17em!important}
+  .speed-readout i{margin-top:8px!important;letter-spacing:.12em!important}
+}
+@media(max-width:390px){
+  .speed-readout{transform:translateY(-25px)!important}
+  .speed-readout strong{font-size:clamp(60px,16vw,64px)!important;transform:scaleX(.9)!important}
+}
+'''
+          if marker not in css:
+              css += block
+          if 'v4.css?v=14' in html:
+              html=html.replace('v4.css?v=14','v4.css?v=15')
+          elif 'v4.css?v=15' not in html:
+              raise SystemExit('Unexpected CSS cache version')
+          cssp.write_text(css)
+          htmlp.write_text(html)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          css=Path('v4.css').read_text(); html=Path('index.html').read_text()
+          assert css.count('{')==css.count('}')
+          assert 'shared close control + mobile speed alignment' in css
+          assert 'v4.css?v=15' in html
+          print('QA OK')
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add v4.css index.html
+          git rm .github/workflows/techclose-speed-align.yml
+          git commit -m "fix: unify close controls and align mobile speed readout"
+          git push

@@ -1,0 +1,82 @@
+name: VANTA QA cleanup
+
+on:
+  push:
+    paths:
+      - '.github/workflows/qa-cleanup.yml'
+      - 'tools/qa-cleanup-payload.b64'
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Apply verified cleanup payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          base64 -d tools/qa-cleanup-payload.b64 > /tmp/vanta-clean.tgz
+          tar -xzf /tmp/vanta-clean.tgz -C .
+
+          rm -f \
+            app.js final.css media-0.js polish.css polish.js styles.css v3.css v3.js \
+            v4-mobile-fixes.css v4-polish.css v4-final-fixes.css v4-power-spacing.css \
+            v4-hmi-r2.css v4-hmi-oem-final.css v4-speedometer-premium.css v4-hmi-r2.js
+
+          rm -f tools/qa-cleanup-payload.b64 .github/workflows/qa-cleanup.yml
+
+      - name: Validate cleaned site
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check v4.js
+          git diff --check
+          python - <<'PY'
+          from pathlib import Path
+          from html.parser import HTMLParser
+
+          html = Path('index.html').read_text(encoding='utf-8')
+          css = Path('v4.css').read_text(encoding='utf-8')
+          js = Path('v4.js').read_text(encoding='utf-8')
+
+          assert 'v4.css?v=5' in html
+          assert 'v4.js?v=4' in html
+          assert 'v4-hmi-r2' not in html
+          assert 'v4-speedometer-premium' not in html
+          assert 'rel="canonical"' in html
+          assert 'rel="manifest"' in html
+          assert 'rel="icon"' in html
+          assert 'res.cloudinary.com' in html and 'f_auto,q_auto:good' in html
+          assert 'aria-controls="mobileMenu"' in html
+          assert 'aria-pressed="false"' in html
+          assert css.count('{') == css.count('}')
+          assert 'MutationObserver' not in js
+          assert '--power-angle' in js and 'regenValue' in js
+
+          legacy = [
+              'app.js','final.css','media-0.js','polish.css','polish.js','styles.css','v3.css','v3.js',
+              'v4-mobile-fixes.css','v4-polish.css','v4-final-fixes.css','v4-power-spacing.css',
+              'v4-hmi-r2.css','v4-hmi-oem-final.css','v4-speedometer-premium.css','v4-hmi-r2.js'
+          ]
+          assert not any(Path(p).exists() for p in legacy)
+          print('QA static validation: OK')
+          PY
+
+      - name: Commit cleanup to main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'refactor: complete VANTA R1 QA cleanup'
+          git push origin HEAD:main

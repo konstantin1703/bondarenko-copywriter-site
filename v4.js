@@ -9,6 +9,8 @@
   const mobile=document.getElementById('mobileMenu');
   let lastFocus=null;
   let scrollTick=false;
+  const navAnchors=[...document.querySelectorAll('.desktop-nav a,.activate-link,.mobile-menu a')];
+  const navSections=[...document.querySelectorAll('main section[id]')];
 
   const updateScroll=()=>{
     scrollTick=false;
@@ -16,6 +18,12 @@
     const max=Math.max(document.documentElement.scrollHeight-window.innerHeight,1);
     header?.classList.toggle('scrolled',y>18);
     if(progress) progress.style.transform=`scaleX(${Math.min(y/max,1)})`;
+    if(navSections.length){
+      const probe=y+innerHeight*.34;
+      let current='';
+      navSections.forEach(section=>{if(section.offsetTop<=probe)current=section.id;});
+      navAnchors.forEach(link=>link.classList.toggle('is-current',link.getAttribute('href')===`#${current}`));
+    }
   };
   const requestScrollUpdate=()=>{
     if(scrollTick)return;
@@ -52,7 +60,6 @@
   });
   addEventListener('resize',()=>{if(innerWidth>980&&mobile?.classList.contains('open'))setNav(false,{restoreFocus:false})},{passive:true});
 
-  // Progressive section reveal. No scroll locking or scroll-driven timelines.
   const revealEls=document.querySelectorAll('.reveal');
   if(reduceMotion||!('IntersectionObserver' in window)){
     revealEls.forEach(el=>el.classList.add('show'));
@@ -63,7 +70,6 @@
     revealEls.forEach(el=>io.observe(el));
   }
 
-  // Tiny pointer parallax: product media moves inside its frame, never the layout.
   if(!reduceMotion&&finePointer){
     const bindParallax=(host,img,maxX,maxY,hero=false)=>{
       if(!host||!img)return;
@@ -92,7 +98,6 @@
     bindParallax(materialHost,materialHost?.querySelector('img'),5,4);
   }
 
-  // Engineering callouts: hover/focus previews, tap/click pins one annotation.
   const architecture=document.querySelector('.architecture-stage');
   const calls=[...(architecture?.querySelectorAll('.call')||[])];
   const svg=architecture?.querySelector('.callout-map');
@@ -104,6 +109,8 @@
     const active=index>=0;
     if(active)architecture?.classList.add('has-interacted');
     architecture?.classList.toggle('has-call-focus',active);
+    const hotspots=[['45.5%','24.6%'],['80.5%','30%'],['33%','52%']];
+    if(architecture&&active){architecture.style.setProperty('--call-x',hotspots[index][0]);architecture.style.setProperty('--call-y',hotspots[index][1]);}
     calls.forEach((call,i)=>{
       const on=i===index;
       call.classList.toggle('is-active',on);
@@ -132,39 +139,49 @@
     if(pinnedCall>=0&&!e.target.closest('.call')){pinnedCall=-1;paintCall(-1);}
   });
 
-  // Gallery: centered frame becomes the visual anchor; keyboard arrows mirror buttons.
   const rail=document.getElementById('rail');
   const galleryFrames=[...(rail?.querySelectorAll('figure')||[])];
+  const galleryCounter=document.getElementById('galleryCounter');
+  const galleryProgress=document.getElementById('galleryProgress');
+  const prevButton=document.getElementById('prev');
+  const nextButton=document.getElementById('next');
   let galleryRaf=0;
-  const updateGalleryActive=()=>{
-    galleryRaf=0;
-    if(!rail||!galleryFrames.length)return;
-    const center=rail.scrollLeft+rail.clientWidth/2;
-    let active=0,best=Infinity;
-    galleryFrames.forEach((frame,i)=>{
-      const fc=frame.offsetLeft+frame.offsetWidth/2;
-      const d=Math.abs(fc-center);
-      if(d<best){best=d;active=i;}
-    });
-    galleryFrames.forEach((frame,i)=>frame.classList.toggle('is-active',i===active));
+  let galleryIndex=0;
+  const setGalleryActive=index=>{
+    if(!galleryFrames.length)return;
+    galleryIndex=Math.max(0,Math.min(index,galleryFrames.length-1));
+    galleryFrames.forEach((frame,i)=>{const active=i===galleryIndex;frame.classList.toggle('is-active',active);frame.setAttribute('aria-current',active?'true':'false');});
+    if(galleryCounter)galleryCounter.textContent=`${String(galleryIndex+1).padStart(2,'0')} / ${String(galleryFrames.length).padStart(2,'0')}`;
+    if(galleryProgress)galleryProgress.style.width=`${((galleryIndex+1)/galleryFrames.length)*100}%`;
+    if(prevButton)prevButton.disabled=galleryIndex===0;
+    if(nextButton)nextButton.disabled=galleryIndex===galleryFrames.length-1;
   };
-  const requestGalleryUpdate=()=>{
-    if(galleryRaf)return;
-    galleryRaf=requestAnimationFrame(updateGalleryActive);
+  const closestGalleryIndex=()=>{
+    if(!rail||!galleryFrames.length)return 0;
+    const rr=rail.getBoundingClientRect();const center=rr.left+rr.width/2;let active=0,best=Infinity;
+    galleryFrames.forEach((frame,i)=>{const r=frame.getBoundingClientRect();const d=Math.abs((r.left+r.width/2)-center);if(d<best){best=d;active=i;}});
+    return active;
   };
-  const shift=()=>Math.min((rail?.clientWidth||0)*.82,760);
-  const scrollGallery=direction=>rail?.scrollBy({left:direction*shift(),behavior:reduceMotion?'auto':'smooth'});
-  document.getElementById('prev')?.addEventListener('click',()=>scrollGallery(-1));
-  document.getElementById('next')?.addEventListener('click',()=>scrollGallery(1));
+  const updateGalleryActive=()=>{galleryRaf=0;setGalleryActive(closestGalleryIndex());};
+  const requestGalleryUpdate=()=>{if(!galleryRaf)galleryRaf=requestAnimationFrame(updateGalleryActive);};
+  const scrollGalleryTo=index=>{
+    if(!rail||!galleryFrames.length)return;const target=Math.max(0,Math.min(index,galleryFrames.length-1));const frame=galleryFrames[target];
+    const left=frame.offsetLeft-(rail.clientWidth-frame.offsetWidth)/2;rail.scrollTo({left,behavior:reduceMotion?'auto':'smooth'});setGalleryActive(target);
+  };
+  prevButton?.addEventListener('click',()=>scrollGalleryTo(galleryIndex-1));
+  nextButton?.addEventListener('click',()=>scrollGalleryTo(galleryIndex+1));
   rail?.addEventListener('scroll',requestGalleryUpdate,{passive:true});
-  rail?.addEventListener('keydown',e=>{
-    if(e.key==='ArrowLeft'){e.preventDefault();scrollGallery(-1);}
-    if(e.key==='ArrowRight'){e.preventDefault();scrollGallery(1);}
-  });
+  rail?.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();scrollGalleryTo(galleryIndex-1);}if(e.key==='ArrowRight'){e.preventDefault();scrollGalleryTo(galleryIndex+1);}if(e.key==='Home'){e.preventDefault();scrollGalleryTo(0);}if(e.key==='End'){e.preventDefault();scrollGalleryTo(galleryFrames.length-1);}});
   addEventListener('resize',requestGalleryUpdate,{passive:true});
-  updateGalleryActive();
+  if(rail&&finePointer){
+    let dragging=false,startX=0,startScroll=0,moved=false;
+    rail.addEventListener('pointerdown',e=>{if(e.button!==0)return;dragging=true;moved=false;startX=e.clientX;startScroll=rail.scrollLeft;rail.classList.add('is-dragging');rail.setPointerCapture?.(e.pointerId);});
+    rail.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-startX;if(Math.abs(dx)>3)moved=true;rail.scrollLeft=startScroll-dx;});
+    const endDrag=e=>{if(!dragging)return;dragging=false;rail.classList.remove('is-dragging');rail.releasePointerCapture?.(e.pointerId);if(moved)scrollGalleryTo(closestGalleryIndex());};
+    rail.addEventListener('pointerup',endDrag);rail.addEventListener('pointercancel',endDrag);
+  }
+  setGalleryActive(0);
 
-  // Ride System — one state model, animated speed and calibrated visual settle.
   const dash=document.getElementById('dash');
   const speed=document.getElementById('speed');
   const battery=document.getElementById('battery');
@@ -183,34 +200,34 @@
     range:{speed:62,battery:'84%',range:'286 км',regen:'ВЫСОКАЯ',regenValue:88,power:42,dial:106,name:'ЭКО',desc:'Приоритет запаса хода'}
   };
 
-const svgNS='http://www.w3.org/2000/svg';
-if(speedTicks&&!speedTicks.childElementCount){
-  const count=31;
-  for(let i=0;i<count;i+=1){
-    const angle=135+(270/(count-1))*i;
-    const rad=angle*Math.PI/180;
-    const major=i%5===0;
-    const inner=major?108:112;
-    const outer=119;
-    const line=document.createElementNS(svgNS,'line');
-    line.setAttribute('x1',String(160+Math.cos(rad)*inner));
-    line.setAttribute('y1',String(160+Math.sin(rad)*inner));
-    line.setAttribute('x2',String(160+Math.cos(rad)*outer));
-    line.setAttribute('y2',String(160+Math.sin(rad)*outer));
-    line.classList.add(major?'is-major':'is-minor');
-    speedTicks.appendChild(line);
+  const svgNS='http://www.w3.org/2000/svg';
+  if(speedTicks&&!speedTicks.childElementCount){
+    const count=31;
+    for(let i=0;i<count;i+=1){
+      const angle=135+(270/(count-1))*i;
+      const rad=angle*Math.PI/180;
+      const major=i%5===0;
+      const inner=major?108:112;
+      const outer=119;
+      const line=document.createElementNS(svgNS,'line');
+      line.setAttribute('x1',String(160+Math.cos(rad)*inner));
+      line.setAttribute('y1',String(160+Math.sin(rad)*inner));
+      line.setAttribute('x2',String(160+Math.cos(rad)*outer));
+      line.setAttribute('y2',String(160+Math.sin(rad)*outer));
+      line.classList.add(major?'is-major':'is-minor');
+      speedTicks.appendChild(line);
+    }
   }
-}
-const setSvgArc=(arc,percent)=>{
-  if(!arc)return;
-  const clamped=Math.max(0,Math.min(Number(percent)||0,100));
-  const visible=75*clamped/100;
-  arc.style.strokeDasharray=`${visible.toFixed(2)} ${(100-visible).toFixed(2)}`;
-};
-setSvgArc(speedArc,42);
-setSvgArc(powerArcSvg,62);
+  const setSvgArc=(arc,percent)=>{
+    if(!arc)return;
+    const clamped=Math.max(0,Math.min(Number(percent)||0,100));
+    const visible=75*clamped/100;
+    arc.style.strokeDasharray=`${visible.toFixed(2)} ${(100-visible).toFixed(2)}`;
+  };
+  setSvgArc(speedArc,42);
+  setSvgArc(powerArcSvg,62);
 
-let speedAnimation=0;
+  let speedAnimation=0;
   let calibrateTimer=0;
   const formatSpeed=value=>String(Math.max(0,Math.round(value))).padStart(3,'0');
   const animateSpeed=target=>{
@@ -272,12 +289,15 @@ let speedAnimation=0;
   tick();
   setInterval(tick,15000);
 
-  // Activation — restrained OEM boot sequence: CHECK -> READY -> ACTIVE.
   const stage=document.getElementById('stage');
   const activateBtn=document.getElementById('activateBtn');
   const status=document.getElementById('bootStatus');
   const note=document.getElementById('activateNote');
   const activateLabel=activateBtn?.querySelector('span');
+  const finishName=document.getElementById('finishName');
+  const finishDesc=document.getElementById('finishDesc');
+  const finishes={red:{name:'SIGNAL RED',desc:'Фирменная красная световая подпись.'},green:{name:'VOLT GREEN',desc:'Холодный электрический зелёный акцент.'},stealth:{name:'STEALTH BLACK',desc:'Монохромный режим без лишнего блеска.'}};
+  let currentFinish='red';
   let activationOn=false;
   let activationBusy=false;
   let bootTimers=[];
@@ -291,7 +311,7 @@ let speedAnimation=0;
     activateBtn?.setAttribute('aria-pressed',String(on));
     if(status)status.textContent=on?'SYSTEM ACTIVE':'STANDBY';
     if(activateLabel)activateLabel.textContent=on?'ОТКЛЮЧИТЬ DEMO':'АКТИВИРОВАТЬ R1';
-    if(note)note.textContent=on?'Оптика и бортовая система активированы. Можно менять цветовой режим.':'Система ожидает запуска.';
+    if(note)note.textContent=on?`${finishes[currentFinish].name}: оптика и бортовая система активированы.`:'Система ожидает запуска.';
     activationBusy=false;
   };
   const bootActivation=()=>{
@@ -316,14 +336,24 @@ let speedAnimation=0;
     ];
   };
   activateBtn?.addEventListener('click',bootActivation);
-  document.querySelectorAll('.sw').forEach(sw=>sw.addEventListener('click',()=>{
-    document.querySelectorAll('.sw').forEach(x=>{
-      const active=x===sw;
-      x.classList.toggle('active',active);
-      x.setAttribute('aria-pressed',String(active));
-    });
-    stage?.classList.remove('color-green','color-stealth');
-    if(sw.dataset.color==='green')stage?.classList.add('color-green');
-    if(sw.dataset.color==='stealth')stage?.classList.add('color-stealth');
-  }));
+  const applyFinish=(key,{announce=true}={})=>{
+    const finish=finishes[key]||finishes.red;currentFinish=finishes[key]?key:'red';
+    document.querySelectorAll('.sw').forEach(x=>{const active=x.dataset.color===currentFinish;x.classList.toggle('active',active);x.setAttribute('aria-pressed',String(active));});
+    stage?.classList.remove('color-green','color-stealth','color-shifting');
+    if(currentFinish==='green')stage?.classList.add('color-green');
+    if(currentFinish==='stealth')stage?.classList.add('color-stealth');
+    if(stage&&!reduceMotion){void stage.offsetWidth;stage.classList.add('color-shifting');setTimeout(()=>stage.classList.remove('color-shifting'),420);}
+    if(finishName)finishName.textContent=finish.name;
+    if(finishDesc)finishDesc.textContent=finish.desc;
+    if(announce&&note)note.textContent=activationOn?`${finish.name}: световой характер обновлён.`:'Выбран световой характер. Система ожидает запуска.';
+  };
+  document.querySelectorAll('.sw').forEach(sw=>sw.addEventListener('click',()=>applyFinish(sw.dataset.color)));
+  applyFinish('red',{announce:false});
+
+  const techTrigger=document.getElementById('techTrigger');
+  const techSheet=document.getElementById('techSheet');
+  const techClose=document.getElementById('techClose');
+  techTrigger?.addEventListener('click',()=>{if(techSheet?.showModal)techSheet.showModal();else techSheet?.setAttribute('open','');});
+  techClose?.addEventListener('click',()=>techSheet?.close?.());
+  techSheet?.addEventListener('click',e=>{if(e.target===techSheet)techSheet.close?.();});
 })();

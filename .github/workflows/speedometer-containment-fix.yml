@@ -1,0 +1,83 @@
+name: VANTA SVG speedometer containment fix
+on:
+  push:
+    paths:
+      - .github/workflows/speedometer-containment-fix.yml
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Calibrate speedometer proportions
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          html = Path('index.html')
+          s = html.read_text()
+          old_center = '<circle class="speedometer-center" cx="160" cy="160" r="70"></circle>'
+          new_center = '<circle class="speedometer-center" cx="160" cy="160" r="78"></circle>'
+          if s.count(old_center) != 1:
+              raise SystemExit('expected one r=70 speedometer center')
+          s = s.replace(old_center, new_center)
+          if s.count('v4.css?v=7') != 1:
+              raise SystemExit('expected v4.css?v=7 once')
+          s = s.replace('v4.css?v=7', 'v4.css?v=8')
+          html.write_text(s)
+
+          css = Path('v4.css')
+          c = css.read_text()
+          old_base = '''.speed-readout strong{\n  font-size:clamp(78px,7vw,116px);\n  font-weight:470;\n  letter-spacing:-.105em;\n  transform:scaleX(.975);\n  text-shadow:none;\n}'''
+          new_base = '''.speed-readout strong{\n  max-width:100%;\n  font-size:clamp(72px,6.2vw,102px);\n  font-weight:470;\n  letter-spacing:-.082em;\n  transform:scaleX(.94);\n  transform-origin:center;\n  text-shadow:none;\n}'''
+          if c.count(old_base) != 1:
+              raise SystemExit('base speed number rule mismatch')
+          c = c.replace(old_base, new_base)
+
+          old_tablet = '''  .speed-readout{transform:translateY(-21px)}\n  .speed-readout strong{font-size:88px}'''
+          new_tablet = '''  .speed-readout{transform:translateY(-18px)}\n  .speed-readout strong{font-size:74px;letter-spacing:-.078em;transform:scaleX(.92)}'''
+          if c.count(old_tablet) != 1:
+              raise SystemExit('tablet speed number rule mismatch')
+          c = c.replace(old_tablet, new_tablet)
+
+          old_mobile = '''  .speed-readout{transform:translateY(-18px)}\n  .speed-readout strong{font-size:82px;letter-spacing:-.1em;transform:scaleX(.98)}\n  .speed-readout small{letter-spacing:.18em}'''
+          new_mobile = '''  .speed-readout{transform:translateY(-15px)}\n  .speed-readout strong{font-size:68px;letter-spacing:-.075em;transform:scaleX(.91)}\n  .speed-readout small{letter-spacing:.18em}\n  .speed-readout i{margin-top:10px}'''
+          if c.count(old_mobile) != 1:
+              raise SystemExit('mobile speed number rule mismatch')
+          c = c.replace(old_mobile, new_mobile)
+          css.write_text(c)
+          PY
+      - name: Validate containment fix
+        shell: bash
+        run: |
+          node --check v4.js
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          html=Path('index.html').read_text()
+          css=Path('v4.css').read_text()
+          assert 'class="speedometer-center" cx="160" cy="160" r="78"' in html
+          assert 'v4.css?v=8' in html
+          assert 'font-size:68px;letter-spacing:-.075em;transform:scaleX(.91)' in css
+          assert css.count('{') == css.count('}')
+          ids=re.findall(r'\bid="([^"]+)"',html)
+          assert len(ids)==len(set(ids))
+          print('containment validation OK')
+          PY
+      - name: Commit calibrated instrument
+        shell: bash
+        run: |
+          rm -f .github/workflows/speedometer-containment-fix.yml
+          rmdir .github/workflows 2>/dev/null || true
+          rmdir .github 2>/dev/null || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "fix: keep Ride System speed values inside SVG dial"
+          git push origin HEAD:main

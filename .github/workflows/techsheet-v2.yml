@@ -1,0 +1,43 @@
+name: Tech Sheet V2
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/techsheet-v2.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply Tech Sheet V2
+        run: python .qa/techsheet-v2.py
+      - name: Validate production files
+        run: |
+          node --check v4.js
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          html=Path('index.html').read_text()
+          css=Path('v4.css').read_text()
+          ids=re.findall(r'id="([^"]+)"',html)
+          dup=[x for x in set(ids) if ids.count(x)>1]
+          assert not dup, f'duplicate ids: {dup}'
+          assert html.count('<dialog aria-labelledby="techTitle" class="tech-sheet" id="techSheet">')==1
+          assert 'ТЕХПАСПОРТ R1' in html
+          assert 'v4.css?v=17' in html
+          assert css.count('{')==css.count('}'), 'css braces mismatch'
+          print('validation ok')
+          PY
+      - name: Commit production update
+        run: |
+          rm -f .qa/techsheet-v2.py .github/workflows/techsheet-v2.yml
+          rmdir .qa 2>/dev/null || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "feat: rebuild Tech Sheet as Russian-first engineering card"
+          git push origin main

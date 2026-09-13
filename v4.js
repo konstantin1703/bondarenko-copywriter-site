@@ -518,3 +518,78 @@
     lightboxStage.addEventListener('touchcancel',settle,{passive:true});
   }
 })();
+
+/* VANTA R1 — Configurator 2026-09 */
+(()=>{
+  'use strict';
+  const root=document.getElementById('configurator');
+  if(!root)return;
+  const base={power:210,torque:390,mass:189,range:320,charge:18,price:32900};
+  const effects={
+    performance:{power:15,torque:20,range:-18,price:3900},
+    aero:{mass:2,range:-4,price:2600},
+    carbon:{mass:-8,price:4800},
+    range:{mass:7,range:45,price:4200},
+    fast:{charge:-3,price:1900},
+    telemetry:{price:1200}
+  };
+  const presets={
+    road:{label:'ROAD',modules:['fast','telemetry'],tone:'red'},
+    attack:{label:'ATTACK',modules:['performance','aero','carbon','telemetry'],tone:'red'},
+    range:{label:'RANGE',modules:['range','fast','carbon','telemetry'],tone:'green'}
+  };
+  let state={preset:'road',modules:new Set(presets.road.modules),tone:'red'};
+  const q=id=>document.getElementById(id);
+  const profileLabel=q('configProfileLabel'),moduleCount=q('configModuleCount'),code=q('configCode'),price=q('configPrice');
+  const stats={power:q('cfgPower'),torque:q('cfgTorque'),mass:q('cfgMass'),range:q('cfgRange'),charge:q('cfgCharge')};
+  const preview=q('configPreview'),save=q('configSave'),activate=q('configActivate'),activationBuild=q('activationBuild');
+  const presetButtons=[...root.querySelectorAll('[data-preset]')];
+  const moduleButtons=[...root.querySelectorAll('[data-module]')];
+  const toneButtons=[...root.querySelectorAll('[data-config-tone]')];
+  const money=n=>new Intl.NumberFormat('ru-RU',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n).replace(/ /g,' ');
+  const sameSet=(a,b)=>a.size===b.length&&b.every(x=>a.has(x));
+  const detectPreset=()=>Object.entries(presets).find(([,p])=>sameSet(state.modules,p.modules)&&state.tone===p.tone)?.[0]||'custom';
+  const calculate=()=>{
+    const out={...base};
+    state.modules.forEach(key=>{const e=effects[key]||{};Object.keys(e).forEach(k=>out[k]=(out[k]||0)+e[k]);});
+    return out;
+  };
+  const render=()=>{
+    state.preset=detectPreset();
+    const values=calculate();
+    const profile=state.preset==='custom'?'CUSTOM':presets[state.preset].label;
+    profileLabel.textContent=profile;
+    const count=state.modules.size;
+    moduleCount.textContent=`${count} ${count===1?'МОДУЛЬ':count<5?'МОДУЛЯ':'МОДУЛЕЙ'}`;
+    code.textContent=`R1-${profile}-${String(count).padStart(2,'0')}`;
+    price.textContent=money(values.price);
+    stats.power.textContent=`${values.power} кВт`;
+    stats.torque.textContent=`${values.torque} Н·м`;
+    stats.mass.textContent=`${values.mass} кг`;
+    stats.range.textContent=`${values.range} км`;
+    stats.charge.textContent=`${values.charge} мин`;
+    preview.dataset.tone=state.tone;
+    presetButtons.forEach(btn=>{const on=btn.dataset.preset===state.preset;btn.classList.toggle('active',on);btn.setAttribute('aria-pressed',String(on));});
+    moduleButtons.forEach(btn=>{const on=state.modules.has(btn.dataset.module);btn.setAttribute('aria-pressed',String(on));const status=btn.querySelector(':scope > i');if(status)status.textContent=on?'УСТАНОВЛЕНО':'ДОБАВИТЬ';});
+    toneButtons.forEach(btn=>{const on=btn.dataset.configTone===state.tone;btn.classList.toggle('active',on);btn.setAttribute('aria-pressed',String(on));});
+    if(activationBuild)activationBuild.textContent=`YOUR R1 / ${profile} / ${count} MODULES`;
+  };
+  const usePreset=key=>{const p=presets[key];if(!p)return;state={preset:key,modules:new Set(p.modules),tone:p.tone};render();};
+  presetButtons.forEach(btn=>btn.addEventListener('click',()=>usePreset(btn.dataset.preset)));
+  moduleButtons.forEach(btn=>btn.addEventListener('click',()=>{const key=btn.dataset.module;if(state.modules.has(key))state.modules.delete(key);else state.modules.add(key);render();}));
+  toneButtons.forEach(btn=>btn.addEventListener('click',()=>{state.tone=btn.dataset.configTone;render();}));
+  save?.addEventListener('click',()=>{
+    try{localStorage.setItem('vanta-r1-config',JSON.stringify({modules:[...state.modules],tone:state.tone}));}catch{}
+    const span=save.querySelector('span');if(span){const original='СОХРАНИТЬ CONFIG';span.textContent='CONFIG СОХРАНЁН';setTimeout(()=>span.textContent=original,1400);}
+  });
+  activate?.addEventListener('click',()=>{
+    const swatch=document.querySelector(`.sw[data-color="${state.tone}"]`);swatch?.click();
+    document.getElementById('activate')?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  });
+  try{
+    const saved=JSON.parse(localStorage.getItem('vanta-r1-config')||'null');
+    if(saved&&Array.isArray(saved.modules)){state.modules=new Set(saved.modules.filter(k=>effects[k]));state.tone=['red','green','stealth'].includes(saved.tone)?saved.tone:'red';}
+  }catch{}
+  render();
+})();
+

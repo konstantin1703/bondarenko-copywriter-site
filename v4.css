@@ -548,3 +548,102 @@ section[id]{scroll-margin-top:calc(var(--header) + 18px)}.header.scrolled .brand
 @media(max-width:980px){section[id]{scroll-margin-top:calc(var(--header) + 14px)}.signature,.signature-media{min-height:62svh}.signature-copy strong{font-size:clamp(46px,10vw,82px)}.rail{padding-inline:9vw;scroll-padding-inline:9vw;margin-left:calc(-1*var(--pad));margin-right:calc(-1*var(--pad))}.power-readout span:after,.power-readout b:before{font-size:7px}}
 @media(max-width:520px){.performance-copy h2,.section-head h2,.materials-copy h2,.gallery-head h2,.system-ui h2,.activate-copy h2{font-size:clamp(34px,9.7vw,40px);letter-spacing:-.035em;line-height:.98}.gallery-head{grid-template-columns:1fr!important;gap:18px}.gallery-toolbar{width:100%;margin:0!important;justify-content:space-between}.gallery-meta{width:100%!important;justify-items:start}.gallery-meta>i{width:132px}.rail{padding-inline:8vw;scroll-padding-inline:8vw;margin-left:-20px;margin-right:-20px}.signature,.signature-media{min-height:56svh}.signature-copy{width:calc(100% - 40px)}.signature-copy strong{font-size:clamp(42px,13vw,58px);max-width:8ch}.signature-copy span{font-size:9px}.tech-grid{grid-template-columns:repeat(2,1fr)}.tech-grid div{min-height:112px;padding:15px}.tech-grid strong{font-size:40px}.tech-sheet-panel{padding:20px}.tech-sheet{width:calc(100vw - 24px)}.tech-trigger{width:100%;margin-top:14px}}
 @media(prefers-reduced-motion:reduce){.signature-media img,.architecture-stage:before{transition:none!important}}
+
+/* VANTA R1 — merged mobile/signature hotfix 2026-09 */
+/* VANTA R1 — visual hotfix: clean architecture, coherent VOLT GREEN, editorial signature and live color recalibration */
+
+/* Green mode: shift the baked red lighting into one coherent green spectrum while preserving black/carbon neutrals. */
+.activation-stage.color-green .stage-inner img{filter:hue-rotate(118deg) brightness(.5) saturate(.84) contrast(1.035)!important}
+.activation-stage.stage-live.color-green .stage-inner img{filter:hue-rotate(118deg) brightness(.94) saturate(1.02) contrast(1.025)!important}
+.activation-stage.color-green .ambient{background:radial-gradient(circle at 48% 49%,rgba(38,224,122,.25),transparent 54%)}
+.activation-stage.color-green .beam{background:radial-gradient(ellipse,#f7fff9 0%,#2ee184 14%,rgba(46,225,132,.18) 35%,transparent 69%)}
+
+/* Live light-signature recalibration. The full boot remains exclusive to initial activation. */
+.activation-stage.stage-live.color-shifting .scan{opacity:1!important;background:linear-gradient(90deg,transparent 0 39%,rgba(255,58,42,0) 43%,rgba(255,78,58,.82) 50%,rgba(255,58,42,0) 57%,transparent 61%)!important;animation:vantaSignatureSweep .58s cubic-bezier(.2,.72,.2,1)!important}
+.activation-stage.stage-live.color-shifting .ambient{animation:vantaSignatureBloom .58s cubic-bezier(.2,.72,.2,1)!important}
+.activation-stage.stage-live.color-shifting .stage-inner img{animation:vantaSignatureSettle .58s cubic-bezier(.2,.72,.2,1)!important}
+.activation-stage.stage-live.color-shifting .beam{animation:vantaRedPulse .58s ease!important}
+.activation-stage.stage-live.color-green.color-shifting .scan{background:linear-gradient(90deg,transparent 0 38%,rgba(46,225,132,0) 43%,rgba(74,240,151,.92) 50%,rgba(46,225,132,0) 57%,transparent 62%)!important}
+.activation-stage.stage-live.color-green.color-shifting .ambient{animation:vantaGreenBloom .62s cubic-bezier(.2,.72,.2,1)!important}
+.activation-stage.stage-live.color-green.color-shifting .beam{animation:vantaGreenPulse .62s ease!important}
+.activation-stage.stage-live.color-stealth.color-shifting .scan{background:linear-gradient(90deg,transparent 0 40%,rgba(255,255,255,0) 44%,rgba(230,234,232,.55) 50%,rgba(255,255,255,0) 56%,transparent 60%)!important}
+.activation-stage.stage-live.color-stealth.color-shifting .ambient{animation:vantaStealthBloom .58s ease!important}
+.activation-stage.stage-live.color-stealth.color-shifting .beam{animation:vantaStealthPulse .58s ease!important}
+@keyframes vantaSignatureSweep{0%{transform:translateX(-118%);opacity:0}15%{opacity:.9}72%{opacity:.72}100%{transform:translateX(118%);opacity:0}}
+@keyframes vantaSignatureSettle{0%{opacity:.82;transform:scale(.992)}45%{opacity:.96;transform:scale(1.004)}100%{opacity:1;transform:scale(1)}}
+@keyframes vantaSignatureBloom{0%{opacity:.22}42%{opacity:.84}100%{opacity:.62}}
+@keyframes vantaGreenBloom{0%{opacity:.2}38%{opacity:.94}100%{opacity:.62}}
+@keyframes vantaStealthBloom{0%{opacity:.46}42%{opacity:.08}100%{opacity:.28}}
+@keyframes vantaRedPulse{0%,100%{opacity:.78}45%{opacity:1;filter:blur(2px)}}
+@keyframes vantaGreenPulse{0%,100%{opacity:.78}38%{opacity:1;filter:blur(2px)}}
+@keyframes vantaStealthPulse{0%{opacity:.5}45%{opacity:.08}100%{opacity:.38}}
+
+/* Signature scene: editorial layout instead of oversized English copy over the motorcycle. */
+.signature{padding:96px var(--pad) 0!important;background:#070707!important;overflow:hidden}
+.signature-media{position:relative!important;display:grid!important;grid-template-columns:minmax(250px,.58fr) minmax(0,1.42fr)!important;gap:clamp(34px,5vw,76px)!important;align-items:end!important;min-height:0!important;overflow:visible!important;background:#070707!important}
+.signature-media:before,.signature-media:after{content:none!important;display:none!important}
+.signature-media>img{position:static!important;grid-column:2;grid-row:1;width:100%!important;height:clamp(520px,57vw,760px)!important;object-fit:cover!important;object-position:center!important;opacity:1!important;filter:brightness(.94) contrast(1.045) saturate(.98)!important;transform:none!important}
+.signature-copy{position:static!important;inset:auto!important;grid-column:1;grid-row:1;align-self:end!important;z-index:2!important;padding:0 0 28px!important;max-width:620px!important;transform:none!important;text-align:left!important}
+.signature-copy small,.signature-copy strong{display:none!important}
+.signature-copy:before{content:"VANTA / ПРИНЦИП ДИЗАЙНА";display:block;margin-bottom:18px;font-size:9px;line-height:1;letter-spacing:.18em;color:#777b78;text-transform:uppercase}
+.signature-copy span{display:block!important;margin:0!important;font-family:"Manrope","Inter",sans-serif!important;font-size:clamp(46px,5.15vw,82px)!important;font-weight:800!important;line-height:.9!important;letter-spacing:-.055em!important;color:#f3f3ef!important;text-transform:uppercase!important;max-width:8.7ch!important}
+.signature-copy span:after{content:"Каждая грань работает на поток, жёсткость и контроль.";display:block;margin-top:24px;max-width:30ch;font-family:"Inter",sans-serif;font-size:13px;font-weight:400;line-height:1.55;letter-spacing:0;color:#8d918e;text-transform:none}
+
+/* Mobile architecture: keep the motorcycle image clean and move engineering callouts into a dedicated list below it. */
+@media(max-width:640px){
+  .architecture-stage{display:grid;grid-template-columns:1fr;overflow:hidden;background:#070707;border:0;margin-left:calc(-1*var(--pad));margin-right:calc(-1*var(--pad))}
+  .architecture-stage:before,.architecture-stage:after,.architecture-stage .callout-map{display:none!important}
+  .architecture-stage>img{grid-column:1;width:100%;aspect-ratio:1.2;object-fit:cover;border-top:1px solid #242424;border-bottom:1px solid #2a2a2a}
+  .architecture-stage .call,.architecture-stage .c1,.architecture-stage .c2,.architecture-stage .c3{position:static!important;inset:auto!important;width:100%;min-height:66px;display:grid!important;grid-template-columns:44px minmax(0,1fr);align-items:center;gap:0;padding:0 20px!important;margin:0;border:0;border-bottom:1px solid #242424;border-radius:0;background:#070707!important;color:#f0f0ec;text-align:left;opacity:1!important;filter:none!important;transform:none!important;box-shadow:none!important}
+  .architecture-stage .call:last-child{border-bottom:0}
+  .architecture-stage .call:after{display:none!important}
+  .architecture-stage .call b{align-self:stretch;display:flex;align-items:center;font-size:10px;letter-spacing:.12em;color:#ff3a2c;border-right:1px solid #2b2b2a}
+  .architecture-stage .call span{display:block;min-width:0;padding:12px 0 11px 16px!important;background:none!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;font-size:10px;line-height:1.15;letter-spacing:.12em;color:#efefeb;white-space:normal}
+  .architecture-stage .call small{display:block;margin-top:6px;font-size:8px;line-height:1.3;letter-spacing:.04em;color:#71716e;text-transform:none}
+  .architecture-stage.has-call-focus .call:not(.is-active){opacity:1!important;filter:none!important}
+  .architecture-stage .call.is-active{background:linear-gradient(90deg,rgba(255,46,27,.055),#070707 42%)!important;box-shadow:inset 2px 0 0 #ff3a2c!important}
+  .architecture-stage .call:focus-visible{outline:1px solid rgba(255,255,255,.5);outline-offset:-2px}
+}
+
+@media(max-width:980px){
+  .signature{padding:68px 0 0!important}
+  .signature-media{grid-template-columns:1fr!important;gap:28px!important}
+  .signature-copy{grid-column:1;grid-row:1;padding:0 var(--pad) 2px!important;max-width:none!important}
+  .signature-copy:before{margin-bottom:14px;font-size:8px}
+  .signature-copy span{font-size:clamp(42px,11vw,58px)!important;line-height:.91!important;max-width:9ch!important}
+  .signature-copy span:after{margin-top:18px;font-size:12px;max-width:29ch}
+  .signature-media>img{grid-column:1;grid-row:2;height:auto!important;aspect-ratio:.96;object-fit:cover!important;object-position:center!important;filter:brightness(1) contrast(1.035) saturate(.99)!important;border-top:1px solid #252525;border-bottom:1px solid #252525}
+}
+
+@media(max-width:520px){
+  .signature{padding-top:58px!important}
+  .signature-media{gap:24px!important}
+  .signature-copy span{font-size:clamp(40px,10.8vw,52px)!important;max-width:9.2ch!important}
+  .signature-media>img{aspect-ratio:.9;filter:brightness(1.03) contrast(1.025) saturate(1)!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .activation-stage.stage-live.color-shifting .scan,.activation-stage.stage-live.color-shifting .ambient,.activation-stage.stage-live.color-shifting .stage-inner img,.activation-stage.stage-live.color-shifting .beam{animation:none!important}
+}
+
+
+/* VANTA R1 — Final Product QA Pass 2026-09 */
+.spec-strip{border-bottom:1px solid #202220;background:linear-gradient(180deg,rgba(255,255,255,.012),rgba(255,255,255,.002))}
+.spec-strip>div{position:relative;padding-left:18px;padding-right:18px}
+.spec-strip>div:first-child{padding-left:0}.spec-strip>div+div:before{content:"";position:absolute;left:0;top:21%;bottom:21%;width:1px;background:#252725}
+.spec-strip strong{font-variant-numeric:tabular-nums lining-nums;font-weight:520}.spec-strip span{display:block;margin-top:5px;line-height:1.35;color:#858985}
+.hero-media img{filter:contrast(1.045) saturate(.96) brightness(1.015)}
+.facts b{font-variant-numeric:tabular-nums lining-nums;transition:color .28s ease,text-shadow .28s ease}.facts.is-counting b{color:#fff;text-shadow:0 0 16px rgba(255,46,27,.1)}
+.rail figure img{cursor:zoom-in;-webkit-tap-highlight-color:transparent}
+.gallery-lightbox{position:fixed;z-index:300;inset:0;width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:rgba(3,3,3,.96);color:#f4f4f0;overflow:hidden}
+.gallery-lightbox::backdrop{background:#030303}.gallery-lightbox[open]{display:grid;grid-template-rows:auto 1fr auto}
+.gallery-lightbox-head{height:68px;padding:0 max(20px,env(safe-area-inset-left)) 0 max(20px,env(safe-area-inset-right));display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #252525;background:rgba(5,5,5,.92);backdrop-filter:blur(14px)}
+.gallery-lightbox-count{font-size:9px;letter-spacing:.18em;color:#8c918d;font-variant-numeric:tabular-nums}.gallery-lightbox-close{width:44px;height:44px;border:1px solid #373a37;background:#090a09;color:#eee;border-radius:50%;font-size:24px;line-height:1;cursor:pointer}
+.gallery-lightbox-stage{position:relative;min-height:0;display:grid;place-items:center;overflow:hidden;padding:22px 76px}.gallery-lightbox-stage img{max-width:min(1320px,100%);max-height:calc(100dvh - 170px);width:auto;height:auto;object-fit:contain;filter:none!important;transform:none!important;user-select:none;-webkit-user-drag:none}
+.gallery-lightbox-nav{position:absolute;top:50%;translate:0 -50%;width:48px;height:48px;border-radius:50%;border:1px solid #3a3c3a;background:rgba(5,5,5,.72);color:#eee;font-size:22px;cursor:pointer;backdrop-filter:blur(8px)}.gallery-lightbox-prev{left:18px}.gallery-lightbox-next{right:18px}.gallery-lightbox-nav:disabled{opacity:.2;pointer-events:none}
+.gallery-lightbox-caption{min-height:78px;padding:15px max(22px,env(safe-area-inset-left)) calc(15px + env(safe-area-inset-bottom)) max(22px,env(safe-area-inset-right));border-top:1px solid #252525;display:grid;grid-template-columns:auto 1fr;gap:10px 24px;align-items:center;background:#060706}
+.gallery-lightbox-caption strong{font-size:10px;letter-spacing:.13em;font-weight:600;color:#f1f1ed}.gallery-lightbox-caption span{justify-self:end;font-size:9px;color:#858985;line-height:1.4}body.gallery-open{overflow:hidden}
+@media(max-width:980px){.spec-strip>div:first-child{padding-left:var(--pad)}.spec-strip>div+div:before{top:18%;bottom:18%}.gallery-lightbox-head{height:62px}.gallery-lightbox-stage{padding:16px 16px 10px}.gallery-lightbox-stage img{max-height:calc(100dvh - 164px);max-width:100%}.gallery-lightbox-nav{top:auto;bottom:14px;translate:0;width:44px;height:44px;background:rgba(5,5,5,.84)}.gallery-lightbox-prev{left:16px}.gallery-lightbox-next{right:16px}.gallery-lightbox-caption{min-height:92px;padding-right:72px;padding-left:72px;grid-template-columns:1fr;gap:5px;text-align:center}.gallery-lightbox-caption span{justify-self:center}}
+@media(max-width:520px){html,body{max-width:100%;overflow-x:hidden}.hero{min-height:100svh}.hero-copy p{max-width:30ch}.hero .spec-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.spec-strip>div{min-width:0;padding:14px 12px}.spec-strip>div:nth-child(odd){padding-left:20px}.spec-strip>div:nth-child(even){padding-right:20px}.spec-strip>div:nth-child(3):before{content:none}.spec-strip>div:nth-child(n+3){border-top:1px solid #202220}.spec-strip strong{font-size:28px}.spec-strip span{font-size:7.5px;letter-spacing:.09em}.facts{gap:13px}.facts span{line-height:1.35}.facts b{font-size:19px}.rail figure img{cursor:default}}
+@media(max-width:390px){.hero-copy h1.hero-title{font-size:clamp(39px,11.7vw,46px)!important}.performance-copy h2,.section-head h2,.materials-copy h2,.gallery-head h2,.system-ui h2,.activate-copy h2{font-size:clamp(32px,9.15vw,37px)!important}.gallery-lightbox-stage{padding-left:10px;padding-right:10px}}
+@media(prefers-reduced-motion:reduce){.facts b,.gallery-lightbox *{transition:none!important;animation:none!important}}

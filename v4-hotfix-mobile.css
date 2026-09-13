@@ -1,0 +1,22 @@
+/* VANTA R1 — iPhone hotfix: clean architecture callouts + coherent VOLT GREEN */
+/* Green mode: shift the baked red lighting into one coherent green spectrum while preserving black/carbon neutrals. */
+.activation-stage.color-green .stage-inner img{filter:hue-rotate(118deg) brightness(.5) saturate(.84) contrast(1.035)!important}
+.activation-stage.stage-live.color-green .stage-inner img{filter:hue-rotate(118deg) brightness(.94) saturate(1.02) contrast(1.025)!important}
+.activation-stage.color-green .ambient{background:radial-gradient(circle at 48% 49%,rgba(38,224,122,.25),transparent 54%)}
+.activation-stage.color-green .beam{background:radial-gradient(ellipse,#f7fff9 0%,#2ee184 14%,rgba(46,225,132,.18) 35%,transparent 69%)}
+
+/* Mobile architecture: keep the motorcycle image clean and move engineering callouts into a dedicated list below it. */
+@media(max-width:640px){
+  .architecture-stage{display:grid;grid-template-columns:1fr;overflow:hidden;background:#070707;border:0;margin-left:calc(-1*var(--pad));margin-right:calc(-1*var(--pad))}
+  .architecture-stage:before,.architecture-stage:after,.architecture-stage .callout-map{display:none!important}
+  .architecture-stage>img{grid-column:1;width:100%;aspect-ratio:1.2;object-fit:cover;border-top:1px solid #242424;border-bottom:1px solid #2a2a2a}
+  .architecture-stage .call,.architecture-stage .c1,.architecture-stage .c2,.architecture-stage .c3{position:static!important;inset:auto!important;width:100%;min-height:66px;display:grid!important;grid-template-columns:44px minmax(0,1fr);align-items:center;gap:0;padding:0 20px!important;margin:0;border:0;border-bottom:1px solid #242424;border-radius:0;background:#070707!important;color:#f0f0ec;text-align:left;opacity:1!important;filter:none!important;transform:none!important;box-shadow:none!important}
+  .architecture-stage .call:last-child{border-bottom:0}
+  .architecture-stage .call:after{display:none!important}
+  .architecture-stage .call b{align-self:stretch;display:flex;align-items:center;font-size:10px;letter-spacing:.12em;color:#ff3a2c;border-right:1px solid #2b2b2a}
+  .architecture-stage .call span{display:block;min-width:0;padding:12px 0 11px 16px!important;background:none!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;font-size:10px;line-height:1.15;letter-spacing:.12em;color:#efefeb;white-space:normal}
+  .architecture-stage .call small{display:block;margin-top:6px;font-size:8px;line-height:1.3;letter-spacing:.04em;color:#71716e;text-transform:none}
+  .architecture-stage.has-call-focus .call:not(.is-active){opacity:1!important;filter:none!important}
+  .architecture-stage .call.is-active{background:linear-gradient(90deg,rgba(255,46,27,.055),#070707 42%)!important;box-shadow:inset 2px 0 0 #ff3a2c!important}
+  .architecture-stage .call:focus-visible{outline:1px solid rgba(255,255,255,.5);outline-offset:-2px}
+}

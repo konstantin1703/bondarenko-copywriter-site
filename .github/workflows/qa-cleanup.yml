@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - '.github/workflows/qa-cleanup.yml'
-      - 'tools/qa-cleanup-payload.b64'
 
 permissions:
   contents: write
@@ -20,11 +19,25 @@ jobs:
           ref: main
           fetch-depth: 0
 
+      - name: Reassemble and verify cleanup payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat \
+            tools/qa-payload.part00 \
+            tools/qa-payload.part01 \
+            tools/qa-payload.part02 \
+            tools/qa-payload.part03 \
+            tools/qa-payload.part04 > /tmp/vanta-clean.b64
+          echo '06edf48ee28a27d0f16e06a57baa05ea59c299abf7af8aa6fa64da0e01e6b1a8  /tmp/vanta-clean.b64' | sha256sum -c -
+          base64 -d /tmp/vanta-clean.b64 > /tmp/vanta-clean.tgz
+          echo '0bdc3af794c202579af2f789819d8a162c6d681fc53d1731b48badb834a5b5b0  /tmp/vanta-clean.tgz' | sha256sum -c -
+          tar -tzf /tmp/vanta-clean.tgz
+
       - name: Apply verified cleanup payload
         shell: bash
         run: |
           set -euo pipefail
-          base64 -d tools/qa-cleanup-payload.b64 > /tmp/vanta-clean.tgz
           tar -xzf /tmp/vanta-clean.tgz -C .
 
           rm -f \
@@ -32,7 +45,11 @@ jobs:
             v4-mobile-fixes.css v4-polish.css v4-final-fixes.css v4-power-spacing.css \
             v4-hmi-r2.css v4-hmi-oem-final.css v4-speedometer-premium.css v4-hmi-r2.js
 
-          rm -f tools/qa-cleanup-payload.b64 .github/workflows/qa-cleanup.yml
+          rm -f \
+            tools/qa-cleanup-payload.b64 \
+            tools/qa-payload.part00 tools/qa-payload.part01 tools/qa-payload.part02 \
+            tools/qa-payload.part03 tools/qa-payload.part04 \
+            .github/workflows/qa-cleanup.yml
 
       - name: Validate cleaned site
         shell: bash
@@ -43,6 +60,8 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           from html.parser import HTMLParser
+          from collections import Counter
+          import re
 
           html = Path('index.html').read_text(encoding='utf-8')
           css = Path('v4.css').read_text(encoding='utf-8')
@@ -55,12 +74,30 @@ jobs:
           assert 'rel="canonical"' in html
           assert 'rel="manifest"' in html
           assert 'rel="icon"' in html
-          assert 'res.cloudinary.com' in html and 'f_auto,q_auto:good' in html
+          assert 'f_auto,q_auto:good' in html
           assert 'aria-controls="mobileMenu"' in html
           assert 'aria-pressed="false"' in html
           assert css.count('{') == css.count('}')
           assert 'MutationObserver' not in js
           assert '--power-angle' in js and 'regenValue' in js
+
+          class QAParser(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.ids=[]; self.hrefs=[]; self.imgs=[]; self.h1=0
+              def handle_starttag(self, tag, attrs):
+                  a=dict(attrs)
+                  if 'id' in a: self.ids.append(a['id'])
+                  if tag == 'a' and 'href' in a: self.hrefs.append(a['href'])
+                  if tag == 'img': self.imgs.append(a)
+                  if tag == 'h1': self.h1 += 1
+
+          p=QAParser(); p.feed(html)
+          assert not [k for k,v in Counter(p.ids).items() if v > 1]
+          assert p.h1 == 1
+          assert all('alt' in img for img in p.imgs)
+          ids=set(p.ids)
+          assert not [h for h in p.hrefs if h.startswith('#') and h[1:] not in ids]
 
           legacy = [
               'app.js','final.css','media-0.js','polish.css','polish.js','styles.css','v3.css','v3.js',

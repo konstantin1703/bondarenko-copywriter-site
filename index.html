@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Inter+Tight:wght@500;600;700;800;900&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://konstantin1703.github.io/bondarenko-copywriter-site/" rel="canonical"/><link href="favicon.svg" rel="icon" type="image/svg+xml"/><link href="site.webmanifest" rel="manifest"/><link href="https://res.cloudinary.com" rel="preconnect"/><meta content="https://konstantin1703.github.io/bondarenko-copywriter-site/" property="og:url"/><meta content="summary_large_image" name="twitter:card"/><meta content="VANTA R1 — Electric Superbike Concept" name="twitter:title"/><meta content="Оригинальный электрический superbike-концепт VANTA R1." name="twitter:description"/><meta content="https://res.cloudinary.com/dg9shucn/image/upload/f_auto,q_auto:good,c_limit,w_1200/v1789101691/vanta-r1-hq-hero-v2.png" name="twitter:image"/><link href="v4.css?v=20" rel="stylesheet"/></head>
+<link href="https://konstantin1703.github.io/bondarenko-copywriter-site/" rel="canonical"/><link href="favicon.svg" rel="icon" type="image/svg+xml"/><link href="site.webmanifest" rel="manifest"/><link href="https://res.cloudinary.com" rel="preconnect"/><meta content="https://konstantin1703.github.io/bondarenko-copywriter-site/" property="og:url"/><meta content="summary_large_image" name="twitter:card"/><meta content="VANTA R1 — Electric Superbike Concept" name="twitter:title"/><meta content="Оригинальный электрический superbike-концепт VANTA R1." name="twitter:description"/><meta content="https://res.cloudinary.com/dg9shucn/image/upload/f_auto,q_auto:good,c_limit,w_1200/v1789101691/vanta-r1-hq-hero-v2.png" name="twitter:image"/><link href="v4.css?v=21" rel="stylesheet"/></head>
 <body>
 <div aria-hidden="true" class="progress" id="progress"></div>
 <header class="header" id="header">
@@ -145,11 +145,12 @@
 <section class="configurator chapter" id="configurator">
   <div class="config-head reveal">
     <div>
-      <div class="eyebrow">07 / R1 CONFIGURATOR / YOUR R1</div>
-      <h2>Собери свой<br/><em>характер R1.</em></h2>
+      <div class="eyebrow">07 / R1 CONFIGURATOR / BUILD SYSTEM</div>
+      <h2>Собери свой<br/><em>R1.</em></h2>
     </div>
-    <p>Выбери характер, установи нужные модули и сразу увидишь честный инженерный баланс: мощность, момент, масса, запас хода, зарядка и стоимость меняются вместе с конфигурацией.</p>
+    <p>Начни с заводского характера, добавь инженерные пакеты и сразу увидишь, как каждый выбор меняет динамику, массу, дальность и итоговую стоимость.</p>
   </div>
+
   <div class="config-layout">
     <div class="config-preview reveal">
       <div class="config-preview-media" data-tone="red" id="configPreview">
@@ -157,47 +158,55 @@
         <div class="config-preview-glow" aria-hidden="true"></div>
         <div class="config-preview-id"><small>YOUR R1</small><strong id="configProfileLabel">ROAD</strong><span id="configModuleCount">2 МОДУЛЯ</span></div>
       </div>
+
       <div class="config-summary" aria-live="polite">
-        <div class="config-summary-top"><span><small>CONFIGURATION</small><strong id="configCode">R1-ROAD-02</strong></span><span class="config-price"><small>CONCEPT PRICE</small><strong id="configPrice">€36 000</strong></span></div>
+        <div class="config-summary-top">
+          <span><small>BUILD CODE</small><strong id="configCode">R1-RD-SR-FC-TL</strong></span>
+          <span class="config-price"><small>CONCEPT PRICE</small><strong id="configPrice">€36 000</strong></span>
+        </div>
+        <div class="config-character"><small>ХАРАКТЕР СБОРКИ</small><strong id="configCharacter">Сбалансированный / дорожный / быстрая зарядка</strong></div>
+        <div class="config-compare-label"><span>BASE R1</span><span>YOUR R1</span></div>
         <div class="config-stats">
           <span><small>МОЩНОСТЬ</small><b id="cfgPower">210 кВт</b><em id="cfgPowerDelta">BASE</em></span>
           <span><small>МОМЕНТ</small><b id="cfgTorque">390 Н·м</b><em id="cfgTorqueDelta">BASE</em></span>
           <span><small>МАССА</small><b id="cfgMass">189 кг</b><em id="cfgMassDelta">BASE</em></span>
           <span><small>ЗАПАС</small><b id="cfgRange">320 км</b><em id="cfgRangeDelta">BASE</em></span>
-          <span><small>10→80%</small><b id="cfgCharge">15 мин</b><em id="cfgChargeDelta">−3 мин</em></span>
+          <span><small>10→80%</small><b id="cfgCharge">14 мин</b><em id="cfgChargeDelta">−4 мин</em></span>
         </div>
-        <div class="config-balance"><span>BASELINE</span><b>210 кВт / 390 Н·м / 189 кг / 320 км / 18 мин</b></div>
+        <div class="config-balance"><span>БАЗОВАЯ КОНФИГУРАЦИЯ</span><b>210 кВт · 390 Н·м · 189 кг · 320 км · 18 мин</b></div>
+        <div class="config-active-build"><div><small>ACTIVE BUILD</small><strong>УСТАНОВЛЕННЫЕ МОДУЛИ</strong></div><div id="configActiveModules"></div></div>
       </div>
     </div>
 
     <div class="config-panel reveal">
-      <section class="config-step">
-        <div class="config-step-head"><b>01</b><div><strong>ХАРАКТЕР</strong><small>RIDE PROFILE</small></div></div>
+      <section class="config-step config-step-profile">
+        <div class="config-step-head"><b>01</b><div><strong>ХАРАКТЕР</strong><small>FACTORY PROFILE</small></div></div>
         <div class="config-presets" aria-label="Профиль R1">
-          <button class="active" data-preset="road" aria-pressed="true"><span>ДОРОГА</span><small>ROAD</small><i>баланс</i></button>
-          <button data-preset="attack" aria-pressed="false"><span>ТРЕК</span><small>ATTACK</small><i>максимум</i></button>
-          <button data-preset="range" aria-pressed="false"><span>ЭКО</span><small>RANGE</small><i>дальность</i></button>
+          <button class="active" data-preset="road" aria-pressed="true"><span>ДОРОГА</span><small>ROAD</small><p>Баланс отклика, зарядки и повседневной дальности.</p><i>FACTORY</i></button>
+          <button data-preset="attack" aria-pressed="false"><span>ТРЕК</span><small>ATTACK</small><p>Максимальная отдача, меньше массы, жёстче характер.</p><i>FACTORY</i></button>
+          <button data-preset="range" aria-pressed="false"><span>ЭКО</span><small>RANGE</small><p>Приоритет дальности, эффективности и энергетического цикла.</p><i>FACTORY</i></button>
         </div>
+        <div class="factory-setup"><small>FACTORY SETUP</small><strong id="configFactoryCopy">FAST CHARGE 800V + RIDER TELEMETRY</strong></div>
       </section>
 
       <section class="config-step">
-        <div class="config-step-head"><b>02</b><div><strong>МОДУЛИ</strong><small>ENGINEERING OPTIONS</small></div></div>
+        <div class="config-step-head"><b>02</b><div><strong>ИНЖЕНЕРНЫЕ ПАКЕТЫ</strong><small>ENGINEERING OPTIONS</small></div></div>
         <div class="config-modules">
-          <button class="config-module" data-module="performance" aria-pressed="false"><span class="config-module-copy"><strong>PERFORMANCE PACK</strong><small>Усиленная силовая электроника и охлаждение.</small></span><span class="config-effect">+18 кВт · +30 Н·м · +3 кг · −16 км</span><span class="config-module-price">+€3 900</span><i>ДОБАВИТЬ</i></button>
-          <button class="config-module" data-module="aero" aria-pressed="false"><span class="config-module-copy"><strong>ACTIVE AERO</strong><small>Активная аэродинамика: стабильность и низкое сопротивление.</small></span><span class="config-effect">+2 кг · +6 км</span><span class="config-module-price">+€2 600</span><i>ДОБАВИТЬ</i></button>
-          <button class="config-module" data-module="carbon" aria-pressed="false"><span class="config-module-copy"><strong>CARBON STRUCTURE</strong><small>Расширенный пакет кованого карбона и облегчённых узлов.</small></span><span class="config-effect">−9 кг</span><span class="config-module-price">+€4 800</span><i>ДОБАВИТЬ</i></button>
-          <button class="config-module" data-module="range" aria-pressed="false"><span class="config-module-copy"><strong>RANGE SYSTEM</strong><small>Увеличенный энергетический пакет для дальних маршрутов.</small></span><span class="config-effect">+52 км · +12 кг · +2 мин</span><span class="config-module-price">+€4 200</span><i>ДОБАВИТЬ</i></button>
-          <button class="config-module" data-module="fast" aria-pressed="true"><span class="config-module-copy"><strong>FAST CHARGE 800V</strong><small>Расширенный профиль термоконтроля и быстрой зарядки.</small></span><span class="config-effect">18 → 14 мин</span><span class="config-module-price">+€1 900</span><i>УСТАНОВЛЕНО</i></button>
-          <button class="config-module" data-module="telemetry" aria-pressed="true"><span class="config-module-copy"><strong>RIDER TELEMETRY</strong><small>Расширенные данные поездки, состояния систем и экспорт сессии.</small></span><span class="config-effect">DATA+</span><span class="config-module-price">+€1 200</span><i>УСТАНОВЛЕНО</i></button>
+          <button class="config-module" data-module="performance" aria-pressed="false"><span class="module-index">P01</span><span class="config-module-copy"><strong>PERFORMANCE PACK</strong><small>Усиленная силовая электроника, охлаждение и более резкий профиль отдачи.</small></span><span class="config-effect">+18 кВт · +30 Н·м · +3 кг · −16 км</span><span class="config-module-price">+€3 900</span><i>ДОБАВИТЬ</i></button>
+          <button class="config-module" data-module="aero" aria-pressed="false"><span class="module-index">A02</span><span class="config-module-copy"><strong>ACTIVE AERO</strong><small>Активная аэродинамика для стабильности и снижения сопротивления на скорости.</small></span><span class="config-effect">+2 кг · +6 км</span><span class="config-module-price">+€2 600</span><i>ДОБАВИТЬ</i></button>
+          <button class="config-module" data-module="carbon" aria-pressed="false"><span class="module-index">C03</span><span class="config-module-copy"><strong>CARBON STRUCTURE</strong><small>Кованый карбон и облегчённые узлы для снижения массы.</small></span><span class="config-effect">−9 кг</span><span class="config-module-price">+€4 800</span><i>ДОБАВИТЬ</i></button>
+          <button class="config-module" data-module="range" aria-pressed="false"><span class="module-index">R04</span><span class="config-module-copy"><strong>RANGE SYSTEM</strong><small>Увеличенный энергетический пакет для дальних маршрутов.</small></span><span class="config-effect">+52 км · +12 кг · +2 мин</span><span class="config-module-price">+€4 200</span><i>ДОБАВИТЬ</i></button>
+          <button class="config-module" data-module="fast" aria-pressed="true"><span class="module-index">F05</span><span class="config-module-copy"><strong>FAST CHARGE 800V</strong><small>Расширенный термоконтроль и ускоренный зарядный профиль.</small></span><span class="config-effect">18 → 14 мин</span><span class="config-module-price">+€1 900</span><i>УСТАНОВЛЕНО</i></button>
+          <button class="config-module" data-module="telemetry" aria-pressed="true"><span class="module-index">T06</span><span class="config-module-copy"><strong>RIDER TELEMETRY</strong><small>Данные поездки, состояние систем и расширенная аналитика сессии.</small></span><span class="config-effect">DATA+</span><span class="config-module-price">+€1 200</span><i>УСТАНОВЛЕНО</i></button>
         </div>
       </section>
 
       <section class="config-step">
         <div class="config-step-head"><b>03</b><div><strong>СВЕТОВАЯ ПОДПИСЬ</strong><small>LIGHT SIGNATURE</small></div></div>
         <div class="config-finishes" aria-label="Световая подпись конфигуратора">
-          <button class="active" data-config-tone="red" aria-pressed="true"><i></i><span>SIGNAL RED</span></button>
-          <button data-config-tone="green" aria-pressed="false"><i></i><span>VOLT GREEN</span></button>
-          <button data-config-tone="stealth" aria-pressed="false"><i></i><span>STEALTH</span></button>
+          <button class="active" data-config-tone="red" aria-pressed="true"><i></i><span><b>SIGNAL RED</b><small>агрессивный акцент</small></span></button>
+          <button data-config-tone="green" aria-pressed="false"><i></i><span><b>VOLT GREEN</b><small>энергетический акцент</small></span></button>
+          <button data-config-tone="stealth" aria-pressed="false"><i></i><span><b>STEALTH</b><small>минимальная световая графика</small></span></button>
         </div>
       </section>
 
@@ -205,7 +214,7 @@
         <button class="config-save" id="configSave" type="button"><span>СОХРАНИТЬ CONFIG</span><i>+</i></button>
         <button class="config-request" id="configRequest" type="button"><span>ПЕРЕЙТИ К ЗАЯВКЕ</span><i>→</i></button>
       </div>
-      <p class="config-note">Демонстрационный конфигуратор: стоимость и параметры относятся к fictional product-concept VANTA R1 и не являются коммерческим предложением.</p>
+      <p class="config-note">VANTA R1 / CONFIGURATION SYSTEM · параметры и стоимость относятся к концептуальной конфигурации проекта.</p>
     </div>
   </div>
 </section>
@@ -216,7 +225,7 @@
       <div class="eyebrow">08 / REQUEST / APPLICATION</div>
       <h2>Зафиксируй<br/><em>свой R1.</em></h2>
     </div>
-    <p>Финальный демонстрационный шаг: контактные данные, страна и адрес. Ничего не отправляется — форма существует только внутри portfolio-сценария.</p>
+    <p>Контактные данные и адрес — последний шаг перед фиксацией выбранной конфигурации R1.</p>
   </div>
 
   <div class="request-layout">
@@ -228,20 +237,20 @@
       </div>
 
       <section class="request-step active" data-request-step="1">
-        <div class="request-step-title"><b>01</b><div><strong>КОНТАКТНЫЕ ДАННЫЕ</strong><small>Кому принадлежит конфигурация</small></div></div>
+        <div class="request-step-title"><b>01</b><div><strong>КОНТАКТНЫЕ ДАННЫЕ</strong><small>Данные владельца конфигурации</small></div></div>
         <div class="request-fields two-col">
           <label class="request-field"><span>ИМЯ</span><input id="reqFirst" name="firstName" autocomplete="given-name" required placeholder="Иван"/></label>
           <label class="request-field"><span>ФАМИЛИЯ</span><input id="reqLast" name="lastName" autocomplete="family-name" required placeholder="Иванов"/></label>
           <label class="request-field full"><span>EMAIL</span><input id="reqEmail" name="email" autocomplete="email" inputmode="email" type="email" required placeholder="name@example.com"/></label>
-          <div class="request-field full"><span>ТЕЛЕФОН</span><div class="phone-combo"><button class="phone-prefix" id="phoneRegionButton" type="button" aria-haspopup="dialog"><span id="phoneFlag">🌐</span><b id="phoneDial">КОД</b><i>⌄</i></button><input id="reqPhone" name="phone" autocomplete="tel-national" inputmode="tel" required placeholder="Номер телефона"/></div><small class="field-hint" id="phoneHint">Выбери регион номера — например 🇷🇺 Россия +7.</small></div>
+          <div class="request-field full"><span>ТЕЛЕФОН</span><div class="phone-combo"><button class="phone-prefix" id="phoneRegionButton" type="button" aria-haspopup="dialog"><span class="region-symbol is-empty" id="phoneFlag" aria-hidden="true"></span><b id="phoneDial">Код</b><i>⌄</i></button><input id="reqPhone" name="phone" autocomplete="tel-national" inputmode="tel" required placeholder="Номер телефона"/></div><small class="field-hint" id="phoneHint">Выбери страну или телефонный код.</small></div>
         </div>
         <div class="request-controls"><span></span><button class="request-next" type="button" data-request-next="2">ПРОДОЛЖИТЬ <i>→</i></button></div>
       </section>
 
       <section class="request-step" data-request-step="2" hidden>
-        <div class="request-step-title"><b>02</b><div><strong>АДРЕС</strong><small>Демонстрационные данные доставки</small></div></div>
+        <div class="request-step-title"><b>02</b><div><strong>АДРЕС</strong><small>Адрес доставки R1</small></div></div>
         <div class="request-fields two-col">
-          <div class="request-field full"><span>СТРАНА</span><button class="country-button" id="countryButton" type="button" aria-haspopup="dialog"><span id="countryFlag">🌐</span><b id="countryName">ВЫБЕРИ СТРАНУ</b><i>⌄</i></button><small class="field-error" id="countryError"></small></div>
+          <div class="request-field full"><span>СТРАНА</span><button class="country-button" id="countryButton" type="button" aria-haspopup="dialog"><span class="region-symbol is-empty" id="countryFlag" aria-hidden="true"></span><b id="countryName">ВЫБЕРИ СТРАНУ</b><i>⌄</i></button><small class="field-error" id="countryError"></small></div>
           <label class="request-field"><span>РЕГИОН / ОБЛАСТЬ / ШТАТ</span><input id="reqRegion" name="region" autocomplete="address-level1" placeholder="Регион"/></label>
           <label class="request-field"><span>ГОРОД</span><input id="reqCity" name="city" autocomplete="address-level2" required placeholder="Город"/></label>
           <label class="request-field"><span>ИНДЕКС</span><input id="reqPostal" name="postal" autocomplete="postal-code" required placeholder="000000"/></label>
@@ -252,13 +261,12 @@
       </section>
 
       <section class="request-step" data-request-step="3" hidden>
-        <div class="request-step-title"><b>03</b><div><strong>ПРОВЕРКА ЗАЯВКИ</strong><small>Ничего не отправится в сеть</small></div></div>
+        <div class="request-step-title"><b>03</b><div><strong>ПРОВЕРКА ЗАЯВКИ</strong><small>Проверь данные перед подтверждением</small></div></div>
         <div class="request-review">
           <article><small>КОНТАКТ</small><strong id="reviewName">—</strong><span id="reviewContact">—</span></article>
           <article><small>ДОСТАВКА</small><strong id="reviewCountry">—</strong><span id="reviewAddress">—</span></article>
-          <article class="request-review-config"><small>КОНФИГУРАЦИЯ</small><strong id="reviewConfig">R1-ROAD-02</strong><span id="reviewModules">—</span></article>
+          <article class="request-review-config"><small>КОНФИГУРАЦИЯ</small><strong id="reviewConfig">—</strong><span id="reviewModules">—</span></article>
         </div>
-        <div class="request-privacy"><i></i><p><b>DEMO ONLY.</b> Поля используются только для интерактивной презентации. Данные не сохраняются и не отправляются.</p></div>
         <div class="request-controls"><button class="request-back" type="button" data-request-back="2">← НАЗАД</button><button class="request-submit" type="submit">ПОДТВЕРДИТЬ ЗАЯВКУ <i>→</i></button></div>
       </section>
 
@@ -266,25 +274,26 @@
         <div class="request-lock-mark"><i></i><span>R1 / REQUEST SYSTEM</span></div>
         <small>CONFIGURATION LOCKED</small>
         <h3>ЗАЯВКА<br/>СФОРМИРОВАНА.</h3>
-        <p>Это демонстрационное подтверждение portfolio-сценария. Конфигурация зафиксирована локально только на экране — никакие персональные данные не передавались.</p>
-        <div class="request-code"><span>REQUEST ID</span><b id="requestCode">VR1-0000</b></div>
+        <p>Конфигурация R1 закреплена за заявкой. Система готова перейти к активации выбранного профиля.</p>
+        <div class="request-code"><span>REQUEST ID</span><b id="requestCode">—</b></div>
         <button class="request-to-activation" id="requestToActivation" type="button"><span>АКТИВИРОВАТЬ СВОЙ R1</span><i>→</i></button>
       </section>
     </form>
 
     <aside class="request-summary reveal" aria-live="polite">
+      <div class="request-summary-kicker"><span></span>YOUR CONFIGURATION</div>
       <div class="request-bike" data-tone="red" id="requestBike"><img alt="VANTA R1 — выбранная конфигурация" loading="lazy" decoding="async" src="https://res.cloudinary.com/dg9shucn/image/upload/f_auto,q_auto:good,c_limit,w_900/v1789100635/vanta-r1-hq-side.jpg"/><div></div></div>
       <div class="request-summary-head"><span><small>YOUR R1</small><strong id="requestProfile">ROAD</strong></span><span><small>CONCEPT PRICE</small><strong id="requestPrice">€36 000</strong></span></div>
       <div class="request-summary-stats"><span><small>POWER</small><b id="requestPower">210 кВт</b></span><span><small>MASS</small><b id="requestMass">189 кг</b></span><span><small>RANGE</small><b id="requestRange">320 км</b></span></div>
-      <div class="request-summary-modules"><small>УСТАНОВЛЕНО</small><div id="requestModules"></div></div>
-      <div class="request-summary-code"><span>CONFIG</span><b id="requestConfigCode">R1-ROAD-02</b></div>
+      <div class="request-summary-modules"><small>ACTIVE BUILD</small><div id="requestModules"></div></div>
+      <div class="request-summary-code"><span>BUILD CODE</span><b id="requestConfigCode">R1-RD-SR-FC-TL</b></div>
     </aside>
   </div>
 
   <dialog class="region-picker" id="regionPicker" aria-labelledby="regionPickerTitle">
     <div class="region-picker-panel">
       <header><div><small>REGION DATABASE</small><strong id="regionPickerTitle">ВЫБЕРИ СТРАНУ</strong></div><button id="regionPickerClose" type="button" aria-label="Закрыть выбор страны">×</button></header>
-      <label class="region-search"><span>⌕</span><input id="regionSearch" type="search" autocomplete="off" placeholder="Поиск страны или кода +7"/></label>
+      <label class="region-search"><span aria-hidden="true"></span><input id="regionSearch" type="search" autocomplete="off" placeholder="Страна или код +7"/></label>
       <div class="region-list" id="regionList" role="listbox"></div>
     </div>
   </dialog>
@@ -292,9 +301,9 @@
 
 <section class="activate chapter" id="activate">
 <div class="activate-copy reveal">
-<div class="eyebrow">09 / ACTIVATION / DEMO</div>
+<div class="eyebrow">09 / ACTIVATION / SYSTEM</div>
 <h2>Готов к первому<br/><em>импульсу?</em></h2>
-<p>Запусти демонстрационный режим: оптика проснётся, световая система активируется, а цветовой характер сцены изменится.</p>
+<p>Запусти R1: оптика проснётся, световая система активируется, а выбранный характер сцены перейдёт в рабочий режим.</p>
 <div class="activation-build" id="activationBuild">YOUR R1 / ROAD / 2 MODULES</div>
 <div aria-label="Цветовой режим" class="swatches"><button aria-label="Красная подсветка" aria-pressed="true" class="sw active" data-color="red"></button><button aria-label="Зелёная подсветка" aria-pressed="false" class="sw" data-color="green"></button><button aria-label="Stealth Black" aria-pressed="false" class="sw" data-color="stealth"></button></div><div aria-live="polite" class="activation-config"><small>CONFIG / LIGHT SIGNATURE</small><strong id="finishName">SIGNAL RED</strong><span id="finishDesc">Фирменная красная световая подпись.</span></div>
 </div>
@@ -307,39 +316,52 @@
 </section>
 </main>
 <dialog aria-labelledby="techTitle" class="tech-sheet" id="techSheet">
-<div class="tech-sheet-panel tech-sheet-v2">
-<div class="tech-sheet-head">
-  <div class="tech-sheet-titleblock">
-    <small>R1 / TECH SHEET / ENGINEERING DATA</small>
-    <h2 id="techTitle">ТЕХПАСПОРТ R1</h2>
-    <p>Ключевые целевые параметры концепта — что означает каждая цифра и на что она влияет.</p>
+<div class="tech-sheet-panel tech-profile-v3">
+  <div class="tech-sheet-head tech-profile-head">
+    <div class="tech-sheet-titleblock">
+      <small>R1 / ENGINEERING PROFILE / CORE DATA</small>
+      <h2 id="techTitle">ИНЖЕНЕРНЫЙ<br/>ПРОФИЛЬ R1</h2>
+      <p>Шесть параметров, которые формируют отклик, тягу, энергетический цикл, массу и практическую дальность R1.</p>
+    </div>
+    <button aria-label="Закрыть инженерный профиль" id="techClose" type="button">×</button>
   </div>
-  <button aria-label="Закрыть технические характеристики" id="techClose" type="button">×</button>
-</div>
-<div class="tech-grid tech-grid-v2">
-  <section class="tech-group" aria-label="Привод">
-    <header class="tech-group-head"><b>01</b><div><h3>ПРИВОД</h3><small>DRIVE SYSTEM</small></div></header>
-    <div class="tech-metric"><div class="tech-value"><strong>210</strong><em>кВт</em></div><span class="tech-label">Пиковая мощность</span><p>Максимальная целевая отдача электрического привода.</p></div>
-    <div class="tech-metric"><div class="tech-value"><strong>390</strong><em>Н·м</em></div><span class="tech-label">Крутящий момент</span><p>Тяга доступна практически сразу после открытия газа.</p></div>
-  </section>
-  <section class="tech-group" aria-label="Энергосистема">
-    <header class="tech-group-head"><b>02</b><div><h3>ЭНЕРГОСИСТЕМА</h3><small>ENERGY SYSTEM</small></div></header>
-    <div class="tech-metric"><div class="tech-value"><strong>800</strong><em>V</em></div><span class="tech-label">Высоковольтная архитектура</span><p>Основа для высокой мощности и эффективной быстрой зарядки.</p></div>
-    <div class="tech-metric"><div class="tech-value"><strong>18</strong><em>мин</em></div><span class="tech-label">Зарядка 10→80%</span><p>Целевое время на совместимой станции быстрой зарядки.</p></div>
-  </section>
-  <section class="tech-group" aria-label="Параметры мотоцикла">
-    <header class="tech-group-head"><b>03</b><div><h3>ПАРАМЕТРЫ</h3><small>VEHICLE TARGETS</small></div></header>
-    <div class="tech-metric"><div class="tech-value"><strong>189</strong><em>кг</em></div><span class="tech-label">Целевая масса</span><p>Расчётная масса R1 в концептуальной инженерной конфигурации.</p></div>
-    <div class="tech-metric"><div class="tech-value"><strong>320</strong><em>км</em></div><span class="tech-label">Запас хода</span><p>Расчётный целевой диапазон движения на одном заряде.</p></div>
-  </section>
-</div>
-<div class="tech-meaning">
-  <div><small>ЧТО ОПРЕДЕЛЯЮТ ЭТИ ПАРАМЕТРЫ</small><strong>Цифры описывают характер R1.</strong></div>
-  <p><b>210 кВт + 390 Н·м</b> отвечают за ускорение и тягу. <b>800 V + 18 мин</b> — за энергетическую архитектуру и скорость зарядки. <b>189 кг + 320 км</b> показывают баланс массы и практического запаса хода.</p>
-  <span>Все значения — целевые параметры демонстрационного concept-проекта, а не сертифицированные характеристики серийной модели.</span>
-</div>
+
+  <div class="tech-profile-groups">
+    <section class="tech-profile-group">
+      <header><b>01</b><div><h3>ПРИВОД</h3><small>DRIVE SYSTEM</small></div></header>
+      <div class="tech-profile-metrics">
+        <article><div class="tech-profile-value"><strong>210</strong><em>кВт</em></div><h4>Пиковая мощность</h4><p>Максимальная целевая отдача электрического привода.</p></article>
+        <article><div class="tech-profile-value"><strong>390</strong><em>Н·м</em></div><h4>Крутящий момент</h4><p>Тяга доступна практически сразу после открытия газа.</p></article>
+      </div>
+      <div class="tech-profile-impact"><small>ЧТО ЭТО ДАЁТ</small><p>Мгновенный отклик и высокий темп разгона без паузы на переключения.</p></div>
+    </section>
+
+    <section class="tech-profile-group">
+      <header><b>02</b><div><h3>ЭНЕРГОСИСТЕМА</h3><small>ENERGY SYSTEM</small></div></header>
+      <div class="tech-profile-metrics">
+        <article><div class="tech-profile-value"><strong>800</strong><em>В</em></div><h4>Высоковольтная архитектура</h4><p>Основа для высокой мощности и эффективной быстрой зарядки.</p></article>
+        <article><div class="tech-profile-value"><strong>18</strong><em>мин</em></div><h4>Зарядка 10→80%</h4><p>Целевой энергетический цикл на совместимой DC-станции.</p></article>
+      </div>
+      <div class="tech-profile-impact"><small>ЧТО ЭТО ДАЁТ</small><p>Высокую скорость восстановления заряда и устойчивую отдачу силовой системы.</p></div>
+    </section>
+
+    <section class="tech-profile-group">
+      <header><b>03</b><div><h3>ХОДОВОЙ ПРОФИЛЬ</h3><small>VEHICLE PROFILE</small></div></header>
+      <div class="tech-profile-metrics">
+        <article><div class="tech-profile-value"><strong>189</strong><em>кг</em></div><h4>Целевая масса</h4><p>Расчётная масса базовой инженерной конфигурации R1.</p></article>
+        <article><div class="tech-profile-value"><strong>320</strong><em>км</em></div><h4>Запас хода</h4><p>Расчётная дальность базовой конфигурации на одном заряде.</p></article>
+      </div>
+      <div class="tech-profile-impact"><small>ЧТО ЭТО ДАЁТ</small><p>Баланс между управляемостью, плотностью компоновки и практической дальностью.</p></div>
+    </section>
+  </div>
+
+  <div class="tech-conclusion">
+    <div><small>ИНЖЕНЕРНЫЙ ИТОГ</small><strong>Характер R1 складывается не из одной большой цифры.</strong></div>
+    <p><b>210 кВт и 390 Н·м</b> формируют отклик и тягу. <b>800 В и 18 минут</b> определяют энергетический темп. <b>189 кг и 320 км</b> задают баланс динамики, массы и реальной дальности.</p>
+  </div>
 </div>
 </dialog>
+
 <footer><a class="brand" href="#top"><span>V</span><span>A</span><span>N</span><span>T</span><span>A</span><sup>R1</sup></a><p>VANTA R1 — вымышленный демонстрационный product-concept. Все изображения мотоцикла созданы специально для этого проекта.</p><span>CONCEPT / 2026</span></footer>
-<script defer src="v4.js?v=12"></script></body>
+<script defer src="v4.js?v=13"></script></body>
 </html>

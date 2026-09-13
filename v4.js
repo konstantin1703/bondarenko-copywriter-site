@@ -519,145 +519,109 @@
   }
 })();
 
-/* VANTA R1 — Configurator V2 + Request Flow 2026-09 */
+/* VANTA R1 — Configurator V3 + Request V2 2026-09 */
 (()=>{
   'use strict';
   const root=document.getElementById('configurator');
   if(!root)return;
   const base={power:210,torque:390,mass:189,range:320,charge:18,price:32900};
   const effects={
-    performance:{power:18,torque:30,mass:3,range:-16,price:3900,label:'PERFORMANCE PACK'},
-    aero:{mass:2,range:6,price:2600,label:'ACTIVE AERO'},
-    carbon:{mass:-9,price:4800,label:'CARBON STRUCTURE'},
-    range:{mass:12,range:52,charge:2,price:4200,label:'RANGE SYSTEM'},
-    fast:{charge:-4,price:1900,label:'FAST CHARGE 800V'},
-    telemetry:{price:1200,label:'RIDER TELEMETRY'}
+    performance:{power:18,torque:30,mass:3,range:-16,price:3900,label:'PERFORMANCE PACK',code:'PF'},
+    aero:{mass:2,range:6,price:2600,label:'ACTIVE AERO',code:'AA'},
+    carbon:{mass:-9,price:4800,label:'CARBON STRUCTURE',code:'CF'},
+    range:{mass:12,range:52,charge:2,price:4200,label:'RANGE SYSTEM',code:'RG'},
+    fast:{charge:-4,price:1900,label:'FAST CHARGE 800V',code:'FC'},
+    telemetry:{price:1200,label:'RIDER TELEMETRY',code:'TL'}
   };
   const presets={
-    road:{label:'ROAD',modules:['fast','telemetry'],tone:'red'},
-    attack:{label:'ATTACK',modules:['performance','aero','carbon','telemetry'],tone:'red'},
-    range:{label:'RANGE',modules:['range','fast','carbon','telemetry'],tone:'green'}
+    road:{label:'ROAD',short:'RD',modules:['fast','telemetry'],tone:'red',factory:'FAST CHARGE 800V + RIDER TELEMETRY'},
+    attack:{label:'ATTACK',short:'AT',modules:['performance','aero','carbon','telemetry'],tone:'red',factory:'PERFORMANCE + ACTIVE AERO + CARBON + TELEMETRY'},
+    range:{label:'RANGE',short:'RG',modules:['range','fast','carbon','telemetry'],tone:'green',factory:'RANGE SYSTEM + FAST CHARGE + CARBON + TELEMETRY'}
   };
+  const toneCodes={red:'SR',green:'VG',stealth:'ST'};
   let state={preset:'road',modules:new Set(presets.road.modules),tone:'red'};
   const q=id=>document.getElementById(id);
   const profileLabel=q('configProfileLabel'),moduleCount=q('configModuleCount'),code=q('configCode'),price=q('configPrice');
   const stats={power:q('cfgPower'),torque:q('cfgTorque'),mass:q('cfgMass'),range:q('cfgRange'),charge:q('cfgCharge')};
   const deltas={power:q('cfgPowerDelta'),torque:q('cfgTorqueDelta'),mass:q('cfgMassDelta'),range:q('cfgRangeDelta'),charge:q('cfgChargeDelta')};
   const preview=q('configPreview'),save=q('configSave'),request=q('configRequest'),activationBuild=q('activationBuild');
-  const presetButtons=[...root.querySelectorAll('[data-preset]')];
-  const moduleButtons=[...root.querySelectorAll('[data-module]')];
-  const toneButtons=[...root.querySelectorAll('[data-config-tone]')];
+  const activeModules=q('configActiveModules'),characterNode=q('configCharacter'),factoryCopy=q('configFactoryCopy');
+  const presetButtons=[...root.querySelectorAll('[data-preset]')],moduleButtons=[...root.querySelectorAll('[data-module]')],toneButtons=[...root.querySelectorAll('[data-config-tone]')];
   const money=n=>new Intl.NumberFormat('ru-RU',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n).replace(/ /g,' ');
   const sameSet=(a,b)=>a.size===b.length&&b.every(x=>a.has(x));
   const detectPreset=()=>Object.entries(presets).find(([,p])=>sameSet(state.modules,p.modules)&&state.tone===p.tone)?.[0]||'custom';
-  const calculate=()=>{
-    const out={...base};
-    state.modules.forEach(key=>{const e=effects[key]||{};['power','torque','mass','range','charge','price'].forEach(k=>{if(typeof e[k]==='number')out[k]+=e[k];});});
-    return out;
-  };
-  const signed=(value,unit,{inverse=false}={})=>{
-    if(!value)return 'BASE';
-    const good=inverse?value<0:value>0;
-    return {text:`${value>0?'+':'−'}${Math.abs(value)} ${unit}`,good};
+  const calculate=()=>{const out={...base};state.modules.forEach(key=>{const e=effects[key]||{};['power','torque','mass','range','charge','price'].forEach(k=>{if(typeof e[k]==='number')out[k]+=e[k];});});return out;};
+  const signed=(value,unit,{inverse=false}={})=>{if(!value)return 'BASE';const good=inverse?value<0:value>0;return {text:`${value>0?'+':'−'}${Math.abs(value)} ${unit}`,good};};
+  const buildCharacter=(profile,modules)=>{
+    const parts=[];
+    if(profile==='ATTACK'||modules.includes('performance'))parts.push('агрессивный');
+    else if(profile==='RANGE'||modules.includes('range'))parts.push('дальний');
+    else parts.push('сбалансированный');
+    if(modules.includes('carbon'))parts.push('облегчённый');
+    if(modules.includes('fast'))parts.push('быстрая зарядка');
+    if(modules.includes('aero'))parts.push('активная аэродинамика');
+    if(modules.includes('telemetry'))parts.push('телеметрия');
+    return parts.slice(0,3).join(' / ');
   };
   const snapshot=()=>{
-    const values=calculate();
-    const preset=detectPreset();
-    const profile=preset==='custom'?'CUSTOM':presets[preset].label;
-    const modules=[...state.modules];
-    return {profile,preset,modules,tone:state.tone,values,code:`R1-${profile}-${String(modules.length).padStart(2,'0')}`,price:money(values.price),moduleLabels:modules.map(k=>effects[k]?.label||k)};
+    const values=calculate(),preset=detectPreset(),profile=preset==='custom'?'CUSTOM':presets[preset].label,modules=[...state.modules];
+    const profileCode=preset==='custom'?'CU':presets[preset].short;
+    const moduleCode=modules.map(k=>effects[k]?.code).filter(Boolean).join('-')||'BASE';
+    return {profile,preset,modules,tone:state.tone,values,code:`R1-${profileCode}-${toneCodes[state.tone]}-${moduleCode}`,price:money(values.price),moduleLabels:modules.map(k=>effects[k]?.label||k),character:buildCharacter(profile,modules)};
   };
-  const paintDelta=(node,value,unit,options)=>{
-    if(!node)return;
-    const d=signed(value,unit,options);
-    node.textContent=typeof d==='string'?d:d.text;
-    node.classList.remove('is-positive','is-negative');
-    if(typeof d!=='string')node.classList.add(d.good?'is-positive':'is-negative');
-  };
+  const paintDelta=(node,value,unit,options)=>{if(!node)return;const d=signed(value,unit,options);node.textContent=typeof d==='string'?d:d.text;node.classList.remove('is-positive','is-negative');if(typeof d!=='string')node.classList.add(d.good?'is-positive':'is-negative');};
   const render=()=>{
-    state.preset=detectPreset();
-    const snap=snapshot(),v=snap.values;
-    profileLabel.textContent=snap.profile;
-    const count=snap.modules.length;
-    moduleCount.textContent=`${count} ${count===1?'МОДУЛЬ':count<5?'МОДУЛЯ':'МОДУЛЕЙ'}`;
-    code.textContent=snap.code;price.textContent=snap.price;
+    state.preset=detectPreset();const snap=snapshot(),v=snap.values,count=snap.modules.length;
+    profileLabel.textContent=snap.profile;moduleCount.textContent=`${count} ${count===1?'МОДУЛЬ':count<5?'МОДУЛЯ':'МОДУЛЕЙ'}`;code.textContent=snap.code;price.textContent=snap.price;
     stats.power.textContent=`${v.power} кВт`;stats.torque.textContent=`${v.torque} Н·м`;stats.mass.textContent=`${v.mass} кг`;stats.range.textContent=`${v.range} км`;stats.charge.textContent=`${v.charge} мин`;
     paintDelta(deltas.power,v.power-base.power,'кВт');paintDelta(deltas.torque,v.torque-base.torque,'Н·м');paintDelta(deltas.mass,v.mass-base.mass,'кг',{inverse:true});paintDelta(deltas.range,v.range-base.range,'км');paintDelta(deltas.charge,v.charge-base.charge,'мин',{inverse:true});
-    preview.dataset.tone=state.tone;
+    preview.dataset.tone=state.tone;if(characterNode)characterNode.textContent=snap.character;
+    if(activeModules)activeModules.innerHTML=snap.moduleLabels.length?snap.moduleLabels.map(x=>`<span>${x}</span>`).join(''):'<span>BASE R1</span>';
+    if(factoryCopy)factoryCopy.textContent=state.preset==='custom'?'CUSTOM BUILD — ручная конфигурация':presets[state.preset].factory;
     presetButtons.forEach(btn=>{const on=btn.dataset.preset===state.preset;btn.classList.toggle('active',on);btn.setAttribute('aria-pressed',String(on));});
     moduleButtons.forEach(btn=>{const on=state.modules.has(btn.dataset.module);btn.setAttribute('aria-pressed',String(on));const status=btn.querySelector(':scope > i');if(status)status.textContent=on?'УСТАНОВЛЕНО':'ДОБАВИТЬ';});
     toneButtons.forEach(btn=>{const on=btn.dataset.configTone===state.tone;btn.classList.toggle('active',on);btn.setAttribute('aria-pressed',String(on));});
     if(activationBuild)activationBuild.textContent=`YOUR R1 / ${snap.profile} / ${count} MODULES`;
-    window.dispatchEvent(new CustomEvent('vanta:configchange',{detail:snap}));
-    return snap;
+    window.dispatchEvent(new CustomEvent('vanta:configchange',{detail:snap}));return snap;
   };
   const usePreset=key=>{const p=presets[key];if(!p)return;state={preset:key,modules:new Set(p.modules),tone:p.tone};render();};
   presetButtons.forEach(btn=>btn.addEventListener('click',()=>usePreset(btn.dataset.preset)));
   moduleButtons.forEach(btn=>btn.addEventListener('click',()=>{const key=btn.dataset.module;if(state.modules.has(key))state.modules.delete(key);else state.modules.add(key);render();}));
   toneButtons.forEach(btn=>btn.addEventListener('click',()=>{state.tone=btn.dataset.configTone;render();}));
-  save?.addEventListener('click',()=>{
-    try{localStorage.setItem('vanta-r1-config',JSON.stringify({modules:[...state.modules],tone:state.tone}));}catch{}
-    const span=save.querySelector('span');if(span){const original='СОХРАНИТЬ CONFIG';span.textContent='CONFIG СОХРАНЁН';setTimeout(()=>span.textContent=original,1400);}
-  });
+  save?.addEventListener('click',()=>{try{localStorage.setItem('vanta-r1-config',JSON.stringify({modules:[...state.modules],tone:state.tone}));}catch{}const span=save.querySelector('span');if(span){const original='СОХРАНИТЬ CONFIG';span.textContent='CONFIG СОХРАНЁН';setTimeout(()=>span.textContent=original,1400);}});
   request?.addEventListener('click',()=>document.getElementById('request')?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}));
   try{const saved=JSON.parse(localStorage.getItem('vanta-r1-config')||'null');if(saved&&Array.isArray(saved.modules)){state.modules=new Set(saved.modules.filter(k=>effects[k]));state.tone=['red','green','stealth'].includes(saved.tone)?saved.tone:'red';}}catch{}
-  window.vantaConfig={getSnapshot:snapshot,setTone:t=>{if(['red','green','stealth'].includes(t)){state.tone=t;render();}},render};
-  render();
+  window.vantaConfig={getSnapshot:snapshot,setTone:t=>{if(['red','green','stealth'].includes(t)){state.tone=t;render();}},render};render();
 })();
 
 (()=>{
   'use strict';
-  const section=document.getElementById('request');
-  const form=document.getElementById('requestForm');
-  if(!section||!form)return;
+  const section=document.getElementById('request'),form=document.getElementById('requestForm');if(!section||!form)return;
   const q=id=>document.getElementById(id);
-  const countries=[
-    ['RU','Россия','+7'],['KZ','Казахстан','+7'],['BY','Беларусь','+375'],['DE','Германия','+49'],['FR','Франция','+33'],['IT','Италия','+39'],['ES','Испания','+34'],['PT','Португалия','+351'],['GB','Великобритания','+44'],['IE','Ирландия','+353'],['NL','Нидерланды','+31'],['BE','Бельгия','+32'],['LU','Люксембург','+352'],['CH','Швейцария','+41'],['AT','Австрия','+43'],['PL','Польша','+48'],['CZ','Чехия','+420'],['SK','Словакия','+421'],['HU','Венгрия','+36'],['RO','Румыния','+40'],['BG','Болгария','+359'],['GR','Греция','+30'],['CY','Кипр','+357'],['MT','Мальта','+356'],['HR','Хорватия','+385'],['SI','Словения','+386'],['RS','Сербия','+381'],['ME','Черногория','+382'],['BA','Босния и Герцеговина','+387'],['MK','Северная Македония','+389'],['AL','Албания','+355'],['EE','Эстония','+372'],['LV','Латвия','+371'],['LT','Литва','+370'],['FI','Финляндия','+358'],['SE','Швеция','+46'],['NO','Норвегия','+47'],['DK','Дания','+45'],['IS','Исландия','+354'],['MD','Молдова','+373'],['GE','Грузия','+995'],['AM','Армения','+374'],['AZ','Азербайджан','+994'],['UZ','Узбекистан','+998'],['TR','Турция','+90'],['IL','Израиль','+972'],['AE','ОАЭ','+971'],['SA','Саудовская Аравия','+966'],['QA','Катар','+974'],['IN','Индия','+91'],['CN','Китай','+86'],['JP','Япония','+81'],['KR','Южная Корея','+82'],['SG','Сингапур','+65'],['TH','Таиланд','+66'],['VN','Вьетнам','+84'],['ID','Индонезия','+62'],['MY','Малайзия','+60'],['AU','Австралия','+61'],['NZ','Новая Зеландия','+64'],['US','США','+1'],['CA','Канада','+1'],['MX','Мексика','+52'],['BR','Бразилия','+55'],['AR','Аргентина','+54'],['CL','Чили','+56'],['CO','Колумбия','+57'],['ZA','ЮАР','+27'],['EG','Египет','+20'],['MA','Марокко','+212']
-  ].map(([iso,name,dial])=>({iso,name,dial}));
+  const countries=[['RU','Россия','+7'],['KZ','Казахстан','+7'],['BY','Беларусь','+375'],['DE','Германия','+49'],['FR','Франция','+33'],['IT','Италия','+39'],['ES','Испания','+34'],['PT','Португалия','+351'],['GB','Великобритания','+44'],['IE','Ирландия','+353'],['NL','Нидерланды','+31'],['BE','Бельгия','+32'],['LU','Люксембург','+352'],['CH','Швейцария','+41'],['AT','Австрия','+43'],['PL','Польша','+48'],['CZ','Чехия','+420'],['SK','Словакия','+421'],['HU','Венгрия','+36'],['RO','Румыния','+40'],['BG','Болгария','+359'],['GR','Греция','+30'],['CY','Кипр','+357'],['MT','Мальта','+356'],['HR','Хорватия','+385'],['SI','Словения','+386'],['RS','Сербия','+381'],['ME','Черногория','+382'],['BA','Босния и Герцеговина','+387'],['MK','Северная Македония','+389'],['AL','Албания','+355'],['EE','Эстония','+372'],['LV','Латвия','+371'],['LT','Литва','+370'],['FI','Финляндия','+358'],['SE','Швеция','+46'],['NO','Норвегия','+47'],['DK','Дания','+45'],['IS','Исландия','+354'],['MD','Молдова','+373'],['GE','Грузия','+995'],['AM','Армения','+374'],['AZ','Азербайджан','+994'],['UZ','Узбекистан','+998'],['TR','Турция','+90'],['IL','Израиль','+972'],['AE','ОАЭ','+971'],['SA','Саудовская Аравия','+966'],['QA','Катар','+974'],['IN','Индия','+91'],['CN','Китай','+86'],['JP','Япония','+81'],['KR','Южная Корея','+82'],['SG','Сингапур','+65'],['TH','Таиланд','+66'],['VN','Вьетнам','+84'],['ID','Индонезия','+62'],['MY','Малайзия','+60'],['AU','Австралия','+61'],['NZ','Новая Зеландия','+64'],['US','США','+1'],['CA','Канада','+1'],['MX','Мексика','+52'],['BR','Бразилия','+55'],['AR','Аргентина','+54'],['CL','Чили','+56'],['CO','Колумбия','+57'],['ZA','ЮАР','+27'],['EG','Египет','+20'],['MA','Марокко','+212']].map(([iso,name,dial])=>({iso,name,dial}));
   const flag=iso=>String.fromCodePoint(...iso.toUpperCase().split('').map(c=>127397+c.charCodeAt()));
-  const countryButton=q('countryButton'),countryFlag=q('countryFlag'),countryName=q('countryName'),countryError=q('countryError');
-  const phoneButton=q('phoneRegionButton'),phoneFlag=q('phoneFlag'),phoneDial=q('phoneDial'),phone=q('reqPhone'),phoneHint=q('phoneHint');
-  const picker=q('regionPicker'),pickerTitle=q('regionPickerTitle'),pickerClose=q('regionPickerClose'),search=q('regionSearch'),list=q('regionList');
+  const countryButton=q('countryButton'),countryFlag=q('countryFlag'),countryName=q('countryName'),countryError=q('countryError'),phoneButton=q('phoneRegionButton'),phoneFlag=q('phoneFlag'),phoneDial=q('phoneDial'),phone=q('reqPhone'),phoneHint=q('phoneHint');
+  const picker=q('regionPicker'),pickerTitle=q('regionPickerTitle'),pickerClose=q('regionPickerClose'),search=q('regionSearch'),list=q('regionList'),complete=q('requestComplete'),progress=form.querySelector('.request-progress');
   let pickerMode='country',deliveryCountry=null,phoneCountry=null,phoneManual=false,currentStep=1,currentConfig=window.vantaConfig?.getSnapshot?.()||null;
   const fields={first:q('reqFirst'),last:q('reqLast'),email:q('reqEmail'),region:q('reqRegion'),city:q('reqCity'),postal:q('reqPostal'),address:q('reqAddress'),address2:q('reqAddress2')};
   const steps=[...form.querySelectorAll('[data-request-step]')],nav=[...form.querySelectorAll('[data-request-nav]')];
   const moduleNames={performance:'Performance Pack',aero:'Active Aero',carbon:'Carbon Structure',range:'Range System',fast:'Fast Charge 800V',telemetry:'Rider Telemetry'};
-  const formatNational=(raw,iso)=>{
-    const d=raw.replace(/\D/g,'').slice(0,14);
-    if(!d)return '';
-    if(iso==='RU'||iso==='KZ'){return [d.slice(0,3),d.slice(3,6),d.slice(6,8),d.slice(8,10)].filter(Boolean).join(d.length>6?'-':' ')}
-    if(iso==='US'||iso==='CA'){const a=d.slice(0,3),b=d.slice(3,6),c=d.slice(6,10);return `${a?`(${a}${a.length===3?') ':''}`:''}${b}${c?`-${c}`:''}`.trim()}
-    return d.replace(/(\d{3})(?=\d)/g,'$1 ').trim();
-  };
-  phone?.addEventListener('input',()=>{const pos=phone.selectionStart||0;phone.value=formatNational(phone.value,phoneCountry?.iso||'');try{phone.setSelectionRange(phone.value.length,phone.value.length)}catch{}});
-  const renderPicker=(query='')=>{
-    const needle=query.trim().toLocaleLowerCase('ru');
-    const rows=countries.filter(c=>!needle||c.name.toLocaleLowerCase('ru').includes(needle)||c.dial.includes(needle)||c.iso.toLowerCase()===needle);
-    list.innerHTML=rows.length?rows.map(c=>`<button class="region-option" type="button" role="option" data-iso="${c.iso}"><span class="flag">${flag(c.iso)}</span><strong>${c.name}</strong><small>${c.dial}</small></button>`).join(''):'<div class="region-empty">Ничего не найдено</div>';
-  };
-  const openPicker=mode=>{
-    pickerMode=mode;pickerTitle.textContent=mode==='country'?'ВЫБЕРИ СТРАНУ':'КОД ТЕЛЕФОНА';search.value='';renderPicker();
-    if(picker.showModal)picker.showModal();else picker.setAttribute('open','');setTimeout(()=>search.focus(),50);
-  };
-  const closePicker=()=>picker.close?.();
-  countryButton?.addEventListener('click',()=>openPicker('country'));phoneButton?.addEventListener('click',()=>openPicker('phone'));pickerClose?.addEventListener('click',closePicker);search?.addEventListener('input',()=>renderPicker(search.value));
-  picker?.addEventListener('click',e=>{if(e.target===picker){closePicker();return;}const btn=e.target.closest('.region-option');if(!btn)return;const c=countries.find(x=>x.iso===btn.dataset.iso);if(!c)return;if(pickerMode==='country'){deliveryCountry=c;countryFlag.textContent=flag(c.iso);countryName.textContent=c.name.toUpperCase();countryButton.classList.remove('is-invalid');countryError.textContent='';if(!phoneManual){phoneCountry=c;phoneFlag.textContent=flag(c.iso);phoneDial.textContent=c.dial;phoneHint.textContent=`${c.name} ${c.dial} · код выбран по стране доставки.`;phone.value=formatNational(phone.value,c.iso);}}else{phoneCountry=c;phoneManual=true;phoneFlag.textContent=flag(c.iso);phoneDial.textContent=c.dial;phoneHint.textContent=`${c.name} ${c.dial} · регион номера выбран вручную.`;phone.value=formatNational(phone.value,c.iso);}closePicker();});
-  const setStep=n=>{currentStep=n;steps.forEach(s=>{const on=Number(s.dataset.requestStep)===n;s.hidden=!on;s.classList.toggle('active',on);});nav.forEach(b=>{const x=Number(b.dataset.requestNav),on=x===n;b.classList.toggle('active',on);b.classList.toggle('complete',x<n);b.toggleAttribute('aria-current',on);});if(n===3)fillReview();};
+  const formatNational=(raw,iso)=>{const d=raw.replace(/\D/g,'').slice(0,14);if(!d)return '';if(iso==='RU'||iso==='KZ')return [d.slice(0,3),d.slice(3,6),d.slice(6,8),d.slice(8,10)].filter(Boolean).join(d.length>6?'-':' ');if(iso==='US'||iso==='CA'){const a=d.slice(0,3),b=d.slice(3,6),c=d.slice(6,10);return `${a?`(${a}${a.length===3?') ':''}`:''}${b}${c?`-${c}`:''}`.trim()}return d.replace(/(\d{3})(?=\d)/g,'$1 ').trim();};
+  phone?.addEventListener('input',()=>{phone.value=formatNational(phone.value,phoneCountry?.iso||'');try{phone.setSelectionRange(phone.value.length,phone.value.length)}catch{}});
+  const renderPicker=(query='')=>{const needle=query.trim().toLocaleLowerCase('ru');const rows=countries.filter(c=>!needle||c.name.toLocaleLowerCase('ru').includes(needle)||c.dial.includes(needle)||c.iso.toLowerCase()===needle);list.innerHTML=rows.length?rows.map(c=>`<button class="region-option" type="button" role="option" data-iso="${c.iso}"><span class="flag">${flag(c.iso)}</span><strong>${c.name}</strong><small>${c.dial}</small></button>`).join(''):'<div class="region-empty">Ничего не найдено</div>';};
+  const openPicker=mode=>{pickerMode=mode;pickerTitle.textContent=mode==='country'?'ВЫБЕРИ СТРАНУ':'КОД ТЕЛЕФОНА';search.value='';renderPicker();if(picker.showModal)picker.showModal();else picker.setAttribute('open','');setTimeout(()=>search.focus(),50);};
+  const closePicker=()=>picker.close?.();countryButton?.addEventListener('click',()=>openPicker('country'));phoneButton?.addEventListener('click',()=>openPicker('phone'));pickerClose?.addEventListener('click',closePicker);search?.addEventListener('input',()=>renderPicker(search.value));
+  const setFlag=(node,c)=>{node.classList.remove('is-empty');node.textContent=flag(c.iso);};
+  picker?.addEventListener('click',e=>{if(e.target===picker){closePicker();return;}const btn=e.target.closest('.region-option');if(!btn)return;const c=countries.find(x=>x.iso===btn.dataset.iso);if(!c)return;if(pickerMode==='country'){deliveryCountry=c;setFlag(countryFlag,c);countryName.textContent=c.name.toUpperCase();countryButton.classList.remove('is-invalid');countryError.textContent='';if(!phoneManual){phoneCountry=c;setFlag(phoneFlag,c);phoneDial.textContent=c.dial;phoneHint.textContent=`${c.name} ${c.dial}`;phone.value=formatNational(phone.value,c.iso);}}else{phoneCountry=c;phoneManual=true;setFlag(phoneFlag,c);phoneDial.textContent=c.dial;phoneHint.textContent=`${c.name} ${c.dial}`;phone.value=formatNational(phone.value,c.iso);}closePicker();});
+  const setStep=n=>{currentStep=n;if(complete)complete.hidden=true;if(progress)progress.hidden=false;steps.forEach(s=>{const on=Number(s.dataset.requestStep)===n;s.hidden=!on;s.classList.toggle('active',on);});nav.forEach(b=>{const x=Number(b.dataset.requestNav),on=x===n;b.classList.toggle('active',on);b.classList.toggle('complete',x<n);b.toggleAttribute('aria-current',on);});if(n===3)fillReview();};
   const validInput=input=>{if(!input)return true;const ok=input.checkValidity();input.classList.toggle('is-invalid',!ok);return ok;};
-  const validateStep=n=>{
-    if(n===1){const ok=[fields.first,fields.last,fields.email].every(validInput);const digits=phone.value.replace(/\D/g,'');const phoneOk=!!phoneCountry&&digits.length>=6;phone.classList.toggle('is-invalid',!phoneOk);if(!phoneCountry)phoneHint.textContent='Сначала выбери регион номера.';else if(!phoneOk)phoneHint.textContent='Проверь номер: нужно минимум 6 цифр.';return ok&&phoneOk;}
-    if(n===2){let ok=[fields.city,fields.postal,fields.address].every(validInput);if(!deliveryCountry){countryButton.classList.add('is-invalid');countryError.textContent='Выбери страну.';ok=false;}return ok;}
-    return true;
-  };
-  form.querySelectorAll('[data-request-next]').forEach(btn=>btn.addEventListener('click',()=>{if(validateStep(currentStep))setStep(Number(btn.dataset.requestNext));}));
-  form.querySelectorAll('[data-request-back]').forEach(btn=>btn.addEventListener('click',()=>setStep(Number(btn.dataset.requestBack))));
-  nav.forEach(btn=>btn.addEventListener('click',()=>{const n=Number(btn.dataset.requestNav);if(n<currentStep)setStep(n);else if(n===currentStep+1&&validateStep(currentStep))setStep(n);}));
-  form.querySelectorAll('input').forEach(input=>input.addEventListener('input',()=>input.classList.remove('is-invalid')));
+  const validateStep=n=>{if(n===1){const ok=[fields.first,fields.last,fields.email].every(validInput);const digits=phone.value.replace(/\D/g,'');const phoneOk=!!phoneCountry&&digits.length>=6;phone.classList.toggle('is-invalid',!phoneOk);if(!phoneCountry)phoneHint.textContent='Выбери страну или телефонный код.';else if(!phoneOk)phoneHint.textContent='Проверь номер: нужно минимум 6 цифр.';return ok&&phoneOk;}if(n===2){let ok=[fields.city,fields.postal,fields.address].every(validInput);if(!deliveryCountry){countryButton.classList.add('is-invalid');countryError.textContent='Выбери страну.';ok=false;}return ok;}return true;};
+  form.querySelectorAll('[data-request-next]').forEach(btn=>btn.addEventListener('click',()=>{if(validateStep(currentStep))setStep(Number(btn.dataset.requestNext));}));form.querySelectorAll('[data-request-back]').forEach(btn=>btn.addEventListener('click',()=>setStep(Number(btn.dataset.requestBack))));nav.forEach(btn=>btn.addEventListener('click',()=>{const n=Number(btn.dataset.requestNav);if(n<currentStep)setStep(n);else if(n===currentStep+1&&validateStep(currentStep))setStep(n);}));form.querySelectorAll('input').forEach(input=>input.addEventListener('input',()=>input.classList.remove('is-invalid')));
   const fullPhone=()=>phoneCountry?`${phoneCountry.dial} ${phone.value}`.trim():phone.value;
-  const fillReview=()=>{q('reviewName').textContent=`${fields.first.value} ${fields.last.value}`.trim()||'—';q('reviewContact').textContent=[fields.email.value,fullPhone()].filter(Boolean).join(' · ')||'—';q('reviewCountry').textContent=deliveryCountry?`${flag(deliveryCountry.iso)} ${deliveryCountry.name}`:'—';q('reviewAddress').textContent=[fields.postal.value,fields.region.value,fields.city.value,fields.address.value,fields.address2.value].filter(Boolean).join(', ')||'—';if(currentConfig){q('reviewConfig').textContent=currentConfig.code;q('reviewModules').textContent=currentConfig.moduleLabels.join(' · ')||'BASE CONFIGURATION';}};
-  const paintConfig=snap=>{currentConfig=snap;if(!snap)return;q('requestProfile').textContent=snap.profile;q('requestPrice').textContent=snap.price;q('requestPower').textContent=`${snap.values.power} кВт`;q('requestMass').textContent=`${snap.values.mass} кг`;q('requestRange').textContent=`${snap.values.range} км`;q('requestConfigCode').textContent=snap.code;q('requestBike').dataset.tone=snap.tone;q('requestModules').innerHTML=snap.modules.length?snap.modules.map(k=>`<span>${moduleNames[k]||k}</span>`).join(''):'<span>BASE CONFIGURATION</span>';if(currentStep===3)fillReview();};
+  const fillReview=()=>{q('reviewName').textContent=`${fields.first.value} ${fields.last.value}`.trim()||'—';q('reviewContact').textContent=[fields.email.value,fullPhone()].filter(Boolean).join(' · ')||'—';q('reviewCountry').textContent=deliveryCountry?`${flag(deliveryCountry.iso)} ${deliveryCountry.name}`:'—';q('reviewAddress').textContent=[fields.postal.value,fields.region.value,fields.city.value,fields.address.value,fields.address2.value].filter(Boolean).join(', ')||'—';if(currentConfig){q('reviewConfig').textContent=currentConfig.code;q('reviewModules').textContent=currentConfig.moduleLabels.join(' · ')||'BASE R1';}};
+  const paintConfig=snap=>{currentConfig=snap;if(!snap)return;q('requestProfile').textContent=snap.profile;q('requestPrice').textContent=snap.price;q('requestPower').textContent=`${snap.values.power} кВт`;q('requestMass').textContent=`${snap.values.mass} кг`;q('requestRange').textContent=`${snap.values.range} км`;q('requestConfigCode').textContent=snap.code;q('requestBike').dataset.tone=snap.tone;q('requestModules').innerHTML=snap.modules.length?snap.modules.map(k=>`<span>${moduleNames[k]||k}</span>`).join(''):'<span>BASE R1</span>';if(currentStep===3)fillReview();};
   addEventListener('vanta:configchange',e=>paintConfig(e.detail));paintConfig(currentConfig);
-  form.addEventListener('submit',e=>{e.preventDefault();if(!validateStep(1)||!validateStep(2)){setStep(!validateStep(1)?1:2);return;}fillReview();steps.forEach(s=>s.hidden=true);q('requestComplete').hidden=false;form.querySelector('.request-progress').hidden=true;const rnd=new Uint32Array(1);try{crypto.getRandomValues(rnd)}catch{rnd[0]=Math.floor(Math.random()*9999)}const suffix=String(rnd[0]%10000).padStart(4,'0');q('requestCode').textContent=`VR1-${currentConfig?.profile||'CUSTOM'}-${suffix}`;});
-  q('requestToActivation')?.addEventListener('click',()=>{const tone=currentConfig?.tone||'red';document.querySelector(`.sw[data-color="${tone}"]`)?.click();document.getElementById('activate')?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});
-  setStep(1);
+  if(complete)complete.hidden=true;if(progress)progress.hidden=false;
+  form.addEventListener('submit',e=>{e.preventDefault();const step1ok=validateStep(1),step2ok=validateStep(2);if(!step1ok||!step2ok){setStep(!step1ok?1:2);return;}fillReview();steps.forEach(s=>s.hidden=true);if(progress)progress.hidden=true;if(complete)complete.hidden=false;const rnd=new Uint32Array(1);try{crypto.getRandomValues(rnd)}catch{rnd[0]=Math.floor(Math.random()*9999)}q('requestCode').textContent=`VR1-${currentConfig?.preset==='custom'?'CU':(currentConfig?.preset||'CU').slice(0,2).toUpperCase()}-${String(rnd[0]%10000).padStart(4,'0')}`;});
+  q('requestToActivation')?.addEventListener('click',()=>{const tone=currentConfig?.tone||'red';document.querySelector(`.sw[data-color="${tone}"]`)?.click();document.getElementById('activate')?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});setStep(1);
 })();

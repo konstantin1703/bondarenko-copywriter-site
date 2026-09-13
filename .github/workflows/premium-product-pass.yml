@@ -35,37 +35,30 @@ jobs:
                   raise SystemExit(f'expected one block for {label}, found {text.count(old)}')
               return text.replace(old, new, 1)
 
-          # Cache busts.
           html = replace_once(html, 'v4.css?v=8', 'v4.css?v=9', 'css version')
           html = replace_once(html, 'v4.js?v=6', 'v4.js?v=7', 'js version')
 
-          # Premium gallery toolbar with count + progress.
           old_gallery_head = '<div class="gallery-head reveal"><div><div class="eyebrow">05 / ГАЛЕРЕЯ / ХАРАКТЕР</div><h2>Один R1.<br/><em>Шесть граней характера.</em></h2></div><div class="gallery-controls"><button aria-label="Предыдущий кадр" id="prev">←</button><button aria-label="Следующий кадр" id="next">→</button></div></div>'
           new_gallery_head = '<div class="gallery-head reveal"><div><div class="eyebrow">05 / ГАЛЕРЕЯ / ХАРАКТЕР</div><h2>Один R1.<br/><em>Шесть граней характера.</em></h2></div><div class="gallery-toolbar"><div aria-live="polite" class="gallery-meta"><span id="galleryCounter">01 / 06</span><i aria-hidden="true"><b id="galleryProgress"></b></i></div><div class="gallery-controls"><button aria-label="Предыдущий кадр" id="prev">←</button><button aria-label="Следующий кадр" id="next">→</button></div></div></div>'
           html = replace_once(html, old_gallery_head, new_gallery_head, 'gallery toolbar')
 
-          # Activation becomes a restrained mini configurator.
           old_swatches = '<div aria-label="Цветовой режим" class="swatches"><button aria-label="Красная подсветка" aria-pressed="true" class="sw active" data-color="red"></button><button aria-label="Зелёная подсветка" aria-pressed="false" class="sw" data-color="green"></button><button aria-label="Stealth Black" aria-pressed="false" class="sw" data-color="stealth"></button></div>'
           new_swatches = '<div aria-label="Цветовой режим" class="swatches"><button aria-label="Красная подсветка" aria-pressed="true" class="sw active" data-color="red"></button><button aria-label="Зелёная подсветка" aria-pressed="false" class="sw" data-color="green"></button><button aria-label="Stealth Black" aria-pressed="false" class="sw" data-color="stealth"></button></div><div aria-live="polite" class="activation-config"><small>CONFIG / LIGHT SIGNATURE</small><strong id="finishName">SIGNAL RED</strong><span id="finishDesc">Фирменная красная световая подпись.</span></div>'
           html = replace_once(html, old_swatches, new_swatches, 'activation configurator')
           index.write_text(html)
 
-          # Replace gallery controller as one cohesive block.
           gallery_start = script.index('  // Gallery: centered frame becomes the visual anchor; keyboard arrows mirror buttons.')
           gallery_end = script.index('  // Ride System — one state model, animated speed and calibrated visual settle.')
           new_gallery_js = '''  // Gallery — premium product rail: exact frame snapping, counter/progress and desktop drag.\n  const rail=document.getElementById('rail');\n  const galleryFrames=[...(rail?.querySelectorAll('figure')||[])];\n  const galleryCounter=document.getElementById('galleryCounter');\n  const galleryProgress=document.getElementById('galleryProgress');\n  const prevButton=document.getElementById('prev');\n  const nextButton=document.getElementById('next');\n  let galleryRaf=0;\n  let galleryIndex=0;\n  const setGalleryActive=index=>{\n    if(!galleryFrames.length)return;\n    galleryIndex=Math.max(0,Math.min(index,galleryFrames.length-1));\n    galleryFrames.forEach((frame,i)=>{\n      const active=i===galleryIndex;\n      frame.classList.toggle('is-active',active);\n      frame.setAttribute('aria-current',active?'true':'false');\n    });\n    if(galleryCounter)galleryCounter.textContent=`${String(galleryIndex+1).padStart(2,'0')} / ${String(galleryFrames.length).padStart(2,'0')}`;\n    if(galleryProgress)galleryProgress.style.width=`${((galleryIndex+1)/galleryFrames.length)*100}%`;\n    if(prevButton)prevButton.disabled=galleryIndex===0;\n    if(nextButton)nextButton.disabled=galleryIndex===galleryFrames.length-1;\n  };\n  const closestGalleryIndex=()=>{\n    if(!rail||!galleryFrames.length)return 0;\n    const railRect=rail.getBoundingClientRect();\n    const center=railRect.left+railRect.width/2;\n    let active=0,best=Infinity;\n    galleryFrames.forEach((frame,i)=>{\n      const r=frame.getBoundingClientRect();\n      const d=Math.abs((r.left+r.width/2)-center);\n      if(d<best){best=d;active=i;}\n    });\n    return active;\n  };\n  const updateGalleryActive=()=>{galleryRaf=0;setGalleryActive(closestGalleryIndex());};\n  const requestGalleryUpdate=()=>{if(!galleryRaf)galleryRaf=requestAnimationFrame(updateGalleryActive);};\n  const scrollGalleryTo=index=>{\n    if(!rail||!galleryFrames.length)return;\n    const target=Math.max(0,Math.min(index,galleryFrames.length-1));\n    const frame=galleryFrames[target];\n    const left=frame.offsetLeft-(rail.clientWidth-frame.offsetWidth)/2;\n    rail.scrollTo({left,behavior:reduceMotion?'auto':'smooth'});\n    setGalleryActive(target);\n  };\n  prevButton?.addEventListener('click',()=>scrollGalleryTo(galleryIndex-1));\n  nextButton?.addEventListener('click',()=>scrollGalleryTo(galleryIndex+1));\n  rail?.addEventListener('scroll',requestGalleryUpdate,{passive:true});\n  rail?.addEventListener('keydown',e=>{\n    if(e.key==='ArrowLeft'){e.preventDefault();scrollGalleryTo(galleryIndex-1);}\n    if(e.key==='ArrowRight'){e.preventDefault();scrollGalleryTo(galleryIndex+1);}\n    if(e.key==='Home'){e.preventDefault();scrollGalleryTo(0);}\n    if(e.key==='End'){e.preventDefault();scrollGalleryTo(galleryFrames.length-1);}\n  });\n  addEventListener('resize',requestGalleryUpdate,{passive:true});\n  if(rail&&finePointer){\n    let dragging=false,startX=0,startScroll=0,moved=false;\n    rail.addEventListener('pointerdown',e=>{\n      if(e.button!==0)return;\n      dragging=true;moved=false;startX=e.clientX;startScroll=rail.scrollLeft;\n      rail.classList.add('is-dragging');rail.setPointerCapture?.(e.pointerId);\n    });\n    rail.addEventListener('pointermove',e=>{\n      if(!dragging)return;\n      const dx=e.clientX-startX;\n      if(Math.abs(dx)>3)moved=true;\n      rail.scrollLeft=startScroll-dx;\n    });\n    const endDrag=e=>{\n      if(!dragging)return;\n      dragging=false;rail.classList.remove('is-dragging');rail.releasePointerCapture?.(e.pointerId);\n      if(moved)scrollGalleryTo(closestGalleryIndex());\n    };\n    rail.addEventListener('pointerup',endDrag);\n    rail.addEventListener('pointercancel',endDrag);\n  }\n  setGalleryActive(0);\n\n'''
           script = script[:gallery_start] + new_gallery_js + script[gallery_end:]
 
-          # Active section navigation, integrated into the existing scroll loop.
           old_scroll = "    header?.classList.toggle('scrolled',y>18);\n    if(progress) progress.style.transform=`scaleX(${Math.min(y/max,1)})`;"
           new_scroll = "    header?.classList.toggle('scrolled',y>18);\n    if(progress) progress.style.transform=`scaleX(${Math.min(y/max,1)})`;\n    if(navSections.length){\n      const probe=y+innerHeight*.34;\n      let current='';\n      navSections.forEach(section=>{if(section.offsetTop<=probe)current=section.id;});\n      navAnchors.forEach(link=>link.classList.toggle('is-current',link.getAttribute('href')===`#${current}`));\n    }"
-          # Declarations must exist before updateScroll first runs.
           decl_old = "  let lastFocus=null;\n  let scrollTick=false;"
           decl_new = "  let lastFocus=null;\n  let scrollTick=false;\n  const navAnchors=[...document.querySelectorAll('.desktop-nav a,.activate-link,.mobile-menu a')];\n  const navSections=[...document.querySelectorAll('main section[id]')];"
           script = replace_once(script, decl_old, decl_new, 'nav declarations')
           script = replace_once(script, old_scroll, new_scroll, 'active navigation')
 
-          # Activation configurator data and behavior.
           activation_decl_old = "  const activateLabel=activateBtn?.querySelector('span');\n  let activationOn=false;"
           activation_decl_new = "  const activateLabel=activateBtn?.querySelector('span');\n  const finishName=document.getElementById('finishName');\n  const finishDesc=document.getElementById('finishDesc');\n  const finishes={\n    red:{name:'SIGNAL RED',desc:'Фирменная красная световая подпись.'},\n    green:{name:'VOLT GREEN',desc:'Холодный электрический зелёный акцент.'},\n    stealth:{name:'STEALTH BLACK',desc:'Монохромный световой режим без лишнего блеска.'}\n  };\n  let currentFinish='red';\n  let activationOn=false;"
           script = replace_once(script, activation_decl_old, activation_decl_new, 'activation config declarations')
@@ -79,22 +72,18 @@ jobs:
           script = replace_once(script, old_swatch_js, new_swatch_js, 'activation swatches')
           js.write_text(script)
 
-          # Final product-level CSS. Intentionally one cohesive override layer within the single production CSS.
           marker = '/* VANTA R1 — Premium Product Pass 2026-09 */'
           if marker in styles:
               raise SystemExit('premium product pass already exists')
           premium_css = r'''
 
 /* VANTA R1 — Premium Product Pass 2026-09 */
-/* Navigation: quiet current-section orientation. */
 .desktop-nav a,.activate-link,.mobile-menu a{position:relative}
 .desktop-nav a:after,.activate-link:after{content:"";position:absolute;left:0;right:100%;bottom:-8px;height:1px;background:var(--accent);transition:right .3s var(--motion-ease),opacity .3s ease;opacity:.3}
 .desktop-nav a.is-current,.activate-link.is-current{color:#f2f2ee}
 .desktop-nav a.is-current:after,.activate-link.is-current:after{right:0;opacity:.9}
 .mobile-menu a.is-current{color:#fff}
 .mobile-menu a.is-current:before{content:"";display:inline-block;width:16px;height:1px;margin:0 10px 8px 0;background:var(--accent)}
-
-/* Gallery: product-showcase framing, exact snap, counter and progress. */
 .gallery-toolbar{display:flex;align-items:center;gap:18px}
 .gallery-meta{width:132px;display:grid;gap:9px;justify-items:end;font-variant-numeric:tabular-nums}
 .gallery-meta>span{font-size:9px;letter-spacing:.16em;color:#a3a39f}
@@ -108,8 +97,6 @@ jobs:
 .rail figure.is-active img{filter:brightness(1.025) saturate(1)}
 .rail figure:not(.is-active) img{filter:brightness(.72) saturate(.78)}
 .rail figcaption{border-top:1px solid #222;background:linear-gradient(180deg,#0a0a0a,#070707)}
-
-/* Ride System: stricter OEM lower deck; SVG dial stays the single hero instrument. */
 .dash-screen{background-image:none!important}
 .dash-main{gap:18px}
 .mode-readout{padding-bottom:14px}
@@ -124,8 +111,6 @@ jobs:
 .modes button.active small{color:color-mix(in srgb,var(--dash-accent) 26%,#8c938e)}
 .dash.calibrating .speedometer-svg{animation:oemDialSettle .46s var(--motion-ease)}
 @keyframes oemDialSettle{0%{opacity:.72;filter:brightness(.86)}55%{opacity:1;filter:brightness(1.08)}100%{opacity:1;filter:none}}
-
-/* Activation: restrained configurator language around the existing boot sequence. */
 .swatches{gap:14px}
 .sw{width:28px;height:28px}
 .activation-config{margin-top:22px;padding:16px 0 0;border-top:1px solid #252525;display:grid;grid-template-columns:auto 1fr;gap:7px 18px;align-items:baseline}
@@ -140,7 +125,6 @@ jobs:
 @keyframes finishPulse{0%{opacity:.2}48%{opacity:.72}100%{opacity:var(--finish-opacity,.62)}}
 @keyframes finishImageSettle{0%{opacity:.72}100%{opacity:1}}
 @keyframes buttonSweep{to{transform:translateX(100%)}}
-
 @media(max-width:980px){
   .gallery-head{gap:18px;align-items:flex-end}
   .gallery-toolbar{margin-left:auto}
@@ -211,3 +195,4 @@ jobs:
           git rm .github/workflows/premium-product-pass.yml
           git commit -m 'feat: elevate gallery Ride System and activation experience'
           git push origin HEAD:main
+# retrigger existing workflow

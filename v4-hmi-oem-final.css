@@ -1,0 +1,204 @@
+/* VANTA R1 — final OEM cockpit refinement.
+   Loaded after v4-hmi-r2.css to keep the proven mobile geometry and Safari-safe POWER arc. */
+
+/* Display depth: physical anti-glare glass without putting glare over the readout. */
+.dash-screen{
+  box-shadow:
+    inset 0 0 68px rgba(0,0,0,.82),
+    inset 0 1px 0 rgba(255,255,255,.025),
+    inset 0 30px 58px rgba(255,255,255,.012),
+    inset 0 -34px 70px rgba(0,0,0,.28);
+}
+.dash-screen:after{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.034) 0,rgba(255,255,255,.012) 8%,transparent 23%),
+    linear-gradient(112deg,rgba(255,255,255,.014),transparent 27% 74%,rgba(255,255,255,.007)),
+    radial-gradient(120% 54% at 50% 0,rgba(255,255,255,.018),transparent 48%);
+  opacity:.72;
+}
+
+/* More separation between SPEED and POWER DELIVERY. */
+.speed-dial:before{
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px));
+  mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px));
+}
+.power-arc{
+  width:min(194px,68%);
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3.5px),#000 calc(100% - 2.5px),#000 calc(100% - 1px),transparent 100%);
+  mask:radial-gradient(farthest-side,transparent calc(100% - 3.5px),#000 calc(100% - 2.5px),#000 calc(100% - 1px),transparent 100%);
+  filter:drop-shadow(0 0 6px color-mix(in srgb,var(--dash-accent) 28%,transparent));
+}
+
+/* Calibration contrast: ROAD is controlled, ATTACK hot, RANGE efficient and calm. */
+.dash[data-mode="road"]{
+  --outer-ring-opacity:.64;
+  --regen-opacity:.82;
+  --hmi-grid:.3;
+}
+.dash[data-mode="road"] .speed-dial:before{filter:drop-shadow(0 0 6px rgba(228,71,59,.15))}
+.dash[data-mode="road"] .power-arc{filter:drop-shadow(0 0 6px rgba(228,71,59,.2));opacity:.88}
+
+.dash[data-mode="attack"]{
+  --outer-ring-opacity:.92;
+  --regen-opacity:.58;
+  --hmi-grid:.7;
+}
+.dash[data-mode="attack"] .power-arc{filter:drop-shadow(0 0 10px rgba(255,37,24,.46));opacity:1}
+
+.dash[data-mode="range"]{
+  --outer-ring-opacity:.56;
+  --regen-opacity:.94;
+  --hmi-grid:.23;
+}
+.dash[data-mode="range"] .power-arc{filter:drop-shadow(0 0 6px rgba(46,220,127,.24));opacity:.86}
+
+/* Energy flow: clearer labels and a real zero point, still below the dial. */
+.power-readout{
+  bottom:31px;
+  color:#858c87;
+  letter-spacing:.155em;
+}
+.power-readout span:after,
+.power-readout b:before{
+  font-size:7.2px;
+  letter-spacing:.155em;
+  color:#8e958f;
+}
+.power-readout span:after{opacity:.94}
+.power-readout b{font-size:8.5px;gap:6px}
+.power{
+  bottom:13px;
+  height:4px;
+  background:linear-gradient(90deg,#171a19 0 49.6%,#434a45 49.6% 50.4%,#171a19 50.4% 100%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.016);
+}
+.power:before{
+  background:linear-gradient(90deg,color-mix(in srgb,var(--dash-accent) 26%,#606662),color-mix(in srgb,var(--dash-accent) 70%,#d1d6d2));
+  box-shadow:0 0 11px color-mix(in srgb,var(--dash-accent) 22%,transparent);
+}
+.power:after{
+  top:-5px;
+  width:2px;
+  height:14px;
+  margin-left:-1px;
+  border-radius:999px;
+  background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(126,136,130,.58));
+  box-shadow:0 0 9px rgba(255,255,255,.13);
+}
+.power i{
+  box-shadow:0 0 12px color-mix(in srgb,var(--dash-accent) 48%,transparent);
+}
+
+/* Telemetry becomes one OEM information module instead of three floating web cards. */
+.dash-stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:0;
+  align-content:stretch;
+  border:1px solid #252a27;
+  border-radius:14px;
+  overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.018),rgba(255,255,255,.004));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.018),0 10px 28px rgba(0,0,0,.14);
+}
+.dash-stats span{
+  min-width:0;
+  min-height:80px;
+  padding:14px 8px 13px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  border:0!important;
+  background:transparent!important;
+  text-align:center;
+}
+.dash-stats span+span{border-left:1px solid #252a27!important}
+.dash-stats small{
+  font-size:9px;
+  letter-spacing:.18em;
+  color:#7d847f;
+  white-space:nowrap;
+}
+.dash-stats b{
+  font-size:14px;
+  line-height:1.05;
+  font-weight:600;
+  letter-spacing:.01em;
+  color:#f2f4f3;
+  white-space:nowrap;
+}
+
+/* Drive modes become one segmented OEM selector. */
+.modes{
+  margin:14px 18px 18px;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:0;
+  overflow:hidden;
+  border:1px solid #252a27;
+  border-radius:14px;
+  background:linear-gradient(180deg,rgba(255,255,255,.016),rgba(255,255,255,.003));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.016);
+}
+.modes button{
+  position:relative;
+  height:74px;
+  min-width:0;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:#858b87;
+  transition:color .28s ease,background .28s ease;
+}
+.modes button+button{border-left:1px solid #252a27!important}
+.modes button small{
+  margin-top:6px;
+  font-size:8px;
+  letter-spacing:.16em;
+  color:#5f6661;
+  transition:color .28s ease;
+}
+.modes button.active{
+  color:#fff;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--dash-accent) 10%,transparent),transparent 76%)!important;
+  box-shadow:inset 0 -2px 0 var(--dash-accent)!important;
+}
+.modes button.active:after{
+  content:"";
+  position:absolute;
+  left:22%;right:22%;bottom:0;
+  height:2px;
+  background:var(--dash-accent);
+  box-shadow:0 0 8px color-mix(in srgb,var(--dash-accent) 34%,transparent);
+}
+.modes button.active small{color:color-mix(in srgb,var(--dash-accent) 42%,#b8bfba)}
+.dash[data-mode="attack"] .modes button.active:after{box-shadow:0 0 10px rgba(255,37,24,.34)}
+.dash[data-mode="range"] .modes button.active:after{box-shadow:0 0 8px rgba(46,220,127,.24)}
+
+@media(max-width:980px){
+  .power-arc{width:180px}
+  .dash-stats span{min-height:78px;padding:13px 7px 12px}
+  .dash-stats b{font-size:13px}
+  .modes{margin:13px 14px 14px}
+  .modes button{height:70px}
+}
+
+@media(max-width:420px){
+  .power-arc{width:168px}
+  .power-readout span:after,.power-readout b:before{font-size:6.5px}
+  .power-readout b{font-size:8px;gap:4px}
+  .dash-stats{border-radius:12px}
+  .dash-stats span{min-height:74px;padding:12px 5px 11px;gap:6px}
+  .dash-stats small{font-size:7.8px;letter-spacing:.14em}
+  .dash-stats b{font-size:12.5px}
+  .modes{margin:12px 12px 12px;border-radius:12px}
+  .modes button{height:66px;font-size:8px}
+  .modes button small{font-size:7px;margin-top:5px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .modes button,.modes button small{transition:none}
+}

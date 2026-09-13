@@ -1,0 +1,242 @@
+name: Final product QA pass
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  apply-pass:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply final product pass
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          css_path=Path('v4.css')
+          js_path=Path('v4.js')
+          html_path=Path('index.html')
+          hotfix_path=Path('v4-hotfix-mobile.css')
+
+          css=css_path.read_text()
+          js=js_path.read_text()
+          html=html_path.read_text()
+
+          merge_marker='/* VANTA R1 — merged mobile/signature hotfix 2026-09 */'
+          pass_marker='/* VANTA R1 — Final Product QA Pass 2026-09 */'
+          js_marker='/* VANTA R1 — Final Product QA Pass 2026-09 */'
+
+          if hotfix_path.exists() and merge_marker not in css:
+              hotfix=hotfix_path.read_text().replace('/* linker trigger */','').strip()
+              css += '\n\n' + merge_marker + '\n' + hotfix + '\n'
+
+          if pass_marker not in css:
+              css += r'''
+
+/* VANTA R1 — Final Product QA Pass 2026-09 */
+/* Hero: stricter product-spec presentation without changing the approved composition. */
+.spec-strip{border-bottom:1px solid #202220;background:linear-gradient(180deg,rgba(255,255,255,.012),rgba(255,255,255,.002))}
+.spec-strip>div{position:relative;padding-left:18px;padding-right:18px}
+.spec-strip>div:first-child{padding-left:0}.spec-strip>div+div:before{content:"";position:absolute;left:0;top:21%;bottom:21%;width:1px;background:#252725}
+.spec-strip strong{font-variant-numeric:tabular-nums lining-nums;font-weight:520}.spec-strip span{display:block;margin-top:5px;line-height:1.35;color:#858985}
+.hero-media img{filter:contrast(1.045) saturate(.96) brightness(1.015)}
+
+/* Performance values: JS adds .facts-live once the count-up is complete. */
+.facts b{font-variant-numeric:tabular-nums lining-nums;transition:color .28s ease,text-shadow .28s ease}
+.facts.is-counting b{color:#fff;text-shadow:0 0 16px rgba(255,46,27,.1)}
+
+/* Gallery viewer affordance. */
+.rail figure img{cursor:zoom-in;-webkit-tap-highlight-color:transparent}
+.gallery-lightbox{position:fixed;z-index:300;inset:0;width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:rgba(3,3,3,.96);color:#f4f4f0;overflow:hidden}
+.gallery-lightbox::backdrop{background:#030303}
+.gallery-lightbox[open]{display:grid;grid-template-rows:auto 1fr auto}
+.gallery-lightbox-head{height:68px;padding:0 max(20px,env(safe-area-inset-left)) 0 max(20px,env(safe-area-inset-right));display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #252525;background:rgba(5,5,5,.92);backdrop-filter:blur(14px)}
+.gallery-lightbox-count{font-size:9px;letter-spacing:.18em;color:#8c918d;font-variant-numeric:tabular-nums}
+.gallery-lightbox-close{width:44px;height:44px;border:1px solid #373a37;background:#090a09;color:#eee;border-radius:50%;font-size:24px;line-height:1;cursor:pointer}
+.gallery-lightbox-stage{position:relative;min-height:0;display:grid;place-items:center;overflow:hidden;padding:22px 76px}
+.gallery-lightbox-stage img{max-width:min(1320px,100%);max-height:calc(100dvh - 170px);width:auto;height:auto;object-fit:contain;filter:none!important;transform:none!important;user-select:none;-webkit-user-drag:none}
+.gallery-lightbox-nav{position:absolute;top:50%;translate:0 -50%;width:48px;height:48px;border-radius:50%;border:1px solid #3a3c3a;background:rgba(5,5,5,.72);color:#eee;font-size:22px;cursor:pointer;backdrop-filter:blur(8px)}
+.gallery-lightbox-prev{left:18px}.gallery-lightbox-next{right:18px}.gallery-lightbox-nav:disabled{opacity:.2;pointer-events:none}
+.gallery-lightbox-caption{min-height:78px;padding:15px max(22px,env(safe-area-inset-left)) calc(15px + env(safe-area-inset-bottom)) max(22px,env(safe-area-inset-right));border-top:1px solid #252525;display:grid;grid-template-columns:auto 1fr;gap:10px 24px;align-items:center;background:#060706}
+.gallery-lightbox-caption strong{font-size:10px;letter-spacing:.13em;font-weight:600;color:#f1f1ed}.gallery-lightbox-caption span{justify-self:end;font-size:9px;color:#858985;line-height:1.4}
+body.gallery-open{overflow:hidden}
+
+/* Mobile QA: clean 390/430 px behavior and safe interaction sizes. */
+@media(max-width:980px){
+  .spec-strip>div:first-child{padding-left:var(--pad)}
+  .spec-strip>div+div:before{top:18%;bottom:18%}
+  .gallery-lightbox-head{height:62px}
+  .gallery-lightbox-stage{padding:16px 16px 10px}
+  .gallery-lightbox-stage img{max-height:calc(100dvh - 164px);max-width:100%}
+  .gallery-lightbox-nav{top:auto;bottom:14px;translate:0;width:44px;height:44px;background:rgba(5,5,5,.84)}
+  .gallery-lightbox-prev{left:16px}.gallery-lightbox-next{right:16px}
+  .gallery-lightbox-caption{min-height:92px;padding-right:72px;padding-left:72px;grid-template-columns:1fr;gap:5px;text-align:center}
+  .gallery-lightbox-caption span{justify-self:center}
+}
+@media(max-width:520px){
+  html,body{max-width:100%;overflow-x:hidden}
+  .hero{min-height:100svh}
+  .hero-copy p{max-width:30ch}
+  .hero .spec-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .spec-strip>div{min-width:0;padding:14px 12px}
+  .spec-strip>div:nth-child(odd){padding-left:20px}
+  .spec-strip>div:nth-child(even){padding-right:20px}
+  .spec-strip>div:nth-child(3):before{content:none}
+  .spec-strip>div:nth-child(n+3){border-top:1px solid #202220}
+  .spec-strip strong{font-size:28px}.spec-strip span{font-size:7.5px;letter-spacing:.09em}
+  .facts{gap:13px}.facts span{line-height:1.35}.facts b{font-size:19px}
+  .rail figure img{cursor:default}
+  .gallery-lightbox-caption{font-size:8px}
+}
+@media(max-width:390px){
+  .hero-copy h1.hero-title{font-size:clamp(39px,11.7vw,46px)!important}
+  .performance-copy h2,.section-head h2,.materials-copy h2,.gallery-head h2,.system-ui h2,.activate-copy h2{font-size:clamp(32px,9.15vw,37px)!important}
+  .gallery-lightbox-stage{padding-left:10px;padding-right:10px}
+}
+@media(prefers-reduced-motion:reduce){.facts b,.gallery-lightbox *{transition:none!important;animation:none!important}}
+'''
+
+          if js_marker not in js:
+              js += r'''
+
+/* VANTA R1 — Final Product QA Pass 2026-09 */
+(()=>{
+  'use strict';
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Performance numbers: one restrained count-up when the section first becomes visible. */
+  const facts=document.querySelector('.facts');
+  const factNumbers=[...(facts?.querySelectorAll('b')||[])];
+  let factsDone=false;
+  const runFacts=()=>{
+    if(factsDone||!facts||!factNumbers.length)return;
+    factsDone=true;
+    facts.classList.add('is-counting');
+    factNumbers.forEach((node,index)=>{
+      const raw=node.textContent.trim();
+      const match=raw.match(/^(\d+(?:[.,]\d+)?)(.*)$/);
+      if(!match)return;
+      const target=Number(match[1].replace(',','.'));
+      const suffix=match[2];
+      if(reduce){node.textContent=`${match[1]}${suffix}`;return;}
+      const start=performance.now()+index*70;
+      const duration=540;
+      const tick=now=>{
+        const t=Math.max(0,Math.min((now-start)/duration,1));
+        const eased=1-Math.pow(1-t,3);
+        const value=target*eased;
+        node.textContent=`${Number.isInteger(target)?Math.round(value):value.toFixed(1)}${suffix}`;
+        if(t<1)requestAnimationFrame(tick);
+        else node.textContent=`${match[1]}${suffix}`;
+      };
+      requestAnimationFrame(tick);
+    });
+    setTimeout(()=>facts.classList.remove('is-counting'),850);
+  };
+  if(facts){
+    if(reduce||!('IntersectionObserver' in window))runFacts();
+    else{
+      const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
+        if(entry.isIntersecting){runFacts();observer.disconnect();}
+      }),{threshold:.42});
+      observer.observe(facts);
+    }
+  }
+
+  /* Fullscreen gallery viewer generated at runtime to keep the HTML lean. */
+  const rail=document.getElementById('rail');
+  const frames=[...(rail?.querySelectorAll('figure')||[])];
+  if(rail&&frames.length){
+    const dialog=document.createElement('dialog');
+    dialog.className='gallery-lightbox';
+    dialog.setAttribute('aria-label','Полноэкранная галерея VANTA R1');
+    dialog.innerHTML=`<div class="gallery-lightbox-head"><span class="gallery-lightbox-count">01 / ${String(frames.length).padStart(2,'0')}</span><button class="gallery-lightbox-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-lightbox-stage"><button class="gallery-lightbox-nav gallery-lightbox-prev" type="button" aria-label="Предыдущий кадр">←</button><img alt=""><button class="gallery-lightbox-nav gallery-lightbox-next" type="button" aria-label="Следующий кадр">→</button></div><div class="gallery-lightbox-caption"><strong></strong><span></span></div>`;
+    document.body.appendChild(dialog);
+    const image=dialog.querySelector('.gallery-lightbox-stage img');
+    const count=dialog.querySelector('.gallery-lightbox-count');
+    const title=dialog.querySelector('.gallery-lightbox-caption strong');
+    const desc=dialog.querySelector('.gallery-lightbox-caption span');
+    const prev=dialog.querySelector('.gallery-lightbox-prev');
+    const next=dialog.querySelector('.gallery-lightbox-next');
+    const close=dialog.querySelector('.gallery-lightbox-close');
+    let index=0;
+    let touchX=0;
+    const render=()=>{
+      const frame=frames[index];
+      const source=frame.querySelector('img');
+      const strong=frame.querySelector('figcaption strong');
+      const span=frame.querySelector('figcaption span');
+      if(image&&source){image.src=source.currentSrc||source.src;image.alt=source.alt||'VANTA R1';}
+      if(count)count.textContent=`${String(index+1).padStart(2,'0')} / ${String(frames.length).padStart(2,'0')}`;
+      if(title)title.textContent=strong?.textContent||'';
+      if(desc)desc.textContent=span?.textContent||'';
+      if(prev)prev.disabled=index===0;
+      if(next)next.disabled=index===frames.length-1;
+    };
+    const openAt=i=>{
+      index=Math.max(0,Math.min(i,frames.length-1));render();document.body.classList.add('gallery-open');
+      if(dialog.showModal)dialog.showModal();else dialog.setAttribute('open','');
+    };
+    const closeViewer=()=>{document.body.classList.remove('gallery-open');if(dialog.open&&dialog.close)dialog.close();else dialog.removeAttribute('open');};
+    frames.forEach((frame,i)=>frame.querySelector('img')?.addEventListener('click',()=>openAt(i)));
+    prev?.addEventListener('click',()=>{if(index>0){index-=1;render();}});
+    next?.addEventListener('click',()=>{if(index<frames.length-1){index+=1;render();}});
+    close?.addEventListener('click',closeViewer);
+    dialog.addEventListener('close',()=>document.body.classList.remove('gallery-open'));
+    dialog.addEventListener('click',e=>{if(e.target===dialog)closeViewer();});
+    dialog.addEventListener('keydown',e=>{
+      if(e.key==='ArrowLeft'&&index>0){e.preventDefault();index-=1;render();}
+      if(e.key==='ArrowRight'&&index<frames.length-1){e.preventDefault();index+=1;render();}
+    });
+    dialog.addEventListener('touchstart',e=>{touchX=e.changedTouches[0]?.clientX||0;},{passive:true});
+    dialog.addEventListener('touchend',e=>{
+      const end=e.changedTouches[0]?.clientX||touchX;const dx=end-touchX;
+      if(Math.abs(dx)<44)return;
+      if(dx<0&&index<frames.length-1){index+=1;render();}
+      if(dx>0&&index>0){index-=1;render();}
+    },{passive:true});
+  }
+})();
+'''
+
+          html=html.replace('<link href="v4.css?v=10" rel="stylesheet"/><link href="v4-hotfix-mobile.css?v=1" rel="stylesheet"/>','<link href="v4.css?v=11" rel="stylesheet"/>')
+          html=html.replace('<script defer src="v4.js?v=8"></script>','<script defer src="v4.js?v=9"></script>')
+
+          css_path.write_text(css)
+          js_path.write_text(js)
+          html_path.write_text(html)
+          if hotfix_path.exists(): hotfix_path.unlink()
+          PY
+
+          node --check v4.js
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          html=Path('index.html').read_text()
+          css=Path('v4.css').read_text()
+          ids=re.findall(r'\bid="([^"]+)"',html)
+          dup=sorted({x for x in ids if ids.count(x)>1})
+          anchors=re.findall(r'href="#([^"]+)"',html)
+          missing=sorted({a for a in anchors if a!='top' and f'id="{a}"' not in html})
+          assert not dup, f'duplicate ids: {dup}'
+          assert not missing, f'missing anchors: {missing}'
+          assert css.count('{')==css.count('}'), 'CSS brace mismatch'
+          assert 'v4-hotfix-mobile.css' not in html, 'hotfix stylesheet still linked'
+          assert not Path('v4-hotfix-mobile.css').exists(), 'hotfix file still exists'
+          print('QA OK',len(ids),'ids',css.count('{'),'css blocks')
+          PY
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html v4.css v4.js v4-hotfix-mobile.css
+          git rm --ignore-unmatch .github/workflows/final-product-qa-pass.yml
+          git commit -m "feat: finalize mobile, gallery and hero polish"
+          git push

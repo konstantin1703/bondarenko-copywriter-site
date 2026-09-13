@@ -460,3 +460,61 @@
     },{passive:true});
   }
 })();
+
+
+/* VANTA R1 — Final Interface Polish 2026-09 */
+(()=>{
+  'use strict';
+  const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* A live color switch is a recalibration, not a reboot. */
+  const stage=document.getElementById('stage');
+  const bootStatus=document.getElementById('bootStatus');
+  let lockTimerA=0,lockTimerB=0;
+  document.querySelectorAll('.sw').forEach(sw=>sw.addEventListener('click',()=>{
+    if(!stage?.classList.contains('stage-live')||!bootStatus)return;
+    clearTimeout(lockTimerA);clearTimeout(lockTimerB);
+    stage.classList.remove('signature-locking','signature-locked');
+    void stage.offsetWidth;
+    stage.classList.add('signature-locking');
+    bootStatus.textContent='CALIBRATING';
+    if(reduceMotion){bootStatus.textContent='SYSTEM ACTIVE';stage.classList.remove('signature-locking');return;}
+    lockTimerA=setTimeout(()=>{
+      stage.classList.remove('signature-locking');
+      stage.classList.add('signature-locked');
+      bootStatus.textContent='SIGNATURE LOCKED';
+    },330);
+    lockTimerB=setTimeout(()=>{
+      stage.classList.remove('signature-locked');
+      bootStatus.textContent='SYSTEM ACTIVE';
+    },760);
+  }));
+
+  /* Give the fullscreen image a small physical response while the existing swipe logic changes frames. */
+  const dialog=document.querySelector('.gallery-lightbox');
+  const lightboxStage=dialog?.querySelector('.gallery-lightbox-stage');
+  const lightboxImage=lightboxStage?.querySelector('img');
+  if(dialog&&lightboxStage&&lightboxImage&&!reduceMotion){
+    let startX=0;
+    let dragging=false;
+    lightboxStage.addEventListener('touchstart',e=>{
+      startX=e.touches[0]?.clientX||0;
+      dragging=true;
+      dialog.classList.add('is-swiping');
+    },{passive:true});
+    lightboxStage.addEventListener('touchmove',e=>{
+      if(!dragging)return;
+      const x=e.touches[0]?.clientX||startX;
+      const dx=Math.max(-54,Math.min(54,(x-startX)*.22));
+      lightboxImage.style.setProperty('--lightbox-drag',`${dx}px`);
+    },{passive:true});
+    const settle=()=>{
+      if(!dragging)return;
+      dragging=false;
+      dialog.classList.remove('is-swiping');
+      requestAnimationFrame(()=>lightboxImage.style.setProperty('--lightbox-drag','0px'));
+    };
+    lightboxStage.addEventListener('touchend',settle,{passive:true});
+    lightboxStage.addEventListener('touchcancel',settle,{passive:true});
+  }
+})();

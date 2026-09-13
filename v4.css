@@ -673,8 +673,15 @@ section[id]{scroll-margin-top:calc(var(--header) + 18px)}.header.scrolled .brand
 .rail:focus{outline:none!important}
 @media(hover:hover) and (pointer:fine){.rail:focus-visible{box-shadow:0 0 0 1px rgba(255,255,255,.22);outline:none!important}}
 
+/* VANTA R1 — Final Interface Polish 2026-09 */
+:root{
+  --control-line:#454944;
+  --control-line-hover:#747a74;
+  --control-bg:#090a09;
+  --control-bg-hover:#101110;
+}
 
-/* VANTA R1 — gallery close + single OEM mode indicator 2026-09 */
+/* One clean OEM mode indicator — no inset duplicate lines. */
 .modes button.active{box-shadow:none!important}
 .modes button.active:after{
   content:""!important;
@@ -685,55 +692,34 @@ section[id]{scroll-margin-top:calc(var(--header) + 18px)}.header.scrolled .brand
   height:2px!important;
   border-radius:999px!important;
   background:var(--dash-accent)!important;
-  box-shadow:0 0 6px color-mix(in srgb,var(--dash-accent) 24%,transparent)!important;
-}
-.gallery-lightbox-close{
-  position:relative;
-  display:grid;
-  place-items:center;
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  border:1px solid #4a4d4a;
-  background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.055),transparent 34%),#090a09;
-  color:transparent;
-  font-size:0;
-  line-height:0;
-  appearance:none;
-  -webkit-appearance:none;
-  -webkit-tap-highlight-color:transparent;
-  outline:none!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 8px 22px rgba(0,0,0,.28);
-  transition:transform .18s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease;
-}
-.gallery-lightbox-close:before,.gallery-lightbox-close:after{
-  content:"";
-  position:absolute;
-  width:17px;
-  height:1.5px;
-  border-radius:99px;
-  background:#e8eae7;
-  box-shadow:0 0 5px rgba(255,255,255,.08);
-}
-.gallery-lightbox-close:before{transform:rotate(45deg)}
-.gallery-lightbox-close:after{transform:rotate(-45deg)}
-.gallery-lightbox-close:focus{outline:none!important}
-.gallery-lightbox-close:active{
-  transform:scale(.94);
-  border-color:color-mix(in srgb,var(--accent) 70%,#575957);
-  background:#0d0908;
-  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 22%,transparent),0 0 16px color-mix(in srgb,var(--accent) 12%,transparent);
-}
-@media(hover:hover) and (pointer:fine){
-  .gallery-lightbox-close:hover{border-color:#777b77;background:#101110;transform:translateY(-1px)}
-  .gallery-lightbox-close:focus-visible{outline:none!important;box-shadow:0 0 0 1px #c9ccc9,0 0 0 4px rgba(255,46,27,.12),0 8px 22px rgba(0,0,0,.28)}
-}
-@media(max-width:520px){
-  .modes button.active:after{left:18%!important;right:18%!important;bottom:7px!important;height:2px!important}
-  .gallery-lightbox-close{width:44px;height:44px}
+  box-shadow:0 0 6px color-mix(in srgb,var(--dash-accent) 22%,transparent)!important;
 }
 
-/* VANTA R1 — shared close control + mobile speed alignment 2026-09 */
+/* Unified tactile language for interactive controls. */
+.gallery-controls button,.gallery-lightbox-nav,.gallery-lightbox-close,#techClose,.tech-trigger,.sw,.menu{
+  -webkit-tap-highlight-color:transparent;
+}
+.gallery-controls button,.gallery-lightbox-nav{
+  border-color:var(--control-line)!important;
+  background:rgba(8,9,8,.86)!important;
+  color:#e9ebe8!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 8px 22px rgba(0,0,0,.2);
+  transition:transform .18s ease,border-color .2s ease,background .2s ease,opacity .2s ease!important;
+}
+.gallery-controls button:active,.gallery-lightbox-nav:active{transform:scale(.94)}
+@media(hover:hover) and (pointer:fine){
+  .gallery-controls button:hover,.gallery-lightbox-nav:hover{border-color:var(--control-line-hover)!important;background:var(--control-bg-hover)!important;color:#fff!important}
+}
+.tech-trigger{
+  border-color:#393d39!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.014),rgba(255,255,255,.003))!important;
+  transition:transform .18s ease,border-color .22s ease,color .22s ease,background .22s ease!important;
+}
+.tech-trigger:active{transform:translateY(1px)}
+.activate-btn{transition:transform .18s ease,filter .25s ease,background .25s ease!important}
+.activate-btn:active{transform:translateY(1px) scale(.995)!important}
+
+/* Gallery + TECH SHEET share the same VANTA close control. */
 .gallery-lightbox-close,#techClose{
   position:relative!important;
   display:grid!important;
@@ -744,14 +730,13 @@ section[id]{scroll-margin-top:calc(var(--header) + 18px)}.header.scrolled .brand
   min-height:46px!important;
   padding:0!important;
   border-radius:50%!important;
-  border:1px solid #4a4d4a!important;
-  background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.055),transparent 34%),#090a09!important;
+  border:1px solid var(--control-line)!important;
+  background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.055),transparent 34%),var(--control-bg)!important;
   color:transparent!important;
   font-size:0!important;
   line-height:0!important;
   appearance:none!important;
   -webkit-appearance:none!important;
-  -webkit-tap-highlight-color:transparent!important;
   outline:none!important;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 8px 22px rgba(0,0,0,.28)!important;
   transition:transform .18s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease!important;
@@ -771,22 +756,115 @@ section[id]{scroll-margin-top:calc(var(--header) + 18px)}.header.scrolled .brand
 .gallery-lightbox-close:focus,#techClose:focus{outline:none!important}
 .gallery-lightbox-close:active,#techClose:active{
   transform:scale(.94)!important;
-  border-color:color-mix(in srgb,var(--accent) 70%,#575957)!important;
+  border-color:color-mix(in srgb,var(--accent) 68%,#575957)!important;
   background:#0d0908!important;
-  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 22%,transparent),0 0 16px color-mix(in srgb,var(--accent) 12%,transparent)!important;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 20%,transparent),0 0 15px color-mix(in srgb,var(--accent) 11%,transparent)!important;
 }
 @media(hover:hover) and (pointer:fine){
-  .gallery-lightbox-close:hover,#techClose:hover{border-color:#777b77!important;background:#101110!important;transform:translateY(-1px)}
-  .gallery-lightbox-close:focus-visible,#techClose:focus-visible{outline:none!important;box-shadow:0 0 0 1px #c9ccc9,0 0 0 4px rgba(255,46,27,.12),0 8px 22px rgba(0,0,0,.28)!important}
+  .gallery-lightbox-close:hover,#techClose:hover{border-color:var(--control-line-hover)!important;background:var(--control-bg-hover)!important;transform:translateY(-1px)}
+  .gallery-lightbox-close:focus-visible,#techClose:focus-visible{outline:none!important;box-shadow:0 0 0 1px #c9ccc9,0 0 0 4px rgba(255,46,27,.11),0 8px 22px rgba(0,0,0,.28)!important}
 }
+
+/* TECH SHEET: grouped engineering data with staged reveal. */
+.tech-sheet-panel{padding:30px}
+.tech-sheet-head{padding-bottom:24px}
+.tech-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:12px!important;
+  margin-top:24px!important;
+  border:0!important;
+  background:none!important;
+}
+.tech-group{
+  min-width:0;
+  border:1px solid #292d29;
+  background:linear-gradient(180deg,rgba(255,255,255,.012),rgba(255,255,255,.002));
+}
+.tech-group>small{
+  display:block;
+  padding:12px 14px;
+  border-bottom:1px solid #292d29;
+  font-size:7px;
+  letter-spacing:.18em;
+  color:#777e78;
+}
+.tech-metric{
+  min-height:132px;
+  padding:18px 14px 16px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  border-bottom:1px solid #242824;
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity .42s var(--motion-ease),transform .48s var(--motion-ease);
+}
+.tech-metric:last-child{border-bottom:0}
+.tech-metric strong{font-family:"Inter Tight","Inter",sans-serif;font-size:48px;font-weight:500;line-height:.9;letter-spacing:-.055em;font-variant-numeric:tabular-nums lining-nums}
+.tech-metric span{margin-top:11px;font-size:7.5px;line-height:1.35;letter-spacing:.12em;color:#858b85}
+.tech-sheet[open] .tech-metric{opacity:1;transform:none}
+.tech-sheet[open] .tech-group:nth-child(1) .tech-metric:nth-of-type(1){transition-delay:.06s}
+.tech-sheet[open] .tech-group:nth-child(1) .tech-metric:nth-of-type(2){transition-delay:.11s}
+.tech-sheet[open] .tech-group:nth-child(2) .tech-metric:nth-of-type(1){transition-delay:.14s}
+.tech-sheet[open] .tech-group:nth-child(2) .tech-metric:nth-of-type(2){transition-delay:.19s}
+.tech-sheet[open] .tech-group:nth-child(3) .tech-metric:nth-of-type(1){transition-delay:.22s}
+.tech-sheet[open] .tech-group:nth-child(3) .tech-metric:nth-of-type(2){transition-delay:.27s}
+
+/* Premium lightbox: calmer entry, tighter caption, tactile swipe feedback. */
+.gallery-lightbox[open]{animation:vantaLightboxFade .22s ease}
+.gallery-lightbox-stage img{
+  transform:translate3d(var(--lightbox-drag,0px),0,0)!important;
+  transition:transform .24s var(--motion-ease),opacity .2s ease!important;
+  will-change:transform;
+}
+.gallery-lightbox[open] .gallery-lightbox-stage img{animation:vantaLightboxMediaIn .34s var(--motion-ease)}
+.gallery-lightbox.is-swiping .gallery-lightbox-stage img{transition:none!important}
+.gallery-lightbox-caption{min-height:64px!important;padding-top:11px!important;padding-bottom:11px!important;background:#050605!important}
+.gallery-lightbox-caption strong{font-size:9.5px!important}
+.gallery-lightbox-caption span{font-size:8.5px!important}
+@keyframes vantaLightboxFade{from{opacity:.72}to{opacity:1}}
+@keyframes vantaLightboxMediaIn{from{opacity:.35;transform:translate3d(0,7px,0) scale(.985)}to{opacity:1;transform:translate3d(0,0,0) scale(1)}}
+
+/* Activation: short lock confirmation after a live light-signature change. */
+.activation-stage.signature-locking .boot-hud strong{color:var(--accent)!important;text-shadow:0 0 11px color-mix(in srgb,var(--accent) 34%,transparent)}
+.activation-stage.signature-locked .boot-hud strong{color:#f0f3f0!important;text-shadow:0 0 8px color-mix(in srgb,var(--accent) 18%,transparent)}
+.activation-stage.signature-locked .boot-hud:after{
+  content:"";
+  width:28px;
+  height:1px;
+  justify-self:end;
+  margin-top:2px;
+  background:var(--accent);
+  box-shadow:0 0 8px color-mix(in srgb,var(--accent) 24%,transparent);
+  animation:vantaLockLine .28s var(--motion-ease);
+}
+@keyframes vantaLockLine{from{width:0;opacity:.2}to{width:28px;opacity:1}}
+
+/* Mobile speed readout calibration: all 062 / 084 / 146 stay centered inside the inner dial. */
 @media(max-width:520px){
+  .modes button.active:after{left:18%!important;right:18%!important;bottom:7px!important;height:2px!important}
   .gallery-lightbox-close,#techClose{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important}
   .speed-readout{transform:translateY(-27px)!important}
   .speed-readout strong{font-size:clamp(62px,16vw,68px)!important;line-height:.8!important;letter-spacing:-.065em!important;transform:scaleX(.9)!important;transform-origin:center!important}
   .speed-readout small{letter-spacing:.17em!important}
   .speed-readout i{margin-top:8px!important;letter-spacing:.12em!important}
+  .tech-sheet-panel{padding:18px}
+  .tech-grid{grid-template-columns:1fr!important;gap:9px!important;margin-top:18px!important}
+  .tech-group{display:grid;grid-template-columns:78px repeat(2,minmax(0,1fr));align-items:stretch}
+  .tech-group>small{display:flex;align-items:center;padding:10px;border:0;border-right:1px solid #292d29;font-size:6.5px;line-height:1.45}
+  .tech-metric{min-height:96px;padding:13px 10px;border-bottom:0;border-right:1px solid #242824}
+  .tech-metric:last-child{border-right:0}
+  .tech-metric strong{font-size:34px}
+  .tech-metric span{font-size:6.5px;letter-spacing:.09em}
+  .gallery-lightbox-caption{min-height:74px!important;padding:9px 64px calc(9px + env(safe-area-inset-bottom))!important}
 }
 @media(max-width:390px){
   .speed-readout{transform:translateY(-25px)!important}
   .speed-readout strong{font-size:clamp(60px,16vw,64px)!important;transform:scaleX(.9)!important}
+  .tech-group{grid-template-columns:66px repeat(2,minmax(0,1fr))}
+  .tech-metric strong{font-size:31px}
+}
+@media(prefers-reduced-motion:reduce){
+  .tech-metric,.gallery-lightbox[open],.gallery-lightbox[open] .gallery-lightbox-stage img,.activation-stage.signature-locked .boot-hud:after{animation:none!important;transition:none!important}
 }

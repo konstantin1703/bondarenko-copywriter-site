@@ -20,3 +20,5 @@
   .architecture-stage .call.is-active{background:linear-gradient(90deg,rgba(255,46,27,.055),#070707 42%)!important;box-shadow:inset 2px 0 0 #ff3a2c!important}
   .architecture-stage .call:focus-visible{outline:1px solid rgba(255,255,255,.5);outline-offset:-2px}
 }
+
+/* linker trigger */

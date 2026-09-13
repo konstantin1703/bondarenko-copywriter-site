@@ -172,6 +172,9 @@
   const regen=document.getElementById('regen');
   const powerLabel=document.getElementById('powerLabel');
   const powerMeter=dash?.querySelector('.power');
+  const speedArc=document.getElementById('speedArc');
+  const powerArcSvg=document.getElementById('powerArcSvg');
+  const speedTicks=document.getElementById('speedTicks');
   const modeName=document.getElementById('modeName');
   const modeDesc=document.getElementById('modeDesc');
   const states={
@@ -179,7 +182,35 @@
     attack:{speed:146,battery:'61%',range:'128 км',regen:'НИЗКАЯ',regenValue:18,power:94,dial:232,name:'ТРЕК',desc:'Максимальная отдача привода'},
     range:{speed:62,battery:'84%',range:'286 км',regen:'ВЫСОКАЯ',regenValue:88,power:42,dial:106,name:'ЭКО',desc:'Приоритет запаса хода'}
   };
-  let speedAnimation=0;
+
+const svgNS='http://www.w3.org/2000/svg';
+if(speedTicks&&!speedTicks.childElementCount){
+  const count=31;
+  for(let i=0;i<count;i+=1){
+    const angle=135+(270/(count-1))*i;
+    const rad=angle*Math.PI/180;
+    const major=i%5===0;
+    const inner=major?108:112;
+    const outer=119;
+    const line=document.createElementNS(svgNS,'line');
+    line.setAttribute('x1',String(160+Math.cos(rad)*inner));
+    line.setAttribute('y1',String(160+Math.sin(rad)*inner));
+    line.setAttribute('x2',String(160+Math.cos(rad)*outer));
+    line.setAttribute('y2',String(160+Math.sin(rad)*outer));
+    line.classList.add(major?'is-major':'is-minor');
+    speedTicks.appendChild(line);
+  }
+}
+const setSvgArc=(arc,percent)=>{
+  if(!arc)return;
+  const clamped=Math.max(0,Math.min(Number(percent)||0,100));
+  const visible=75*clamped/100;
+  arc.style.strokeDasharray=`${visible.toFixed(2)} ${(100-visible).toFixed(2)}`;
+};
+setSvgArc(speedArc,42);
+setSvgArc(powerArcSvg,62);
+
+let speedAnimation=0;
   let calibrateTimer=0;
   const formatSpeed=value=>String(Math.max(0,Math.round(value))).padStart(3,'0');
   const animateSpeed=target=>{
@@ -217,6 +248,8 @@
     if(powerLabel)powerLabel.textContent=`${s.power}%`;
     if(modeName)modeName.textContent=s.name;
     if(modeDesc)modeDesc.textContent=s.desc;
+    setSvgArc(speedArc,s.speed/2);
+    setSvgArc(powerArcSvg,s.power);
     dash.style.setProperty('--dial',`${s.dial}deg`);
     dash.style.setProperty('--power-angle',`${s.power*2.7}deg`);
     dash.style.setProperty('--power-half',`${s.power*.5}%`);

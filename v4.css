@@ -647,3 +647,17 @@ section[id]{scroll-margin-top:calc(var(--header) + 18px)}.header.scrolled .brand
 @media(max-width:520px){html,body{max-width:100%;overflow-x:hidden}.hero{min-height:100svh}.hero-copy p{max-width:30ch}.hero .spec-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.spec-strip>div{min-width:0;padding:14px 12px}.spec-strip>div:nth-child(odd){padding-left:20px}.spec-strip>div:nth-child(even){padding-right:20px}.spec-strip>div:nth-child(3):before{content:none}.spec-strip>div:nth-child(n+3){border-top:1px solid #202220}.spec-strip strong{font-size:28px}.spec-strip span{font-size:7.5px;letter-spacing:.09em}.facts{gap:13px}.facts span{line-height:1.35}.facts b{font-size:19px}.rail figure img{cursor:default}}
 @media(max-width:390px){.hero-copy h1.hero-title{font-size:clamp(39px,11.7vw,46px)!important}.performance-copy h2,.section-head h2,.materials-copy h2,.gallery-head h2,.system-ui h2,.activate-copy h2{font-size:clamp(32px,9.15vw,37px)!important}.gallery-lightbox-stage{padding-left:10px;padding-right:10px}}
 @media(prefers-reduced-motion:reduce){.facts b,.gallery-lightbox *{transition:none!important;animation:none!important}}
+
+
+/* VANTA R1 — OEM divider + signature spacing fix 2026-09 */
+.dash{--oem-divider:rgba(126,133,128,.24)}
+.dash-stats,.modes{border:1px solid var(--oem-divider)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.012)!important}
+.dash-stats span,.modes button{border:0!important}
+.dash-stats span+span,.modes button+button{border-left:1px solid var(--oem-divider)!important}
+.modes button:last-child{border-right:0!important}
+@media(max-width:520px){
+  .signature-copy span{line-height:1.04!important;letter-spacing:-.04em!important;max-width:10ch!important}
+}
+@media(max-width:390px){
+  .signature-copy span{line-height:1.05!important;letter-spacing:-.035em!important;font-size:clamp(38px,10.4vw,48px)!important}
+}

@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/apply-locale-v1.yml'
+      - 'tools/rebuild_locations_i18n.py'
 
 permissions:
   contents: write
@@ -39,6 +40,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "Nothing to commit"
           else
-            git commit -m "feat: add localized RU EN location experience"
+            git commit -m "feat: refresh localized RU EN location data"
             git push
           fi

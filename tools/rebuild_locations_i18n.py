@@ -7,7 +7,7 @@ DATA=ROOT/'data'
 OUT=DATA/'locations-i18n'
 OUT.mkdir(parents=True,exist_ok=True)
 
-UA='VANTA-R1-portfolio-build/2.0'
+UA='VANTA-R1-portfolio-build/2.1'
 def download(url:str)->bytes:
     req=urllib.request.Request(url,headers={'User-Agent':UA})
     with urllib.request.urlopen(req,timeout=120) as r:
@@ -15,14 +15,6 @@ def download(url:str)->bytes:
 
 def norm_name(value:str)->str:
     return ' '.join((value or '').replace('\u00a0',' ').split()).strip()
-
-def choose(current, candidate, preferred=False):
-    candidate=norm_name(candidate)
-    if not candidate:
-        return current
-    if current is None or preferred:
-        return (candidate, preferred)
-    return current
 
 print('Downloading admin1 codes…')
 admin_text=download('https://download.geonames.org/export/dump/admin1CodesASCII.txt').decode('utf-8','replace')
@@ -59,12 +51,17 @@ print(f'Downloading localized names for {len(ids):,} geonames…')
 alt_raw=download('https://download.geonames.org/export/dump/alternateNamesV2.zip')
 localized={}
 with zipfile.ZipFile(io.BytesIO(alt_raw)) as zf:
-    # Current dump uses alternateNamesV2.txt.
-    member=next((n for n in zf.namelist() if n.endswith('.txt')),zf.namelist()[0])
+    names=zf.namelist()
+    member='alternateNamesV2.txt' if 'alternateNamesV2.txt' in names else next((n for n in names if n.lower().endswith('alternatenamesv2.txt')),None)
+    if not member:
+        raise RuntimeError(f'alternateNamesV2.txt not found in archive: {names[:8]}')
     with zf.open(member) as fh:
         for bline in fh:
-            try: line=bline.decode('utf-8','replace').rstrip('\n');p=line.split('\t')
-            except: continue
+            try:
+                line=bline.decode('utf-8','replace').rstrip('\n')
+                p=line.split('\t')
+            except:
+                continue
             if len(p)<4: continue
             try: geoid=int(p[1])
             except: continue
@@ -74,13 +71,15 @@ with zipfile.ZipFile(io.BytesIO(alt_raw)) as zf:
             name=norm_name(p[3])
             if not name: continue
             preferred=len(p)>4 and p[4]=='1'
-            historic=len(p)>7 and p[7]=='1'
+            short=len(p)>5 and p[5]=='1'
             colloquial=len(p)>6 and p[6]=='1'
+            historic=len(p)>7 and p[7]=='1'
             if historic or colloquial: continue
+            score=(2 if preferred else 0)+(1 if short else 0)
             entry=localized.setdefault(geoid,{})
             cur=entry.get(lang)
-            if cur is None or (preferred and not cur[1]):
-                entry[lang]=(name,preferred)
+            if cur is None or score>cur[1]:
+                entry[lang]=(name,score)
 
 def lname(geoid:int,lang:str,fallback:str)->str:
     val=localized.get(geoid,{}).get(lang)
@@ -106,7 +105,7 @@ for c in cities:
         a=norm_name(a)
         if not a: continue
         if a.casefold()!=en.casefold() and a not in aliases_en and len(a)<=80: aliases_en.append(a)
-        if any('А'<=ch<='я' or ch in 'Ёё' for ch in a) and a.casefold()!=ru.casefold() and a not in aliases_ru and len(a)<=80: aliases_ru.append(a)
+        if any(('А'<=ch<='я') or ch in 'Ёё' for ch in a) and a.casefold()!=ru.casefold() and a not in aliases_ru and len(a)<=80: aliases_ru.append(a)
         if len(aliases_en)>=4 and len(aliases_ru)>=4: break
     row={'id':c['id'],'ru':ru,'en':en,'r':c['r'],'p':c['p']}
     if aliases_ru: row['a_ru']=aliases_ru[:4]
@@ -122,4 +121,4 @@ for country,items in by_country.items():
     rows=sorted(dedup.values(),key=lambda x:(-x['p'],x['ru'].casefold(),x['en'].casefold()))
     (OUT/f'{country}.json').write_text(json.dumps(rows,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
 
-print(f'Wrote {len(regions)} country region sets and {len(by_country)} country city files.')
+print(f'Wrote {len(regions)} country region sets and {len(by_country)} country city files with {len(localized):,} localized geonames.')

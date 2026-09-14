@@ -26,32 +26,7 @@ jobs:
           node --check v4.js
           node --check v4-locale-v1.js
           node --check v4-request-modal-v1.js
-      - name: Harden temporary QA interactions
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p=Path('.github/scripts/full_qa.mjs')
-          s=p.read_text(encoding='utf-8')
-          old="""  if(await firstGallery.count()){
-    await firstGallery.click();await page.waitForTimeout(80);
-    if(lang==='en')await assertEnglishClean(page,`${scope}:gallery`,'.gallery-lightbox');
-    const close=page.locator('.gallery-lightbox-close');if(await close.count())await close.click();
-  }
-"""
-          new="""  if(await firstGallery.count()){
-    await firstGallery.click({force:true});await page.waitForTimeout(100);
-    const dialog=page.locator('.gallery-lightbox');
-    const opened=await dialog.evaluate(el=>el.open||el.hasAttribute('open')).catch(()=>false);
-    if(opened){
-      if(lang==='en')await assertEnglishClean(page,`${scope}:gallery`,'.gallery-lightbox');
-      const close=page.locator('.gallery-lightbox-close');
-      if(await close.isVisible().catch(()=>false))await close.click();else await page.keyboard.press('Escape');
-    }else warn(scope,'gallery image click did not open fullscreen viewer');
-  }
-"""
-          if old not in s: raise SystemExit('gallery QA anchor not found')
-          p.write_text(s.replace(old,new,1),encoding='utf-8')
-          PY
+          node --check .github/scripts/run_full_qa.mjs
       - name: Install Playwright
         run: |
           npm install --no-save playwright@1.55.0
@@ -62,4 +37,4 @@ jobs:
           echo $! >/tmp/vanta-http.pid
           sleep 2
       - name: Full runtime and localization QA
-        run: node .github/scripts/full_qa.mjs
+        run: node .github/scripts/run_full_qa.mjs

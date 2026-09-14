@@ -1,6 +1,6 @@
 name: Temporary full site QA
 
-# QA pass 2: verify production localization, typography and runtime cleanup.
+# QA pass 3: final release verification after localization, typography and runtime cleanup.
 on:
   push:
     branches: [main]

@@ -18,7 +18,9 @@ jobs:
         with:
           fetch-depth: 0
       - name: Apply V5 patch
-        run: python .github/scripts/product-flow-v5.py
+        run: |
+          sed -i 's/admin1Codes\.txt/admin1CodesASCII.txt/g' .github/scripts/product-flow-v5.py
+          python .github/scripts/product-flow-v5.py
       - name: Validate JavaScript
         run: node --check v4.js
       - name: Commit production update

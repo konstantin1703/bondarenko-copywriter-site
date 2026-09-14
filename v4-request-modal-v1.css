@@ -1,27 +1,5 @@
 /* VANTA R1 — Request Interface / header locale / final mobile fixes */
 
-/* Header language control: available beside the menu, not buried inside it. */
-.lang-switch{border-color:#3a3d3a!important;background:rgba(7,8,7,.86)!important;border-radius:999px!important;height:34px!important;padding:3px!important;gap:0!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.015);overflow:hidden}
-.lang-switch button{position:relative;min-width:38px!important;height:26px!important;padding:0 9px!important;border-radius:999px!important;font-size:8px!important;letter-spacing:.1em!important;color:#737a74!important;transition:color .2s,background .2s,box-shadow .2s!important}
-.lang-switch button.active{background:#eeefeb!important;color:#090a09!important;box-shadow:0 1px 8px rgba(255,255,255,.08)!important}
-.lang-switch button[data-lang="ru"]:after{content:"";position:absolute;left:11px;right:11px;bottom:3px;height:1px;background:linear-gradient(90deg,#fff 0 33%,#486dcc 33% 66%,#dd4038 66%);opacity:.55}
-.lang-switch button[data-lang="en"]:after{content:"";position:absolute;left:11px;right:11px;bottom:3px;height:1px;background:linear-gradient(90deg,#476cab 0 45%,#eee 45% 55%,#d74a42 55%);opacity:.45}
-#header .header-lang{z-index:5!important;pointer-events:auto!important}#header .header-lang button{pointer-events:auto!important;touch-action:manipulation!important}
-.mobile-lang{display:none!important}
-@media(max-width:980px){
-  #header.header{grid-template-columns:1fr auto auto!important;column-gap:5px!important}
-  #header .header-lang{display:inline-flex!important;position:static!important;right:auto!important;top:auto!important;transform:none!important;grid-column:2;grid-row:1;justify-self:end;margin:0 1px 0 0!important}
-  #header .menu{grid-column:3;grid-row:1;margin:0!important}
-}
-@media(max-width:390px){.lang-switch button{min-width:34px!important;padding:0 7px!important}.lang-switch{height:32px!important}.lang-switch button{height:24px!important}}
-
-/* Engineering Profile close: the button position was correct; draw the glyph on the button itself. */
-html #techSheet[open] #techClose.tech-floating-close>span{display:none!important}
-html #techSheet[open] #techClose.tech-floating-close::before,
-html #techSheet[open] #techClose.tech-floating-close::after{content:""!important;display:block!important;position:absolute!important;left:50%!important;top:50%!important;width:20px!important;height:1.6px!important;margin:0!important;padding:0!important;background:#f4f4f0!important;border:0!important;border-radius:99px!important;transform-origin:50% 50%!important;opacity:1!important}
-html #techSheet[open] #techClose.tech-floating-close::before{transform:translate(-50%,-50%) rotate(45deg)!important}
-html #techSheet[open] #techClose.tech-floating-close::after{transform:translate(-50%,-50%) rotate(-45deg)!important}
-
 /* Request is removed from the document flow only after JS has initialized the modal controller. */
 html.request-modal-ready #request:not(.request-modal-open){display:none!important}
 body.request-open{position:fixed!important;left:0!important;right:0!important;width:100%!important;overflow:hidden!important;top:var(--request-scroll-lock,0)!important}
@@ -35,7 +13,7 @@ body.request-open{position:fixed!important;left:0!important;right:0!important;wi
 #request.request-modal-open .request-summary{top:calc(env(safe-area-inset-top) + 94px)!important;max-height:calc(100dvh - 126px);overflow:auto;scrollbar-width:thin}
 
 .request-modal-bar{position:sticky;z-index:6200;top:0;min-height:78px;padding:calc(env(safe-area-inset-top) + 13px) max(24px,var(--pad)) 13px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px;background:rgba(5,6,5,.94);border-bottom:1px solid #2c302d;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 12px 42px rgba(0,0,0,.28)}
-.request-modal-title{display:grid;gap:5px;min-width:0}.request-modal-title small{font-size:7px;letter-spacing:.2em;color:#747b75;text-transform:uppercase}.request-modal-title strong{font-family:"Inter Tight","Inter",sans-serif;font-size:18px;line-height:1;font-weight:700;letter-spacing:-.025em;color:#f3f4ef}
+.request-modal-title{display:grid;gap:5px;min-width:0}.request-modal-title small{font-size:8px;letter-spacing:.2em;color:#747b75;text-transform:uppercase}.request-modal-title strong{font-family:"Inter Tight","Inter",sans-serif;font-size:18px;line-height:1;font-weight:700;letter-spacing:-.025em;color:#f3f4ef}
 .request-modal-close{position:relative;width:46px;height:46px;min-width:46px;padding:0;border:1px solid #4a4f4a;border-radius:50%;background:#090a09;color:transparent;cursor:pointer;touch-action:manipulation;box-shadow:0 10px 28px rgba(0,0,0,.34)}
 .request-modal-close::before,.request-modal-close::after{content:"";position:absolute;left:50%;top:50%;width:19px;height:1.5px;background:#f2f3ee;border-radius:99px;transform-origin:center}.request-modal-close::before{transform:translate(-50%,-50%) rotate(45deg)}.request-modal-close::after{transform:translate(-50%,-50%) rotate(-45deg)}
 .request-modal-close:active{transform:scale(.96);background:#151715}
@@ -66,7 +44,7 @@ html[lang="ru"] #request .request-code span{letter-spacing:.13em}
 @media(max-width:600px){
   #request.request-modal-open{padding-bottom:max(24px,env(safe-area-inset-bottom))!important}
   .request-modal-bar{min-height:66px;padding:calc(env(safe-area-inset-top) + 9px) 14px 9px 18px;gap:10px}
-  .request-modal-title{gap:4px}.request-modal-title small{font-size:6.5px;letter-spacing:.17em}.request-modal-title strong{font-size:15px}
+  .request-modal-title{gap:4px}.request-modal-title small{font-size:8px;letter-spacing:.17em}.request-modal-title strong{font-size:15px}
   .request-modal-close{width:44px;height:44px;min-width:44px}.request-modal-close::before,.request-modal-close::after{width:18px}
   #request.request-modal-open .request-layout{width:100%!important;margin:0!important;display:block!important}
   #request.request-modal-open .request-summary{display:none!important}
@@ -80,7 +58,7 @@ html[lang="ru"] #request .request-code span{letter-spacing:.13em}
   #request.request-modal-open .request-controls button{min-height:56px!important}
   #request.request-modal-open .request-complete{padding-top:34px!important}
   .request-modal-configbar{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:13px;padding:12px 18px;border-bottom:1px solid #292d2a;background:#080908;position:relative;z-index:61}
-  .request-modal-configbar span{display:grid;gap:3px;min-width:0}.request-modal-configbar small{font-size:6.5px;letter-spacing:.15em;color:#6e756f;text-transform:uppercase}.request-modal-configbar b{font-family:"Inter Tight","Inter",sans-serif;font-size:13px;letter-spacing:.015em;white-space:nowrap}.request-modal-configbar .rm-price{text-align:right}.request-modal-configbar .rm-code{padding-left:13px;border-left:1px solid #2a2e2b;text-align:right}.request-modal-configbar .rm-code b{font-family:"Inter",sans-serif;font-size:8px;letter-spacing:.09em;color:#aeb4ae}
+  .request-modal-configbar span{display:grid;gap:3px;min-width:0}.request-modal-configbar small{font-size:8px;letter-spacing:.15em;color:#6e756f;text-transform:uppercase}.request-modal-configbar b{font-family:"Inter Tight","Inter",sans-serif;font-size:13px;letter-spacing:.015em;white-space:nowrap}.request-modal-configbar .rm-price{text-align:right}.request-modal-configbar .rm-code{padding-left:13px;border-left:1px solid #2a2e2b;text-align:right}.request-modal-configbar .rm-code b{font-family:"Inter",sans-serif;font-size:8px;letter-spacing:.09em;color:#aeb4ae}
   .location-suggest{max-height:min(38dvh,310px)!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y!important;overscroll-behavior:contain!important}
   .location-suggest button{touch-action:pan-y!important}
 }

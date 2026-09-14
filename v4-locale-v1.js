@@ -18,9 +18,23 @@
     'ИНЖЕНЕРНЫЙ':'ENGINEERING','ПРОФИЛЬ R1':'PROFILE R1','Шесть параметров, которые формируют отклик, тягу, энергетический цикл, массу и практическую дальность R1.':'Six parameters define R1 response, torque, energy cycle, mass and practical range.','ПРИВОД':'DRIVE','Пиковая мощность':'Peak power','Максимальная целевая отдача электрического привода.':'Maximum target output of the electric drive.','Крутящий момент':'Torque','Тяга доступна практически сразу после открытия газа.':'Torque is available almost immediately after throttle input.','ВЛИЯНИЕ НА R1':'IMPACT ON R1','Мгновенный отклик и высокий темп разгона без паузы на переключения.':'Instant response and rapid acceleration without shift interruptions.','ЭНЕРГОСИСТЕМА':'ENERGY SYSTEM','Высоковольтная архитектура':'High-voltage architecture','Основа для высокой мощности и эффективной быстрой зарядки.':'The foundation for high output and efficient fast charging.','Зарядка 10→80%':'Charging 10→80%','Целевой энергетический цикл на совместимой DC-станции.':'Target charge cycle on a compatible DC station.','Высокую скорость восстановления заряда и устойчивую отдачу силовой системы.':'Fast energy recovery and consistent power-system output.','ХОДОВОЙ ПРОФИЛЬ':'VEHICLE PROFILE','Целевая масса':'Target mass','Расчётная масса базовой инженерной конфигурации R1.':'Calculated mass of the base R1 engineering configuration.','Запас хода':'Range','Расчётная дальность базовой конфигурации на одном заряде.':'Calculated range of the base configuration on one charge.','Баланс между управляемостью, плотностью компоновки и практической дальностью.':'A balance of handling, packaging density and practical range.','ИНЖЕНЕРНЫЙ ИТОГ':'ENGINEERING SUMMARY','Характер R1 складывается не из одной большой цифры.':'R1 character is not defined by a single headline number.','формируют отклик и тягу.':'define response and torque.','определяют энергетический темп.':'set the energy-cycle pace.','задают баланс динамики, массы и реальной дальности.':'balance dynamics, mass and real-world range.',
     'VANTA R1 — авторский электрический superbike-концепт. Все изображения мотоцикла созданы специально для этого проекта.':'VANTA R1 is an original electric superbike concept. All motorcycle imagery was created specifically for this project.'
   };
+  Object.assign(TEXT,{
+    'Зафиксируй':'Lock in','свой R1.':'your R1.','Контактные данные и адрес — последний шаг перед фиксацией выбранной конфигурации R1.':'Contact details and delivery address are the final step before locking in your R1 configuration.',
+    'кВт':'kW','Н·м':'N·m','В':'V','мин':'min','кг':'kg','км':'km',
+    '210 кВт и 390 Н·м':'210 kW and 390 N·m','800 В и 18 минут':'800 V and 18 min','189 кг и 320 км':'189 kg and 320 km',
+    'Монохромный режим без лишнего блеска.':'Monochrome mode with no unnecessary glare.',
+    'ВАШ R1':'YOUR R1','КОД СБОРКИ':'BUILD CODE','АКТИВНАЯ СБОРКА':'ACTIVE BUILD','ЗАВОДСКОЙ ПРОФИЛЬ':'FACTORY PROFILE','ЗАВОДСКАЯ СБОРКА':'FACTORY SETUP','ВЕРНУТЬ ЗАВОДСКУЮ СБОРКУ':'RESTORE FACTORY SETUP','ИНЖЕНЕРНЫЕ ОПЦИИ':'ENGINEERING OPTIONS','КОНФИГУРАЦИЯ / СВЕТОВАЯ ПОДПИСЬ':'CONFIG / LIGHT SIGNATURE','10—80% / целевое':'10—80% / target'
+  });
   const ATTR={
     'VANTA — наверх':'VANTA — back to top','Основная навигация':'Main navigation','Открыть меню':'Open menu','Мобильная навигация':'Mobile navigation','Ключевые характеристики концепта':'Key concept specifications','Предыдущий кадр':'Previous frame','Следующий кадр':'Next frame','Галерея VANTA R1':'VANTA R1 gallery','Интерактивная приборная панель VANTA R1':'Interactive VANTA R1 instrument panel','Режим движения':'Ride mode','Профиль R1':'R1 profile','Световая подпись конфигуратора':'Configurator light signature','Цветовой режим':'Light color mode','Красная подсветка':'Red lighting','Зелёная подсветка':'Green lighting','Закрыть инженерный профиль':'Close engineering profile','Закрыть выбор страны':'Close country picker'
   };
+  Object.assign(ATTR,{
+    'VANTA R1 — фронтальный ракурс три четверти':'VANTA R1 — front three-quarter view','VANTA R1 в динамической световой сцене':'VANTA R1 in a dynamic lighting scene','VANTA R1 в архитектурной студии':'VANTA R1 in the architecture studio',
+    'Подсветить CARBON MONOCOQUE':'Highlight CARBON MONOCOQUE','Подсветить ACTIVE AERO':'Highlight ACTIVE AERO','Подсветить AXIAL DRIVE':'Highlight AXIAL DRIVE',
+    'Макро-деталь карбонового корпуса VANTA R1':'Macro detail of the VANTA R1 carbon body','Фара VANTA R1':'VANTA R1 headlight','Переднее колесо и тормоз VANTA R1':'VANTA R1 front wheel and brake','Задняя оптика VANTA R1':'VANTA R1 rear light','Световая подпись и карбоновая поверхность VANTA R1':'VANTA R1 light signature and carbon surface',
+    'VANTA R1 — фронт три четверти':'VANTA R1 — front three-quarter view','VANTA R1 — боковой профиль':'VANTA R1 — side profile','VANTA R1 — задний ракурс':'VANTA R1 — rear view','VANTA R1 — студийный портрет':'VANTA R1 — studio portrait','Кокпит VANTA R1':'VANTA R1 cockpit','Оптика VANTA R1':'VANTA R1 lighting','Кокпит VANTA R1 с цифровой приборной панелью':'VANTA R1 cockpit with digital instrument display',
+    'VANTA R1 — конфигуратор':'VANTA R1 — configurator','Этапы заявки':'Request steps','VANTA R1 — выбранная конфигурация':'VANTA R1 — selected configuration','VANTA R1 — финальный активационный ракурс':'VANTA R1 — final activation view','Полноэкранная галерея VANTA R1':'Fullscreen VANTA R1 gallery','Закрыть галерею':'Close gallery'
+  });
   const reverse=Object.fromEntries(Object.entries(TEXT).map(([ru,en])=>[en,ru]));
   const reverseAttr=Object.fromEntries(Object.entries(ATTR).map(([ru,en])=>[en,ru]));
   let activeLang='ru';
@@ -48,16 +62,19 @@
   };
   const translateAttrs=root=>{
     const dict=activeLang==='en'?ATTR:reverseAttr;
-    root.querySelectorAll?.('[aria-label],[placeholder],[title]').forEach(el=>{
-      ['aria-label','placeholder','title'].forEach(attr=>{const v=el.getAttribute(attr);if(!v)return;const mapped=activeLang==='en'?(dict[v]||TEXT[v]):(dict[v]||reverse[v]);if(mapped)el.setAttribute(attr,mapped);});
+    const scope=root?.nodeType===Node.DOCUMENT_NODE?document:root;
+    scope?.querySelectorAll?.('[aria-label],[placeholder],[title],[alt]').forEach(el=>{
+      ['aria-label','placeholder','title','alt'].forEach(attr=>{const v=el.getAttribute(attr);if(!v)return;const mapped=activeLang==='en'?(dict[v]||TEXT[v]):(dict[v]||reverse[v]);if(mapped)el.setAttribute(attr,mapped);});
     });
   };
   const translateTree=root=>{
-    if(applying)return;applying=true;
-    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>/^(SCRIPT|STYLE|NOSCRIPT)$/.test(n.parentElement?.tagName||'')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
-    let node;while((node=walker.nextNode()))translateNode(node);
-    translateAttrs(root.nodeType===Node.DOCUMENT_NODE?document:root);
-    applying=false;
+    if(applying||!root||typeof root.nodeType!=='number')return;
+    applying=true;
+    try{
+      const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>/^(SCRIPT|STYLE|NOSCRIPT)$/.test(n.parentElement?.tagName||'')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+      let node;while((node=walker.nextNode()))translateNode(node);
+      translateAttrs(root);
+    }finally{applying=false;}
   };
 
   const displayName=iso=>{try{return new Intl.DisplayNames([activeLang],{type:'region'}).of(iso)||iso}catch{return iso}};
@@ -69,7 +86,7 @@
     document.title='VANTA R1 — Electric Superbike Concept';
     const d=document.querySelector('meta[name="description"]');if(d)d.content=activeLang==='en'?'VANTA R1 — an original electric superbike concept and interactive digital product experience.':'VANTA R1 — авторский концепт электрического superbike и интерактивная digital-презентация.';
   };
-  const updateSwitches=()=>document.querySelectorAll('.lang-switch button').forEach(b=>{const on=b.dataset.lang===activeLang;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on));});
+  const updateSwitches=()=>{document.querySelectorAll('.lang-switch').forEach(w=>w.setAttribute('aria-label',activeLang==='en'?'Language':'Язык'));document.querySelectorAll('.lang-switch button').forEach(b=>{const on=b.dataset.lang===activeLang;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on));});};
   const setLanguage=(lang,{persist=true,url=true}={})=>{
     activeLang=lang==='en'?'en':'ru';
     document.documentElement.lang=activeLang;
@@ -107,8 +124,6 @@
   setLanguage(initial,{persist:false,url:false});
   window.vantaLocale={get:()=>activeLang,set:setLanguage};
 
-  const observer=new MutationObserver(muts=>{if(applying)return;let touched=false;for(const m of muts){if(m.type==='characterData'){translateNode(m.target);touched=true;}else m.addedNodes.forEach(n=>{if(n.nodeType===1||n.nodeType===3){translateTree(n.nodeType===1?n:n.parentNode);touched=true;}});}if(touched)localizeCountryRows();});
-  observer.observe(document.body,{subtree:true,childList:true,characterData:true});
 
   /* Replace legacy autocomplete nodes to remove pointerdown selection listeners. */
   const cloneClean=id=>{const old=document.getElementById(id);if(!old)return null;const fresh=old.cloneNode(true);old.replaceWith(fresh);return fresh;};

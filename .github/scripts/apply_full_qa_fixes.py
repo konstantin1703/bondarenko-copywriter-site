@@ -4,7 +4,7 @@ import re
 ROOT=Path('.')
 
 def sub_once(text, pattern, repl, name, flags=re.S):
-    out,n=re.subn(pattern,repl,text,count=1,flags=flags)
+    out,n=re.subn(pattern,lambda _m: repl,text,count=1,flags=flags)
     if n!=1:
         raise SystemExit(f'{name}: expected one match, got {n}')
     return out

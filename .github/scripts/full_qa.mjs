@@ -98,7 +98,7 @@ async function basicDomAudit(page,scope,mobile){
   const unnamed=await page.evaluate(()=>[...document.querySelectorAll('button')].filter(el=>{const s=getComputedStyle(el),r=el.getBoundingClientRect();if(s.display==='none'||s.visibility==='hidden'||r.width===0||r.height===0)return false;return !(el.getAttribute('aria-label')||el.textContent.trim()||el.getAttribute('title'));}).map(el=>el.id||el.className||'<button>'));
   if(unnamed.length)issue(scope,`visible buttons without accessible name: ${unnamed.join(', ')}`);
 
-  const broken=await page.evaluate(()=>[...document.images].filter(i=>i.complete&&i.naturalWidth===0).map(i=>i.src));
+  const broken=await page.evaluate(()=>[...document.images].map(i=>({i,src:i.currentSrc||i.getAttribute('src')||''})).filter(x=>x.src&&x.i.complete&&x.i.naturalWidth===0).map(x=>x.src));
   if(broken.length)issue(scope,`broken images: ${broken.slice(0,5).join(', ')}`);
 
   if(mobile){

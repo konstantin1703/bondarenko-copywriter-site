@@ -194,10 +194,15 @@
   const speedTicks=document.getElementById('speedTicks');
   const modeName=document.getElementById('modeName');
   const modeDesc=document.getElementById('modeDesc');
+  const rideLang=()=>document.documentElement.lang==='en'?'en':'ru';
+  const rideCopy={
+    ru:{km:'км',regen:{medium:'СРЕДНЯЯ',low:'НИЗКАЯ',high:'ВЫСОКАЯ'},modes:{road:{name:'ДОРОГА',desc:'Сбалансированный отклик'},attack:{name:'ТРЕК',desc:'Максимальная отдача привода'},range:{name:'ЭКО',desc:'Приоритет запаса хода'}},meter:(r,p)=>`Рекуперация ${r} процентов, мощность ${p} процентов`},
+    en:{km:'km',regen:{medium:'MEDIUM',low:'LOW',high:'HIGH'},modes:{road:{name:'ROAD',desc:'Balanced response'},attack:{name:'ATTACK',desc:'Maximum drive output'},range:{name:'RANGE',desc:'Range priority'}},meter:(r,p)=>`Regeneration ${r} percent, power ${p} percent`}
+  };
   const states={
-    road:{speed:84,battery:'78%',range:'214 км',regen:'СРЕДНЯЯ',regenValue:48,power:62,dial:142,name:'ДОРОГА',desc:'Сбалансированный отклик'},
-    attack:{speed:146,battery:'61%',range:'128 км',regen:'НИЗКАЯ',regenValue:18,power:94,dial:232,name:'ТРЕК',desc:'Максимальная отдача привода'},
-    range:{speed:62,battery:'84%',range:'286 км',regen:'ВЫСОКАЯ',regenValue:88,power:42,dial:106,name:'ЭКО',desc:'Приоритет запаса хода'}
+    road:{speed:84,battery:'78%',range:214,regen:'medium',regenValue:48,power:62,dial:142},
+    attack:{speed:146,battery:'61%',range:128,regen:'low',regenValue:18,power:94,dial:232},
+    range:{speed:62,battery:'84%',range:286,regen:'high',regenValue:88,power:42,dial:106}
   };
 
   const svgNS='http://www.w3.org/2000/svg';
@@ -256,22 +261,24 @@
   const applyMode=(key,{animate=true}={})=>{
     const s=states[key];
     if(!dash||!s)return;
+    const copy=rideCopy[rideLang()];
+    const mode=copy.modes[key];
     dash.dataset.mode=key;
     if(animate)calibrate();
     animateSpeed(s.speed);
     if(battery)battery.textContent=s.battery;
-    if(range)range.textContent=s.range;
-    if(regen)regen.textContent=s.regen;
+    if(range)range.textContent=`${s.range} ${copy.km}`;
+    if(regen)regen.textContent=copy.regen[s.regen];
     if(powerLabel)powerLabel.textContent=`${s.power}%`;
-    if(modeName)modeName.textContent=s.name;
-    if(modeDesc)modeDesc.textContent=s.desc;
+    if(modeName)modeName.textContent=mode.name;
+    if(modeDesc)modeDesc.textContent=mode.desc;
     setSvgArc(speedArc,s.speed/2);
     setSvgArc(powerArcSvg,s.power);
     dash.style.setProperty('--dial',`${s.dial}deg`);
     dash.style.setProperty('--power-angle',`${s.power*2.7}deg`);
     dash.style.setProperty('--power-half',`${s.power*.5}%`);
     dash.style.setProperty('--regen-half',`${s.regenValue*.5}%`);
-    powerMeter?.setAttribute('aria-label',`Рекуперация ${s.regenValue} процентов, мощность ${s.power} процентов`);
+    powerMeter?.setAttribute('aria-label',copy.meter(s.regenValue,s.power));
   };
   document.querySelectorAll('.modes button').forEach(btn=>btn.addEventListener('click',()=>{
     if(btn.getAttribute('aria-pressed')==='true')return;
@@ -283,9 +290,10 @@
     applyMode(btn.dataset.mode);
   }));
   applyMode('road',{animate:false});
+  window.addEventListener('vanta:languagechange',()=>applyMode(dash?.dataset.mode||'road',{animate:false}));
 
   const clock=document.getElementById('clock');
-  const tick=()=>{if(clock)clock.textContent=new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});};
+  const tick=()=>{if(clock)clock.textContent=new Date().toLocaleTimeString(rideLang()==='en'?'en-GB':'ru-RU',{hour:'2-digit',minute:'2-digit'});};
   tick();
   setInterval(tick,15000);
 
@@ -296,12 +304,24 @@
   const activateLabel=activateBtn?.querySelector('span');
   const finishName=document.getElementById('finishName');
   const finishDesc=document.getElementById('finishDesc');
-  const finishes={red:{name:'SIGNAL RED',desc:'Фирменная красная световая подпись.'},green:{name:'VOLT GREEN',desc:'Холодный электрический зелёный акцент.'},stealth:{name:'STEALTH BLACK',desc:'Монохромный режим без лишнего блеска.'}};
+  const activationLang=()=>document.documentElement.lang==='en'?'en':'ru';
+  const activationCopy={
+    ru:{activate:'АКТИВИРОВАТЬ R1',deactivate:'ОТКЛЮЧИТЬ R1',starting:'ЗАПУСК...',standby:'Система ожидает запуска.',checking:'Проверка бортовой системы.',ready:'Система готова к активации.',active:name=>`${name}: оптика и бортовая система активированы.`,updated:name=>`${name}: световой характер обновлён.`,selected:'Выбран световой характер. Система ожидает запуска.',desc:{red:'Фирменная красная световая подпись.',green:'Холодный электрический зелёный акцент.',stealth:'Монохромный режим без лишнего блеска.'}},
+    en:{activate:'ACTIVATE R1',deactivate:'DEACTIVATE R1',starting:'STARTING...',standby:'System ready for activation.',checking:'Running onboard system check.',ready:'System ready to activate.',active:name=>`${name}: optics and onboard systems are active.`,updated:name=>`${name}: light signature updated.`,selected:'Light signature selected. System ready for activation.',desc:{red:'Signature red light graphic.',green:'Cold electric green accent.',stealth:'Monochrome mode with no unnecessary glare.'}}
+  };
+  const finishes={red:{name:'SIGNAL RED'},green:{name:'VOLT GREEN'},stealth:{name:'STEALTH BLACK'}};
   let currentFinish='red';
   let activationOn=false;
   let activationBusy=false;
   let bootTimers=[];
+  const activationText=()=>activationCopy[activationLang()];
   const clearBootTimers=()=>{bootTimers.forEach(clearTimeout);bootTimers=[];};
+  const paintActivationCopy=()=>{
+    const copy=activationText(),finish=finishes[currentFinish]||finishes.red;
+    if(activateLabel)activateLabel.textContent=activationBusy?copy.starting:(activationOn?copy.deactivate:copy.activate);
+    if(finishDesc)finishDesc.textContent=copy.desc[currentFinish]||copy.desc.red;
+    if(note)note.textContent=activationOn?copy.active(finish.name):copy.standby;
+  };
   const setActivationUi=on=>{
     activationOn=on;
     stage?.classList.toggle('stage-live',on);
@@ -310,27 +330,27 @@
     activateBtn?.setAttribute('aria-busy','false');
     activateBtn?.setAttribute('aria-pressed',String(on));
     if(status)status.textContent=on?'SYSTEM ACTIVE':'STANDBY';
-    if(activateLabel)activateLabel.textContent=on?'ОТКЛЮЧИТЬ R1':'АКТИВИРОВАТЬ R1';
-    if(note)note.textContent=on?`${finishes[currentFinish].name}: оптика и бортовая система активированы.`:'Система ожидает запуска.';
     activationBusy=false;
+    paintActivationCopy();
   };
   const bootActivation=()=>{
     if(!stage||!activateBtn||activationBusy)return;
     if(activationOn){clearBootTimers();setActivationUi(false);return;}
     if(reduceMotion){setActivationUi(true);return;}
     activationBusy=true;
+    const copy=activationText();
     stage.classList.remove('stage-live','stage-ready');
     stage.classList.add('stage-booting');
     stage.setAttribute('aria-busy','true');
     activateBtn.setAttribute('aria-busy','true');
     if(status)status.textContent='SYSTEM CHECK';
-    if(activateLabel)activateLabel.textContent='ЗАПУСК...';
-    if(note)note.textContent='Проверка бортовой системы.';
+    if(activateLabel)activateLabel.textContent=copy.starting;
+    if(note)note.textContent=copy.checking;
     bootTimers=[
       setTimeout(()=>{
         stage.classList.add('stage-ready');
         if(status)status.textContent='READY';
-        if(note)note.textContent='Система готова к активации.';
+        if(note)note.textContent=activationText().ready;
       },330),
       setTimeout(()=>setActivationUi(true),820)
     ];
@@ -344,11 +364,12 @@
     if(currentFinish==='stealth')stage?.classList.add('color-stealth');
     if(stage&&!reduceMotion){void stage.offsetWidth;stage.classList.add('color-shifting');setTimeout(()=>stage.classList.remove('color-shifting'),420);}
     if(finishName)finishName.textContent=finish.name;
-    if(finishDesc)finishDesc.textContent=finish.desc;
-    if(announce&&note)note.textContent=activationOn?`${finish.name}: световой характер обновлён.`:'Выбран световой характер. Система ожидает запуска.';
+    if(finishDesc)finishDesc.textContent=activationText().desc[currentFinish];
+    if(announce&&note)note.textContent=activationOn?activationText().updated(finish.name):activationText().selected;
   };
   document.querySelectorAll('.sw').forEach(sw=>sw.addEventListener('click',()=>applyFinish(sw.dataset.color)));
   applyFinish('red',{announce:false});
+  window.addEventListener('vanta:languagechange',paintActivationCopy);
 
   const techTrigger=document.getElementById('techTrigger');
   const techSheet=document.getElementById('techSheet');
@@ -539,6 +560,12 @@
     range:{label:'RANGE',short:'RG',modules:['range','fast','carbon','telemetry'],tone:'green',factory:'RANGE SYSTEM + FAST CHARGE + CARBON + TELEMETRY'}
   };
   const toneCodes={red:'SR',green:'VG',stealth:'ST'};
+  const configLang=()=>document.documentElement.lang==='en'?'en':'ru';
+  const configCopy={
+    ru:{units:{power:'кВт',torque:'Н·м',mass:'кг',range:'км',charge:'мин'},add:'ДОБАВИТЬ',installed:'УСТАНОВЛЕНО',notInstalled:'НЕ УСТАНОВЛЕНО',saved:'СБОРКА СОХРАНЕНА',save:'СОХРАНИТЬ СБОРКУ',baseFactory:'BASE R1 — чистая конфигурация',customFactory:'CUSTOM BUILD — ручная конфигурация',your:'ВАШ R1',character:{balanced:'сбалансированный',aggressive:'агрессивный',long:'дальний',light:'облегчённый',fast:'быстрая зарядка',aero:'активная аэродинамика',telemetry:'телеметрия'}},
+    en:{units:{power:'kW',torque:'N·m',mass:'kg',range:'km',charge:'min'},add:'ADD',installed:'INSTALLED',notInstalled:'NOT INSTALLED',saved:'BUILD SAVED',save:'SAVE BUILD',baseFactory:'BASE R1 — clean configuration',customFactory:'CUSTOM BUILD — manual configuration',your:'YOUR R1',character:{balanced:'balanced',aggressive:'aggressive',long:'long-range',light:'lightweight',fast:'fast charging',aero:'active aero',telemetry:'telemetry'}}
+  };
+  const moduleCountLabel=(count,lang=configLang())=>lang==='en'?`${count} MODULE${count===1?'':'S'}`:`${count} ${count%10===1&&count%100!==11?'МОДУЛЬ':([2,3,4].includes(count%10)&&![12,13,14].includes(count%100)?'МОДУЛЯ':'МОДУЛЕЙ')}`;
   let state={preset:'road',modules:new Set(presets.road.modules),tone:'red'};
   let factoryPreset='road';
   const q=id=>document.getElementById(id);
@@ -548,20 +575,21 @@
   const preview=q('configPreview'),save=q('configSave'),request=q('configRequest'),activationBuild=q('activationBuild');
   const activeModules=q('configActiveModules'),characterNode=q('configCharacter'),factoryCopy=q('configFactoryCopy'),resetBuildBtn=q('configReset'),factoryResetBtn=q('configFactoryReset');
   const presetButtons=[...root.querySelectorAll('[data-preset]')],moduleButtons=[...root.querySelectorAll('[data-module]')],toneButtons=[...root.querySelectorAll('[data-config-tone]')];
-  const money=n=>new Intl.NumberFormat('ru-RU',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n).replace(/ /g,' ');
+  const money=n=>new Intl.NumberFormat(configLang()==='en'?'en-IE':'ru-RU',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n).replace(/ /g,' ');
   const sameSet=(a,b)=>a.size===b.length&&b.every(x=>a.has(x));
   const detectPreset=()=>{if(state.modules.size===0)return 'base';return Object.entries(presets).find(([,p])=>sameSet(state.modules,p.modules)&&state.tone===p.tone)?.[0]||'custom';};
   const calculate=()=>{const out={...base};state.modules.forEach(key=>{const e=effects[key]||{};['power','torque','mass','range','charge','price'].forEach(k=>{if(typeof e[k]==='number')out[k]+=e[k];});});return out;};
   const signed=(value,unit,{inverse=false}={})=>{if(!value)return 'BASE';const good=inverse?value<0:value>0;return {text:`${value>0?'+':'−'}${Math.abs(value)} ${unit}`,good};};
   const buildCharacter=(profile,modules)=>{
+    const c=configCopy[configLang()].character;
     const parts=[];
-    if(profile==='ATTACK'||modules.includes('performance'))parts.push('агрессивный');
-    else if(profile==='RANGE'||modules.includes('range'))parts.push('дальний');
-    else parts.push('сбалансированный');
-    if(modules.includes('carbon'))parts.push('облегчённый');
-    if(modules.includes('fast'))parts.push('быстрая зарядка');
-    if(modules.includes('aero'))parts.push('активная аэродинамика');
-    if(modules.includes('telemetry'))parts.push('телеметрия');
+    if(profile==='ATTACK'||modules.includes('performance'))parts.push(c.aggressive);
+    else if(profile==='RANGE'||modules.includes('range'))parts.push(c.long);
+    else parts.push(c.balanced);
+    if(modules.includes('carbon'))parts.push(c.light);
+    if(modules.includes('fast'))parts.push(c.fast);
+    if(modules.includes('aero'))parts.push(c.aero);
+    if(modules.includes('telemetry'))parts.push(c.telemetry);
     return parts.slice(0,3).join(' / ');
   };
   const snapshot=()=>{
@@ -572,17 +600,18 @@
   };
   const paintDelta=(node,value,unit,options)=>{if(!node)return;const d=signed(value,unit,options);node.textContent=typeof d==='string'?d:d.text;node.classList.remove('is-positive','is-negative');if(typeof d!=='string')node.classList.add(d.good?'is-positive':'is-negative');};
   const render=()=>{
+    const lang=configLang(),copy=configCopy[lang],u=copy.units;
     state.preset=detectPreset();const snap=snapshot(),v=snap.values,count=snap.modules.length;
-    profileLabel.textContent=snap.profile;moduleCount.textContent=`${count} ${count===1?'МОДУЛЬ':count<5?'МОДУЛЯ':'МОДУЛЕЙ'}`;code.textContent=snap.code;price.textContent=snap.price;
-    stats.power.textContent=`${v.power} кВт`;stats.torque.textContent=`${v.torque} Н·м`;stats.mass.textContent=`${v.mass} кг`;stats.range.textContent=`${v.range} км`;stats.charge.textContent=`${v.charge} мин`;if(stats.telemetry)stats.telemetry.textContent=state.modules.has('telemetry')?'LIVE':'OFF';if(deltas.telemetry)deltas.telemetry.textContent=state.modules.has('telemetry')?'R1 LINK':'НЕ УСТАНОВЛЕНО';stats.telemetry?.parentElement?.classList.toggle('is-off',!state.modules.has('telemetry'));
-    paintDelta(deltas.power,v.power-base.power,'кВт');paintDelta(deltas.torque,v.torque-base.torque,'Н·м');paintDelta(deltas.mass,v.mass-base.mass,'кг',{inverse:true});paintDelta(deltas.range,v.range-base.range,'км');paintDelta(deltas.charge,v.charge-base.charge,'мин',{inverse:true});
+    profileLabel.textContent=snap.profile;moduleCount.textContent=moduleCountLabel(count,lang);code.textContent=snap.code;price.textContent=snap.price;
+    stats.power.textContent=`${v.power} ${u.power}`;stats.torque.textContent=`${v.torque} ${u.torque}`;stats.mass.textContent=`${v.mass} ${u.mass}`;stats.range.textContent=`${v.range} ${u.range}`;stats.charge.textContent=`${v.charge} ${u.charge}`;if(stats.telemetry)stats.telemetry.textContent=state.modules.has('telemetry')?'LIVE':'OFF';if(deltas.telemetry)deltas.telemetry.textContent=state.modules.has('telemetry')?'R1 LINK':copy.notInstalled;stats.telemetry?.parentElement?.classList.toggle('is-off',!state.modules.has('telemetry'));
+    paintDelta(deltas.power,v.power-base.power,u.power);paintDelta(deltas.torque,v.torque-base.torque,u.torque);paintDelta(deltas.mass,v.mass-base.mass,u.mass,{inverse:true});paintDelta(deltas.range,v.range-base.range,u.range);paintDelta(deltas.charge,v.charge-base.charge,u.charge,{inverse:true});
     preview.dataset.tone=state.tone;if(characterNode)characterNode.textContent=snap.character;
     if(activeModules)activeModules.innerHTML=snap.moduleLabels.length?snap.moduleLabels.map(x=>`<span>${x}</span>`).join(''):'<span>BASE R1</span>';
-    if(factoryCopy)factoryCopy.textContent=state.preset==='base'?'BASE R1 — чистая конфигурация':state.preset==='custom'?'CUSTOM BUILD — ручная конфигурация':presets[state.preset].factory;if(factoryResetBtn){factoryResetBtn.hidden=state.preset!=='custom';factoryResetBtn.disabled=state.preset!=='custom';}if(resetBuildBtn){resetBuildBtn.hidden=state.modules.size===0;resetBuildBtn.disabled=state.modules.size===0;}
+    if(factoryCopy)factoryCopy.textContent=state.preset==='base'?copy.baseFactory:state.preset==='custom'?copy.customFactory:presets[state.preset].factory;if(factoryResetBtn){factoryResetBtn.hidden=state.preset!=='custom';factoryResetBtn.disabled=state.preset!=='custom';}if(resetBuildBtn){resetBuildBtn.hidden=state.modules.size===0;resetBuildBtn.disabled=state.modules.size===0;}
     presetButtons.forEach(btn=>{const on=btn.dataset.preset===state.preset;btn.classList.toggle('active',on);btn.setAttribute('aria-pressed',String(on));});
-    moduleButtons.forEach(btn=>{const on=state.modules.has(btn.dataset.module);btn.setAttribute('aria-pressed',String(on));const status=btn.querySelector(':scope > i');if(status)status.textContent=on?'УСТАНОВЛЕНО':'ДОБАВИТЬ';});
+    moduleButtons.forEach(btn=>{const on=state.modules.has(btn.dataset.module);btn.setAttribute('aria-pressed',String(on));const status=btn.querySelector(':scope > i');if(status)status.textContent=on?copy.installed:copy.add;});
     toneButtons.forEach(btn=>{const on=btn.dataset.configTone===state.tone;btn.classList.toggle('active',on);btn.setAttribute('aria-pressed',String(on));});
-    if(activationBuild)activationBuild.textContent=`YOUR R1 / ${snap.profile} / ${count} MODULES`;
+    if(activationBuild)activationBuild.textContent=`${copy.your} / ${snap.profile} / ${moduleCountLabel(count,lang)}`;
     window.dispatchEvent(new CustomEvent('vanta:configchange',{detail:snap}));return snap;
   };
   const usePreset=key=>{const p=presets[key];if(!p)return;factoryPreset=key;state={preset:key,modules:new Set(p.modules),tone:p.tone};render();};
@@ -593,9 +622,9 @@
   toneButtons.forEach(btn=>btn.addEventListener('click',()=>{state.tone=btn.dataset.configTone;render();}));
   resetBuildBtn?.addEventListener('click',resetBuild);
   factoryResetBtn?.addEventListener('click',restoreFactory);
-  save?.addEventListener('click',()=>{try{localStorage.setItem('vanta-r1-config',JSON.stringify({modules:[...state.modules],tone:state.tone}));}catch{}const span=save.querySelector('span');if(span){const original='СОХРАНИТЬ СБОРКУ';span.textContent='СБОРКА СОХРАНЕНА';setTimeout(()=>span.textContent=original,1400);}});
-  request?.addEventListener('click',()=>document.getElementById('request')?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}));
+  save?.addEventListener('click',()=>{try{localStorage.setItem('vanta-r1-config',JSON.stringify({modules:[...state.modules],tone:state.tone}));}catch{}const span=save.querySelector('span');if(span){span.textContent=configCopy[configLang()].saved;setTimeout(()=>span.textContent=configCopy[configLang()].save,1400);}});
   try{const saved=JSON.parse(localStorage.getItem('vanta-r1-config')||'null');if(saved&&Array.isArray(saved.modules)){state.modules=new Set(saved.modules.filter(k=>effects[k]));state.tone=['red','green','stealth'].includes(saved.tone)?saved.tone:'red';}}catch{}
+  window.addEventListener('vanta:languagechange',render);
   window.vantaConfig={getSnapshot:snapshot,setTone:t=>{if(['red','green','stealth'].includes(t)){state.tone=t;render();}},setPreset:usePreset,reset:resetBuild,restoreFactory,render};render();
 })();
 
@@ -603,7 +632,7 @@
   'use strict';
   const section=document.getElementById('request'),form=document.getElementById('requestForm');if(!section||!form)return;
   const q=id=>document.getElementById(id);
-  const countries=[{"iso":"RU","name":"Россия","dial":"+7"},{"iso":"DE","name":"Германия","dial":"+49"},{"iso":"US","name":"США","dial":"+1"},{"iso":"AE","name":"ОАЭ","dial":"+971"},{"iso":"KZ","name":"Казахстан","dial":"+7"},{"iso":"BY","name":"Беларусь","dial":"+375"},{"iso":"GB","name":"Великобритания","dial":"+44"},{"iso":"FR","name":"Франция","dial":"+33"},{"iso":"IT","name":"Италия","dial":"+39"},{"iso":"ES","name":"Испания","dial":"+34"},{"iso":"CH","name":"Швейцария","dial":"+41"},{"iso":"AT","name":"Австрия","dial":"+43"},{"iso":"NL","name":"Нидерланды","dial":"+31"},{"iso":"PL","name":"Польша","dial":"+48"},{"iso":"TR","name":"Турция","dial":"+90"},{"iso":"CN","name":"Китай","dial":"+86"},{"iso":"JP","name":"Япония","dial":"+81"},{"iso":"KR","name":"Южная Корея","dial":"+82"},{"iso":"IN","name":"Индия","dial":"+91"},{"iso":"AU","name":"Австралия","dial":"+61"},{"iso":"CA","name":"Канада","dial":"+1"},{"iso":"AZ","name":"Азербайджан","dial":"+994"},{"iso":"AX","name":"Аландские острова","dial":"+358"},{"iso":"AL","name":"Албания","dial":"+355"},{"iso":"DZ","name":"Алжир","dial":"+213"},{"iso":"AS","name":"Американское Самоа","dial":"+1-684"},{"iso":"AI","name":"Ангилья","dial":"+1-264"},{"iso":"AO","name":"Ангола","dial":"+244"},{"iso":"AD","name":"Андорра","dial":"+376"},{"iso":"AG","name":"Антигуа и Барбуда","dial":"+1-268"},{"iso":"AR","name":"Аргентина","dial":"+54"},{"iso":"AM","name":"Армения","dial":"+374"},{"iso":"AW","name":"Аруба","dial":"+297"},{"iso":"AF","name":"Афганистан","dial":"+93"},{"iso":"BS","name":"Багамские Острова","dial":"+1-242"},{"iso":"BD","name":"Бангладеш","dial":"+880"},{"iso":"BB","name":"Барбадос","dial":"+1-246"},{"iso":"BH","name":"Бахрейн","dial":"+973"},{"iso":"BZ","name":"Белиз","dial":"+501"},{"iso":"BE","name":"Бельгия","dial":"+32"},{"iso":"BJ","name":"Бенин","dial":"+229"},{"iso":"BM","name":"Бермудские Острова","dial":"+1-441"},{"iso":"BG","name":"Болгария","dial":"+359"},{"iso":"BO","name":"Боливия","dial":"+591"},{"iso":"BA","name":"Босния и Герцеговина","dial":"+387"},{"iso":"BW","name":"Ботсвана","dial":"+267"},{"iso":"BR","name":"Бразилия","dial":"+55"},{"iso":"IO","name":"Британская территория в Индийском океане","dial":"+246"},{"iso":"VG","name":"Британские Виргинские острова","dial":"+1-284"},{"iso":"BN","name":"Бруней","dial":"+673"},{"iso":"BF","name":"Буркина-Фасо","dial":"+226"},{"iso":"BI","name":"Бурунди","dial":"+257"},{"iso":"BT","name":"Бутан","dial":"+975"},{"iso":"VU","name":"Вануату","dial":"+678"},{"iso":"VA","name":"Ватикан","dial":"+39-06"},{"iso":"HU","name":"Венгрия","dial":"+36"},{"iso":"VE","name":"Венесуэла","dial":"+58"},{"iso":"VI","name":"Виргинские Острова","dial":"+1-340"},{"iso":"UM","name":"Внешние малые острова США","dial":"+268"},{"iso":"TL","name":"Восточный Тимор","dial":"+670"},{"iso":"VN","name":"Вьетнам","dial":"+84"},{"iso":"GA","name":"Габон","dial":"+241"},{"iso":"HT","name":"Гаити","dial":"+509"},{"iso":"GY","name":"Гайана","dial":"+592"},{"iso":"GM","name":"Гамбия","dial":"+220"},{"iso":"GH","name":"Гана","dial":"+233"},{"iso":"GP","name":"Гваделупа","dial":"+590"},{"iso":"GT","name":"Гватемала","dial":"+502"},{"iso":"GN","name":"Гвинея","dial":"+224"},{"iso":"GW","name":"Гвинея-Бисау","dial":"+245"},{"iso":"GG","name":"Гернси","dial":"+44"},{"iso":"GI","name":"Гибралтар","dial":"+350"},{"iso":"HN","name":"Гондурас","dial":"+504"},{"iso":"HK","name":"Гонконг","dial":"+852"},{"iso":"GD","name":"Гренада","dial":"+1-473"},{"iso":"GL","name":"Гренландия","dial":"+299"},{"iso":"GR","name":"Греция","dial":"+30"},{"iso":"GE","name":"Грузия","dial":"+995"},{"iso":"GU","name":"Гуам","dial":"+1-671"},{"iso":"DK","name":"Дания","dial":"+45"},{"iso":"CD","name":"Демократическая Республика Конго","dial":"+243"},{"iso":"JE","name":"Джерси","dial":"+44"},{"iso":"DJ","name":"Джибути","dial":"+253"},{"iso":"DM","name":"Доминика","dial":"+1-767"},{"iso":"DO","name":"Доминиканская Республика","dial":"+1-809"},{"iso":"EG","name":"Египет","dial":"+20"},{"iso":"ZM","name":"Замбия","dial":"+260"},{"iso":"EH","name":"Западная Сахара","dial":"+212"},{"iso":"ZW","name":"Зимбабве","dial":"+263"},{"iso":"IL","name":"Израиль","dial":"+972"},{"iso":"ID","name":"Индонезия","dial":"+62"},{"iso":"JO","name":"Иордания","dial":"+962"},{"iso":"IQ","name":"Ирак","dial":"+964"},{"iso":"IR","name":"Иран","dial":"+98"},{"iso":"IE","name":"Ирландия","dial":"+353"},{"iso":"IS","name":"Исландия","dial":"+354"},{"iso":"YE","name":"Йемен","dial":"+967"},{"iso":"CV","name":"Кабо-Верде","dial":"+238"},{"iso":"KY","name":"Каймановы острова","dial":"+1-345"},{"iso":"KH","name":"Камбоджа","dial":"+855"},{"iso":"CM","name":"Камерун","dial":"+237"},{"iso":"BQ","name":"Карибские Нидерланды","dial":"+599"},{"iso":"QA","name":"Катар","dial":"+974"},{"iso":"KE","name":"Кения","dial":"+254"},{"iso":"CY","name":"Кипр","dial":"+357"},{"iso":"KG","name":"Киргизия","dial":"+996"},{"iso":"KI","name":"Кирибати","dial":"+686"},{"iso":"CC","name":"Кокосовые острова","dial":"+61"},{"iso":"CO","name":"Колумбия","dial":"+57"},{"iso":"KM","name":"Коморы","dial":"+269"},{"iso":"CR","name":"Коста-Рика","dial":"+506"},{"iso":"CI","name":"Кот-д’Ивуар","dial":"+225"},{"iso":"CU","name":"Куба","dial":"+53"},{"iso":"KW","name":"Кувейт","dial":"+965"},{"iso":"CW","name":"Кюрасао","dial":"+599"},{"iso":"LA","name":"Лаос","dial":"+856"},{"iso":"LV","name":"Латвия","dial":"+371"},{"iso":"LS","name":"Лесото","dial":"+266"},{"iso":"LR","name":"Либерия","dial":"+231"},{"iso":"LB","name":"Ливан","dial":"+961"},{"iso":"LY","name":"Ливия","dial":"+218"},{"iso":"LT","name":"Литва","dial":"+370"},{"iso":"LI","name":"Лихтенштейн","dial":"+423"},{"iso":"LU","name":"Люксембург","dial":"+352"},{"iso":"MU","name":"Маврикий","dial":"+230"},{"iso":"MR","name":"Мавритания","dial":"+222"},{"iso":"MG","name":"Мадагаскар","dial":"+261"},{"iso":"YT","name":"Майотта","dial":"+262"},{"iso":"MO","name":"Макао","dial":"+853"},{"iso":"MW","name":"Малави","dial":"+265"},{"iso":"MY","name":"Малайзия","dial":"+60"},{"iso":"ML","name":"Мали","dial":"+223"},{"iso":"MV","name":"Мальдивы","dial":"+960"},{"iso":"MT","name":"Мальта","dial":"+356"},{"iso":"MA","name":"Марокко","dial":"+212"},{"iso":"MQ","name":"Мартиника","dial":"+596"},{"iso":"MH","name":"Маршалловы Острова","dial":"+692"},{"iso":"MX","name":"Мексика","dial":"+52"},{"iso":"MZ","name":"Мозамбик","dial":"+258"},{"iso":"MD","name":"Молдова","dial":"+373"},{"iso":"MC","name":"Монако","dial":"+377"},{"iso":"MN","name":"Монголия","dial":"+976"},{"iso":"MS","name":"Монтсеррат","dial":"+1-664"},{"iso":"MM","name":"Мьянма","dial":"+95"},{"iso":"NA","name":"Намибия","dial":"+264"},{"iso":"NR","name":"Науру","dial":"+674"},{"iso":"NP","name":"Непал","dial":"+977"},{"iso":"NE","name":"Нигер","dial":"+227"},{"iso":"NG","name":"Нигерия","dial":"+234"},{"iso":"NI","name":"Никарагуа","dial":"+505"},{"iso":"NU","name":"Ниуэ","dial":"+683"},{"iso":"NZ","name":"Новая Зеландия","dial":"+64"},{"iso":"NC","name":"Новая Каледония","dial":"+687"},{"iso":"NO","name":"Норвегия","dial":"+47"},{"iso":"NF","name":"Норфолк","dial":"+672"},{"iso":"OM","name":"Оман","dial":"+968"},{"iso":"BV","name":"Остров Буве","dial":"+47"},{"iso":"IM","name":"Остров Мэн","dial":"+44"},{"iso":"CX","name":"Остров Рождества","dial":"+61"},{"iso":"CK","name":"Острова Кука","dial":"+682"},{"iso":"PN","name":"Острова Питкэрн","dial":"+870"},{"iso":"SH","name":"Острова Святой Елены, Вознесения и Тристан-да-Кунья","dial":"+290 n"},{"iso":"PK","name":"Пакистан","dial":"+92"},{"iso":"PW","name":"Палау","dial":"+680"},{"iso":"PS","name":"Палестина","dial":"+970"},{"iso":"PA","name":"Панама","dial":"+507"},{"iso":"PG","name":"Папуа — Новая Гвинея","dial":"+675"},{"iso":"PY","name":"Парагвай","dial":"+595"},{"iso":"PE","name":"Перу","dial":"+51"},{"iso":"PT","name":"Португалия","dial":"+351"},{"iso":"PR","name":"Пуэрто-Рико","dial":"+1"},{"iso":"CG","name":"Республика Конго","dial":"+242"},{"iso":"XK","name":"Республика Косово","dial":"+383"},{"iso":"RE","name":"Реюньон","dial":"+262"},{"iso":"RW","name":"Руанда","dial":"+250"},{"iso":"RO","name":"Румыния","dial":"+40"},{"iso":"SV","name":"Сальвадор","dial":"+503"},{"iso":"WS","name":"Самоа","dial":"+685"},{"iso":"SM","name":"Сан-Марино","dial":"+378"},{"iso":"ST","name":"Сан-Томе и Принсипи","dial":"+239"},{"iso":"SA","name":"Саудовская Аравия","dial":"+966"},{"iso":"SZ","name":"Свазиленд","dial":"+268"},{"iso":"KP","name":"Северная Корея","dial":"+850"},{"iso":"MK","name":"Северная Македония","dial":"+389"},{"iso":"MP","name":"Северные Марианские острова","dial":"+1-670"},{"iso":"SC","name":"Сейшельские Острова","dial":"+248"},{"iso":"BL","name":"Сен-Бартелеми","dial":"+590"},{"iso":"MF","name":"Сен-Мартен","dial":"+590"},{"iso":"PM","name":"Сен-Пьер и Микелон","dial":"+508"},{"iso":"SN","name":"Сенегал","dial":"+221"},{"iso":"VC","name":"Сент-Винсент и Гренадины","dial":"+1-784"},{"iso":"KN","name":"Сент-Китс и Невис","dial":"+1-869"},{"iso":"LC","name":"Сент-Люсия","dial":"+1-758"},{"iso":"RS","name":"Сербия","dial":"+381 p"},{"iso":"SG","name":"Сингапур","dial":"+65"},{"iso":"SX","name":"Синт-Мартен","dial":"+1-721"},{"iso":"SY","name":"Сирия","dial":"+963"},{"iso":"SK","name":"Словакия","dial":"+421"},{"iso":"SI","name":"Словения","dial":"+386"},{"iso":"SB","name":"Соломоновы Острова","dial":"+677"},{"iso":"SO","name":"Сомали","dial":"+252"},{"iso":"SD","name":"Судан","dial":"+249"},{"iso":"SR","name":"Суринам","dial":"+597"},{"iso":"SL","name":"Сьерра-Леоне","dial":"+232"},{"iso":"TJ","name":"Таджикистан","dial":"+992"},{"iso":"TH","name":"Таиланд","dial":"+66"},{"iso":"TW","name":"Тайвань","dial":"+886"},{"iso":"TZ","name":"Танзания","dial":"+255"},{"iso":"TC","name":"Теркс и Кайкос","dial":"+1-649"},{"iso":"TG","name":"Того","dial":"+228"},{"iso":"TK","name":"Токелау","dial":"+690"},{"iso":"TO","name":"Тонга","dial":"+676"},{"iso":"TT","name":"Тринидад и Тобаго","dial":"+1-868"},{"iso":"TV","name":"Тувалу","dial":"+688"},{"iso":"TN","name":"Тунис","dial":"+216"},{"iso":"TM","name":"Туркмения","dial":"+993"},{"iso":"UG","name":"Уганда","dial":"+256"},{"iso":"UZ","name":"Узбекистан","dial":"+998"},{"iso":"UA","name":"Украина","dial":"+380"},{"iso":"WF","name":"Уоллис и Футуна","dial":"+681"},{"iso":"UY","name":"Уругвай","dial":"+598"},{"iso":"FO","name":"Фарерские острова","dial":"+298"},{"iso":"FM","name":"Федеративные Штаты Микронезии","dial":"+691"},{"iso":"FJ","name":"Фиджи","dial":"+679"},{"iso":"PH","name":"Филиппины","dial":"+63"},{"iso":"FI","name":"Финляндия","dial":"+358"},{"iso":"FK","name":"Фолклендские острова","dial":"+500"},{"iso":"GF","name":"Французская Гвиана","dial":"+594"},{"iso":"PF","name":"Французская Полинезия","dial":"+689"},{"iso":"TF","name":"Французские Южные и Антарктические территории","dial":"+262"},{"iso":"HR","name":"Хорватия","dial":"+385"},{"iso":"CF","name":"Центральноафриканская Республика","dial":"+236"},{"iso":"TD","name":"Чад","dial":"+235"},{"iso":"ME","name":"Черногория","dial":"+382"},{"iso":"CZ","name":"Чехия","dial":"+420"},{"iso":"CL","name":"Чили","dial":"+56"},{"iso":"SE","name":"Швеция","dial":"+46"},{"iso":"SJ","name":"Шпицберген и Ян-Майен","dial":"+47"},{"iso":"LK","name":"Шри-Ланка","dial":"+94"},{"iso":"EC","name":"Эквадор","dial":"+593"},{"iso":"GQ","name":"Экваториальная Гвинея","dial":"+240"},{"iso":"ER","name":"Эритрея","dial":"+291"},{"iso":"EE","name":"Эстония","dial":"+372"},{"iso":"ET","name":"Эфиопия","dial":"+251"},{"iso":"GS","name":"Южная Георгия и Южные Сандвичевы острова","dial":"+500"},{"iso":"ZA","name":"Южно-Африканская Республика","dial":"+27"},{"iso":"SS","name":"Южный Судан","dial":"+211"},{"iso":"JM","name":"Ямайка","dial":"+1-876"}];
+  const countries=[{"iso":"RU","name":"Россия","dial":"+7"},{"iso":"DE","name":"Германия","dial":"+49"},{"iso":"US","name":"США","dial":"+1"},{"iso":"AE","name":"ОАЭ","dial":"+971"},{"iso":"KZ","name":"Казахстан","dial":"+7"},{"iso":"BY","name":"Беларусь","dial":"+375"},{"iso":"GB","name":"Великобритания","dial":"+44"},{"iso":"FR","name":"Франция","dial":"+33"},{"iso":"IT","name":"Италия","dial":"+39"},{"iso":"ES","name":"Испания","dial":"+34"},{"iso":"CH","name":"Швейцария","dial":"+41"},{"iso":"AT","name":"Австрия","dial":"+43"},{"iso":"NL","name":"Нидерланды","dial":"+31"},{"iso":"PL","name":"Польша","dial":"+48"},{"iso":"TR","name":"Турция","dial":"+90"},{"iso":"CN","name":"Китай","dial":"+86"},{"iso":"JP","name":"Япония","dial":"+81"},{"iso":"KR","name":"Южная Корея","dial":"+82"},{"iso":"IN","name":"Индия","dial":"+91"},{"iso":"AU","name":"Австралия","dial":"+61"},{"iso":"CA","name":"Канада","dial":"+1"},{"iso":"AZ","name":"Азербайджан","dial":"+994"},{"iso":"AX","name":"Аландские острова","dial":"+358"},{"iso":"AL","name":"Албания","dial":"+355"},{"iso":"DZ","name":"Алжир","dial":"+213"},{"iso":"AS","name":"Американское Самоа","dial":"+1-684"},{"iso":"AI","name":"Ангилья","dial":"+1-264"},{"iso":"AO","name":"Ангола","dial":"+244"},{"iso":"AD","name":"Андорра","dial":"+376"},{"iso":"AG","name":"Антигуа и Барбуда","dial":"+1-268"},{"iso":"AR","name":"Аргентина","dial":"+54"},{"iso":"AM","name":"Армения","dial":"+374"},{"iso":"AW","name":"Аруба","dial":"+297"},{"iso":"AF","name":"Афганистан","dial":"+93"},{"iso":"BS","name":"Багамские Острова","dial":"+1-242"},{"iso":"BD","name":"Бангладеш","dial":"+880"},{"iso":"BB","name":"Барбадос","dial":"+1-246"},{"iso":"BH","name":"Бахрейн","dial":"+973"},{"iso":"BZ","name":"Белиз","dial":"+501"},{"iso":"BE","name":"Бельгия","dial":"+32"},{"iso":"BJ","name":"Бенин","dial":"+229"},{"iso":"BM","name":"Бермудские Острова","dial":"+1-441"},{"iso":"BG","name":"Болгария","dial":"+359"},{"iso":"BO","name":"Боливия","dial":"+591"},{"iso":"BA","name":"Босния и Герцеговина","dial":"+387"},{"iso":"BW","name":"Ботсвана","dial":"+267"},{"iso":"BR","name":"Бразилия","dial":"+55"},{"iso":"IO","name":"Британская территория в Индийском океане","dial":"+246"},{"iso":"VG","name":"Британские Виргинские острова","dial":"+1-284"},{"iso":"BN","name":"Бруней","dial":"+673"},{"iso":"BF","name":"Буркина-Фасо","dial":"+226"},{"iso":"BI","name":"Бурунди","dial":"+257"},{"iso":"BT","name":"Бутан","dial":"+975"},{"iso":"VU","name":"Вануату","dial":"+678"},{"iso":"VA","name":"Ватикан","dial":"+39-06"},{"iso":"HU","name":"Венгрия","dial":"+36"},{"iso":"VE","name":"Венесуэла","dial":"+58"},{"iso":"VI","name":"Виргинские Острова","dial":"+1-340"},{"iso":"UM","name":"Внешние малые острова США","dial":"+268"},{"iso":"TL","name":"Восточный Тимор","dial":"+670"},{"iso":"VN","name":"Вьетнам","dial":"+84"},{"iso":"GA","name":"Габон","dial":"+241"},{"iso":"HT","name":"Гаити","dial":"+509"},{"iso":"GY","name":"Гайана","dial":"+592"},{"iso":"GM","name":"Гамбия","dial":"+220"},{"iso":"GH","name":"Гана","dial":"+233"},{"iso":"GP","name":"Гваделупа","dial":"+590"},{"iso":"GT","name":"Гватемала","dial":"+502"},{"iso":"GN","name":"Гвинея","dial":"+224"},{"iso":"GW","name":"Гвинея-Бисау","dial":"+245"},{"iso":"GG","name":"Гернси","dial":"+44"},{"iso":"GI","name":"Гибралтар","dial":"+350"},{"iso":"HN","name":"Гондурас","dial":"+504"},{"iso":"HK","name":"Гонконг","dial":"+852"},{"iso":"GD","name":"Гренада","dial":"+1-473"},{"iso":"GL","name":"Гренландия","dial":"+299"},{"iso":"GR","name":"Греция","dial":"+30"},{"iso":"GE","name":"Грузия","dial":"+995"},{"iso":"GU","name":"Гуам","dial":"+1-671"},{"iso":"DK","name":"Дания","dial":"+45"},{"iso":"CD","name":"Демократическая Республика Конго","dial":"+243"},{"iso":"JE","name":"Джерси","dial":"+44"},{"iso":"DJ","name":"Джибути","dial":"+253"},{"iso":"DM","name":"Доминика","dial":"+1-767"},{"iso":"DO","name":"Доминиканская Республика","dial":"+1-809"},{"iso":"EG","name":"Египет","dial":"+20"},{"iso":"ZM","name":"Замбия","dial":"+260"},{"iso":"EH","name":"Западная Сахара","dial":"+212"},{"iso":"ZW","name":"Зимбабве","dial":"+263"},{"iso":"IL","name":"Израиль","dial":"+972"},{"iso":"ID","name":"Индонезия","dial":"+62"},{"iso":"JO","name":"Иордания","dial":"+962"},{"iso":"IQ","name":"Ирак","dial":"+964"},{"iso":"IR","name":"Иран","dial":"+98"},{"iso":"IE","name":"Ирландия","dial":"+353"},{"iso":"IS","name":"Исландия","dial":"+354"},{"iso":"YE","name":"Йемен","dial":"+967"},{"iso":"CV","name":"Кабо-Верде","dial":"+238"},{"iso":"KY","name":"Каймановы острова","dial":"+1-345"},{"iso":"KH","name":"Камбоджа","dial":"+855"},{"iso":"CM","name":"Камерун","dial":"+237"},{"iso":"BQ","name":"Карибские Нидерланды","dial":"+599"},{"iso":"QA","name":"Катар","dial":"+974"},{"iso":"KE","name":"Кения","dial":"+254"},{"iso":"CY","name":"Кипр","dial":"+357"},{"iso":"KG","name":"Киргизия","dial":"+996"},{"iso":"KI","name":"Кирибати","dial":"+686"},{"iso":"CC","name":"Кокосовые острова","dial":"+61"},{"iso":"CO","name":"Колумбия","dial":"+57"},{"iso":"KM","name":"Коморы","dial":"+269"},{"iso":"CR","name":"Коста-Рика","dial":"+506"},{"iso":"CI","name":"Кот-д’Ивуар","dial":"+225"},{"iso":"CU","name":"Куба","dial":"+53"},{"iso":"KW","name":"Кувейт","dial":"+965"},{"iso":"CW","name":"Кюрасао","dial":"+599"},{"iso":"LA","name":"Лаос","dial":"+856"},{"iso":"LV","name":"Латвия","dial":"+371"},{"iso":"LS","name":"Лесото","dial":"+266"},{"iso":"LR","name":"Либерия","dial":"+231"},{"iso":"LB","name":"Ливан","dial":"+961"},{"iso":"LY","name":"Ливия","dial":"+218"},{"iso":"LT","name":"Литва","dial":"+370"},{"iso":"LI","name":"Лихтенштейн","dial":"+423"},{"iso":"LU","name":"Люксембург","dial":"+352"},{"iso":"MU","name":"Маврикий","dial":"+230"},{"iso":"MR","name":"Мавритания","dial":"+222"},{"iso":"MG","name":"Мадагаскар","dial":"+261"},{"iso":"YT","name":"Майотта","dial":"+262"},{"iso":"MO","name":"Макао","dial":"+853"},{"iso":"MW","name":"Малави","dial":"+265"},{"iso":"MY","name":"Малайзия","dial":"+60"},{"iso":"ML","name":"Мали","dial":"+223"},{"iso":"MV","name":"Мальдивы","dial":"+960"},{"iso":"MT","name":"Мальта","dial":"+356"},{"iso":"MA","name":"Марокко","dial":"+212"},{"iso":"MQ","name":"Мартиника","dial":"+596"},{"iso":"MH","name":"Маршалловы Острова","dial":"+692"},{"iso":"MX","name":"Мексика","dial":"+52"},{"iso":"MZ","name":"Мозамбик","dial":"+258"},{"iso":"MD","name":"Молдова","dial":"+373"},{"iso":"MC","name":"Монако","dial":"+377"},{"iso":"MN","name":"Монголия","dial":"+976"},{"iso":"MS","name":"Монтсеррат","dial":"+1-664"},{"iso":"MM","name":"Мьянма","dial":"+95"},{"iso":"NA","name":"Намибия","dial":"+264"},{"iso":"NR","name":"Науру","dial":"+674"},{"iso":"NP","name":"Непал","dial":"+977"},{"iso":"NE","name":"Нигер","dial":"+227"},{"iso":"NG","name":"Нигерия","dial":"+234"},{"iso":"NI","name":"Никарагуа","dial":"+505"},{"iso":"NU","name":"Ниуэ","dial":"+683"},{"iso":"NZ","name":"Новая Зеландия","dial":"+64"},{"iso":"NC","name":"Новая Каледония","dial":"+687"},{"iso":"NO","name":"Норвегия","dial":"+47"},{"iso":"NF","name":"Норфолк","dial":"+672"},{"iso":"OM","name":"Оман","dial":"+968"},{"iso":"BV","name":"Остров Буве","dial":"+47"},{"iso":"IM","name":"Остров Мэн","dial":"+44"},{"iso":"CX","name":"Остров Рождества","dial":"+61"},{"iso":"CK","name":"Острова Кука","dial":"+682"},{"iso":"PN","name":"Острова Питкэрн","dial":"+870"},{"iso":"SH","name":"Острова Святой Елены, Вознесения и Тристан-да-Кунья","dial":"+290"},{"iso":"PK","name":"Пакистан","dial":"+92"},{"iso":"PW","name":"Палау","dial":"+680"},{"iso":"PS","name":"Палестина","dial":"+970"},{"iso":"PA","name":"Панама","dial":"+507"},{"iso":"PG","name":"Папуа — Новая Гвинея","dial":"+675"},{"iso":"PY","name":"Парагвай","dial":"+595"},{"iso":"PE","name":"Перу","dial":"+51"},{"iso":"PT","name":"Португалия","dial":"+351"},{"iso":"PR","name":"Пуэрто-Рико","dial":"+1"},{"iso":"CG","name":"Республика Конго","dial":"+242"},{"iso":"XK","name":"Республика Косово","dial":"+383"},{"iso":"RE","name":"Реюньон","dial":"+262"},{"iso":"RW","name":"Руанда","dial":"+250"},{"iso":"RO","name":"Румыния","dial":"+40"},{"iso":"SV","name":"Сальвадор","dial":"+503"},{"iso":"WS","name":"Самоа","dial":"+685"},{"iso":"SM","name":"Сан-Марино","dial":"+378"},{"iso":"ST","name":"Сан-Томе и Принсипи","dial":"+239"},{"iso":"SA","name":"Саудовская Аравия","dial":"+966"},{"iso":"SZ","name":"Свазиленд","dial":"+268"},{"iso":"KP","name":"Северная Корея","dial":"+850"},{"iso":"MK","name":"Северная Македония","dial":"+389"},{"iso":"MP","name":"Северные Марианские острова","dial":"+1-670"},{"iso":"SC","name":"Сейшельские Острова","dial":"+248"},{"iso":"BL","name":"Сен-Бартелеми","dial":"+590"},{"iso":"MF","name":"Сен-Мартен","dial":"+590"},{"iso":"PM","name":"Сен-Пьер и Микелон","dial":"+508"},{"iso":"SN","name":"Сенегал","dial":"+221"},{"iso":"VC","name":"Сент-Винсент и Гренадины","dial":"+1-784"},{"iso":"KN","name":"Сент-Китс и Невис","dial":"+1-869"},{"iso":"LC","name":"Сент-Люсия","dial":"+1-758"},{"iso":"RS","name":"Сербия","dial":"+381 p"},{"iso":"SG","name":"Сингапур","dial":"+65"},{"iso":"SX","name":"Синт-Мартен","dial":"+1-721"},{"iso":"SY","name":"Сирия","dial":"+963"},{"iso":"SK","name":"Словакия","dial":"+421"},{"iso":"SI","name":"Словения","dial":"+386"},{"iso":"SB","name":"Соломоновы Острова","dial":"+677"},{"iso":"SO","name":"Сомали","dial":"+252"},{"iso":"SD","name":"Судан","dial":"+249"},{"iso":"SR","name":"Суринам","dial":"+597"},{"iso":"SL","name":"Сьерра-Леоне","dial":"+232"},{"iso":"TJ","name":"Таджикистан","dial":"+992"},{"iso":"TH","name":"Таиланд","dial":"+66"},{"iso":"TW","name":"Тайвань","dial":"+886"},{"iso":"TZ","name":"Танзания","dial":"+255"},{"iso":"TC","name":"Теркс и Кайкос","dial":"+1-649"},{"iso":"TG","name":"Того","dial":"+228"},{"iso":"TK","name":"Токелау","dial":"+690"},{"iso":"TO","name":"Тонга","dial":"+676"},{"iso":"TT","name":"Тринидад и Тобаго","dial":"+1-868"},{"iso":"TV","name":"Тувалу","dial":"+688"},{"iso":"TN","name":"Тунис","dial":"+216"},{"iso":"TM","name":"Туркмения","dial":"+993"},{"iso":"UG","name":"Уганда","dial":"+256"},{"iso":"UZ","name":"Узбекистан","dial":"+998"},{"iso":"UA","name":"Украина","dial":"+380"},{"iso":"WF","name":"Уоллис и Футуна","dial":"+681"},{"iso":"UY","name":"Уругвай","dial":"+598"},{"iso":"FO","name":"Фарерские острова","dial":"+298"},{"iso":"FM","name":"Федеративные Штаты Микронезии","dial":"+691"},{"iso":"FJ","name":"Фиджи","dial":"+679"},{"iso":"PH","name":"Филиппины","dial":"+63"},{"iso":"FI","name":"Финляндия","dial":"+358"},{"iso":"FK","name":"Фолклендские острова","dial":"+500"},{"iso":"GF","name":"Французская Гвиана","dial":"+594"},{"iso":"PF","name":"Французская Полинезия","dial":"+689"},{"iso":"TF","name":"Французские Южные и Антарктические территории","dial":"+262"},{"iso":"HR","name":"Хорватия","dial":"+385"},{"iso":"CF","name":"Центральноафриканская Республика","dial":"+236"},{"iso":"TD","name":"Чад","dial":"+235"},{"iso":"ME","name":"Черногория","dial":"+382"},{"iso":"CZ","name":"Чехия","dial":"+420"},{"iso":"CL","name":"Чили","dial":"+56"},{"iso":"SE","name":"Швеция","dial":"+46"},{"iso":"SJ","name":"Шпицберген и Ян-Майен","dial":"+47"},{"iso":"LK","name":"Шри-Ланка","dial":"+94"},{"iso":"EC","name":"Эквадор","dial":"+593"},{"iso":"GQ","name":"Экваториальная Гвинея","dial":"+240"},{"iso":"ER","name":"Эритрея","dial":"+291"},{"iso":"EE","name":"Эстония","dial":"+372"},{"iso":"ET","name":"Эфиопия","dial":"+251"},{"iso":"GS","name":"Южная Георгия и Южные Сандвичевы острова","dial":"+500"},{"iso":"ZA","name":"Южно-Африканская Республика","dial":"+27"},{"iso":"SS","name":"Южный Судан","dial":"+211"},{"iso":"JM","name":"Ямайка","dial":"+1-876"}];
   const flag=iso=>String.fromCodePoint(...iso.toUpperCase().split('').map(c=>127397+c.charCodeAt()));
   const countryButton=q('countryButton'),countryFlag=q('countryFlag'),countryName=q('countryName'),countryError=q('countryError'),phoneButton=q('phoneRegionButton'),phoneFlag=q('phoneFlag'),phoneDial=q('phoneDial'),phone=q('reqPhone'),phoneHint=q('phoneHint');
   const picker=q('regionPicker'),pickerTitle=q('regionPickerTitle'),pickerClose=q('regionPickerClose'),search=q('regionSearch'),list=q('regionList'),complete=q('requestComplete'),progress=form.querySelector('.request-progress');
@@ -611,156 +640,27 @@
   const fields={first:q('reqFirst'),last:q('reqLast'),email:q('reqEmail'),region:q('reqRegion'),city:q('reqCity'),postal:q('reqPostal'),address:q('reqAddress'),address2:q('reqAddress2')};
   const steps=[...form.querySelectorAll('[data-request-step]')],nav=[...form.querySelectorAll('[data-request-nav]')];
   const moduleNames={performance:'Performance Pack',aero:'Active Aero',carbon:'Carbon Structure',range:'Range System',fast:'Fast Charge 800V',telemetry:'Rider Telemetry'};
+  const requestLang=()=>document.documentElement.lang==='en'?'en':'ru';
+  const requestCopy={ru:{chooseCountry:'ВЫБЕРИ СТРАНУ',phoneCode:'КОД ТЕЛЕФОНА',none:'Ничего не найдено',choosePhone:'Выбери страну или телефонный код.',badPhone:'Проверь номер: нужно минимум 6 цифр.',chooseDelivery:'Выбери страну.',units:{power:'кВт',mass:'кг',range:'км'}},en:{chooseCountry:'SELECT COUNTRY',phoneCode:'PHONE CODE',none:'No results found',choosePhone:'Choose a country or calling code.',badPhone:'Check the number: enter at least 6 digits.',chooseDelivery:'Select a country.',units:{power:'kW',mass:'kg',range:'km'}}};
+  const countryLabel=c=>{if(!c)return '';if(requestLang()==='ru')return c.name;try{return new Intl.DisplayNames(['en'],{type:'region'}).of(c.iso)||c.name}catch{return c.name}};
   const formatNational=(raw,iso)=>{const d=raw.replace(/\D/g,'').slice(0,14);if(!d)return '';if(iso==='RU'||iso==='KZ')return [d.slice(0,3),d.slice(3,6),d.slice(6,8),d.slice(8,10)].filter(Boolean).join(d.length>6?'-':' ');if(iso==='US'||iso==='CA'){const a=d.slice(0,3),b=d.slice(3,6),c=d.slice(6,10);return `${a?`(${a}${a.length===3?') ':''}`:''}${b}${c?`-${c}`:''}`.trim()}return d.replace(/(\d{3})(?=\d)/g,'$1 ').trim();};
   phone?.addEventListener('input',()=>{phone.value=formatNational(phone.value,phoneCountry?.iso||'');try{phone.setSelectionRange(phone.value.length,phone.value.length)}catch{}});
-  const renderPicker=(query='')=>{const needle=query.trim().toLocaleLowerCase('ru');const rows=countries.filter(c=>!needle||c.name.toLocaleLowerCase('ru').includes(needle)||c.dial.includes(needle)||c.iso.toLowerCase()===needle);list.innerHTML=rows.length?rows.map(c=>`<button class="region-option" type="button" role="option" data-iso="${c.iso}"><span class="flag">${flag(c.iso)}</span><strong>${c.name}</strong><small>${c.dial}</small></button>`).join(''):'<div class="region-empty">Ничего не найдено</div>';};
-  const openPicker=mode=>{pickerMode=mode;pickerTitle.textContent=mode==='country'?'ВЫБЕРИ СТРАНУ':'КОД ТЕЛЕФОНА';search.value='';renderPicker();if(picker.showModal)picker.showModal();else picker.setAttribute('open','');setTimeout(()=>search.focus(),50);};
+  const renderPicker=(query='')=>{const lang=requestLang(),copy=requestCopy[lang],needle=query.trim().toLocaleLowerCase(lang);const rows=countries.filter(c=>{const label=countryLabel(c);return !needle||c.name.toLocaleLowerCase('ru').includes(needle)||label.toLocaleLowerCase(lang).includes(needle)||c.dial.includes(needle)||c.iso.toLowerCase()===needle;});list.innerHTML=rows.length?rows.map(c=>`<button class="region-option" type="button" role="option" data-iso="${c.iso}"><span class="flag">${flag(c.iso)}</span><strong>${countryLabel(c)}</strong><small>${c.dial}</small></button>`).join(''):`<div class="region-empty">${copy.none}</div>`;};
+  const openPicker=mode=>{pickerMode=mode;pickerTitle.textContent=mode==='country'?requestCopy[requestLang()].chooseCountry:requestCopy[requestLang()].phoneCode;search.value='';renderPicker();if(picker.showModal)picker.showModal();else picker.setAttribute('open','');setTimeout(()=>search.focus(),50);};
   const closePicker=()=>picker.close?.();countryButton?.addEventListener('click',()=>openPicker('country'));phoneButton?.addEventListener('click',()=>openPicker('phone'));pickerClose?.addEventListener('click',closePicker);search?.addEventListener('input',()=>renderPicker(search.value));
   const setFlag=(node,c)=>{node.classList.remove('is-empty');node.textContent=flag(c.iso);};
-  picker?.addEventListener('click',e=>{if(e.target===picker){closePicker();return;}const btn=e.target.closest('.region-option');if(!btn)return;const c=countries.find(x=>x.iso===btn.dataset.iso);if(!c)return;if(pickerMode==='country'){deliveryCountry=c;countryButton.dataset.iso=c.iso;window.dispatchEvent(new CustomEvent('vanta:countrychange',{detail:c}));setFlag(countryFlag,c);countryName.textContent=c.name.toUpperCase();countryButton.classList.remove('is-invalid');countryError.textContent='';if(!phoneManual){phoneCountry=c;setFlag(phoneFlag,c);phoneDial.textContent=c.dial;phoneHint.textContent=`${c.name} ${c.dial}`;phone.value=formatNational(phone.value,c.iso);}}else{phoneCountry=c;phoneManual=true;setFlag(phoneFlag,c);phoneDial.textContent=c.dial;phoneHint.textContent=`${c.name} ${c.dial}`;phone.value=formatNational(phone.value,c.iso);}closePicker();});
+  picker?.addEventListener('click',e=>{if(e.target===picker){closePicker();return;}const btn=e.target.closest('.region-option');if(!btn)return;const c=countries.find(x=>x.iso===btn.dataset.iso);if(!c)return;const label=countryLabel(c);if(pickerMode==='country'){deliveryCountry=c;countryButton.dataset.iso=c.iso;window.dispatchEvent(new CustomEvent('vanta:countrychange',{detail:c}));setFlag(countryFlag,c);countryName.textContent=label.toLocaleUpperCase(requestLang());countryButton.classList.remove('is-invalid');countryError.textContent='';if(!phoneManual){phoneCountry=c;setFlag(phoneFlag,c);phoneDial.textContent=c.dial;phoneHint.textContent=`${label} ${c.dial}`;phone.value=formatNational(phone.value,c.iso);}}else{phoneCountry=c;phoneManual=true;setFlag(phoneFlag,c);phoneDial.textContent=c.dial;phoneHint.textContent=`${label} ${c.dial}`;phone.value=formatNational(phone.value,c.iso);}closePicker();});
   const setStep=n=>{currentStep=n;if(complete)complete.hidden=true;if(progress)progress.hidden=false;steps.forEach(s=>{const on=Number(s.dataset.requestStep)===n;s.hidden=!on;s.classList.toggle('active',on);});nav.forEach(b=>{const x=Number(b.dataset.requestNav),on=x===n;b.classList.toggle('active',on);b.classList.toggle('complete',x<n);b.toggleAttribute('aria-current',on);});if(n===3)fillReview();};
   const validInput=input=>{if(!input)return true;const ok=input.checkValidity();input.classList.toggle('is-invalid',!ok);return ok;};
-  const validateStep=n=>{if(n===1){const ok=[fields.first,fields.last,fields.email].every(validInput);const digits=phone.value.replace(/\D/g,'');const phoneOk=!!phoneCountry&&digits.length>=6;phone.classList.toggle('is-invalid',!phoneOk);if(!phoneCountry)phoneHint.textContent='Выбери страну или телефонный код.';else if(!phoneOk)phoneHint.textContent='Проверь номер: нужно минимум 6 цифр.';return ok&&phoneOk;}if(n===2){let ok=[fields.city,fields.postal,fields.address].every(validInput);if(!deliveryCountry){countryButton.classList.add('is-invalid');countryError.textContent='Выбери страну.';ok=false;}return ok;}return true;};
+  const validateStep=n=>{const copy=requestCopy[requestLang()];if(n===1){const ok=[fields.first,fields.last,fields.email].every(validInput);const digits=phone.value.replace(/\D/g,'');const phoneOk=!!phoneCountry&&digits.length>=6;phone.classList.toggle('is-invalid',!phoneOk);if(!phoneCountry)phoneHint.textContent=copy.choosePhone;else if(!phoneOk)phoneHint.textContent=copy.badPhone;return ok&&phoneOk;}if(n===2){let ok=[fields.city,fields.postal,fields.address].every(validInput);if(!deliveryCountry){countryButton.classList.add('is-invalid');countryError.textContent=copy.chooseDelivery;ok=false;}return ok;}return true;};
   form.querySelectorAll('[data-request-next]').forEach(btn=>btn.addEventListener('click',()=>{if(validateStep(currentStep))setStep(Number(btn.dataset.requestNext));}));form.querySelectorAll('[data-request-back]').forEach(btn=>btn.addEventListener('click',()=>setStep(Number(btn.dataset.requestBack))));nav.forEach(btn=>btn.addEventListener('click',()=>{const n=Number(btn.dataset.requestNav);if(n<currentStep)setStep(n);else if(n===currentStep+1&&validateStep(currentStep))setStep(n);}));form.querySelectorAll('input').forEach(input=>input.addEventListener('input',()=>input.classList.remove('is-invalid')));
   const fullPhone=()=>phoneCountry?`${phoneCountry.dial} ${phone.value}`.trim():phone.value;
-  const fillReview=()=>{q('reviewName').textContent=`${fields.first.value} ${fields.last.value}`.trim()||'—';q('reviewContact').textContent=[fields.email.value,fullPhone()].filter(Boolean).join(' · ')||'—';q('reviewCountry').textContent=deliveryCountry?`${flag(deliveryCountry.iso)} ${deliveryCountry.name}`:'—';q('reviewAddress').textContent=[fields.postal.value,fields.region.value,fields.city.value,fields.address.value,fields.address2.value].filter(Boolean).join(', ')||'—';if(currentConfig){q('reviewConfig').textContent=currentConfig.code;q('reviewModules').textContent=currentConfig.moduleLabels.join(' · ')||'BASE R1';}};
-  const paintConfig=snap=>{currentConfig=snap;if(!snap)return;q('requestProfile').textContent=snap.profile;q('requestPrice').textContent=snap.price;q('requestPower').textContent=`${snap.values.power} кВт`;q('requestMass').textContent=`${snap.values.mass} кг`;q('requestRange').textContent=`${snap.values.range} км`;q('requestConfigCode').textContent=snap.code;q('requestBike').dataset.tone=snap.tone;q('requestModules').innerHTML=snap.modules.length?snap.modules.map(k=>`<span>${moduleNames[k]||k}</span>`).join(''):'<span>BASE R1</span>';if(currentStep===3)fillReview();};
-  addEventListener('vanta:configchange',e=>paintConfig(e.detail));paintConfig(currentConfig);
+  const fillReview=()=>{q('reviewName').textContent=`${fields.first.value} ${fields.last.value}`.trim()||'—';q('reviewContact').textContent=[fields.email.value,fullPhone()].filter(Boolean).join(' · ')||'—';q('reviewCountry').textContent=deliveryCountry?`${flag(deliveryCountry.iso)} ${countryLabel(deliveryCountry)}`:'—';q('reviewAddress').textContent=[fields.postal.value,fields.region.value,fields.city.value,fields.address.value,fields.address2.value].filter(Boolean).join(', ')||'—';if(currentConfig){q('reviewConfig').textContent=currentConfig.code;q('reviewModules').textContent=currentConfig.moduleLabels.join(' · ')||'BASE R1';}};
+  const paintConfig=snap=>{currentConfig=snap;if(!snap)return;const u=requestCopy[requestLang()].units;q('requestProfile').textContent=snap.profile;q('requestPrice').textContent=snap.price;q('requestPower').textContent=`${snap.values.power} ${u.power}`;q('requestMass').textContent=`${snap.values.mass} ${u.mass}`;q('requestRange').textContent=`${snap.values.range} ${u.range}`;q('requestConfigCode').textContent=snap.code;q('requestBike').dataset.tone=snap.tone;q('requestModules').innerHTML=snap.modules.length?snap.modules.map(k=>`<span>${moduleNames[k]||k}</span>`).join(''):'<span>BASE R1</span>';if(currentStep===3)fillReview();};
+  addEventListener('vanta:configchange',e=>paintConfig(e.detail));
+  addEventListener('vanta:languagechange',()=>{const lang=requestLang();if(deliveryCountry)countryName.textContent=countryLabel(deliveryCountry).toLocaleUpperCase(lang);if(phoneCountry)phoneHint.textContent=`${countryLabel(phoneCountry)} ${phoneCountry.dial}`;if(picker?.open){pickerTitle.textContent=pickerMode==='country'?requestCopy[lang].chooseCountry:requestCopy[lang].phoneCode;renderPicker(search?.value||'');}paintConfig(currentConfig);if(currentStep===3)fillReview();});
+  paintConfig(currentConfig);
   if(complete)complete.hidden=true;if(progress)progress.hidden=false;
   form.addEventListener('submit',e=>{e.preventDefault();const step1ok=validateStep(1),step2ok=validateStep(2);if(!step1ok||!step2ok){setStep(!step1ok?1:2);return;}fillReview();steps.forEach(s=>s.hidden=true);if(progress)progress.hidden=true;if(complete)complete.hidden=false;const rnd=new Uint32Array(1);try{crypto.getRandomValues(rnd)}catch{rnd[0]=Math.floor(Math.random()*9999)}q('requestCode').textContent=`VR1-${currentConfig?.preset==='custom'?'CU':(currentConfig?.preset||'CU').slice(0,2).toUpperCase()}-${String(rnd[0]%10000).padStart(4,'0')}`;});
   q('requestToActivation')?.addEventListener('click',()=>{const tone=currentConfig?.tone||'red';document.querySelector(`.sw[data-color="${tone}"]`)?.click();document.getElementById('activate')?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});setStep(1);
-})();
-
-
-/* VANTA R1 — Location Search V5 / country-strict autocomplete 2026-09 */
-(()=>{
-  'use strict';
-  const countryButton=document.getElementById('countryButton');
-  const regionInput=document.getElementById('reqRegion');
-  const cityInput=document.getElementById('reqCity');
-  const regionBox=document.getElementById('regionSuggest');
-  const cityBox=document.getElementById('citySuggest');
-  if(!countryButton||!regionInput||!cityInput||!regionBox||!cityBox)return;
-
-  const cache={regions:null,cities:new Map()};
-  let countryIso=countryButton.dataset.iso||'';
-  let selectedRegion='';
-  let cityLoadToken=0;
-  const norm=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('ru').trim();
-  const esc=value=>String(value??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const setExpanded=(input,on)=>input.setAttribute('aria-expanded',String(on));
-  const openBox=(input,box)=>{box.hidden=false;setExpanded(input,true);};
-  const closeBox=(input,box)=>{box.hidden=true;setExpanded(input,false);};
-  const info=(input,box,text)=>{box.innerHTML=`<div class="location-suggest-empty">${esc(text)}</div>`;openBox(input,box);};
-
-  const loadRegions=async()=>{
-    if(cache.regions)return cache.regions;
-    const res=await fetch('data/regions.json',{cache:'force-cache'});
-    if(!res.ok)throw new Error('regions');
-    cache.regions=await res.json();
-    return cache.regions;
-  };
-  const loadCities=async iso=>{
-    if(cache.cities.has(iso))return cache.cities.get(iso);
-    const res=await fetch(`data/locations/${encodeURIComponent(iso)}.json`,{cache:'force-cache'});
-    if(!res.ok)throw new Error('cities');
-    const data=await res.json();
-    cache.cities.set(iso,data);
-    return data;
-  };
-  const rank=(value,query)=>{const a=norm(value),q=norm(query);if(!q)return 2;if(a.startsWith(q))return 0;if(a.includes(q))return 1;return 99;};
-  const manualRow=value=>value?`<button type="button" class="use-manual" data-value="${esc(value)}"><strong>Использовать «${esc(value)}»</strong><small>РУЧНОЙ ВВОД</small></button>`:'';
-
-  const renderRegions=async()=>{
-    if(!countryIso){info(regionInput,regionBox,'Сначала выбери страну.');return;}
-    const query=regionInput.value.trim();
-    info(regionInput,regionBox,'Загружаю регионы…');
-    try{
-      const all=await loadRegions();
-      const pool=all[countryIso]||[];
-      const rows=pool.map(name=>({name,score:rank(name,query)})).filter(x=>x.score<99).sort((a,b)=>a.score-b.score||a.name.localeCompare(b.name,'ru')).slice(0,12);
-      regionBox.innerHTML=rows.map(x=>`<button type="button" data-value="${esc(x.name)}"><strong>${esc(x.name)}</strong><small>РЕГИОН · ${esc(countryIso)}</small></button>`).join('')+manualRow(query);
-      if(!regionBox.innerHTML)regionBox.innerHTML='<div class="location-suggest-empty">Совпадений нет — можно оставить введённое значение.</div>';
-      openBox(regionInput,regionBox);
-    }catch{info(regionInput,regionBox,'Справочник недоступен — введи регион вручную.');}
-  };
-
-  const cityMatches=(rows,query)=>{
-    const q=norm(query),r=norm(selectedRegion);
-    return rows.map(item=>{
-      const aliases=[item.n,...(item.a||[])];
-      const score=Math.min(...aliases.map(x=>rank(x,q)));
-      return {item,score};
-    }).filter(x=>x.score<99&&(!r||norm(x.item.r)===r))
-      .sort((a,b)=>a.score-b.score||(b.item.p||0)-(a.item.p||0)||a.item.n.localeCompare(b.item.n,'ru'))
-      .slice(0,12).map(x=>x.item);
-  };
-  const renderCities=async()=>{
-    if(!countryIso){info(cityInput,cityBox,'Сначала выбери страну.');return;}
-    const query=cityInput.value.trim();
-    if(!query){info(cityInput,cityBox,'Начни вводить название города.');return;}
-    const token=++cityLoadToken;
-    info(cityInput,cityBox,`Ищу города · ${countryIso}…`);
-    try{
-      const rows=await loadCities(countryIso);
-      if(token!==cityLoadToken)return;
-      const matches=cityMatches(rows,query);
-      cityBox.innerHTML=matches.map(item=>`<button type="button" data-value="${esc(item.n)}" data-region="${esc(item.r||'')}"><strong>${esc(item.n)}</strong><small>${esc(item.r||countryIso)}</small></button>`).join('')+manualRow(query);
-      if(!cityBox.innerHTML)cityBox.innerHTML='<div class="location-suggest-empty">В выбранной стране совпадений нет — можно оставить введённое значение.</div>';
-      openBox(cityInput,cityBox);
-    }catch{info(cityInput,cityBox,'Справочник недоступен — введи город вручную.');}
-  };
-
-  const keyboard=(input,box,onPick)=>{
-    let active=-1;
-    input.addEventListener('keydown',e=>{
-      const buttons=[...box.querySelectorAll('button[data-value]')];
-      if(e.key==='Escape'){closeBox(input,box);active=-1;return;}
-      if(!['ArrowDown','ArrowUp','Enter'].includes(e.key))return;
-      if(e.key==='Enter'&&active<0){closeBox(input,box);return;}
-      e.preventDefault();
-      if(e.key==='ArrowDown')active=Math.min(active+1,buttons.length-1);
-      if(e.key==='ArrowUp')active=Math.max(active-1,0);
-      if(e.key==='Enter'&&buttons[active]){onPick(buttons[active]);closeBox(input,box);active=-1;return;}
-      buttons.forEach((b,i)=>b.classList.toggle('is-active',i===active));
-      buttons[active]?.scrollIntoView({block:'nearest'});
-    });
-    input.addEventListener('input',()=>{active=-1;});
-  };
-
-  const pickRegion=btn=>{
-    regionInput.value=btn.dataset.value||'';
-    selectedRegion=btn.classList.contains('use-manual')?'':regionInput.value;
-    cityInput.value='';
-    closeBox(regionInput,regionBox);closeBox(cityInput,cityBox);
-  };
-  const pickCity=btn=>{
-    cityInput.value=btn.dataset.value||'';
-    if(btn.dataset.region&&!selectedRegion){regionInput.value=btn.dataset.region;selectedRegion=btn.dataset.region;}
-    closeBox(cityInput,cityBox);
-  };
-  regionBox.addEventListener('pointerdown',e=>{const btn=e.target.closest('button[data-value]');if(!btn)return;e.preventDefault();pickRegion(btn);});
-  cityBox.addEventListener('pointerdown',e=>{const btn=e.target.closest('button[data-value]');if(!btn)return;e.preventDefault();pickCity(btn);});
-  keyboard(regionInput,regionBox,pickRegion);keyboard(cityInput,cityBox,pickCity);
-
-  let regionTimer=0,cityTimer=0;
-  regionInput.addEventListener('focus',renderRegions);
-  regionInput.addEventListener('input',()=>{selectedRegion='';clearTimeout(regionTimer);regionTimer=setTimeout(renderRegions,55);});
-  regionInput.addEventListener('change',async()=>{
-    try{const all=await loadRegions();const exact=(all[countryIso]||[]).find(x=>norm(x)===norm(regionInput.value));selectedRegion=exact||'';}catch{selectedRegion='';}
-    cityInput.value='';
-  });
-  cityInput.addEventListener('focus',renderCities);
-  cityInput.addEventListener('input',()=>{clearTimeout(cityTimer);cityTimer=setTimeout(renderCities,55);});
-
-  window.addEventListener('vanta:countrychange',e=>{
-    const next=e.detail?.iso||countryButton.dataset.iso||'';
-    if(next===countryIso)return;
-    countryIso=next;selectedRegion='';cityLoadToken+=1;
-    regionInput.value='';cityInput.value='';
-    closeBox(regionInput,regionBox);closeBox(cityInput,cityBox);
-    loadRegions().catch(()=>{});if(countryIso)loadCities(countryIso).catch(()=>{});
-  });
-  countryButton.addEventListener('click',()=>{closeBox(regionInput,regionBox);closeBox(cityInput,cityBox);});
-  document.addEventListener('pointerdown',e=>{if(!e.target.closest('.smart-location-field')){closeBox(regionInput,regionBox);closeBox(cityInput,cityBox);}});
 })();

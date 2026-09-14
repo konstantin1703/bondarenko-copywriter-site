@@ -1,0 +1,44 @@
+name: Apply locale V1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-locale-v1.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build localized location database
+        run: python tools/rebuild_locations_i18n.py
+      - name: Connect locale assets
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          css='<link href="v4-locale-v1.css?v=1" rel="stylesheet"/>'
+          js='<script defer src="v4-locale-v1.js?v=1"></script>'
+          if css not in s:
+              s=s.replace('<link href="v4.css?v=23" rel="stylesheet"/>','<link href="v4.css?v=23" rel="stylesheet"/>'+css)
+          if js not in s:
+              s=s.replace('<script defer src="v4.js?v=16"></script>','<script defer src="v4.js?v=16"></script>'+js)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit generated locale data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html data/regions-i18n.json data/locations-i18n
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+          else
+            git commit -m "feat: add localized RU EN location experience"
+            git push
+          fi

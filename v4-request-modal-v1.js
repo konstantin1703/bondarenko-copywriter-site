@@ -11,7 +11,6 @@
   const lang=()=>window.vantaLocale?.get?.()||document.documentElement.lang||'ru';
   let opened=false;
   let lockedScroll=0;
-  let pushedState=false;
 
   /* Modal chrome is independent of the page section, but reuses the existing form DOM. */
   const bar=document.createElement('div');
@@ -30,14 +29,23 @@
     <span class="rm-code"><small></small><b>—</b></span>`;
   bar.after(configbar);
 
-  const setLead=(el,text)=>{
+  const setLead=(el,value)=>{
     if(!el)return;
     let node=[...el.childNodes].find(n=>n.nodeType===Node.TEXT_NODE);
     if(!node){node=document.createTextNode('');el.prepend(node)}
-    node.nodeValue=text;
+    node.nodeValue=value;
   };
   const text=(sel,value)=>{const el=request.querySelector(sel);if(el)el.textContent=value};
   const attr=(id,name,value)=>{const el=q(id);if(el)el.setAttribute(name,value)};
+
+  const syncCompactSummary=()=>{
+    const profile=q('requestProfile')?.textContent?.trim()||'R1';
+    const price=q('requestPrice')?.textContent?.trim()||'—';
+    const code=q('requestConfigCode')?.textContent?.trim()||'—';
+    configbar.querySelector('.rm-build b').textContent=profile;
+    configbar.querySelector('.rm-price b').textContent=price;
+    configbar.querySelector('.rm-code b').textContent=code;
+  };
 
   const paintRequestLanguage=()=>{
     const en=lang()==='en';
@@ -85,22 +93,15 @@
     const regionHint=q('reqRegion')?.parentElement?.querySelector('.field-hint');if(regionHint)regionHint.textContent=en?'Start typing — suggestions are limited to the selected country.':'Начни вводить — подсказки будут только по выбранной стране.';
     const cityHint=q('reqCity')?.parentElement?.querySelector('.field-hint');if(cityHint)cityHint.textContent=en?'Cities from other countries are never shown.':'Показываются только города выбранной страны.';
 
-    if(!q('countryButton')?.dataset.iso){const n=q('countryName');if(n)n.textContent=en?'SELECT COUNTRY':'ВЫБЕРИ СТРАНУ'}
-    if(!q('phoneRegionButton')?.dataset.iso){const d=q('phoneDial');if(d)d.textContent=en?'Code':'Код'}
+    const countryName=q('countryName');
+    if(countryName&&['ВЫБЕРИ СТРАНУ','SELECT COUNTRY','CHOOSE COUNTRY'].includes(countryName.textContent.trim()))countryName.textContent=en?'SELECT COUNTRY':'ВЫБЕРИ СТРАНУ';
+    const dial=q('phoneDial');
+    if(dial&&['Код','Code','CODE'].includes(dial.textContent.trim()))dial.textContent=en?'Code':'Код';
 
     configbar.querySelector('.rm-build small').textContent=en?'YOUR R1':'ВАШ R1';
     configbar.querySelector('.rm-price small').textContent=en?'PRICE':'СТОИМОСТЬ';
     configbar.querySelector('.rm-code small').textContent=en?'BUILD CODE':'КОД СБОРКИ';
     syncCompactSummary();
-  };
-
-  const syncCompactSummary=()=>{
-    const profile=q('requestProfile')?.textContent?.trim()||'R1';
-    const price=q('requestPrice')?.textContent?.trim()||'—';
-    const code=q('requestConfigCode')?.textContent?.trim()||'—';
-    configbar.querySelector('.rm-build b').textContent=profile;
-    configbar.querySelector('.rm-price b').textContent=price;
-    configbar.querySelector('.rm-code b').textContent=code;
   };
 
   const closeMobileMenu=()=>{
@@ -132,11 +133,7 @@
     request.setAttribute('role','dialog');
     lockPage();
     request.scrollTop=0;
-    if(push&&location.hash!=='#request'){
-      const state={...(history.state||{}),vantaRequestModal:true};
-      history.pushState(state,'','#request');
-      pushedState=true;
-    }else pushedState=Boolean(history.state?.vantaRequestModal);
+    if(push&&location.hash!=='#request')history.pushState({...(history.state||{}),vantaRequestModal:true},'','#request');
   };
 
   const closeInternal=({cleanHash=false}={})=>{
@@ -146,7 +143,6 @@
     request.removeAttribute('aria-modal');
     request.removeAttribute('role');
     unlockPage();
-    pushedState=false;
     if(cleanHash&&location.hash==='#request')history.replaceState({...history.state,vantaRequestModal:false},'',location.pathname+location.search);
     requestBtn.focus({preventScroll:true});
   };
@@ -184,10 +180,9 @@
     else if(location.hash==='#request')openModal({push:false});
   });
 
-  window.addEventListener('vanta:languagechange',()=>{
-    /* Locale translation runs first; repaint request-specific copy afterwards. */
-    queueMicrotask(paintRequestLanguage);
-  });
+  const repaint=()=>queueMicrotask(paintRequestLanguage);
+  window.addEventListener('vanta:languagechange',repaint);
+  new MutationObserver(repaint).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
 
   const summaryObserver=new MutationObserver(syncCompactSummary);
   [q('requestProfile'),q('requestPrice'),q('requestConfigCode')].filter(Boolean).forEach(el=>summaryObserver.observe(el,{subtree:true,childList:true,characterData:true}));

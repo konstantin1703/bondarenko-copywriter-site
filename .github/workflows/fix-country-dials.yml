@@ -1,0 +1,29 @@
+name: Fix Country Dials
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-country-dials.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Correct country calling codes
+        run: python tools/fix_country_dials.py
+      - name: Commit correction
+        run: |
+          rm -f .github/workflows/fix-country-dials.yml tools/fix_country_dials.py
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'fix: normalize country calling codes'
+          git push

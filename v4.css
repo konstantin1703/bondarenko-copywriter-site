@@ -869,336 +869,6 @@ section[id]{scroll-margin-top:calc(var(--header) + 18px)}.header.scrolled .brand
   .tech-metric,.gallery-lightbox[open],.gallery-lightbox[open] .gallery-lightbox-stage img,.activation-stage.signature-locked .boot-hud:after{animation:none!important;transition:none!important}
 }
 
-/* VANTA R1 — Tech Sheet V2: Russian-first engineering explainer 2026-09 */
-.tech-sheet-v2{
-  width:min(980px,calc(100vw - 34px))!important;
-  max-height:min(90svh,920px)!important;
-  overflow:auto!important;
-  padding:30px!important;
-  border:1px solid #393c39!important;
-  background:
-    radial-gradient(circle at 8% 0%,rgba(255,46,27,.055),transparent 28%),
-    linear-gradient(180deg,#0a0b0a 0%,#070807 100%)!important;
-  box-shadow:0 32px 90px rgba(0,0,0,.62),inset 0 1px 0 rgba(255,255,255,.025)!important;
-}
-.tech-sheet-v2 .tech-sheet-head{
-  display:flex!important;
-  align-items:flex-start!important;
-  justify-content:space-between!important;
-  gap:28px!important;
-  padding:0 0 26px!important;
-  margin:0 0 16px!important;
-  border-bottom:1px solid #303330!important;
-}
-.tech-sheet-titleblock{max-width:700px}
-.tech-sheet-titleblock>small{
-  display:block;
-  margin-bottom:12px;
-  color:#8d938e;
-  font-size:9px;
-  letter-spacing:.19em;
-}
-.tech-sheet-titleblock h2{
-  margin:0!important;
-  font-size:clamp(42px,6vw,76px)!important;
-  line-height:.88!important;
-  letter-spacing:-.055em!important;
-  color:#f4f5f1!important;
-}
-.tech-sheet-titleblock>p{
-  max-width:620px;
-  margin:16px 0 0!important;
-  color:#a7aaa6!important;
-  font-size:13px!important;
-  line-height:1.5!important;
-}
-.tech-grid-v2{
-  display:grid!important;
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  gap:10px!important;
-  border:0!important;
-  margin-top:0!important;
-}
-.tech-grid-v2 .tech-group{
-  display:grid!important;
-  grid-template-rows:auto 1fr 1fr!important;
-  min-width:0!important;
-  border:1px solid #2d302e!important;
-  background:linear-gradient(180deg,rgba(255,255,255,.016),rgba(255,255,255,.003))!important;
-  overflow:hidden!important;
-  position:relative!important;
-}
-.tech-grid-v2 .tech-group:before{
-  content:"";
-  position:absolute;
-  inset:0 auto auto 0;
-  width:48px;
-  height:2px;
-  background:var(--accent);
-  opacity:.85;
-}
-.tech-group-head{
-  display:flex!important;
-  align-items:center!important;
-  gap:13px!important;
-  min-height:76px!important;
-  padding:18px 18px 16px!important;
-  border-bottom:1px solid #292c2a!important;
-  background:rgba(255,255,255,.009)!important;
-}
-.tech-group-head>b{
-  color:var(--accent)!important;
-  font-size:11px!important;
-  font-weight:700!important;
-  letter-spacing:.14em!important;
-}
-.tech-group-head h3{
-  margin:0!important;
-  color:#e9ebe7!important;
-  font-size:13px!important;
-  line-height:1.05!important;
-  letter-spacing:.055em!important;
-}
-.tech-group-head small{
-  display:block!important;
-  margin-top:5px!important;
-  color:#747a75!important;
-  font-size:7.5px!important;
-  letter-spacing:.17em!important;
-}
-.tech-grid-v2 .tech-metric{
-  display:flex!important;
-  flex-direction:column!important;
-  justify-content:center!important;
-  min-width:0!important;
-  min-height:176px!important;
-  padding:19px 18px 18px!important;
-  border:0!important;
-  border-bottom:1px solid #292c2a!important;
-  background:transparent!important;
-  text-align:left!important;
-}
-.tech-grid-v2 .tech-metric:last-child{border-bottom:0!important}
-.tech-value{
-  display:flex!important;
-  align-items:baseline!important;
-  gap:8px!important;
-  margin-bottom:9px!important;
-  white-space:nowrap!important;
-}
-.tech-value strong{
-  margin:0!important;
-  color:#f7f8f4!important;
-  font-size:clamp(46px,5vw,66px)!important;
-  font-weight:500!important;
-  line-height:.82!important;
-  letter-spacing:-.065em!important;
-  font-variant-numeric:tabular-nums!important;
-}
-.tech-value em{
-  color:#b8bcb8!important;
-  font-style:normal!important;
-  font-size:11px!important;
-  font-weight:600!important;
-  letter-spacing:.08em!important;
-}
-.tech-label{
-  display:block!important;
-  margin:0 0 7px!important;
-  color:#d9dcd8!important;
-  font-size:10px!important;
-  font-weight:600!important;
-  line-height:1.25!important;
-  letter-spacing:.045em!important;
-  text-transform:uppercase!important;
-}
-.tech-grid-v2 .tech-metric p{
-  margin:0!important;
-  color:#818682!important;
-  font-size:9.5px!important;
-  line-height:1.48!important;
-}
-.tech-meaning{
-  display:grid!important;
-  grid-template-columns:.72fr 1.28fr!important;
-  gap:12px 30px!important;
-  margin-top:14px!important;
-  padding:20px!important;
-  border:1px solid #303330!important;
-  background:linear-gradient(90deg,rgba(255,46,27,.035),rgba(255,255,255,.008) 42%,transparent)!important;
-}
-.tech-meaning>div small{
-  display:block!important;
-  color:var(--accent)!important;
-  font-size:8px!important;
-  letter-spacing:.18em!important;
-}
-.tech-meaning>div strong{
-  display:block!important;
-  margin-top:8px!important;
-  color:#eceeeb!important;
-  font-size:15px!important;
-  line-height:1.25!important;
-}
-.tech-meaning>p{
-  margin:0!important;
-  color:#aaaeaa!important;
-  font-size:10.5px!important;
-  line-height:1.58!important;
-}
-.tech-meaning>p b{color:#e7e9e6!important;font-weight:600!important}
-.tech-meaning>span{
-  grid-column:1/-1!important;
-  padding-top:13px!important;
-  border-top:1px solid #292c2a!important;
-  color:#696e6a!important;
-  font-size:8.5px!important;
-  line-height:1.5!important;
-}
-@media(max-width:720px){
-  .tech-sheet-v2{
-    width:calc(100vw - 20px)!important;
-    max-height:92svh!important;
-    padding:20px!important;
-  }
-  .tech-sheet-v2 .tech-sheet-head{gap:14px!important;padding-bottom:20px!important}
-  .tech-sheet-titleblock h2{font-size:clamp(35px,10.7vw,48px)!important;letter-spacing:-.05em!important}
-  .tech-sheet-titleblock>p{font-size:11px!important;max-width:30ch!important}
-  .tech-grid-v2{grid-template-columns:1fr!important;gap:9px!important}
-  .tech-grid-v2 .tech-group{
-    grid-template-columns:minmax(105px,.58fr) 1fr 1fr!important;
-    grid-template-rows:auto!important;
-  }
-  .tech-group-head{
-    min-height:150px!important;
-    padding:15px 13px!important;
-    border-bottom:0!important;
-    border-right:1px solid #292c2a!important;
-    align-items:flex-start!important;
-    flex-direction:column!important;
-    justify-content:center!important;
-    gap:7px!important;
-  }
-  .tech-group-head h3{font-size:10px!important;word-break:normal!important}
-  .tech-group-head small{font-size:6.5px!important;line-height:1.3!important}
-  .tech-grid-v2 .tech-metric{
-    min-height:150px!important;
-    padding:15px 13px!important;
-    border-bottom:0!important;
-    border-right:1px solid #292c2a!important;
-  }
-  .tech-grid-v2 .tech-metric:last-child{border-right:0!important}
-  .tech-value{gap:5px!important;margin-bottom:8px!important}
-  .tech-value strong{font-size:clamp(36px,10.5vw,48px)!important}
-  .tech-value em{font-size:8px!important}
-  .tech-label{font-size:8px!important;line-height:1.25!important;margin-bottom:6px!important}
-  .tech-grid-v2 .tech-metric p{font-size:7.8px!important;line-height:1.42!important}
-  .tech-meaning{grid-template-columns:1fr!important;gap:10px!important;padding:16px!important}
-  .tech-meaning>p{font-size:9px!important}
-  .tech-meaning>span{grid-column:1!important;font-size:7.7px!important}
-}
-@media(max-width:390px){
-  .tech-sheet-v2{padding:16px!important}
-  .tech-grid-v2 .tech-group{grid-template-columns:94px 1fr 1fr!important}
-  .tech-group-head,.tech-grid-v2 .tech-metric{min-height:144px!important;padding:13px 10px!important}
-  .tech-value strong{font-size:36px!important}
-  .tech-label{font-size:7.4px!important}
-  .tech-grid-v2 .tech-metric p{font-size:7.3px!important}
-}
-
-
-
-/* VANTA R1 — Tech Sheet V2 mobile grid cleanup 2026-09 */
-.tech-grid-v2 .tech-group{
-  overflow:hidden!important;
-  isolation:isolate;
-}
-.tech-grid-v2 .tech-group-head,
-.tech-grid-v2 .tech-metric{
-  box-shadow:none!important;
-}
-.tech-grid-v2 .tech-group-head::before,
-.tech-grid-v2 .tech-group-head::after,
-.tech-grid-v2 .tech-metric::before,
-.tech-grid-v2 .tech-metric::after,
-.tech-grid-v2 .tech-value::before,
-.tech-grid-v2 .tech-value::after{
-  content:none!important;
-  display:none!important;
-}
-.tech-grid-v2 .tech-group-head{
-  border:0!important;
-  border-bottom:1px solid #292c2a!important;
-}
-.tech-grid-v2 .tech-metric{
-  border:0!important;
-  border-bottom:1px solid #292c2a!important;
-}
-.tech-grid-v2 .tech-metric:last-child{
-  border-bottom:0!important;
-}
-.tech-meaning>div>small{
-  letter-spacing:.16em!important;
-}
-
-@media(max-width:980px){
-  .tech-grid-v2 .tech-group{
-    grid-template-columns:116px minmax(0,1fr) minmax(0,1fr)!important;
-    grid-template-rows:auto!important;
-  }
-  .tech-grid-v2 .tech-group-head{
-    min-width:0!important;
-    min-height:150px!important;
-    padding:15px 12px!important;
-    border:0!important;
-    border-right:1px solid #292c2a!important;
-    overflow:hidden!important;
-  }
-  .tech-group-head h3{
-    max-width:100%!important;
-    font-size:9px!important;
-    line-height:1.13!important;
-    letter-spacing:.045em!important;
-    overflow-wrap:anywhere!important;
-  }
-  .tech-group-head small{
-    font-size:6.2px!important;
-    line-height:1.35!important;
-    letter-spacing:.14em!important;
-  }
-  .tech-grid-v2 .tech-metric{
-    min-width:0!important;
-    min-height:150px!important;
-    padding:15px 12px!important;
-    border:0!important;
-  }
-  .tech-grid-v2 .tech-metric + .tech-metric{
-    border-left:1px solid #292c2a!important;
-  }
-  .tech-label{
-    font-size:7.7px!important;
-    line-height:1.28!important;
-    letter-spacing:.055em!important;
-  }
-  .tech-grid-v2 .tech-metric p{
-    font-size:7.5px!important;
-    line-height:1.43!important;
-  }
-}
-
-@media(max-width:390px){
-  .tech-grid-v2 .tech-group{
-    grid-template-columns:106px minmax(0,1fr) minmax(0,1fr)!important;
-  }
-  .tech-grid-v2 .tech-group-head,
-  .tech-grid-v2 .tech-metric{
-    min-height:146px!important;
-    padding:13px 10px!important;
-  }
-  .tech-group-head h3{font-size:8.4px!important}
-  .tech-value strong{font-size:34px!important}
-}
-
 /* VANTA R1 — Product Flow V3 / Engineering Profile / Configurator / Request 2026-09 */
 
 /* Engineering Profile */
@@ -1246,3 +916,111 @@ section[id]{scroll-margin-top:calc(var(--header) + 18px)}.header.scrolled .brand
   .request-head p{font-size:12px}.request-summary{margin-left:-20px;margin-right:-20px;border-left:0;border-right:0}.request-bike{aspect-ratio:1.72}.request-summary-head{padding:16px 18px}.request-summary-head strong{font-size:28px}.request-summary-stats span{padding:13px 11px}.request-form{margin-left:-20px;margin-right:-20px;border-left:0;border-right:0}.request-progress button{min-height:60px;padding:10px 9px;gap:7px}.request-progress b{display:none}.request-progress span{font-size:7px}.request-step{padding:22px 20px}.request-fields.two-col{grid-template-columns:1fr}.request-field.full{grid-column:auto}.request-field input,.phone-prefix,.country-button{height:56px}.phone-prefix{min-width:116px}.request-controls{align-items:stretch}.request-controls button{min-height:52px}.request-controls .request-next,.request-controls .request-submit{min-width:0;flex:1}.request-complete{min-height:610px;padding:36px 20px}.request-complete>small{margin-top:42px}.request-complete h3{font-size:44px}.request-code{min-width:190px}.region-picker-panel{width:calc(100vw - 18px)}
 }
 @media(prefers-reduced-motion:reduce){.config-preview-media img,.request-field input,.config-presets button:after,.request-progress button:after{transition:none!important}}
+
+
+/* VANTA R1 — Product Flow V4 / QA + Checkout Data 2026-09 */
+#techSheet[open] #techClose{position:fixed!important;z-index:10040!important;top:calc(env(safe-area-inset-top,0px) + 18px)!important;right:max(20px,calc((100vw - min(1040px,calc(100vw - 34px)))/2 + 18px))!important;margin:0!important;display:block!important;place-items:unset!important}
+#techSheet[open] #techClose:before,#techSheet[open] #techClose:after{left:50%!important;top:50%!important;margin:0!important;transform-origin:50% 50%!important}
+#techSheet[open] #techClose:before{transform:translate(-50%,-50%) rotate(45deg)!important}
+#techSheet[open] #techClose:after{transform:translate(-50%,-50%) rotate(-45deg)!important}
+.tech-profile-head{padding-right:72px!important}
+
+/* Typography QA */
+.tech-profile-head .tech-sheet-titleblock h2{line-height:.91!important;letter-spacing:-.042em!important}
+.tech-profile-group>header h3{font-size:14px!important;letter-spacing:.025em!important;line-height:1.12!important}
+.tech-profile-group>header small,.tech-profile-impact small,.tech-conclusion small{letter-spacing:.14em!important}
+.tech-profile-metrics h4{font-size:10.5px!important;letter-spacing:.025em!important;line-height:1.25!important}
+.tech-profile-metrics p{font-size:10px!important;line-height:1.52!important}
+.tech-profile-impact p{font-size:11px!important;line-height:1.55!important}
+.tech-conclusion strong{font-size:18px!important;line-height:1.3!important}
+.tech-conclusion p{font-size:11px!important;line-height:1.6!important}
+.config-step-head strong,.request-step-title strong{letter-spacing:.07em!important}
+.config-character small,.config-summary-top small,.config-stats small,.config-active-build small,.factory-setup small,.request-field>span,.request-summary-kicker,.request-summary-head small,.request-summary-stats small,.request-summary-modules>small,.request-summary-code span{letter-spacing:.12em!important}
+.config-character strong{font-size:12px!important;line-height:1.4!important}
+.config-presets button p{font-size:9px!important;line-height:1.5!important}
+.config-presets i,.factory-setup small,.factory-setup strong,.module-index,.config-effect,.config-module>i,.config-finishes button small,.config-active-build small,.config-active-build>#configActiveModules span{font-size:8px!important}
+.config-module-copy strong{font-size:11px!important;letter-spacing:.045em!important;line-height:1.25!important}
+.config-module-copy small{font-size:9px!important;line-height:1.5!important}
+.config-stats b{font-size:14px!important;line-height:1.15!important;font-variant-numeric:tabular-nums lining-nums}
+.config-stats em{font-size:8px!important;letter-spacing:.035em!important}
+.request-field>span{font-size:8.5px!important}
+.request-field input,.phone-prefix,.country-button{font-size:14px!important}
+.field-hint,.field-error{font-size:8px!important;line-height:1.45!important}
+
+/* Complete 3x2 engineering summary. */
+.config-stats{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+.config-stats>span{border-right:1px solid #282c29!important;border-top:0!important;min-height:86px!important;align-content:center}
+.config-stats>span:nth-child(3n){border-right:0!important}
+.config-stats>span:nth-child(n+4){border-top:1px solid #282c29!important}
+.config-stat-telemetry b{color:#f1f3ef!important;letter-spacing:.08em!important}
+.config-stat-telemetry.is-off b,.config-stat-telemetry.is-off em{color:#666d67!important}
+
+/* Build reset / factory restore. */
+.config-active-build{grid-template-columns:auto 1fr!important}
+.config-build-tools{grid-column:1/-1;display:flex;justify-content:flex-end;gap:8px;padding-top:12px;margin-top:4px;border-top:1px solid #262a27}
+.config-build-tools button{min-height:36px;padding:0 11px;border:1px solid #303531;background:#080908;color:#9da39e;display:inline-flex;align-items:center;gap:18px;font-size:8px;letter-spacing:.075em;cursor:pointer;transition:border-color .2s,color .2s,background .2s,transform .16s}
+.config-build-tools button i{font-style:normal;font-size:13px;line-height:1}
+.config-build-tools button:active{transform:translateY(1px)}
+.config-build-tools button:hover{border-color:#575e58;color:#f2f3ef}
+.config-build-tools button:disabled{opacity:.32;cursor:default}
+.config-build-tools button[hidden]{display:none!important}
+#configReset{border-color:#49302d;color:#c78e88}
+#configReset:hover{border-color:#7c3d35;color:#ff8a80;background:rgba(255,46,27,.03)}
+
+/* Request form polish */
+.request-form{background:radial-gradient(circle at 12% 0%,rgba(255,46,27,.035),transparent 24%),linear-gradient(180deg,#0a0b0a,#060706)!important}
+.request-step{background:linear-gradient(180deg,rgba(255,255,255,.006),transparent 36%)}
+.request-field input,.phone-prefix,.country-button{background:#070807!important;border-color:#343936!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.012)!important;transition:border-color .2s,box-shadow .2s,background .2s!important}
+.request-field input:focus,.phone-prefix:focus-visible,.country-button:focus-visible{border-color:#717a72!important;background:#0a0b0a!important;box-shadow:inset 2px 0 0 var(--accent),0 0 0 1px rgba(255,46,27,.08)!important;outline:none!important}
+.region-symbol.is-empty{position:relative;width:18px;height:18px;min-width:18px;border:1px solid #555d56;border-radius:50%;display:block}
+.region-symbol.is-empty:before,.region-symbol.is-empty:after{content:"";position:absolute;inset:3px;border:1px solid #555d56;border-radius:50%}
+.region-symbol.is-empty:after{inset:8px 2px auto;height:1px;border:0;border-top:1px solid #555d56;border-radius:0}
+.request-complete[hidden]{display:none!important}
+
+/* Searchable region/city surface */
+.smart-location-field{position:relative}
+.location-suggest{position:absolute;z-index:90;left:0;right:0;top:calc(100% - 1px);max-height:250px;overflow:auto;border:1px solid #3a3f3b;background:#090a09;box-shadow:0 22px 55px rgba(0,0,0,.5)}
+.location-suggest[hidden]{display:none!important}
+.location-suggest button{width:100%;min-height:45px;padding:10px 13px;border:0;border-bottom:1px solid #252925;background:transparent;color:#dfe2de;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:14px;cursor:pointer}
+.location-suggest button:last-child{border-bottom:0}
+.location-suggest button:hover,.location-suggest button.is-active{background:rgba(255,255,255,.035)}
+.location-suggest button strong{font-size:10px;font-weight:500;letter-spacing:.02em}
+.location-suggest button small{font-size:7px;color:#727a73;letter-spacing:.1em;text-transform:uppercase}
+.location-suggest .use-manual strong{color:#ff756a}
+.location-suggest-empty{padding:13px;color:#737a74;font-size:9px}
+.region-list{max-height:min(52svh,480px)!important}
+.region-option strong{font-size:10px!important;letter-spacing:.02em!important}
+.region-option small{font-size:9px!important}
+.config-summary-top small,.request-summary-head small{color:#858c86!important}
+
+@media(max-width:720px){
+  #techSheet[open] #techClose{top:calc(env(safe-area-inset-top,0px) + 14px)!important;right:16px!important}
+  .tech-profile-head{padding-right:58px!important}
+  .tech-profile-head .tech-sheet-titleblock h2{line-height:.94!important;letter-spacing:-.03em!important}
+  .tech-profile-group>header h3{font-size:13px!important}
+  .tech-profile-metrics h4{font-size:10px!important}
+  .tech-profile-metrics p,.tech-profile-impact p{font-size:10px!important}
+  .config-build-tools{justify-content:stretch;display:grid;grid-template-columns:1fr 1fr}
+  .config-build-tools button{justify-content:space-between;padding:0 10px;font-size:7.5px}
+}
+@media(max-width:520px){
+  .tech-profile-head .tech-sheet-titleblock h2{font-size:38px!important;line-height:.96!important;letter-spacing:-.025em!important}
+  .tech-profile-head .tech-sheet-titleblock>p{font-size:11px!important;line-height:1.55!important}
+  .tech-profile-group>header{gap:13px!important}
+  .tech-profile-group>header h3{font-size:12.5px!important}
+  .tech-profile-metrics article{padding:18px 16px!important}
+  .tech-profile-value strong{font-size:52px!important}
+  .tech-profile-metrics p{font-size:10.5px!important}
+  .tech-profile-impact small{font-size:8px!important}
+  .tech-profile-impact p{font-size:10.5px!important}
+  .config-stats>span{min-height:92px!important;padding:13px 12px!important}
+  .config-stats b{font-size:16px!important}
+  .config-stats small{font-size:8px!important}
+  .config-stats em{font-size:8.5px!important}
+  .config-module-copy strong{font-size:11px!important}
+  .config-module-copy small{font-size:9.5px!important}
+  .config-effect,.config-module>i,.module-index{font-size:8px!important}
+  .config-build-tools{grid-template-columns:1fr}
+  .request-field>span{font-size:9px!important}
+  .field-hint,.field-error{font-size:8.5px!important}
+}

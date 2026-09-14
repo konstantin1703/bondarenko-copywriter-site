@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Inter+Tight:wght@500;600;700;800;900&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://konstantin1703.github.io/bondarenko-copywriter-site/" rel="canonical"/><link href="favicon.svg" rel="icon" type="image/svg+xml"/><link href="site.webmanifest" rel="manifest"/><link href="https://res.cloudinary.com" rel="preconnect"/><meta content="https://konstantin1703.github.io/bondarenko-copywriter-site/" property="og:url"/><meta content="summary_large_image" name="twitter:card"/><meta content="VANTA R1 — Electric Superbike Concept" name="twitter:title"/><meta content="Оригинальный электрический superbike-концепт VANTA R1." name="twitter:description"/><meta content="https://res.cloudinary.com/dg9shucn/image/upload/f_auto,q_auto:good,c_limit,w_1200/v1789101691/vanta-r1-hq-hero-v2.png" name="twitter:image"/><link href="v4.css?v=21" rel="stylesheet"/></head>
+<link href="https://konstantin1703.github.io/bondarenko-copywriter-site/" rel="canonical"/><link href="favicon.svg" rel="icon" type="image/svg+xml"/><link href="site.webmanifest" rel="manifest"/><link href="https://res.cloudinary.com" rel="preconnect"/><meta content="https://konstantin1703.github.io/bondarenko-copywriter-site/" property="og:url"/><meta content="summary_large_image" name="twitter:card"/><meta content="VANTA R1 — Electric Superbike Concept" name="twitter:title"/><meta content="Оригинальный электрический superbike-концепт VANTA R1." name="twitter:description"/><meta content="https://res.cloudinary.com/dg9shucn/image/upload/f_auto,q_auto:good,c_limit,w_1200/v1789101691/vanta-r1-hq-hero-v2.png" name="twitter:image"/><link href="v4.css?v=22" rel="stylesheet"/></head>
 <body>
 <div aria-hidden="true" class="progress" id="progress"></div>
 <header class="header" id="header">
@@ -162,7 +162,7 @@
       <div class="config-summary" aria-live="polite">
         <div class="config-summary-top">
           <span><small>BUILD CODE</small><strong id="configCode">R1-RD-SR-FC-TL</strong></span>
-          <span class="config-price"><small>CONCEPT PRICE</small><strong id="configPrice">€36 000</strong></span>
+          <span class="config-price"><small>СТОИМОСТЬ</small><strong id="configPrice">€36 000</strong></span>
         </div>
         <div class="config-character"><small>ХАРАКТЕР СБОРКИ</small><strong id="configCharacter">Сбалансированный / дорожный / быстрая зарядка</strong></div>
         <div class="config-compare-label"><span>BASE R1</span><span>YOUR R1</span></div>
@@ -171,10 +171,10 @@
           <span><small>МОМЕНТ</small><b id="cfgTorque">390 Н·м</b><em id="cfgTorqueDelta">BASE</em></span>
           <span><small>МАССА</small><b id="cfgMass">189 кг</b><em id="cfgMassDelta">BASE</em></span>
           <span><small>ЗАПАС</small><b id="cfgRange">320 км</b><em id="cfgRangeDelta">BASE</em></span>
-          <span><small>10→80%</small><b id="cfgCharge">14 мин</b><em id="cfgChargeDelta">−4 мин</em></span>
+          <span><small>10→80%</small><b id="cfgCharge">14 мин</b><em id="cfgChargeDelta">−4 мин</em></span><span class="config-stat-telemetry"><small>ТЕЛЕМЕТРИЯ</small><b id="cfgTelemetry">LIVE</b><em id="cfgTelemetryDelta">R1 LINK</em></span>
         </div>
         <div class="config-balance"><span>БАЗОВАЯ КОНФИГУРАЦИЯ</span><b>210 кВт · 390 Н·м · 189 кг · 320 км · 18 мин</b></div>
-        <div class="config-active-build"><div><small>ACTIVE BUILD</small><strong>УСТАНОВЛЕННЫЕ МОДУЛИ</strong></div><div id="configActiveModules"></div></div>
+        <div class="config-active-build"><div><small>ACTIVE BUILD</small><strong>УСТАНОВЛЕННЫЕ МОДУЛИ</strong></div><div id="configActiveModules"></div><div class="config-build-tools"><button id="configFactoryReset" type="button"><span>ВЕРНУТЬ FACTORY SETUP</span><i>↺</i></button><button id="configReset" type="button"><span>СБРОСИТЬ СБОРКУ</span><i>×</i></button></div></div>
       </div>
     </div>
 
@@ -211,10 +211,10 @@
       </section>
 
       <div class="config-actions">
-        <button class="config-save" id="configSave" type="button"><span>СОХРАНИТЬ CONFIG</span><i>+</i></button>
+        <button class="config-save" id="configSave" type="button"><span>СОХРАНИТЬ СБОРКУ</span><i>+</i></button>
         <button class="config-request" id="configRequest" type="button"><span>ПЕРЕЙТИ К ЗАЯВКЕ</span><i>→</i></button>
       </div>
-      <p class="config-note">VANTA R1 / CONFIGURATION SYSTEM · параметры и стоимость относятся к концептуальной конфигурации проекта.</p>
+      
     </div>
   </div>
 </section>
@@ -251,8 +251,8 @@
         <div class="request-step-title"><b>02</b><div><strong>АДРЕС</strong><small>Адрес доставки R1</small></div></div>
         <div class="request-fields two-col">
           <div class="request-field full"><span>СТРАНА</span><button class="country-button" id="countryButton" type="button" aria-haspopup="dialog"><span class="region-symbol is-empty" id="countryFlag" aria-hidden="true"></span><b id="countryName">ВЫБЕРИ СТРАНУ</b><i>⌄</i></button><small class="field-error" id="countryError"></small></div>
-          <label class="request-field"><span>РЕГИОН / ОБЛАСТЬ / ШТАТ</span><input id="reqRegion" name="region" autocomplete="address-level1" placeholder="Регион"/></label>
-          <label class="request-field"><span>ГОРОД</span><input id="reqCity" name="city" autocomplete="address-level2" required placeholder="Город"/></label>
+          <label class="request-field smart-location-field"><span>РЕГИОН / ОБЛАСТЬ / ШТАТ</span><input class="smart-location-input" id="reqRegion" name="region" autocomplete="off" placeholder="Начни вводить регион"/><small class="field-hint">Можно выбрать из подсказок или оставить своё значение.</small><div class="location-suggest" id="regionSuggest" role="listbox" hidden></div></label>
+          <label class="request-field smart-location-field"><span>ГОРОД</span><input class="smart-location-input" id="reqCity" name="city" autocomplete="off" required placeholder="Начни вводить город"/><small class="field-hint">Поиск учитывает выбранную страну и регион.</small><div class="location-suggest" id="citySuggest" role="listbox" hidden></div></label>
           <label class="request-field"><span>ИНДЕКС</span><input id="reqPostal" name="postal" autocomplete="postal-code" required placeholder="000000"/></label>
           <label class="request-field full"><span>АДРЕС</span><input id="reqAddress" name="address" autocomplete="street-address" required placeholder="Улица, дом"/></label>
           <label class="request-field full"><span>ДОПОЛНИТЕЛЬНО</span><input id="reqAddress2" name="address2" autocomplete="address-line2" placeholder="Квартира / офис / комментарий"/></label>
@@ -283,7 +283,7 @@
     <aside class="request-summary reveal" aria-live="polite">
       <div class="request-summary-kicker"><span></span>YOUR CONFIGURATION</div>
       <div class="request-bike" data-tone="red" id="requestBike"><img alt="VANTA R1 — выбранная конфигурация" loading="lazy" decoding="async" src="https://res.cloudinary.com/dg9shucn/image/upload/f_auto,q_auto:good,c_limit,w_900/v1789100635/vanta-r1-hq-side.jpg"/><div></div></div>
-      <div class="request-summary-head"><span><small>YOUR R1</small><strong id="requestProfile">ROAD</strong></span><span><small>CONCEPT PRICE</small><strong id="requestPrice">€36 000</strong></span></div>
+      <div class="request-summary-head"><span><small>YOUR R1</small><strong id="requestProfile">ROAD</strong></span><span><small>СТОИМОСТЬ</small><strong id="requestPrice">€36 000</strong></span></div>
       <div class="request-summary-stats"><span><small>POWER</small><b id="requestPower">210 кВт</b></span><span><small>MASS</small><b id="requestMass">189 кг</b></span><span><small>RANGE</small><b id="requestRange">320 км</b></span></div>
       <div class="request-summary-modules"><small>ACTIVE BUILD</small><div id="requestModules"></div></div>
       <div class="request-summary-code"><span>BUILD CODE</span><b id="requestConfigCode">R1-RD-SR-FC-TL</b></div>
@@ -333,7 +333,7 @@
         <article><div class="tech-profile-value"><strong>210</strong><em>кВт</em></div><h4>Пиковая мощность</h4><p>Максимальная целевая отдача электрического привода.</p></article>
         <article><div class="tech-profile-value"><strong>390</strong><em>Н·м</em></div><h4>Крутящий момент</h4><p>Тяга доступна практически сразу после открытия газа.</p></article>
       </div>
-      <div class="tech-profile-impact"><small>ЧТО ЭТО ДАЁТ</small><p>Мгновенный отклик и высокий темп разгона без паузы на переключения.</p></div>
+      <div class="tech-profile-impact"><small>ВЛИЯНИЕ НА R1</small><p>Мгновенный отклик и высокий темп разгона без паузы на переключения.</p></div>
     </section>
 
     <section class="tech-profile-group">
@@ -342,7 +342,7 @@
         <article><div class="tech-profile-value"><strong>800</strong><em>В</em></div><h4>Высоковольтная архитектура</h4><p>Основа для высокой мощности и эффективной быстрой зарядки.</p></article>
         <article><div class="tech-profile-value"><strong>18</strong><em>мин</em></div><h4>Зарядка 10→80%</h4><p>Целевой энергетический цикл на совместимой DC-станции.</p></article>
       </div>
-      <div class="tech-profile-impact"><small>ЧТО ЭТО ДАЁТ</small><p>Высокую скорость восстановления заряда и устойчивую отдачу силовой системы.</p></div>
+      <div class="tech-profile-impact"><small>ВЛИЯНИЕ НА R1</small><p>Высокую скорость восстановления заряда и устойчивую отдачу силовой системы.</p></div>
     </section>
 
     <section class="tech-profile-group">
@@ -351,7 +351,7 @@
         <article><div class="tech-profile-value"><strong>189</strong><em>кг</em></div><h4>Целевая масса</h4><p>Расчётная масса базовой инженерной конфигурации R1.</p></article>
         <article><div class="tech-profile-value"><strong>320</strong><em>км</em></div><h4>Запас хода</h4><p>Расчётная дальность базовой конфигурации на одном заряде.</p></article>
       </div>
-      <div class="tech-profile-impact"><small>ЧТО ЭТО ДАЁТ</small><p>Баланс между управляемостью, плотностью компоновки и практической дальностью.</p></div>
+      <div class="tech-profile-impact"><small>ВЛИЯНИЕ НА R1</small><p>Баланс между управляемостью, плотностью компоновки и практической дальностью.</p></div>
     </section>
   </div>
 
@@ -362,6 +362,6 @@
 </div>
 </dialog>
 
-<footer><a class="brand" href="#top"><span>V</span><span>A</span><span>N</span><span>T</span><span>A</span><sup>R1</sup></a><p>VANTA R1 — вымышленный демонстрационный product-concept. Все изображения мотоцикла созданы специально для этого проекта.</p><span>CONCEPT / 2026</span></footer>
-<script defer src="v4.js?v=13"></script></body>
+<footer><a class="brand" href="#top"><span>V</span><span>A</span><span>N</span><span>T</span><span>A</span><sup>R1</sup></a><p>VANTA R1 — авторский электрический superbike-концепт. Все изображения мотоцикла созданы специально для этого проекта.</p><span>CONCEPT / 2026</span></footer>
+<script defer src="v4.js?v=14"></script></body>
 </html>

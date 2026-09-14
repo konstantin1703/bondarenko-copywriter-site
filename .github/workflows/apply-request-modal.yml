@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Patch index
+      - name: Patch index v2
         run: python .github/scripts/patch_request_modal.py
       - name: Commit patch
         run: |
@@ -26,6 +26,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No index changes needed"
           else
-            git commit -m "feat: load request modal interface"
+            git commit -m "fix: load request modal v2"
             git push origin HEAD:main
           fi

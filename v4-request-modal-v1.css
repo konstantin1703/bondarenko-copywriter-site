@@ -6,6 +6,7 @@
 .lang-switch button.active{background:#eeefeb!important;color:#090a09!important;box-shadow:0 1px 8px rgba(255,255,255,.08)!important}
 .lang-switch button[data-lang="ru"]:after{content:"";position:absolute;left:11px;right:11px;bottom:3px;height:1px;background:linear-gradient(90deg,#fff 0 33%,#486dcc 33% 66%,#dd4038 66%);opacity:.55}
 .lang-switch button[data-lang="en"]:after{content:"";position:absolute;left:11px;right:11px;bottom:3px;height:1px;background:linear-gradient(90deg,#476cab 0 45%,#eee 45% 55%,#d74a42 55%);opacity:.45}
+#header .header-lang{z-index:5!important;pointer-events:auto!important}#header .header-lang button{pointer-events:auto!important;touch-action:manipulation!important}
 .mobile-lang{display:none!important}
 @media(max-width:980px){
   #header.header{grid-template-columns:1fr auto auto!important;column-gap:5px!important}

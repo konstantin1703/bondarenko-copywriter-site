@@ -71,15 +71,37 @@
   };
   const updateSwitches=()=>document.querySelectorAll('.lang-switch button').forEach(b=>{const on=b.dataset.lang===activeLang;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on));});
   const setLanguage=(lang,{persist=true,url=true}={})=>{
-    activeLang=lang==='en'?'en':'ru';document.documentElement.lang=activeLang;
+    activeLang=lang==='en'?'en':'ru';
+    document.documentElement.lang=activeLang;
     if(persist)try{localStorage.setItem('vanta-lang',activeLang)}catch{}
-    if(url){const u=new URL(location.href);u.searchParams.set('lang',activeLang);history.replaceState(null,'',u);}
+    /* Translate first. A History API quirk must never block the visible language change. */
     translateTree(document);localizeCountryRows();setMeta();updateSwitches();
+    if(url)try{const u=new URL(location.href);u.searchParams.set('lang',activeLang);history.replaceState(history.state,'',u.pathname+u.search+u.hash)}catch{}
     window.dispatchEvent(new CustomEvent('vanta:languagechange',{detail:{lang:activeLang}}));
   };
-  const makeSwitch=cls=>{const wrap=document.createElement('div');wrap.className=`lang-switch ${cls}`;wrap.setAttribute('aria-label','Language / Язык');wrap.innerHTML='<button type="button" data-lang="ru" aria-pressed="true">RU</button><button type="button" data-lang="en" aria-pressed="false">EN</button>';wrap.addEventListener('click',e=>{const b=e.target.closest('button[data-lang]');if(b)setLanguage(b.dataset.lang);});return wrap;};
+  const makeSwitch=cls=>{const wrap=document.createElement('div');wrap.className=`lang-switch ${cls}`;wrap.setAttribute('aria-label','Language / Язык');wrap.innerHTML='<button type="button" data-lang="ru" aria-pressed="true">RU</button><button type="button" data-lang="en" aria-pressed="false">EN</button>';return wrap;};
   document.getElementById('header')?.appendChild(makeSwitch('header-lang'));
   document.getElementById('mobileMenu')?.appendChild(makeSwitch('mobile-lang'));
+
+  const switchLanguage=target=>{
+    setLanguage(target);
+    requestAnimationFrame(()=>{
+      const hero=(document.querySelector('.hero-white')?.textContent||'').trim();
+      const ok=target==='en'?hero==='Silence':hero==='Тишина';
+      if(!ok){
+        const u=new URL(location.href);
+        u.searchParams.set('lang',target);
+        location.replace(u.href);
+      }
+    });
+  };
+  document.addEventListener('click',e=>{
+    const b=e.target.closest?.('.lang-switch button[data-lang]');
+    if(!b)return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    switchLanguage(b.dataset.lang);
+  },true);
 
   const params=new URLSearchParams(location.search);let initial=params.get('lang');if(!['ru','en'].includes(initial)){try{initial=localStorage.getItem('vanta-lang')}catch{}}if(!['ru','en'].includes(initial))initial='ru';
   setLanguage(initial,{persist:false,url:false});

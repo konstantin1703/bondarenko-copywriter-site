@@ -1,0 +1,31 @@
+name: Fix locale switch v4
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-locale-switch-v4.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Patch locale switch
+        run: python .github/scripts/fix_locale_switch_v4.py
+      - name: Commit locale fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html v4-locale-v1.js v4-request-modal-v1.css
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+          else
+            git commit -m "fix: make RU EN switch reliable on Safari"
+            git push origin HEAD:main
+          fi

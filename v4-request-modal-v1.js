@@ -62,7 +62,7 @@
       const small=span?.querySelector('small');if(small)small.textContent=sub[i]||'';
     });
 
-    text('.request-summary-kicker',en?'YOUR CONFIGURATION':'ВАША КОНФИГУРАЦИЯ');
+    setLead(request.querySelector('.request-summary-kicker'),en?'YOUR CONFIGURATION':'ВАША КОНФИГУРАЦИЯ');
     const summaryHeads=request.querySelectorAll('.request-summary-head span>small');
     if(summaryHeads[0])summaryHeads[0].textContent=en?'YOUR R1':'ВАШ R1';
     if(summaryHeads[1])summaryHeads[1].textContent=en?'PRICE':'СТОИМОСТЬ';

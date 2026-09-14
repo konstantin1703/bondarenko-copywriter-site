@@ -18,14 +18,27 @@ jobs:
         with:
           fetch-depth: 0
       - name: Apply V5 patch
+        shell: bash
         run: |
+          set +e
           sed -i 's/admin1Codes\.txt/admin1CodesASCII.txt/g' .github/scripts/product-flow-v5.py
-          python .github/scripts/product-flow-v5.py
+          python .github/scripts/product-flow-v5.py > /tmp/v5.log 2>&1
+          code=$?
+          cat /tmp/v5.log
+          if [ $code -ne 0 ]; then
+            cp /tmp/v5.log v5-error.log
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add v5-error.log
+            git commit -m "ci: capture v5 patch error"
+            git push
+            exit $code
+          fi
       - name: Validate JavaScript
         run: node --check v4.js
       - name: Commit production update
         run: |
-          rm -f .github/scripts/product-flow-v5.py .github/workflows/product-flow-v5.yml
+          rm -f .github/scripts/product-flow-v5.py .github/workflows/product-flow-v5.yml v5-error.log
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A

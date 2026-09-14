@@ -18,6 +18,18 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Harden patcher literal replacements
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('.github/scripts/apply_full_qa_fixes.py')
+          s=p.read_text(encoding='utf-8')
+          old="out,n=re.subn(pattern,repl,text,count=1,flags=flags)"
+          new="out,n=re.subn(pattern,lambda _m: repl,text,count=1,flags=flags)"
+          if old not in s and new not in s:
+              raise SystemExit('sub_once anchor missing')
+          p.write_text(s.replace(old,new,1),encoding='utf-8')
+          PY
       - name: Apply production QA fixes
         run: python3 .github/scripts/apply_full_qa_fixes.py
       - name: Remove superseded location data and stale one-shot workflows

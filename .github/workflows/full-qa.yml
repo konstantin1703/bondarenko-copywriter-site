@@ -1,0 +1,39 @@
+name: Temporary full site QA
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/full-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax checks
+        run: |
+          node --check v4.js
+          node --check v4-locale-v1.js
+          node --check v4-request-modal-v1.js
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Serve site
+        run: |
+          python3 -m http.server 4173 >/tmp/vanta-http.log 2>&1 &
+          echo $! >/tmp/vanta-http.pid
+          sleep 2
+      - name: Full runtime and localization QA
+        run: node .github/scripts/full_qa.mjs

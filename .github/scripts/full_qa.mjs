@@ -19,7 +19,7 @@ function staticAudit(){
   const localeCss=fs.readFileSync('v4-locale-v1.css','utf8');
   const modalCss=fs.readFileSync('v4-request-modal-v1.css','utf8');
 
-  if(!html.includes('v4-locale-v1.js?v=4')) issue('static','locale cache-bust is not v4');
+  if(!html.includes('v4-locale-v1.js?v=5')) issue('static','locale cache-bust is not v5');
   if(!html.includes('v4-request-modal-v1.js?v=4')) issue('static','request modal cache-bust is not v4');
   if(js.includes("fetch('data/regions.json'")||js.includes('data/locations/${encodeURIComponent(iso)}.json')) issue('static','legacy location autocomplete is still active in v4.js alongside i18n autocomplete');
   if(js.includes("request?.addEventListener('click',()=>document.getElementById('request')?.scrollIntoView")) warn('static','legacy config→request scroll handler still exists under modal controller');
@@ -32,13 +32,10 @@ function staticAudit(){
   const importantCount=(cssAll.match(/!important/g)||[]).length;
   if(importantCount>90) warn('static',`CSS override stack contains ${importantCount} !important declarations`);
 
-  const hardcodedDynamic=[
-    ['Ride mode state',/name:'ТРЕК'|desc:'Максимальная отдача привода'|regen:'НИЗКАЯ'/],
-    ['Configurator dynamic copy',/МОДУЛЬ|НЕ УСТАНОВЛЕНО|СБОРКА СОХРАНЕНА/],
-    ['Activation dynamic copy',/ОТКЛЮЧИТЬ R1|ЗАПУСК\.\.\.|Система ожидает запуска/]
-  ];
-  hardcodedDynamic.forEach(([name,re])=>{if(re.test(js))warn('static',`${name} is hard-coded in RU inside v4.js and depends on mutation translation`)});
-  if(!locale.includes('MutationObserver')) issue('static','locale runtime has no observer for dynamic UI text');
+  if(!js.includes("window.addEventListener('vanta:languagechange',()=>applyMode")) issue('static','Ride System has no direct language-change renderer');
+  if(!js.includes("window.addEventListener('vanta:languagechange',render)")) issue('static','Configurator has no direct language-change renderer');
+  if(!js.includes("window.addEventListener('vanta:languagechange',paintActivationCopy)")) issue('static','Activation has no direct language-change renderer');
+  if(locale.includes('new MutationObserver')) warn('static','locale runtime still has a global MutationObserver despite direct dynamic localization');
   if(!modal.includes('request-modal-open')) issue('static','request modal controller missing');
 }
 
@@ -159,9 +156,14 @@ async function exercise(page,lang,scope){
   // Gallery fullscreen.
   const firstGallery=page.locator('#rail figure img').first();
   if(await firstGallery.count()){
-    await firstGallery.click();await page.waitForTimeout(80);
-    if(lang==='en')await assertEnglishClean(page,`${scope}:gallery`,'.gallery-lightbox');
-    const close=page.locator('.gallery-lightbox-close');if(await close.count())await close.click();
+    await firstGallery.evaluate(el=>el.click());await page.waitForTimeout(100);
+    const dialog=page.locator('.gallery-lightbox');
+    const opened=await dialog.evaluate(el=>el.open||el.hasAttribute('open')).catch(()=>false);
+    if(!opened)issue(scope,'gallery click handler did not open fullscreen viewer');
+    else{
+      if(lang==='en')await assertEnglishClean(page,`${scope}:gallery`,'.gallery-lightbox');
+      const close=page.locator('.gallery-lightbox-close');if(await close.count())await close.evaluate(el=>el.click());
+    }
   }
 
   // Activation dynamic states.

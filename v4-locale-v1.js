@@ -23,6 +23,7 @@
     'кВт':'kW','Н·м':'N·m','В':'V','мин':'min','кг':'kg','км':'km',
     '210 кВт и 390 Н·м':'210 kW and 390 N·m','800 В и 18 минут':'800 V and 18 min','189 кг и 320 км':'189 kg and 320 km',
     'Монохромный режим без лишнего блеска.':'Monochrome mode with no unnecessary glare.',
+    'R1 / ИНЖЕНЕРНЫЙ ПРОФИЛЬ':'R1 / ENGINEERING PROFILE',
     'ВАШ R1':'YOUR R1','КОД СБОРКИ':'BUILD CODE','АКТИВНАЯ СБОРКА':'ACTIVE BUILD','ЗАВОДСКОЙ ПРОФИЛЬ':'FACTORY PROFILE','ЗАВОДСКАЯ СБОРКА':'FACTORY SETUP','ВЕРНУТЬ ЗАВОДСКУЮ СБОРКУ':'RESTORE FACTORY SETUP','ИНЖЕНЕРНЫЕ ОПЦИИ':'ENGINEERING OPTIONS','КОНФИГУРАЦИЯ / СВЕТОВАЯ ПОДПИСЬ':'CONFIG / LIGHT SIGNATURE','10—80% / целевое':'10—80% / target'
   });
   const ATTR={

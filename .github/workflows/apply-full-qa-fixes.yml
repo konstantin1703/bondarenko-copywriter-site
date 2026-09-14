@@ -1,0 +1,42 @@
+name: Apply full QA production fixes
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-full-qa-fixes.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply production QA fixes
+        run: python3 .github/scripts/apply_full_qa_fixes.py
+      - name: Remove superseded location data and stale one-shot workflows
+        run: |
+          rm -rf data/locations data/regions.json
+          rm -f .github/workflows/apply-locale-v1.yml .github/workflows/locale-hotfix.yml
+      - name: Syntax checks
+        run: |
+          node --check v4.js
+          node --check v4-locale-v1.js
+          node --check v4-request-modal-v1.js
+      - name: Commit production QA fixes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+          else
+            git commit -m "fix: complete RU EN and full site QA pass"
+            git push origin HEAD:main
+          fi

@@ -18,22 +18,16 @@ jobs:
         with:
           fetch-depth: 0
       - name: Apply V5 patch
-        shell: bash
         run: |
-          set +e
-          sed -i 's/admin1Codes\.txt/admin1CodesASCII.txt/g' .github/scripts/product-flow-v5.py
-          python .github/scripts/product-flow-v5.py > /tmp/v5.log 2>&1
-          code=$?
-          cat /tmp/v5.log
-          if [ $code -ne 0 ]; then
-            cp /tmp/v5.log v5-error.txt
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add -f v5-error.txt
-            git commit -m "ci: capture v5 traceback"
-            git push
-            exit $code
-          fi
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('.github/scripts/product-flow-v5.py')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('admin1Codes.txt','admin1CodesASCII.txt')
+          s=s.replace("js=re.sub(pattern,location_v5+'\\n',js,1)","js=re.sub(pattern,lambda _m: location_v5+'\\n',js,1)")
+          p.write_text(s,encoding='utf-8')
+          PY
+          python .github/scripts/product-flow-v5.py
       - name: Validate JavaScript
         run: node --check v4.js
       - name: Commit production update

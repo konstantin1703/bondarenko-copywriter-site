@@ -91,7 +91,7 @@
   /* Replace legacy autocomplete nodes to remove pointerdown selection listeners. */
   const cloneClean=id=>{const old=document.getElementById(id);if(!old)return null;const fresh=old.cloneNode(true);old.replaceWith(fresh);return fresh;};
   const countryButton=document.getElementById('countryButton');
-  let regionInput=cloneClean('reqRegion'),cityInput=cloneClean('reqCity'),regionBox=cloneClean('regionSuggest'),cityBox=cloneClean('citySuggest');
+  let regionInput=document.getElementById('reqRegion'),cityInput=document.getElementById('reqCity'),regionBox=cloneClean('regionSuggest'),cityBox=cloneClean('citySuggest');
   if(!countryButton||!regionInput||!cityInput||!regionBox||!cityBox)return;
 
   const cache={regions:null,cities:new Map()};let countryIso=countryButton.dataset.iso||'',selectedRegionCode='',cityToken=0;

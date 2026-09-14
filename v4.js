@@ -617,7 +617,7 @@
   const openPicker=mode=>{pickerMode=mode;pickerTitle.textContent=mode==='country'?'ВЫБЕРИ СТРАНУ':'КОД ТЕЛЕФОНА';search.value='';renderPicker();if(picker.showModal)picker.showModal();else picker.setAttribute('open','');setTimeout(()=>search.focus(),50);};
   const closePicker=()=>picker.close?.();countryButton?.addEventListener('click',()=>openPicker('country'));phoneButton?.addEventListener('click',()=>openPicker('phone'));pickerClose?.addEventListener('click',closePicker);search?.addEventListener('input',()=>renderPicker(search.value));
   const setFlag=(node,c)=>{node.classList.remove('is-empty');node.textContent=flag(c.iso);};
-  picker?.addEventListener('click',e=>{if(e.target===picker){closePicker();return;}const btn=e.target.closest('.region-option');if(!btn)return;const c=countries.find(x=>x.iso===btn.dataset.iso);if(!c)return;if(pickerMode==='country'){deliveryCountry=c;countryButton.dataset.iso=c.iso;setFlag(countryFlag,c);countryName.textContent=c.name.toUpperCase();countryButton.classList.remove('is-invalid');countryError.textContent='';if(!phoneManual){phoneCountry=c;setFlag(phoneFlag,c);phoneDial.textContent=c.dial;phoneHint.textContent=`${c.name} ${c.dial}`;phone.value=formatNational(phone.value,c.iso);}}else{phoneCountry=c;phoneManual=true;setFlag(phoneFlag,c);phoneDial.textContent=c.dial;phoneHint.textContent=`${c.name} ${c.dial}`;phone.value=formatNational(phone.value,c.iso);}closePicker();});
+  picker?.addEventListener('click',e=>{if(e.target===picker){closePicker();return;}const btn=e.target.closest('.region-option');if(!btn)return;const c=countries.find(x=>x.iso===btn.dataset.iso);if(!c)return;if(pickerMode==='country'){deliveryCountry=c;countryButton.dataset.iso=c.iso;window.dispatchEvent(new CustomEvent('vanta:countrychange',{detail:c}));setFlag(countryFlag,c);countryName.textContent=c.name.toUpperCase();countryButton.classList.remove('is-invalid');countryError.textContent='';if(!phoneManual){phoneCountry=c;setFlag(phoneFlag,c);phoneDial.textContent=c.dial;phoneHint.textContent=`${c.name} ${c.dial}`;phone.value=formatNational(phone.value,c.iso);}}else{phoneCountry=c;phoneManual=true;setFlag(phoneFlag,c);phoneDial.textContent=c.dial;phoneHint.textContent=`${c.name} ${c.dial}`;phone.value=formatNational(phone.value,c.iso);}closePicker();});
   const setStep=n=>{currentStep=n;if(complete)complete.hidden=true;if(progress)progress.hidden=false;steps.forEach(s=>{const on=Number(s.dataset.requestStep)===n;s.hidden=!on;s.classList.toggle('active',on);});nav.forEach(b=>{const x=Number(b.dataset.requestNav),on=x===n;b.classList.toggle('active',on);b.classList.toggle('complete',x<n);b.toggleAttribute('aria-current',on);});if(n===3)fillReview();};
   const validInput=input=>{if(!input)return true;const ok=input.checkValidity();input.classList.toggle('is-invalid',!ok);return ok;};
   const validateStep=n=>{if(n===1){const ok=[fields.first,fields.last,fields.email].every(validInput);const digits=phone.value.replace(/\D/g,'');const phoneOk=!!phoneCountry&&digits.length>=6;phone.classList.toggle('is-invalid',!phoneOk);if(!phoneCountry)phoneHint.textContent='Выбери страну или телефонный код.';else if(!phoneOk)phoneHint.textContent='Проверь номер: нужно минимум 6 цифр.';return ok&&phoneOk;}if(n===2){let ok=[fields.city,fields.postal,fields.address].every(validInput);if(!deliveryCountry){countryButton.classList.add('is-invalid');countryError.textContent='Выбери страну.';ok=false;}return ok;}return true;};
@@ -632,38 +632,135 @@
 })();
 
 
-/* VANTA R1 — Location Search V4 2026-09 */
+/* VANTA R1 — Location Search V5 / country-strict autocomplete 2026-09 */
 (()=>{
   'use strict';
-  const countryButton=document.getElementById('countryButton'),regionInput=document.getElementById('reqRegion'),cityInput=document.getElementById('reqCity'),regionBox=document.getElementById('regionSuggest'),cityBox=document.getElementById('citySuggest');
-  if(!regionInput||!cityInput||!regionBox||!cityBox)return;
-  const data={
-    DE:{regions:['Baden-Württemberg','Bayern','Berlin','Brandenburg','Bremen','Hamburg','Hessen','Mecklenburg-Vorpommern','Niedersachsen','Nordrhein-Westfalen','Rheinland-Pfalz','Saarland','Sachsen','Sachsen-Anhalt','Schleswig-Holstein','Thüringen'],cities:{Hessen:['Frankfurt am Main','Wiesbaden','Kassel','Darmstadt','Offenbach am Main','Hanau'],Bayern:['München','Nürnberg','Augsburg','Regensburg','Würzburg','Ingolstadt'],Berlin:['Berlin'],Hamburg:['Hamburg'],'Nordrhein-Westfalen':['Köln','Düsseldorf','Dortmund','Essen','Bonn','Münster'],Sachsen:['Dresden','Leipzig','Chemnitz']}},
-    RU:{regions:['Москва','Санкт-Петербург','Московская область','Ленинградская область','Республика Татарстан','Краснодарский край','Свердловская область','Новосибирская область','Самарская область','Ростовская область','Нижегородская область','Челябинская область','Пермский край','Красноярский край','Республика Башкортостан'],cities:{Москва:['Москва'],'Санкт-Петербург':['Санкт-Петербург'],'Московская область':['Химки','Красногорск','Одинцово','Подольск','Мытищи','Королёв','Балашиха'],'Республика Татарстан':['Казань','Набережные Челны','Альметьевск'],'Краснодарский край':['Краснодар','Сочи','Новороссийск','Анапа'],'Свердловская область':['Екатеринбург','Нижний Тагил'],'Новосибирская область':['Новосибирск'],'Самарская область':['Самара','Тольятти'],'Ростовская область':['Ростов-на-Дону','Таганрог'],'Нижегородская область':['Нижний Новгород']}},
-    US:{regions:['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming','District of Columbia'],cities:{California:['Los Angeles','San Francisco','San Diego','San Jose','Sacramento'],Texas:['Austin','Houston','Dallas','San Antonio','Fort Worth'],'New York':['New York','Buffalo','Rochester','Albany'],Florida:['Miami','Orlando','Tampa','Jacksonville'],Illinois:['Chicago','Springfield'],Washington:['Seattle','Tacoma','Spokane']}},
-    AE:{regions:['Abu Dhabi','Dubai','Sharjah','Ajman','Umm Al Quwain','Ras Al Khaimah','Fujairah'],cities:{Dubai:['Dubai'],'Abu Dhabi':['Abu Dhabi','Al Ain'],Sharjah:['Sharjah'],Ajman:['Ajman'],'Ras Al Khaimah':['Ras Al Khaimah'],Fujairah:['Fujairah']}},
-    FR:{regions:['Auvergne-Rhône-Alpes','Bourgogne-Franche-Comté','Bretagne','Centre-Val de Loire','Corse','Grand Est','Hauts-de-France','Île-de-France','Normandie','Nouvelle-Aquitaine','Occitanie','Pays de la Loire','Provence-Alpes-Côte d’Azur'],cities:{'Île-de-France':['Paris','Boulogne-Billancourt','Versailles','Saint-Denis'],'Provence-Alpes-Côte d’Azur':['Marseille','Nice','Cannes','Toulon'],Occitanie:['Toulouse','Montpellier','Nîmes'],'Auvergne-Rhône-Alpes':['Lyon','Grenoble','Annecy']}},
-    IT:{regions:['Abruzzo','Basilicata','Calabria','Campania','Emilia-Romagna','Friuli-Venezia Giulia','Lazio','Liguria','Lombardia','Marche','Molise','Piemonte','Puglia','Sardegna','Sicilia','Toscana','Trentino-Alto Adige','Umbria','Valle d’Aosta','Veneto'],cities:{Lazio:['Roma'],Lombardia:['Milano','Bergamo','Brescia'],Piemonte:['Torino'],Toscana:['Firenze','Pisa','Siena'],Veneto:['Venezia','Verona','Padova'],Campania:['Napoli']}},
-    ES:{regions:['Andalucía','Aragón','Asturias','Illes Balears','Canarias','Cantabria','Castilla-La Mancha','Castilla y León','Cataluña','Comunitat Valenciana','Extremadura','Galicia','Madrid','Murcia','Navarra','País Vasco','La Rioja'],cities:{Madrid:['Madrid'],Cataluña:['Barcelona','Girona','Tarragona'],Andalucía:['Sevilla','Málaga','Granada','Córdoba'],'Comunitat Valenciana':['Valencia','Alicante'],'País Vasco':['Bilbao','San Sebastián']}},
-    GB:{regions:['England','Scotland','Wales','Northern Ireland'],cities:{England:['London','Manchester','Birmingham','Liverpool','Bristol','Leeds'],Scotland:['Edinburgh','Glasgow','Aberdeen'],Wales:['Cardiff','Swansea'],'Northern Ireland':['Belfast']}},
-    KZ:{regions:['Астана','Алматы','Шымкент','Акмолинская область','Актюбинская область','Алматинская область','Атырауская область','Восточно-Казахстанская область','Жамбылская область','Карагандинская область','Костанайская область','Кызылординская область','Мангистауская область','Павлодарская область','Северо-Казахстанская область','Туркестанская область'],cities:{Астана:['Астана'],Алматы:['Алматы'],Шымкент:['Шымкент'],'Карагандинская область':['Караганда','Темиртау'],'Мангистауская область':['Актау'],'Атырауская область':['Атырау']}},
-    CA:{regions:['Alberta','British Columbia','Manitoba','New Brunswick','Newfoundland and Labrador','Nova Scotia','Ontario','Prince Edward Island','Quebec','Saskatchewan'],cities:{Ontario:['Toronto','Ottawa','Hamilton','London'],Quebec:['Montréal','Québec City'],'British Columbia':['Vancouver','Victoria'],Alberta:['Calgary','Edmonton']}},
-    AU:{regions:['Australian Capital Territory','New South Wales','Northern Territory','Queensland','South Australia','Tasmania','Victoria','Western Australia'],cities:{'New South Wales':['Sydney','Newcastle'],Victoria:['Melbourne','Geelong'],Queensland:['Brisbane','Gold Coast'],'Western Australia':['Perth'],'South Australia':['Adelaide'],'Australian Capital Territory':['Canberra']}}
+  const countryButton=document.getElementById('countryButton');
+  const regionInput=document.getElementById('reqRegion');
+  const cityInput=document.getElementById('reqCity');
+  const regionBox=document.getElementById('regionSuggest');
+  const cityBox=document.getElementById('citySuggest');
+  if(!countryButton||!regionInput||!cityInput||!regionBox||!cityBox)return;
+
+  const cache={regions:null,cities:new Map()};
+  let countryIso=countryButton.dataset.iso||'';
+  let selectedRegion='';
+  let cityLoadToken=0;
+  const norm=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('ru').trim();
+  const esc=value=>String(value??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const setExpanded=(input,on)=>input.setAttribute('aria-expanded',String(on));
+  const openBox=(input,box)=>{box.hidden=false;setExpanded(input,true);};
+  const closeBox=(input,box)=>{box.hidden=true;setExpanded(input,false);};
+  const info=(input,box,text)=>{box.innerHTML=`<div class="location-suggest-empty">${esc(text)}</div>`;openBox(input,box);};
+
+  const loadRegions=async()=>{
+    if(cache.regions)return cache.regions;
+    const res=await fetch('data/regions.json',{cache:'force-cache'});
+    if(!res.ok)throw new Error('regions');
+    cache.regions=await res.json();
+    return cache.regions;
   };
-  const iso=()=>countryButton?.dataset.iso||'';
-  const norm=s=>String(s||'').toLocaleLowerCase('ru').trim();
-  const regionPool=()=>data[iso()]?.regions||[];
-  const cityPool=()=>{const d=data[iso()];if(!d)return[];const r=regionInput.value.trim();if(d.cities?.[r])return d.cities[r];return [...new Set(Object.values(d.cities||{}).flat())];};
-  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
-  const bind=(input,box,getPool,label)=>{
+  const loadCities=async iso=>{
+    if(cache.cities.has(iso))return cache.cities.get(iso);
+    const res=await fetch(`data/locations/${encodeURIComponent(iso)}.json`,{cache:'force-cache'});
+    if(!res.ok)throw new Error('cities');
+    const data=await res.json();
+    cache.cities.set(iso,data);
+    return data;
+  };
+  const rank=(value,query)=>{const a=norm(value),q=norm(query);if(!q)return 2;if(a.startsWith(q))return 0;if(a.includes(q))return 1;return 99;};
+  const manualRow=value=>value?`<button type="button" class="use-manual" data-value="${esc(value)}"><strong>Использовать «${esc(value)}»</strong><small>РУЧНОЙ ВВОД</small></button>`:'';
+
+  const renderRegions=async()=>{
+    if(!countryIso){info(regionInput,regionBox,'Сначала выбери страну.');return;}
+    const query=regionInput.value.trim();
+    info(regionInput,regionBox,'Загружаю регионы…');
+    try{
+      const all=await loadRegions();
+      const pool=all[countryIso]||[];
+      const rows=pool.map(name=>({name,score:rank(name,query)})).filter(x=>x.score<99).sort((a,b)=>a.score-b.score||a.name.localeCompare(b.name,'ru')).slice(0,12);
+      regionBox.innerHTML=rows.map(x=>`<button type="button" data-value="${esc(x.name)}"><strong>${esc(x.name)}</strong><small>РЕГИОН · ${esc(countryIso)}</small></button>`).join('')+manualRow(query);
+      if(!regionBox.innerHTML)regionBox.innerHTML='<div class="location-suggest-empty">Совпадений нет — можно оставить введённое значение.</div>';
+      openBox(regionInput,regionBox);
+    }catch{info(regionInput,regionBox,'Справочник недоступен — введи регион вручную.');}
+  };
+
+  const cityMatches=(rows,query)=>{
+    const q=norm(query),r=norm(selectedRegion);
+    return rows.map(item=>{
+      const aliases=[item.n,...(item.a||[])];
+      const score=Math.min(...aliases.map(x=>rank(x,q)));
+      return {item,score};
+    }).filter(x=>x.score<99&&(!r||norm(x.item.r)===r))
+      .sort((a,b)=>a.score-b.score||(b.item.p||0)-(a.item.p||0)||a.item.n.localeCompare(b.item.n,'ru'))
+      .slice(0,12).map(x=>x.item);
+  };
+  const renderCities=async()=>{
+    if(!countryIso){info(cityInput,cityBox,'Сначала выбери страну.');return;}
+    const query=cityInput.value.trim();
+    if(!query){info(cityInput,cityBox,'Начни вводить название города.');return;}
+    const token=++cityLoadToken;
+    info(cityInput,cityBox,`Ищу города · ${countryIso}…`);
+    try{
+      const rows=await loadCities(countryIso);
+      if(token!==cityLoadToken)return;
+      const matches=cityMatches(rows,query);
+      cityBox.innerHTML=matches.map(item=>`<button type="button" data-value="${esc(item.n)}" data-region="${esc(item.r||'')}"><strong>${esc(item.n)}</strong><small>${esc(item.r||countryIso)}</small></button>`).join('')+manualRow(query);
+      if(!cityBox.innerHTML)cityBox.innerHTML='<div class="location-suggest-empty">В выбранной стране совпадений нет — можно оставить введённое значение.</div>';
+      openBox(cityInput,cityBox);
+    }catch{info(cityInput,cityBox,'Справочник недоступен — введи город вручную.');}
+  };
+
+  const keyboard=(input,box,onPick)=>{
     let active=-1;
-    const render=()=>{const query=norm(input.value),pool=getPool();const rows=pool.filter(x=>!query||norm(x).includes(query)).slice(0,10),manual=input.value.trim(),exact=rows.some(x=>norm(x)===query);box.innerHTML=rows.map((x,i)=>`<button type="button" data-value="${esc(x)}" class="${i===active?'is-active':''}"><strong>${esc(x)}</strong><small>${label}</small></button>`).join('')+(manual&&!exact?`<button type="button" class="use-manual" data-value="${esc(manual)}"><strong>Использовать «${esc(manual)}»</strong><small>РУЧНОЙ ВВОД</small></button>`:'');if(!box.innerHTML)box.innerHTML='<div class="location-suggest-empty">Начни вводить — значение можно оставить вручную.</div>';box.hidden=false;active=-1;};
-    input.addEventListener('focus',render);input.addEventListener('input',render);
-    input.addEventListener('keydown',e=>{const buttons=[...box.querySelectorAll('button')];if(e.key==='Escape'){box.hidden=true;return}if(!['ArrowDown','ArrowUp','Enter'].includes(e.key))return;if(e.key==='Enter'&&active<0){box.hidden=true;return}e.preventDefault();if(e.key==='ArrowDown')active=Math.min(active+1,buttons.length-1);if(e.key==='ArrowUp')active=Math.max(active-1,0);if(e.key==='Enter'&&buttons[active]){input.value=buttons[active].dataset.value||'';box.hidden=true;input.dispatchEvent(new Event('change',{bubbles:true}));return}buttons.forEach((b,i)=>b.classList.toggle('is-active',i===active));buttons[active]?.scrollIntoView({block:'nearest'});});
-    box.addEventListener('pointerdown',e=>{const btn=e.target.closest('button[data-value]');if(!btn)return;e.preventDefault();input.value=btn.dataset.value||'';box.hidden=true;input.dispatchEvent(new Event('change',{bubbles:true}));});
+    input.addEventListener('keydown',e=>{
+      const buttons=[...box.querySelectorAll('button[data-value]')];
+      if(e.key==='Escape'){closeBox(input,box);active=-1;return;}
+      if(!['ArrowDown','ArrowUp','Enter'].includes(e.key))return;
+      if(e.key==='Enter'&&active<0){closeBox(input,box);return;}
+      e.preventDefault();
+      if(e.key==='ArrowDown')active=Math.min(active+1,buttons.length-1);
+      if(e.key==='ArrowUp')active=Math.max(active-1,0);
+      if(e.key==='Enter'&&buttons[active]){onPick(buttons[active]);closeBox(input,box);active=-1;return;}
+      buttons.forEach((b,i)=>b.classList.toggle('is-active',i===active));
+      buttons[active]?.scrollIntoView({block:'nearest'});
+    });
+    input.addEventListener('input',()=>{active=-1;});
   };
-  bind(regionInput,regionBox,regionPool,'РЕГИОН');bind(cityInput,cityBox,cityPool,'ГОРОД');
-  regionInput.addEventListener('change',()=>{if(cityInput.value)cityInput.value='';});
-  countryButton?.addEventListener('click',()=>{regionBox.hidden=true;cityBox.hidden=true;});
-  document.addEventListener('pointerdown',e=>{if(!e.target.closest('.smart-location-field')){regionBox.hidden=true;cityBox.hidden=true;}});
+
+  const pickRegion=btn=>{
+    regionInput.value=btn.dataset.value||'';
+    selectedRegion=btn.classList.contains('use-manual')?'':regionInput.value;
+    cityInput.value='';
+    closeBox(regionInput,regionBox);closeBox(cityInput,cityBox);
+  };
+  const pickCity=btn=>{
+    cityInput.value=btn.dataset.value||'';
+    if(btn.dataset.region&&!selectedRegion){regionInput.value=btn.dataset.region;selectedRegion=btn.dataset.region;}
+    closeBox(cityInput,cityBox);
+  };
+  regionBox.addEventListener('pointerdown',e=>{const btn=e.target.closest('button[data-value]');if(!btn)return;e.preventDefault();pickRegion(btn);});
+  cityBox.addEventListener('pointerdown',e=>{const btn=e.target.closest('button[data-value]');if(!btn)return;e.preventDefault();pickCity(btn);});
+  keyboard(regionInput,regionBox,pickRegion);keyboard(cityInput,cityBox,pickCity);
+
+  let regionTimer=0,cityTimer=0;
+  regionInput.addEventListener('focus',renderRegions);
+  regionInput.addEventListener('input',()=>{selectedRegion='';clearTimeout(regionTimer);regionTimer=setTimeout(renderRegions,55);});
+  regionInput.addEventListener('change',async()=>{
+    try{const all=await loadRegions();const exact=(all[countryIso]||[]).find(x=>norm(x)===norm(regionInput.value));selectedRegion=exact||'';}catch{selectedRegion='';}
+    cityInput.value='';
+  });
+  cityInput.addEventListener('focus',renderCities);
+  cityInput.addEventListener('input',()=>{clearTimeout(cityTimer);cityTimer=setTimeout(renderCities,55);});
+
+  window.addEventListener('vanta:countrychange',e=>{
+    const next=e.detail?.iso||countryButton.dataset.iso||'';
+    if(next===countryIso)return;
+    countryIso=next;selectedRegion='';cityLoadToken+=1;
+    regionInput.value='';cityInput.value='';
+    closeBox(regionInput,regionBox);closeBox(cityInput,cityBox);
+    loadRegions().catch(()=>{});if(countryIso)loadCities(countryIso).catch(()=>{});
+  });
+  countryButton.addEventListener('click',()=>{closeBox(regionInput,regionBox);closeBox(cityInput,cityBox);});
+  document.addEventListener('pointerdown',e=>{if(!e.target.closest('.smart-location-field')){closeBox(regionInput,regionBox);closeBox(cityInput,cityBox);}});
 })();

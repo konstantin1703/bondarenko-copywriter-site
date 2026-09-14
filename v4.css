@@ -1024,3 +1024,24 @@ section[id]{scroll-margin-top:calc(var(--header) + 18px)}.header.scrolled .brand
   .request-field>span{font-size:9px!important}
   .field-hint,.field-error{font-size:8.5px!important}
 }
+
+
+/* VANTA R1 — Product Flow V5 / close + location autocomplete 2026-09 */
+.region-symbol.is-empty{width:22px!important;height:22px!important;min-width:22px!important;border:0!important;border-radius:0!important;display:grid!important;place-items:center!important}
+.region-symbol.is-empty:before,.region-symbol.is-empty:after{display:none!important;content:none!important}
+.region-globe{width:21px;height:21px;fill:none;stroke:#858d86;stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round;opacity:.92}
+.phone-prefix:hover .region-globe,.phone-prefix:focus-visible .region-globe,.country-button:hover .region-globe,.country-button:focus-visible .region-globe{stroke:#d6dbd6}
+#techSheet[open] #techClose.tech-floating-close{position:fixed!important;z-index:10060!important;top:calc(env(safe-area-inset-top,0px) + 18px)!important;right:18px!important;width:48px!important;height:48px!important;margin:0!important;padding:0!important;border:1px solid #4b504c!important;border-radius:50%!important;background:rgba(9,10,9,.94)!important;backdrop-filter:blur(12px);overflow:visible!important;color:transparent!important;box-shadow:0 12px 38px rgba(0,0,0,.42)!important}
+#techSheet[open] #techClose.tech-floating-close span:before,#techSheet[open] #techClose.tech-floating-close span:after{content:"";position:absolute;left:50%;top:50%;width:17px;height:1.5px;background:#f1f2ef;border-radius:2px;transform-origin:center}
+#techSheet[open] #techClose.tech-floating-close span:before{transform:translate(-50%,-50%) rotate(45deg)}
+#techSheet[open] #techClose.tech-floating-close span:after{transform:translate(-50%,-50%) rotate(-45deg)}
+#techSheet[open] #techClose.tech-floating-close:before,#techSheet[open] #techClose.tech-floating-close:after{content:none!important;display:none!important}
+.tech-profile-head{padding-right:0!important}
+.location-suggest{z-index:140!important;background:rgba(8,9,8,.985)!important;border-color:#444a45!important;backdrop-filter:blur(18px);box-shadow:0 24px 70px rgba(0,0,0,.62)!important}
+.location-suggest button{min-height:52px!important;padding:10px 14px!important;grid-template-columns:1fr!important;gap:4px!important}
+.location-suggest button strong{font-size:11px!important;letter-spacing:.01em!important}
+.location-suggest button small{font-size:8px!important;letter-spacing:.08em!important;color:#747c75!important}
+.location-suggest button.is-active,.location-suggest button:hover{background:#121412!important;box-shadow:inset 2px 0 0 var(--accent)}
+.location-suggest .use-manual{border-top:1px solid #353a36!important;background:#0b0c0b!important}
+.location-suggest-empty{padding:17px 14px!important;font-size:9px!important;line-height:1.45!important;color:#777f78!important}
+@media(max-width:520px){#techSheet[open] #techClose.tech-floating-close{top:calc(env(safe-area-inset-top,0px) + 14px)!important;right:14px!important;width:46px!important;height:46px!important}.region-symbol.is-empty{width:21px!important;height:21px!important;min-width:21px!important}.location-suggest{max-height:44svh!important}}

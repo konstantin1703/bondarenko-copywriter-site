@@ -26,11 +26,11 @@ jobs:
           code=$?
           cat /tmp/v5.log
           if [ $code -ne 0 ]; then
-            cp /tmp/v5.log v5-error.log
+            cp /tmp/v5.log v5-error.txt
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add v5-error.log
-            git commit -m "ci: capture v5 patch error"
+            git add -f v5-error.txt
+            git commit -m "ci: capture v5 traceback"
             git push
             exit $code
           fi
@@ -38,7 +38,7 @@ jobs:
         run: node --check v4.js
       - name: Commit production update
         run: |
-          rm -f .github/scripts/product-flow-v5.py .github/workflows/product-flow-v5.yml v5-error.log
+          rm -f .github/scripts/product-flow-v5.py .github/workflows/product-flow-v5.yml v5-error.txt
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A

@@ -138,8 +138,8 @@
   const locName=obj=>activeLang==='en'?(obj.en||obj.ru):(obj.ru||obj.en);
   const open=(input,box)=>{box.hidden=false;input.setAttribute('aria-expanded','true')};const close=(input,box)=>{box.hidden=true;input.setAttribute('aria-expanded','false')};
   const info=(input,box,ru,en)=>{box.innerHTML=`<div class="location-suggest-empty">${esc(activeLang==='en'?en:ru)}</div>`;open(input,box)};
-  const loadRegions=async()=>{if(cache.regions)return cache.regions;let r=await fetch('data/regions-i18n.json?v=3',{cache:'no-store'});if(!r.ok)throw new Error('regions');cache.regions=await r.json();return cache.regions};
-  const loadCities=async iso=>{if(cache.cities.has(iso))return cache.cities.get(iso);const r=await fetch(`data/locations-i18n/${encodeURIComponent(iso)}.json?v=3`,{cache:'no-store'});if(!r.ok)throw new Error('cities');const rows=await r.json();cache.cities.set(iso,rows);return rows};
+  const loadRegions=async()=>{if(cache.regions)return cache.regions;let r=await fetch('data/regions-i18n.json?v=3');if(!r.ok)throw new Error('regions');cache.regions=await r.json();return cache.regions};
+  const loadCities=async iso=>{if(cache.cities.has(iso))return cache.cities.get(iso);const r=await fetch(`data/locations-i18n/${encodeURIComponent(iso)}.json?v=3`);if(!r.ok)throw new Error('cities');const rows=await r.json();cache.cities.set(iso,rows);return rows};
   const rank=(name,q)=>{const a=norm(name),b=norm(q);if(!b)return 2;if(a.startsWith(b))return 0;if(a.includes(b))return 1;return 99};
   const manual=q=>q?`<button type="button" class="use-manual" data-value="${esc(q)}"><strong>${activeLang==='en'?'Use':'Использовать'} «${esc(q)}»</strong><small>${activeLang==='en'?'MANUAL ENTRY':'РУЧНОЙ ВВОД'}</small></button>`:'';
   const regionsForCountry=async()=>{const all=await loadRegions();return all[countryIso]||[]};

@@ -17,7 +17,7 @@ function staticAudit(){
   const locale=fs.readFileSync('v4-locale-v1.js','utf8');
   const modal=fs.readFileSync('v4-request-modal-v1.js','utf8');
   const bundle=fs.readFileSync('v4-bundle-v1.css','utf8');
-  const cssSources=['v4.css','v4-locale-v1.css','v4-request-modal-v1.css','v4-typography-v1.css'];
+  const cssSources=['v4.css','v4-locale-v1.css','v4-request-modal-v1.css','v4-typography-v1.css','v4-visual-v1.css'];
 
   expectStatic(html.includes('v4.js?v=18'),'v4.js cache-bust must be v18');
   expectStatic(html.includes('v4-locale-v1.js?v=6'),'locale cache-bust must be v6');
@@ -27,8 +27,10 @@ function staticAudit(){
   expectStatic(!html.includes('v4-locale-v1.css?v=3'),'locale CSS must not be linked directly');
   expectStatic(!html.includes('v4-request-modal-v1.css?v=6'),'request modal CSS must not be linked directly');
   expectStatic(!html.includes('v4-typography-v1.css?v=1'),'typography CSS must not be linked directly');
+  expectStatic(!html.includes('v4-visual-v1.css'),'stage 4 CSS must be delivered through the consolidated bundle only');
   expectStatic(bundle.includes('VANTA R1 — generated CSS bundle v1'),'generated bundle header missing');
   expectStatic(bundle.includes('Stage 2 / selective functional typography pass'),'stage 2 typography layer missing from bundle');
+  expectStatic(bundle.includes('Stage 4 / visual + interaction polish'),'stage 4 visual UX layer missing from bundle');
   for(const source of cssSources){
     const sourceCss=fs.readFileSync(source,'utf8').trim();
     expectStatic(bundle.includes(sourceCss),`consolidated bundle is stale or missing ${source}`);
@@ -91,6 +93,21 @@ async function runCase(browser,{name,width,height,isMobile,lang,testSwitch=false
     });
     const tooSmallFunctional=functionalType.filter(row=>row.size===null||row.size+0.01<row.min);
     if(tooSmallFunctional.length)fail(scope,`functional typography below stage-2 floor: ${tooSmallFunctional.map(x=>`${x.name}:${x.size}px<${x.min}px`).join(', ')}`);
+
+    const stage4UX=await page.evaluate(()=>{
+      const nav=document.querySelector('.desktop-nav a');
+      const sw=document.querySelector('.sw');
+      const materialCaption=document.querySelector('.detail-triptych figcaption');
+      return {
+        navSize:nav?parseFloat(getComputedStyle(nav).fontSize):null,
+        swWidth:sw?sw.getBoundingClientRect().width:null,
+        swHeight:sw?sw.getBoundingClientRect().height:null,
+        materialCaptionSize:materialCaption?parseFloat(getComputedStyle(materialCaption).fontSize):null
+      };
+    });
+    if(!isMobile&&width>=1180&&(stage4UX.navSize===null||stage4UX.navSize<10))fail(scope,`desktop navigation below stage-4 floor: ${stage4UX.navSize}px`);
+    if(isMobile&&((stage4UX.swWidth??0)<44||(stage4UX.swHeight??0)<44))fail(scope,`activation swatch touch target below 44px: ${stage4UX.swWidth}x${stage4UX.swHeight}`);
+    if(stage4UX.materialCaptionSize===null||stage4UX.materialCaptionSize+0.01<8.5)fail(scope,`material caption below stage-4 floor: ${stage4UX.materialCaptionSize}px`);
 
     const phoneSemantics=await page.evaluate(()=>{
       const input=document.getElementById('reqPhone');
@@ -187,7 +204,7 @@ async function runCase(browser,{name,width,height,isMobile,lang,testSwitch=false
       if(switched.lang!==target||switched.url!==target)fail(scope,`language switch failed: lang=${switched.lang}, url=${switched.url}`);
     }
 
-    note(scope,'render, bundle integrity, modal accessibility, responsive input sizing and locale checks passed');
+    note(scope,'render, bundle integrity, stage-4 UX floors, modal accessibility, responsive input sizing and locale checks passed');
   }catch(error){
     fail(scope,`exception: ${error?.stack||error}`);
   }

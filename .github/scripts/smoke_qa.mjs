@@ -17,11 +17,14 @@ function staticAudit(){
   const locale=fs.readFileSync('v4-locale-v1.js','utf8');
   const modal=fs.readFileSync('v4-request-modal-v1.js','utf8');
   const modalCss=fs.readFileSync('v4-request-modal-v1.css','utf8');
+  const typographyCss=fs.readFileSync('v4-typography-v1.css','utf8');
 
   expectStatic(html.includes('v4.js?v=18'),'v4.js cache-bust must be v18');
   expectStatic(html.includes('v4-locale-v1.js?v=6'),'locale cache-bust must be v6');
   expectStatic(html.includes('v4-request-modal-v1.js?v=5'),'request modal JS cache-bust must be v5');
   expectStatic(html.includes('v4-request-modal-v1.css?v=6'),'request modal CSS cache-bust must be v6');
+  expectStatic(html.includes('v4-typography-v1.css?v=1'),'typography cache-bust must be v1');
+  expectStatic(typographyCss.includes('Stage 2 / selective functional typography pass'),'stage 2 typography layer missing');
 
   expectStatic(!js.includes('"dial":"+381 p"'),'Serbia calling code typo regressed');
   expectStatic(js.includes('"dial":"+381"'),'Serbia calling code +381 missing');
@@ -66,6 +69,21 @@ async function runCase(browser,{name,width,height,isMobile,lang,testSwitch=false
     const overflow=await page.evaluate(()=>({scrollWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth}));
     if(overflow.scrollWidth>overflow.clientWidth+3)fail(scope,`horizontal overflow ${overflow.scrollWidth}px > ${overflow.clientWidth}px`);
 
+    const functionalType=await page.evaluate(()=>{
+      const selectors=[
+        ['config summary label','.config-stats small',8.5],
+        ['config module description','.config-module-copy small',10],
+        ['config module effect','.config-effect',8.5],
+        ['config action','.config-actions button',9]
+      ];
+      return selectors.map(([name,selector,min])=>{
+        const el=document.querySelector(selector);
+        return {name,selector,min,size:el?parseFloat(getComputedStyle(el).fontSize):null};
+      });
+    });
+    const tooSmallFunctional=functionalType.filter(row=>row.size===null||row.size+0.01<row.min);
+    if(tooSmallFunctional.length)fail(scope,`functional typography below stage-2 floor: ${tooSmallFunctional.map(x=>`${x.name}:${x.size}px<${x.min}px`).join(', ')}`);
+
     const phoneSemantics=await page.evaluate(()=>{
       const input=document.getElementById('reqPhone');
       return input?{
@@ -96,6 +114,23 @@ async function runCase(browser,{name,width,height,isMobile,lang,testSwitch=false
     if(!modalState.activeClose)fail(scope,'modal did not move focus to close button');
     if(modalState.role!=='dialog'||modalState.ariaModal!=='true')fail(scope,'modal ARIA state missing');
     if(!modalState.headerInert||!modalState.heroInert)fail(scope,'background is not inert while request modal is open');
+    const requestType=await page.evaluate(()=>{
+      const selectors=[
+        ['request progress','.request-progress span',9],
+        ['request field label','.request-field>span',9],
+        ['request hint','.field-hint',innerWidth<=600?10:9.5],
+        ['request action','.request-controls button',innerWidth<=600?9.5:9],
+        ['request summary label','.request-summary-head small',8.5]
+      ];
+      return selectors.map(([name,selector,min])=>{
+        const el=document.querySelector(selector);
+        return {name,selector,min,size:el?parseFloat(getComputedStyle(el).fontSize):null};
+      });
+    });
+    const requestTooSmall=requestType.filter(row=>row.size===null||row.size+0.01<row.min);
+    if(requestTooSmall.length)fail(scope,`request functional typography below stage-2 floor: ${requestTooSmall.map(x=>`${x.name}:${x.size}px<${x.min}px`).join(', ')}`);
+    const modalOverflow=await page.evaluate(()=>({sw:document.getElementById('request')?.scrollWidth||0,cw:document.getElementById('request')?.clientWidth||0}));
+    if(modalOverflow.sw>modalOverflow.cw+3)fail(scope,`request modal horizontal overflow ${modalOverflow.sw}px > ${modalOverflow.cw}px`);
     const expectedModalTitle=lang==='en'?'R1 REQUEST':'ОФОРМЛЕНИЕ R1';
     if(modalState.title!==expectedModalTitle)fail(scope,`request modal localization mismatch: ${modalState.title}`);
 

@@ -37,10 +37,13 @@ old_links = (
     '<link href="v4-request-modal-v1.css?v=6" rel="stylesheet"/>'
     '<link href="v4-typography-v1.css?v=1" rel="stylesheet"/>'
 )
-new_link = '<link href="v4-bundle-v1.css?v=1" rel="stylesheet"/>'
+previous_link = '<link href="v4-bundle-v1.css?v=1" rel="stylesheet"/>'
+new_link = '<link href="v4-bundle-v1.css?v=2" rel="stylesheet"/>'
 
 if old_links in html:
     html = html.replace(old_links, new_link, 1)
+elif previous_link in html:
+    html = html.replace(previous_link, new_link, 1)
 elif new_link not in html:
     raise SystemExit("Expected stylesheet link sequence was not found in index.html")
 

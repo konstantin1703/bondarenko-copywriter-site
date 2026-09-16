@@ -8,6 +8,7 @@ on:
       - '*.css'
       - '*.js'
       - 'data/**'
+      - 'tools/build_css_bundle.py'
       - '.github/scripts/smoke_qa.mjs'
       - '.github/workflows/smoke-qa.yml'
   pull_request:
@@ -17,6 +18,7 @@ on:
       - '*.css'
       - '*.js'
       - 'data/**'
+      - 'tools/build_css_bundle.py'
       - '.github/scripts/smoke_qa.mjs'
       - '.github/workflows/smoke-qa.yml'
 
@@ -47,6 +49,11 @@ jobs:
           node --check v4-request-modal-v1.js
           node --check .github/scripts/smoke_qa.mjs
 
+      - name: CSS bundle source integrity
+        run: |
+          python3 tools/build_css_bundle.py
+          git diff --exit-code -- v4-bundle-v1.css index.html
+
       - name: Install Playwright
         run: |
           npm install --no-save --package-lock=false playwright@1.55.0
@@ -57,5 +64,5 @@ jobs:
           python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/vanta-http.log 2>&1 &
           echo $! > /tmp/vanta-http.pid
 
-      - name: Run smoke QA — final Stage 4 gate
+      - name: Run browser smoke QA
         run: node .github/scripts/smoke_qa.mjs

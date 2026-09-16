@@ -1,5 +1,6 @@
 /* VANTA R1 — Stage 2 / selective functional typography pass */
 /* Decorative indices, technical markers and display typography intentionally remain compact. */
+/* Functional size floors in this layer are protected by the permanent Playwright smoke QA. */
 
 /* Configurator: readable labels, descriptions and actionable states. */
 .config-summary-top small,

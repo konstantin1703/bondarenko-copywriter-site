@@ -54,6 +54,7 @@ html[lang="ru"] #request .request-code span{letter-spacing:.13em}
   #request.request-modal-open .request-step{padding:25px 20px 34px!important}
   #request.request-modal-open .request-fields{gap:19px!important}
   #request.request-modal-open .request-field input,#request.request-modal-open .phone-prefix,#request.request-modal-open .country-button{height:60px!important}
+  #request.request-modal-open .request-field input,#request.request-modal-open .region-search input{font-size:16px!important}
   #request.request-modal-open .request-controls{padding-bottom:max(4px,env(safe-area-inset-bottom))}
   #request.request-modal-open .request-controls button{min-height:56px!important}
   #request.request-modal-open .request-complete{padding-top:34px!important}

@@ -1,0 +1,69 @@
+/* VANTA R1 — Stage 2 / selective functional typography pass */
+/* Decorative indices, technical markers and display typography intentionally remain compact. */
+
+/* Configurator: readable labels, descriptions and actionable states. */
+.config-summary-top small,
+.config-character small,
+.config-stats small,
+.config-step-head small,
+.factory-setup small,
+.config-active-build small{font-size:8.5px!important;letter-spacing:.11em!important;line-height:1.35!important}
+.config-character strong{font-size:12.5px!important;line-height:1.4!important}
+.config-stats em{font-size:8.5px!important;line-height:1.3!important;letter-spacing:.035em!important}
+.config-balance span{font-size:8px!important;line-height:1.35!important;letter-spacing:.11em!important}
+.config-balance b{font-size:8.5px!important;line-height:1.4!important}
+.config-active-build strong{font-size:9px!important;line-height:1.35!important}
+.config-active-build>#configActiveModules span{font-size:8.5px!important;line-height:1.25!important}
+.config-presets small{font-size:8.5px!important;line-height:1.3!important}
+.config-presets button p{font-size:10px!important;line-height:1.5!important}
+.config-presets i{font-size:8.5px!important;line-height:1.3!important}
+.factory-setup strong{font-size:8.5px!important;line-height:1.4!important}
+.config-module-copy strong{font-size:11.5px!important;line-height:1.3!important;letter-spacing:.045em!important}
+.config-module-copy small{font-size:10px!important;line-height:1.5!important}
+.config-effect{font-size:8.5px!important;line-height:1.35!important}
+.config-module>i{font-size:8.5px!important;line-height:1.3!important}
+.config-finishes button b{font-size:9px!important;line-height:1.3!important}
+.config-finishes button small{font-size:8.5px!important;line-height:1.35!important}
+.config-actions button{font-size:9px!important;line-height:1.2!important}
+.config-note{font-size:9px!important;line-height:1.55!important}
+
+/* Request flow: keep the interface dense, but make every instruction and status legible. */
+.request-progress span{font-size:9px!important;line-height:1.25!important}
+.request-progress small{font-size:8px!important;line-height:1.25!important;letter-spacing:.12em!important}
+.request-step-title small{font-size:9px!important;line-height:1.4!important}
+.request-field>span{font-size:9px!important;line-height:1.3!important;letter-spacing:.12em!important}
+.request-field input{font-size:15px!important}
+.phone-prefix b,.country-button b{font-size:11px!important;line-height:1.25!important}
+.field-hint,.field-error{font-size:9.5px!important;line-height:1.5!important}
+.request-controls button{font-size:9px!important;line-height:1.2!important}
+.request-review small{font-size:8.5px!important;line-height:1.3!important;letter-spacing:.12em!important}
+.request-review span{font-size:9.5px!important;line-height:1.55!important}
+.request-lock-mark{font-size:8.5px!important;line-height:1.3!important;letter-spacing:.12em!important}
+.request-complete>small{font-size:9px!important;line-height:1.3!important;letter-spacing:.14em!important}
+.request-code span{font-size:8.5px!important;line-height:1.3!important;letter-spacing:.12em!important}
+.request-to-activation{font-size:9px!important;line-height:1.2!important}
+.request-summary-kicker,
+.request-summary-head small,
+.request-summary-stats small,
+.request-summary-modules>small,
+.request-summary-code span{font-size:8.5px!important;line-height:1.3!important;letter-spacing:.12em!important}
+.request-summary-stats b{font-size:12px!important;line-height:1.3!important}
+.request-summary-modules span{font-size:8.5px!important;line-height:1.25!important}
+.request-summary-code b{font-size:10px!important;line-height:1.3!important}
+
+/* Country / location picker. */
+.region-picker-panel header small{font-size:8.5px!important;line-height:1.3!important;letter-spacing:.12em!important}
+.region-picker-panel header strong{font-size:13px!important;line-height:1.3!important}
+.region-search input{font-size:14px!important;line-height:1.3!important}
+.region-option strong{font-size:11px!important;line-height:1.35!important}
+.region-option small{font-size:9.5px!important;line-height:1.35!important}
+.region-empty,.location-suggest-empty{font-size:10px!important;line-height:1.45!important}
+
+/* Mobile gets one extra step of readability on dense controls. */
+@media(max-width:600px){
+  .request-field input,.region-search input{font-size:16px!important}
+  .field-hint,.field-error{font-size:10px!important}
+  .request-controls button,.request-to-activation,.config-actions button{font-size:9.5px!important}
+  .config-module-copy small,.config-presets button p{font-size:10.5px!important}
+  .config-effect,.config-module>i,.config-finishes button small{font-size:9px!important}
+}

@@ -23,17 +23,20 @@ async function settle(page,base,c){
     .reveal{opacity:1!important;transform:none!important}
   `});
   await page.evaluate(async()=>{
-    if(document.fonts?.ready)await document.fonts.ready;
+    const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+    if(document.fonts?.ready)await Promise.race([document.fonts.ready,sleep(2500)]);
     const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
     for(let y=0;y<h;y+=Math.max(500,innerHeight*.8)){
       scrollTo(0,y);
-      await new Promise(r=>setTimeout(r,20));
+      await sleep(20);
     }
     scrollTo(0,0);
-    await Promise.all([...document.images].map(img=>img.complete?Promise.resolve():new Promise(r=>{img.addEventListener('load',r,{once:true});img.addEventListener('error',r,{once:true})})));
-    await Promise.all([...document.images].map(img=>img.decode?.().catch(()=>{})||Promise.resolve()));
+    const imageDecode=Promise.all([...document.images].map(async img=>{
+      try{if(img.decode)await img.decode()}catch{}
+    }));
+    await Promise.race([imageDecode,sleep(3500)]);
   });
-  await page.waitForTimeout(80);
+  await page.waitForTimeout(100);
 }
 
 function comparePng(scope,aBuffer,bBuffer){
@@ -87,7 +90,7 @@ try{
       const trigger=page.locator('#configRequest');
       await trigger.scrollIntoViewIfNeeded();
       await trigger.click();
-      await page.waitForFunction(()=>document.getElementById('request')?.classList.contains('request-modal-open'));
+      await page.waitForFunction(()=>document.getElementById('request')?.classList.contains('request-modal-open'),null,{timeout:10000});
       await page.waitForTimeout(40);
     }
     const [modalA,modalB]=await Promise.all([

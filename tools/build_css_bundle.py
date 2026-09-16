@@ -7,6 +7,7 @@ SOURCES = [
     ("v4-locale-v1.css", "02 LOCALE UI"),
     ("v4-request-modal-v1.css", "03 REQUEST MODAL"),
     ("v4-typography-v1.css", "04 STAGE 2 FUNCTIONAL TYPOGRAPHY"),
+    ("v4-visual-v1.css", "05 STAGE 4 VISUAL UX"),
 ]
 OUTPUT = ROOT / "v4-bundle-v1.css"
 INDEX = ROOT / "index.html"

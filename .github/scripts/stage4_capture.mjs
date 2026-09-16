@@ -22,6 +22,8 @@ const sections=[
   ['activate','#activate']
 ];
 
+const anchors=['performance','architecture','materials','gallery','system','configurator','activate'];
+
 async function settle(page,c){
   await page.goto(`${BASE}/?qa=stage4&lang=${c.lang}`,{waitUntil:'domcontentloaded',timeout:60000});
   await page.waitForFunction(()=>window.vantaLocale&&document.documentElement.classList.contains('request-modal-ready'),null,{timeout:15000});
@@ -29,6 +31,7 @@ async function settle(page,c){
     html{scroll-behavior:auto!important}
     *,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}
     .reveal{opacity:1!important;transform:none!important}
+    .hero-copy .eyebrow,.hero-copy .hero-title>span,.hero-copy>p,.hero-mark,.spec-strip>div{opacity:1!important;transform:none!important;filter:none!important}
   `});
   await page.evaluate(async()=>{
     const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -57,8 +60,19 @@ try{
       if(await loc.count()){
         await loc.scrollIntoViewIfNeeded();
         await page.waitForTimeout(50);
+        const header=page.locator('#header');
+        await header.evaluate(el=>{el.dataset.captureVisibility=el.style.visibility;el.style.visibility='hidden'});
+        await page.locator('#progress').evaluate(el=>{el.dataset.captureVisibility=el.style.visibility;el.style.visibility='hidden'});
         await loc.screenshot({path:path.join(OUT,`${c.name}-${name}.png`),animations:'disabled'});
+        await header.evaluate(el=>{el.style.visibility=el.dataset.captureVisibility||'';delete el.dataset.captureVisibility});
+        await page.locator('#progress').evaluate(el=>{el.style.visibility=el.dataset.captureVisibility||'';delete el.dataset.captureVisibility});
       }
+    }
+
+    for(const id of anchors){
+      await page.evaluate(target=>{location.hash=target},id);
+      await page.waitForTimeout(80);
+      await page.screenshot({path:path.join(OUT,`${c.name}-anchor-${id}.png`),animations:'disabled'});
     }
 
     const trigger=page.locator('#configRequest');

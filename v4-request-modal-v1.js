@@ -9,8 +9,11 @@
 
   const q=id=>document.getElementById(id);
   const lang=()=>window.vantaLocale?.get?.()||document.documentElement.lang||'ru';
+  const focusableSelector='a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
   let opened=false;
   let lockedScroll=0;
+  let inerted=[];
+  let returnFocus=null;
 
   /* Modal chrome is independent of the page section, but reuses the existing form DOM. */
   const bar=document.createElement('div');
@@ -122,9 +125,25 @@
     window.scrollTo(0,lockedScroll);
   };
 
+  const setBackgroundInert=()=>{
+    const parent=request.parentElement;
+    const candidates=[
+      ...[...document.body.children].filter(el=>el!==parent),
+      ...(parent?[...parent.children].filter(el=>el!==request):[])
+    ];
+    inerted=[...new Set(candidates)].map(el=>({el,wasInert:el.inert}));
+    inerted.forEach(({el})=>{el.inert=true});
+  };
+  const restoreBackground=()=>{
+    inerted.forEach(({el,wasInert})=>{el.inert=wasInert});
+    inerted=[];
+  };
+  const visibleFocusables=()=>[...request.querySelectorAll(focusableSelector)].filter(el=>!el.disabled&&el.getClientRects().length>0);
+
   const openModal=({push=true}={})=>{
     if(opened)return;
     opened=true;
+    returnFocus=document.activeElement instanceof HTMLElement?document.activeElement:requestBtn;
     closeMobileMenu();
     paintRequestLanguage();
     syncCompactSummary();
@@ -132,7 +151,9 @@
     request.setAttribute('aria-modal','true');
     request.setAttribute('role','dialog');
     lockPage();
+    setBackgroundInert();
     request.scrollTop=0;
+    queueMicrotask(()=>bar.querySelector('.request-modal-close')?.focus({preventScroll:true}));
     if(push&&location.hash!=='#request')history.pushState({...(history.state||{}),vantaRequestModal:true},'','#request');
   };
 
@@ -142,9 +163,12 @@
     request.classList.remove('request-modal-open');
     request.removeAttribute('aria-modal');
     request.removeAttribute('role');
+    restoreBackground();
     unlockPage();
     if(cleanHash&&location.hash==='#request')history.replaceState({...history.state,vantaRequestModal:false},'',location.pathname+location.search);
-    requestBtn.focus({preventScroll:true});
+    const target=returnFocus?.isConnected?returnFocus:requestBtn;
+    returnFocus=null;
+    target?.focus?.({preventScroll:true});
   };
 
   const closeByUser=()=>{
@@ -153,7 +177,21 @@
   };
 
   bar.querySelector('.request-modal-close').addEventListener('click',closeByUser);
-  request.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();closeByUser()}});
+  request.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){
+      e.preventDefault();
+      closeByUser();
+      return;
+    }
+    if(e.key!=='Tab')return;
+    const focusables=visibleFocusables();
+    if(!focusables.length){e.preventDefault();return}
+    const first=focusables[0];
+    const last=focusables[focusables.length-1];
+    const active=document.activeElement;
+    if(e.shiftKey&&(active===first||!request.contains(active))){e.preventDefault();last.focus()}
+    else if(!e.shiftKey&&(active===last||!request.contains(active))){e.preventDefault();first.focus()}
+  });
 
   /* Capture phase prevents the old scrollIntoView handler from running. */
   requestBtn.addEventListener('click',e=>{

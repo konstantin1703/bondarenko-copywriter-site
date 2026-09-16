@@ -37,48 +37,6 @@ jobs:
           addition="  expectStatic(bundle.includes('Stage 6 / premium composition pass'),'stage 6 art-direction layer missing from bundle');\n"
           if addition not in s:
               s=s.replace(marker, marker+addition)
-          anchor="    if(stage4UX.materialCaptionSize===null||stage4UX.materialCaptionSize+0.01<8.5)fail(scope,`material caption below stage-4 floor: ${stage4UX.materialCaptionSize}px`);\n"
-          stage6=r'''
-
-    const techTrigger=page.locator('#techTrigger');
-    await techTrigger.scrollIntoViewIfNeeded();
-    await techTrigger.click();
-    await page.waitForFunction(()=>document.getElementById('techSheet')?.open===true);
-    const stage6Profile=await page.evaluate(()=>{
-      const sheet=document.getElementById('techSheet');
-      const close=document.getElementById('techClose');
-      const title=document.querySelector('#techSheet .tech-sheet-titleblock h2');
-      const value=document.querySelector('#techSheet .tech-profile-value strong');
-      const metric=document.querySelector('#techSheet .tech-profile-metrics article');
-      const group=document.querySelector('#techSheet .tech-profile-group');
-      const before=getComputedStyle(close,'::before');
-      return {
-        overflow:(sheet?.scrollWidth||0)-(sheet?.clientWidth||0),
-        closeWidth:close?.getBoundingClientRect().width||0,
-        glyphDisplay:before.display,
-        glyphWidth:parseFloat(before.width)||0,
-        titleSize:title?parseFloat(getComputedStyle(title).fontSize):0,
-        valueSize:value?parseFloat(getComputedStyle(value).fontSize):0,
-        metricMinHeight:metric?parseFloat(getComputedStyle(metric).minHeight)||0:0,
-        groupDisplay:group?getComputedStyle(group).display:''
-      };
-    });
-    if(stage6Profile.overflow>3)fail(scope,`engineering profile horizontal overflow by ${stage6Profile.overflow}px`);
-    if(stage6Profile.closeWidth<44||stage6Profile.glyphDisplay==='none'||stage6Profile.glyphWidth<17)fail(scope,'engineering profile close control regressed');
-    if(isMobile){
-      if(stage6Profile.titleSize<48)fail(scope,`mobile engineering title too small: ${stage6Profile.titleSize}px`);
-      if(stage6Profile.valueSize<72)fail(scope,`mobile engineering metric too small: ${stage6Profile.valueSize}px`);
-    }else{
-      if(stage6Profile.titleSize<58)fail(scope,`desktop engineering title too small: ${stage6Profile.titleSize}px`);
-      if(stage6Profile.valueSize<76)fail(scope,`desktop engineering metric too small: ${stage6Profile.valueSize}px`);
-      if(stage6Profile.groupDisplay!=='grid')fail(scope,`desktop engineering group is not editorial grid: ${stage6Profile.groupDisplay}`);
-    }
-    await page.locator('#techClose').click();
-    await page.waitForFunction(()=>document.getElementById('techSheet')?.open!==true);
-'''
-          if 'const stage6Profile=' not in s:
-              s=s.replace(anchor, anchor+stage6)
-          s=s.replace("note(scope,'render, bundle integrity, stage-4 UX floors, modal accessibility, responsive input sizing and locale checks passed');", "note(scope,'render, bundle integrity, stage-4/6 UX floors, engineering profile, modal accessibility, responsive input sizing and locale checks passed');")
           p.write_text(s)
           PY
 
@@ -96,7 +54,7 @@ jobs:
       - name: Permanent smoke QA
         run: node .github/scripts/smoke_qa.mjs
 
-      - name: Capture Stage 6 visual proof
+      - name: Verify and capture Stage 6 composition
         run: |
           mkdir -p /tmp/stage6-proof
           node --input-type=module <<'JS'
@@ -118,6 +76,31 @@ jobs:
               await trigger.scrollIntoViewIfNeeded();
               await trigger.click();
               await page.waitForFunction(()=>document.getElementById('techSheet')?.open===true);
+              const state=await page.evaluate(()=>{
+                const sheet=document.getElementById('techSheet');
+                const close=document.getElementById('techClose');
+                const title=document.querySelector('#techSheet .tech-sheet-titleblock h2');
+                const value=document.querySelector('#techSheet .tech-profile-value strong');
+                const group=document.querySelector('#techSheet .tech-profile-group');
+                const before=getComputedStyle(close,'::before');
+                return {
+                  overflow:(sheet?.scrollWidth||0)-(sheet?.clientWidth||0),
+                  closeWidth:close?.getBoundingClientRect().width||0,
+                  glyphDisplay:before.display,
+                  glyphWidth:parseFloat(before.width)||0,
+                  titleSize:title?parseFloat(getComputedStyle(title).fontSize):0,
+                  valueSize:value?parseFloat(getComputedStyle(value).fontSize):0,
+                  groupDisplay:group?getComputedStyle(group).display:''
+                };
+              });
+              console.log(cfg.name,JSON.stringify(state));
+              if(state.overflow>3)throw new Error(`${cfg.name}: engineering profile overflow ${state.overflow}px`);
+              if(state.closeWidth<44||state.glyphDisplay==='none'||state.glyphWidth<17)throw new Error(`${cfg.name}: close control regressed`);
+              if(cfg.isMobile){
+                if(state.titleSize<48||state.valueSize<72)throw new Error(`${cfg.name}: Stage 6 type scale below floor`);
+              }else{
+                if(state.titleSize<58||state.valueSize<76||state.groupDisplay!=='grid')throw new Error(`${cfg.name}: Stage 6 editorial layout below floor`);
+              }
               await page.waitForTimeout(100);
               await page.screenshot({path:`/tmp/stage6-proof/${cfg.name}-tech-top.png`,fullPage:false});
               await page.locator('#techSheet .tech-profile-group:nth-child(2)').scrollIntoViewIfNeeded();
@@ -129,7 +112,9 @@ jobs:
               if(errors.length)throw new Error(`${cfg.name}: ${errors.join(' | ')}`);
               await page.close();
             }
-          } finally { await browser.close(); }
+          } finally {
+            await browser.close();
+          }
           JS
 
       - name: Commit generated branch files

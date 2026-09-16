@@ -1470,3 +1470,23 @@ html[lang="ru"] #request .request-code span{letter-spacing:.13em}
   .activate-btn,
   .request-to-activation{transition:none!important}
 }
+
+/* iOS / WebKit tech-sheet close glyph: draw on the positioned button itself.
+   Avoid pseudo-elements on the empty inline span, which can disappear in Safari. */
+#techSheet[open] #techClose.tech-floating-close>span{display:none!important}
+#techSheet[open] #techClose.tech-floating-close::before,
+#techSheet[open] #techClose.tech-floating-close::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  width:18px!important;
+  height:2px!important;
+  background:#f1f2ef!important;
+  border-radius:2px!important;
+  transform-origin:center!important;
+  pointer-events:none!important;
+}
+#techSheet[open] #techClose.tech-floating-close::before{transform:translate(-50%,-50%) rotate(45deg)!important}
+#techSheet[open] #techClose.tech-floating-close::after{transform:translate(-50%,-50%) rotate(-45deg)!important}

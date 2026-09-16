@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import { chromium } from 'playwright';
 
-const BASE='http://127.0.0.1:4173';
+const BASE=process.env.BASE||'http://127.0.0.1:4173';
 const failures=[];
 const notes=[];
 const fail=(scope,message)=>failures.push(`[${scope}] ${message}`);
@@ -16,15 +16,23 @@ function staticAudit(){
   const js=fs.readFileSync('v4.js','utf8');
   const locale=fs.readFileSync('v4-locale-v1.js','utf8');
   const modal=fs.readFileSync('v4-request-modal-v1.js','utf8');
-  const modalCss=fs.readFileSync('v4-request-modal-v1.css','utf8');
-  const typographyCss=fs.readFileSync('v4-typography-v1.css','utf8');
+  const bundle=fs.readFileSync('v4-bundle-v1.css','utf8');
+  const cssSources=['v4.css','v4-locale-v1.css','v4-request-modal-v1.css','v4-typography-v1.css'];
 
   expectStatic(html.includes('v4.js?v=18'),'v4.js cache-bust must be v18');
   expectStatic(html.includes('v4-locale-v1.js?v=6'),'locale cache-bust must be v6');
   expectStatic(html.includes('v4-request-modal-v1.js?v=5'),'request modal JS cache-bust must be v5');
-  expectStatic(html.includes('v4-request-modal-v1.css?v=6'),'request modal CSS cache-bust must be v6');
-  expectStatic(html.includes('v4-typography-v1.css?v=1'),'typography cache-bust must be v1');
-  expectStatic(typographyCss.includes('Stage 2 / selective functional typography pass'),'stage 2 typography layer missing');
+  expectStatic(html.includes('v4-bundle-v1.css?v=1'),'consolidated CSS bundle link missing');
+  expectStatic(!html.includes('v4.css?v=23'),'legacy core CSS must not be linked directly');
+  expectStatic(!html.includes('v4-locale-v1.css?v=3'),'locale CSS must not be linked directly');
+  expectStatic(!html.includes('v4-request-modal-v1.css?v=6'),'request modal CSS must not be linked directly');
+  expectStatic(!html.includes('v4-typography-v1.css?v=1'),'typography CSS must not be linked directly');
+  expectStatic(bundle.includes('VANTA R1 — generated CSS bundle v1'),'generated bundle header missing');
+  expectStatic(bundle.includes('Stage 2 / selective functional typography pass'),'stage 2 typography layer missing from bundle');
+  for(const source of cssSources){
+    const sourceCss=fs.readFileSync(source,'utf8').trim();
+    expectStatic(bundle.includes(sourceCss),`consolidated bundle is stale or missing ${source}`);
+  }
 
   expectStatic(!js.includes('"dial":"+381 p"'),'Serbia calling code typo regressed');
   expectStatic(js.includes('"dial":"+381"'),'Serbia calling code +381 missing');
@@ -37,7 +45,7 @@ function staticAudit(){
   expectStatic(modal.includes('setBackgroundInert'),'request modal background inert handling missing');
   expectStatic(modal.includes("if(e.key!=='Tab')return"),'request modal Tab focus trap missing');
   expectStatic(modal.includes("request-modal-close')?.focus"),'request modal initial focus handling missing');
-  expectStatic(modalCss.includes('font-size:16px!important'),'mobile request input 16px safeguard missing');
+  expectStatic(bundle.includes('font-size:16px!important'),'mobile request input 16px safeguard missing from bundle');
 }
 
 async function runCase(browser,{name,width,height,isMobile,lang,testSwitch=false}){
@@ -179,7 +187,7 @@ async function runCase(browser,{name,width,height,isMobile,lang,testSwitch=false
       if(switched.lang!==target||switched.url!==target)fail(scope,`language switch failed: lang=${switched.lang}, url=${switched.url}`);
     }
 
-    note(scope,'render, modal accessibility, responsive input sizing and locale checks passed');
+    note(scope,'render, bundle integrity, modal accessibility, responsive input sizing and locale checks passed');
   }catch(error){
     fail(scope,`exception: ${error?.stack||error}`);
   }

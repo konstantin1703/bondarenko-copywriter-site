@@ -1490,3 +1490,313 @@ html[lang="ru"] #request .request-code span{letter-spacing:.13em}
 }
 #techSheet[open] #techClose.tech-floating-close::before{transform:translate(-50%,-50%) rotate(45deg)!important}
 #techSheet[open] #techClose.tech-floating-close::after{transform:translate(-50%,-50%) rotate(-45deg)!important}
+
+/* ===== 07 STAGE 6 ART DIRECTION: v4-artdirection-v1.css ===== */
+/* VANTA R1 — Stage 6 / premium composition pass.
+   Stronger editorial rhythm, less framing, more varied engineering-data composition. */
+
+/* Quiet the chrome around image-led sections so the product carries more visual weight. */
+.architecture-stage,
+.material-hero,
+.detail-triptych figure,
+.rail figure,
+.system-photo,
+.activation-stage{
+  border-color:rgba(255,255,255,.105)!important;
+}
+
+.detail-triptych figure,
+.rail figure{
+  background:#070807;
+}
+
+/* Give chapter transitions a little more breathing room on wide screens. */
+@media(min-width:1180px){
+  .architecture,.gallery{padding-top:132px!important;padding-bottom:132px!important}
+  .materials{padding-top:146px!important;padding-bottom:146px!important}
+  .system{padding-top:138px!important;padding-bottom:138px!important}
+  .activate{padding-top:132px!important}
+}
+
+/* Engineering Profile — stop treating all six numbers as identical cards. */
+#techSheet[open]{background:#050605}
+#techSheet[open] .tech-sheet-panel.tech-profile-v3{
+  width:min(1440px,100%);
+  margin:0 auto;
+}
+#techSheet[open] .tech-profile-head{
+  min-height:min(44svh,470px);
+  display:flex;
+  align-items:flex-end;
+  padding:clamp(92px,10vw,150px) clamp(28px,5.8vw,86px) clamp(48px,6vw,82px)!important;
+  border-bottom:1px solid rgba(255,255,255,.13)!important;
+  background:
+    radial-gradient(circle at 12% 16%,rgba(255,46,27,.09),transparent 34%),
+    linear-gradient(180deg,#070807 0%,#050605 100%);
+}
+#techSheet[open] .tech-sheet-titleblock{max-width:760px}
+#techSheet[open] .tech-sheet-titleblock h2{
+  max-width:8.8ch;
+  font-size:clamp(58px,7.1vw,112px)!important;
+  line-height:.82!important;
+  letter-spacing:-.072em!important;
+}
+#techSheet[open] .tech-sheet-titleblock p{
+  max-width:620px!important;
+  margin-top:28px!important;
+  font-size:clamp(15px,1.35vw,19px)!important;
+  line-height:1.55!important;
+}
+
+#techSheet[open] .tech-profile-groups{
+  display:grid!important;
+  gap:0!important;
+  padding:0!important;
+}
+#techSheet[open] .tech-profile-group{
+  position:relative;
+  display:grid!important;
+  grid-template-columns:minmax(190px,.32fr) minmax(0,1.68fr)!important;
+  column-gap:clamp(28px,4vw,70px)!important;
+  padding:clamp(54px,6.2vw,92px) clamp(28px,5.8vw,86px)!important;
+  border:0!important;
+  border-bottom:1px solid rgba(255,255,255,.12)!important;
+  background:transparent!important;
+  overflow:hidden;
+}
+#techSheet[open] .tech-profile-group>header{
+  grid-column:1;
+  grid-row:1 / span 2;
+  align-self:start;
+  position:sticky;
+  top:28px;
+  display:flex!important;
+  align-items:flex-start!important;
+  gap:18px!important;
+  padding:0!important;
+  border:0!important;
+}
+#techSheet[open] .tech-profile-group>header>b{
+  font-size:clamp(26px,2.6vw,42px)!important;
+  line-height:.9!important;
+  font-weight:700!important;
+  letter-spacing:-.045em!important;
+  color:var(--accent)!important;
+}
+#techSheet[open] .tech-profile-group>header h3{
+  font-size:clamp(20px,1.8vw,29px)!important;
+  line-height:1!important;
+  letter-spacing:-.025em!important;
+}
+#techSheet[open] .tech-profile-group>header small{
+  display:block;
+  margin-top:9px!important;
+  font-size:8px!important;
+  letter-spacing:.18em!important;
+  color:#696f6a!important;
+}
+
+#techSheet[open] .tech-profile-metrics{
+  grid-column:2;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:0!important;
+  border-top:1px solid rgba(255,255,255,.13)!important;
+  border-bottom:1px solid rgba(255,255,255,.13)!important;
+}
+#techSheet[open] .tech-profile-metrics article{
+  min-height:300px;
+  display:flex!important;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:clamp(26px,3vw,44px)!important;
+  border:0!important;
+  background:transparent!important;
+}
+#techSheet[open] .tech-profile-metrics article+article{
+  border-left:1px solid rgba(255,255,255,.13)!important;
+}
+#techSheet[open] .tech-profile-value{
+  display:flex!important;
+  align-items:flex-end!important;
+  gap:12px!important;
+  margin-bottom:22px!important;
+}
+#techSheet[open] .tech-profile-value strong{
+  font-size:clamp(76px,8.3vw,136px)!important;
+  line-height:.72!important;
+  letter-spacing:-.075em!important;
+  font-weight:500!important;
+}
+#techSheet[open] .tech-profile-value em{
+  padding-bottom:9px;
+  font-size:clamp(12px,1.25vw,17px)!important;
+  color:#c2c6c1!important;
+}
+#techSheet[open] .tech-profile-metrics h4{
+  margin:0 0 13px!important;
+  font-size:clamp(15px,1.35vw,20px)!important;
+  line-height:1.15!important;
+  letter-spacing:-.015em!important;
+}
+#techSheet[open] .tech-profile-metrics p{
+  max-width:420px;
+  margin:0!important;
+  font-size:clamp(12px,1.05vw,15px)!important;
+  line-height:1.55!important;
+}
+#techSheet[open] .tech-profile-impact{
+  grid-column:2;
+  display:grid!important;
+  grid-template-columns:150px minmax(0,1fr)!important;
+  gap:28px!important;
+  align-items:start!important;
+  padding:22px 0 0!important;
+  border:0!important;
+  background:transparent!important;
+}
+#techSheet[open] .tech-profile-impact small{
+  padding-top:3px;
+  font-size:8px!important;
+  letter-spacing:.17em!important;
+  color:var(--accent)!important;
+}
+#techSheet[open] .tech-profile-impact p{
+  max-width:700px;
+  margin:0!important;
+  font-size:clamp(13px,1.15vw,16px)!important;
+  line-height:1.55!important;
+}
+
+/* Energy chapter gets a denser technical band; vehicle chapter gets the most air. */
+#techSheet[open] .tech-profile-group:nth-child(2){
+  background:linear-gradient(90deg,rgba(255,46,27,.035),transparent 56%)!important;
+}
+#techSheet[open] .tech-profile-group:nth-child(2) .tech-profile-metrics article:first-child{
+  background:rgba(255,46,27,.028)!important;
+}
+#techSheet[open] .tech-profile-group:nth-child(3){
+  padding-top:clamp(74px,8vw,116px)!important;
+  padding-bottom:clamp(74px,8vw,116px)!important;
+}
+#techSheet[open] .tech-profile-group:nth-child(3) .tech-profile-metrics{
+  grid-template-columns:1.15fr .85fr!important;
+}
+#techSheet[open] .tech-profile-group:nth-child(3) .tech-profile-metrics article:first-child{
+  min-height:350px;
+}
+#techSheet[open] .tech-profile-group:nth-child(3) .tech-profile-value strong{
+  font-size:clamp(88px,9.5vw,154px)!important;
+}
+
+#techSheet[open] .tech-conclusion{
+  display:grid!important;
+  grid-template-columns:minmax(260px,.72fr) minmax(0,1.28fr)!important;
+  gap:clamp(36px,7vw,110px)!important;
+  padding:clamp(62px,7vw,105px) clamp(28px,5.8vw,86px)!important;
+  border:0!important;
+  background:#080908!important;
+}
+#techSheet[open] .tech-conclusion>div strong{
+  display:block;
+  margin-top:14px!important;
+  font-size:clamp(24px,2.35vw,38px)!important;
+  line-height:1.05!important;
+  letter-spacing:-.035em!important;
+}
+#techSheet[open] .tech-conclusion>p{
+  margin:0!important;
+  align-self:end;
+  max-width:760px;
+  font-size:clamp(14px,1.2vw,17px)!important;
+  line-height:1.62!important;
+}
+
+@media(max-width:760px){
+  #techSheet[open] .tech-profile-head{
+    min-height:0;
+    padding:calc(env(safe-area-inset-top) + 86px) 27px 45px!important;
+  }
+  #techSheet[open] .tech-sheet-titleblock h2{
+    max-width:9ch;
+    font-size:clamp(48px,14.4vw,68px)!important;
+    line-height:.86!important;
+  }
+  #techSheet[open] .tech-sheet-titleblock p{
+    margin-top:24px!important;
+    font-size:15px!important;
+    max-width:31ch!important;
+  }
+  #techSheet[open] .tech-profile-group{
+    display:block!important;
+    padding:46px 27px 54px!important;
+  }
+  #techSheet[open] .tech-profile-group>header{
+    position:static;
+    margin-bottom:30px!important;
+  }
+  #techSheet[open] .tech-profile-group>header>b{
+    font-size:28px!important;
+  }
+  #techSheet[open] .tech-profile-group>header h3{
+    font-size:22px!important;
+  }
+  #techSheet[open] .tech-profile-metrics,
+  #techSheet[open] .tech-profile-group:nth-child(3) .tech-profile-metrics{
+    display:block!important;
+    border-top:1px solid rgba(255,255,255,.14)!important;
+    border-bottom:0!important;
+  }
+  #techSheet[open] .tech-profile-metrics article,
+  #techSheet[open] .tech-profile-group:nth-child(3) .tech-profile-metrics article:first-child{
+    min-height:0;
+    padding:34px 0 31px!important;
+    border:0!important;
+    border-bottom:1px solid rgba(255,255,255,.14)!important;
+  }
+  #techSheet[open] .tech-profile-metrics article+article{
+    border-left:0!important;
+  }
+  #techSheet[open] .tech-profile-value{
+    margin-bottom:20px!important;
+  }
+  #techSheet[open] .tech-profile-value strong,
+  #techSheet[open] .tech-profile-group:nth-child(3) .tech-profile-value strong{
+    font-size:clamp(72px,22vw,104px)!important;
+  }
+  #techSheet[open] .tech-profile-metrics h4{
+    font-size:17px!important;
+  }
+  #techSheet[open] .tech-profile-metrics p{
+    max-width:35ch;
+    font-size:13px!important;
+  }
+  #techSheet[open] .tech-profile-impact{
+    grid-template-columns:1fr!important;
+    gap:9px!important;
+    padding-top:20px!important;
+  }
+  #techSheet[open] .tech-profile-impact p{
+    max-width:34ch;
+    font-size:13px!important;
+  }
+  #techSheet[open] .tech-profile-group:nth-child(2){
+    background:linear-gradient(180deg,rgba(255,46,27,.035),transparent 60%)!important;
+  }
+  #techSheet[open] .tech-profile-group:nth-child(3){
+    padding-top:54px!important;
+    padding-bottom:62px!important;
+  }
+  #techSheet[open] .tech-conclusion{
+    display:block!important;
+    padding:52px 27px 66px!important;
+  }
+  #techSheet[open] .tech-conclusion>div strong{
+    font-size:27px!important;
+    max-width:14ch;
+  }
+  #techSheet[open] .tech-conclusion>p{
+    margin-top:31px!important;
+    font-size:14px!important;
+  }
+}

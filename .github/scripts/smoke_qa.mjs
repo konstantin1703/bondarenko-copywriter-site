@@ -17,12 +17,12 @@ function staticAudit(){
   const locale=fs.readFileSync('v4-locale-v1.js','utf8');
   const modal=fs.readFileSync('v4-request-modal-v1.js','utf8');
   const bundle=fs.readFileSync('v4-bundle-v1.css','utf8');
-  const cssSources=['v4.css','v4-locale-v1.css','v4-request-modal-v1.css','v4-typography-v1.css','v4-visual-v1.css','v4-impact-v1.css'];
+  const cssSources=['v4.css','v4-locale-v1.css','v4-request-modal-v1.css','v4-typography-v1.css','v4-visual-v1.css','v4-impact-v1.css','v4-artdirection-v1.css'];
 
   expectStatic(html.includes('v4.js?v=18'),'v4.js cache-bust must be v18');
   expectStatic(html.includes('v4-locale-v1.js?v=6'),'locale cache-bust must be v6');
   expectStatic(html.includes('v4-request-modal-v1.js?v=5'),'request modal JS cache-bust must be v5');
-  expectStatic(html.includes('v4-bundle-v1.css?v=2'),'consolidated CSS bundle link missing');
+  expectStatic(html.includes('v4-bundle-v1.css?v=3'),'consolidated CSS bundle link missing');
   expectStatic(!html.includes('v4.css?v=23'),'legacy core CSS must not be linked directly');
   expectStatic(!html.includes('v4-locale-v1.css?v=3'),'locale CSS must not be linked directly');
   expectStatic(!html.includes('v4-request-modal-v1.css?v=6'),'request modal CSS must not be linked directly');
@@ -32,6 +32,7 @@ function staticAudit(){
   expectStatic(bundle.includes('Stage 2 / selective functional typography pass'),'stage 2 typography layer missing from bundle');
   expectStatic(bundle.includes('Stage 4 / visual + interaction polish'),'stage 4 visual UX layer missing from bundle');
   expectStatic(bundle.includes('iOS / WebKit tech-sheet close glyph'),'WebKit-safe tech close glyph missing from bundle');
+  expectStatic(bundle.includes('Stage 6 / premium composition pass'),'stage 6 art-direction layer missing from bundle');
   for(const source of cssSources){
     const sourceCss=fs.readFileSync(source,'utf8').trim();
     expectStatic(bundle.includes(sourceCss),`consolidated bundle is stale or missing ${source}`);

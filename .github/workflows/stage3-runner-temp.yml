@@ -9,6 +9,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: stage3-css-consolidation-runner
+  cancel-in-progress: true
+
 jobs:
   consolidate:
     runs-on: ubuntu-latest

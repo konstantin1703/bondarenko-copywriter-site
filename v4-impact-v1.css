@@ -1,0 +1,148 @@
+/* VANTA R1 — Stage 5 / portfolio impact pass.
+   Cinematic hierarchy and motion only: no structural redesign, no content changes. */
+
+/* Anchor jumps land with enough breathing room below the fixed header. */
+.chapter[id]{scroll-margin-top:calc(var(--header) + 18px)}
+
+/* Large chapter numerals strengthen the editorial sequence on wide screens. */
+@media(min-width:1180px){
+  :where(#performance,#architecture,#materials,#gallery,#system,#configurator,#activate){
+    position:relative;
+    isolation:isolate;
+  }
+  :where(#performance,#architecture,#materials,#gallery,#system,#configurator,#activate)::before{
+    position:absolute;
+    z-index:0;
+    right:max(18px,calc(var(--pad) * .48));
+    top:34px;
+    font:900 clamp(92px,10vw,168px)/.76 "Inter Tight",Inter,sans-serif;
+    letter-spacing:-.085em;
+    color:rgba(244,244,240,.032);
+    pointer-events:none;
+    user-select:none;
+  }
+  #performance::before{content:"02"}
+  #architecture::before{content:"03"}
+  #materials::before{content:"04"}
+  #gallery::before{content:"05"}
+  #system::before{content:"06"}
+  #configurator::before{content:"07"}
+  #activate::before{content:"09"}
+
+  :where(.performance-copy,.section-head,.materials-copy,.gallery-head,.system-photo,.system-ui,.config-shell,.activate-copy,.activation-stage,.activate-btn,.activate-note){
+    position:relative;
+    z-index:1;
+  }
+}
+
+/* Hero gets one restrained light sweep: an electrical wake, not a generic shine. */
+.hero-media{isolation:isolate}
+.hero-media::before{
+  content:"";
+  position:absolute;
+  z-index:2;
+  top:5%;
+  bottom:12%;
+  left:-36%;
+  width:24%;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent 0%,rgba(255,46,27,.02) 20%,rgba(255,46,27,.18) 47%,rgba(255,255,255,.12) 51%,rgba(255,46,27,.06) 57%,transparent 100%);
+  filter:blur(7px);
+  mix-blend-mode:screen;
+  transform:skewX(-10deg);
+  animation:vanta-impact-scan 1.55s cubic-bezier(.2,.75,.2,1) .5s both;
+}
+
+/* Red copy behaves like an impulse as each chapter resolves into view. */
+.reveal.show h2 em,
+.hero-copy.show .hero-red{
+  animation:vanta-impact-pulse .72s cubic-bezier(.2,.75,.2,1) both;
+}
+.hero-copy.show .hero-red:nth-child(2){animation-delay:.08s}
+.hero-copy.show .hero-red:nth-child(3){animation-delay:.15s}
+
+/* Premium image response: small enough to keep the editorial composition stable. */
+.detail-triptych img,
+.rail img{
+  transition:filter .5s var(--ease),transform .8s var(--ease);
+  transform-origin:center;
+}
+
+@media(hover:hover) and (pointer:fine){
+  .detail-triptych figure:hover img{
+    filter:brightness(1.07) contrast(1.02);
+    transform:scale(1.018);
+  }
+  .rail figure:hover img{
+    filter:brightness(1.055) contrast(1.015);
+    transform:scale(1.012);
+  }
+
+  .config-request,
+  .activate-btn,
+  .request-to-activation{
+    transition:transform .22s var(--ease),box-shadow .35s ease,filter .25s ease;
+  }
+  .config-request:hover,
+  .activate-btn:hover,
+  .request-to-activation:hover{
+    transform:translateY(-1px);
+    filter:brightness(1.035);
+    box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 0 32px rgba(255,46,27,.14);
+  }
+}
+
+/* Progressive enhancement: very subtle scroll drift on cinematic stills. */
+@supports (animation-timeline:view()){
+  @media(min-width:981px){
+    .signature-media img,
+    .system-photo img{
+      animation:vanta-impact-drift linear both;
+      animation-timeline:view();
+      animation-range:entry 0% exit 100%;
+      will-change:transform;
+    }
+  }
+}
+
+@keyframes vanta-impact-scan{
+  0%{left:-36%;opacity:0}
+  18%{opacity:.85}
+  72%{opacity:.42}
+  100%{left:116%;opacity:0}
+}
+
+@keyframes vanta-impact-pulse{
+  0%{filter:brightness(.72);text-shadow:0 0 0 rgba(255,46,27,0)}
+  46%{filter:brightness(1.16);text-shadow:0 0 20px rgba(255,46,27,.18)}
+  100%{filter:brightness(1);text-shadow:0 0 0 rgba(255,46,27,0)}
+}
+
+@keyframes vanta-impact-drift{
+  0%{transform:scale(1.035) translate3d(0,-.6%,0)}
+  50%{transform:scale(1.012) translate3d(0,0,0)}
+  100%{transform:scale(1.035) translate3d(0,.6%,0)}
+}
+
+@media(max-width:980px){
+  .hero-media::before{
+    top:0;
+    bottom:8%;
+    width:34%;
+    filter:blur(5px);
+    animation-duration:1.35s;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .hero-media::before{display:none}
+  .reveal.show h2 em,
+  .hero-copy.show .hero-red,
+  .signature-media img,
+  .system-photo img{animation:none!important}
+  .detail-triptych img,
+  .rail img,
+  .config-request,
+  .activate-btn,
+  .request-to-activation{transition:none!important}
+}

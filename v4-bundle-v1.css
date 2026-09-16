@@ -1225,3 +1225,98 @@ html[lang="ru"] #request .request-code span{letter-spacing:.13em}
   .config-module-copy small,.config-presets button p{font-size:10.5px!important}
   .config-effect,.config-module>i,.config-finishes button small{font-size:9px!important}
 }
+
+/* ===== 05 STAGE 4 VISUAL UX: v4-visual-v1.css ===== */
+/* VANTA R1 — Stage 4 / visual + interaction polish.
+   Preserve the established art direction; improve legibility, spacing and touch ergonomics only. */
+
+/* Desktop navigation is functional UI, not decorative microtype. */
+@media(min-width:1180px){
+  .desktop-nav{gap:28px}
+  .desktop-nav a,.activate-link{
+    font-size:10px;
+    letter-spacing:.12em;
+    color:#b0b0ac;
+  }
+}
+
+/* Product data and editorial captions stay technical, but no longer sit at the readability edge. */
+.spec-strip span{
+  font-size:8.5px!important;
+  line-height:1.4;
+  color:#8d8d89;
+}
+.material-hero figcaption span,
+.detail-triptych figcaption{
+  font-size:8.5px!important;
+  line-height:1.35;
+  color:#9a9a96;
+}
+.rail figcaption span{
+  font-size:8.5px;
+  line-height:1.45;
+  color:#81817d;
+}
+
+/* Keep keyboard focus visible without introducing permanent chrome. */
+.desktop-nav a:focus-visible,
+.activate-link:focus-visible,
+.gallery-controls button:focus-visible,
+.sw:focus-visible,
+.activate-btn:focus-visible{
+  outline:1px solid rgba(244,244,240,.72);
+  outline-offset:4px;
+}
+
+/* Activation swatches retain their 28px visual dot, but expose a 44px touch target. */
+.swatches{gap:0}
+.sw{
+  width:44px;
+  height:44px;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  transform:none!important;
+  position:relative;
+  -webkit-tap-highlight-color:transparent;
+}
+.sw:before{
+  content:"";
+  position:absolute;
+  inset:8px;
+  border-radius:50%;
+  border:1px solid #5d5d5a;
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.sw[data-color="red"]:before{background:#ef3024}
+.sw[data-color="green"]:before{background:#24d477}
+.sw[data-color="stealth"]:before{background:#111;border-color:#5a5a58}
+.sw.active:before{
+  transform:scale(1.04);
+  border-color:#d8d8d4;
+  box-shadow:0 0 0 3px #050505,0 0 0 4px #8a8a86;
+}
+
+@media(max-width:520px){
+  /* Slightly release the heavy display tracking so word boundaries remain clear in Russian. */
+  .performance-copy h2,
+  .section-head h2,
+  .materials-copy h2,
+  .gallery-head h2,
+  .system-ui h2,
+  .activate-copy h2{
+    letter-spacing:-.045em!important;
+    line-height:.92!important;
+    word-spacing:.045em;
+  }
+
+  .spec-strip span{font-size:8px!important}
+  .material-hero figcaption span,
+  .detail-triptych figcaption,
+  .rail figcaption span{font-size:8.5px!important}
+  .activation-config span{font-size:9px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .sw:before{transition:none}
+}
